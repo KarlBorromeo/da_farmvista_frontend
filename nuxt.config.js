@@ -66,8 +66,8 @@ export default {
       themes: {
         light: {
           primary: '#1a7358', // Rich Brown
-          accent: '#E8DCCB', // Warm Beige
-          secondary: '#B8A698', // Soft Taupe
+          accent: '#d9d9d9', // Warm Beige
+          secondary: '#d9d9d9', // Soft Taupe
           success: '#A4B494', // Muted Green
           info: '#F7F5F2', // Creamy White
           warning: '#D9D9D9', // Soft Gray
