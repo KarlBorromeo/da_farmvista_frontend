@@ -186,6 +186,7 @@ export default {
 </script>
 
 <style scoped>
+@import url('~/assets/css/fonts.css');
 #logo-container{
     display: inline-block;
     width: 75px;
