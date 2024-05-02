@@ -96,7 +96,7 @@
 	</v-row>
 </template>
 <script>
-import authLogo from '~/components/resusable/authLogo.vue'
+import authLogo from '~/components/authentication/TheLogo.vue'
 export default {
 	components: { authLogo },
 	layout: 'authentication',

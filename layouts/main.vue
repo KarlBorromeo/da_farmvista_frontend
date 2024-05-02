@@ -44,8 +44,8 @@
 </template>
 
 <script>
-import TheMenu from '~/components/main_page_components/TheMenu.vue'
-import TheLogo from '~/components/main_page_components/TheLogo.vue'
+import TheMenu from '~/components/landing/TheMenu.vue'
+import TheLogo from '~/components/landing/TheLogo.vue'
 
 export default {
 	components: { TheMenu, TheLogo },

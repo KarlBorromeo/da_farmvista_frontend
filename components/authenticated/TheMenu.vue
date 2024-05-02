@@ -63,7 +63,86 @@
 </template>
 
 <script>
-export default {}
+export default {
+	name: 'DefaultLayout',
+	data() {
+		return {
+			clipped: false,
+			drawer: false,
+			fixed: false,
+			items: [
+				{
+					icon: 'mdi-tablet-dashboard',
+					title: 'Dashboard',
+					to: '/dashboard',
+				},
+				{
+					icon: 'mdi-account-key',
+					title: 'Account',
+					to: '/auth/login',
+				},
+				{
+					icon: 'mdi-file-upload',
+					title: 'Upload File',
+					to: '/upload',
+				},
+				{
+					icon: 'mdi-account',
+					title: 'Profiling',
+					to: '/profiling',
+				},
+			],
+			miniVariant: false,
+			right: true,
+			rightDrawer: false,
+			title: 'FarmVista',
+			dropdown: [
+				{
+					icon: 'mdi-finance',
+					sub_icon: 'mdi-chevron-right',
+					title: 'Logs',
+					to: '/dashboard',
+				},
+				{
+					icon: 'mdi-account-circle-outline',
+					sub_icon: 'mdi-chevron-right',
+					title: 'My Profile',
+					to: '/dashboard',
+				},
+				{
+					icon: 'mdi-logout',
+					title: 'Logout',
+					to: '/dashboard',
+				},
+			],
+		}
+	},
+	computed: {
+		currentPageTitle() {
+			console.log('pageTitle: ', this.$store.getters['pageNameGetter'])
+			return this.$store.getters['pageNameGetter']
+		},
+	},
+}
 </script>
 
-<style></style>
+<style scoped>
+@import url('~/assets/css/fonts.css');
+#logo-container {
+	display: inline-block;
+	width: 75px;
+	height: 75px;
+	border-radius: 100%;
+	padding: 0.3rem;
+	background-color: white;
+}
+img {
+	height: 100%;
+	border-radius: 100%;
+	border: 1px solid #1a7358;
+}
+#title {
+	font-family: 'poppins';
+	font-weight: 500;
+}
+</style>

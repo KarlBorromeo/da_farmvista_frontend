@@ -9,7 +9,8 @@
 			style="background-color: #3fb07c"
 			class="px-5 py-1"
 		>
-			<v-col
+			<the-logo />
+			<!-- <v-col
 				class="px-4"
 				style="
 					display: flex;
@@ -21,7 +22,7 @@
 					<img id="logo" src="~assets/images/logo.png" />
 				</span>
 				<span id="title"> FARMVISTA </span>
-			</v-col>
+			</v-col> -->
 			<v-divider />
 			<v-list>
 				<v-list-item
@@ -61,6 +62,7 @@
 				<img src="https://randomuser.me/api/portraits/women/81.jpg" />
 			</v-list-item-avatar>
 			<!-- menu dropdown -->
+			<the-menu />
 		</v-app-bar>
 		<v-main style="background-color: #dcdfe3">
 			<Nuxt />
@@ -69,7 +71,10 @@
 </template>
 
 <script>
+import TheLogo from '~/components/authenticated/TheLogo.vue'
+import TheMenu from '~/components/authenticated/TheMenu.vue'
 export default {
+	components: { TheLogo, TheMenu },
 	name: 'DefaultLayout',
 	data() {
 		return {
@@ -134,21 +139,4 @@ export default {
 
 <style scoped>
 @import url('~/assets/css/fonts.css');
-#logo-container {
-	display: inline-block;
-	width: 75px;
-	height: 75px;
-	border-radius: 100%;
-	padding: 0.3rem;
-	background-color: white;
-}
-img {
-	height: 100%;
-	border-radius: 100%;
-	border: 1px solid #1a7358;
-}
-#title {
-	font-family: 'poppins';
-	font-weight: 500;
-}
 </style>
