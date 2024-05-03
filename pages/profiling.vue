@@ -1,25 +1,50 @@
 <template>
-	<v-row justify="center" class="mt-3">
-		<v-dialog v-model="dialog" width="700px">
-			<template v-slot:activator="{ on, attrs }">
-				<v-btn color="primary" dark v-bind="attrs" v-on="on">
-					Open Dialog
-				</v-btn>
-			</template>
-			<v-card>
-				<QuestionaireModal />
-			</v-card>
-		</v-dialog>
-	</v-row>
+	<tab-description
+		icon="mdi-account-arrow-up"
+		title="Profiling"
+		:description="description"
+	>
+		<v-container class="mt-4">
+			<p class="caption">Accepted File: .xlsx</p>
+			<v-row>
+				<v-col cols="12" sm="6" class="pt-0">
+					<!--  -->
+					<upload-button />
+				</v-col>
+				<v-col cols="12" sm="6" class="pt-0">
+					<v-dialog v-model="dialog" width="700">
+						<template v-slot:activator="{ on, attrs }">
+							<v-btn
+								block
+								color="success"
+								large
+								v-bind="attrs"
+								v-on="on"
+							>
+								<v-icon class="mr-2"
+									>mdi-text-box-edit-outline</v-icon
+								>
+								MANUAL SURVEY
+							</v-btn>
+						</template>
+						<questionnaire-vue />
+					</v-dialog>
+				</v-col>
+			</v-row>
+		</v-container>
+	</tab-description>
 </template>
 
 <script>
-import QuestionaireModal from '~/components/questionnaire/questionnaire_modal.vue'
+import TabDescription from '~/components/authenticated/TabDescription.vue'
+import QuestionnaireVue from '~/components/authenticated/modal/questionnaire.vue'
+import UploadButton from '~/components/authenticated/buttons/uploadButton.vue'
 export default {
-	components: { QuestionaireModal },
+	components: { TabDescription, QuestionnaireVue, UploadButton },
 	data() {
 		return {
 			dialog: false,
+			description: 'This module simplifies farm profiling by offering easy Excel uploads or manual survey input, allowing  to capture comprehensive data about coffee farmers.',
 		}
 	},
 	beforeMount() {

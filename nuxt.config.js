@@ -65,12 +65,12 @@ export default {
       light: true,
       themes: {
         light: {
-          primary: '#1a7358', // Rich Brown
-          accent: '#d9d9d9', // Warm Beige
-          secondary: '#d9d9d9', // Soft Taupe
-          success: '#A4B494', // Muted Green
-          info: '#F7F5F2', // Creamy White
-          warning: '#D9D9D9', // Soft Gray
+          primary: '#1a7358', // ex: drawer bg-color
+          accent: '#d3e8d3',  // ex: card bg-color
+          secondary: '#d9d9d9', // ex: page bg-color
+          success: '#f55525', // ex: btn
+          info: '#F7F5F2', 
+          warning: '#D9D9D9',
         },
       }
     }
