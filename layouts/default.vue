@@ -83,49 +83,36 @@ export default {
 			fixed: false,
 			items: [
 				{
-					icon: 'mdi-tablet-dashboard',
+					icon: 'mdi-view-dashboard',
 					title: 'Dashboard',
 					to: '/dashboard',
 				},
 				{
-					icon: 'mdi-account-key',
-					title: 'Account',
-					to: '/auth/login',
-				},
-				{
-					icon: 'mdi-file-upload',
-					title: 'Upload File',
-					to: '/upload',
-				},
-				{
-					icon: 'mdi-account',
+					icon: 'mdi-account-arrow-up',
 					title: 'Profiling',
 					to: '/profiling',
+				},	
+				{
+					icon: 'mdi-finance',
+					title: 'Analytics',
+					to: '/analytics',
 				},
+				{
+					icon: 'mdi-google-maps',
+					title: 'Maps',
+					to: '/maps',
+				},
+				{
+					icon: 'mdi-account-group',
+					title: 'Users',
+					to: '/users',
+				},
+					
 			],
 			miniVariant: false,
 			right: true,
 			rightDrawer: false,
 			title: 'FarmVista',
-			dropdown: [
-				{
-					icon: 'mdi-finance',
-					sub_icon: 'mdi-chevron-right',
-					title: 'Logs',
-					to: '/dashboard',
-				},
-				{
-					icon: 'mdi-account-circle-outline',
-					sub_icon: 'mdi-chevron-right',
-					title: 'My Profile',
-					to: '/dashboard',
-				},
-				{
-					icon: 'mdi-logout',
-					title: 'Logout',
-					to: '/dashboard',
-				},
-			],
 		}
 	},
 	computed: {
@@ -137,6 +124,6 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 @import url('~/assets/css/fonts.css');
 </style>

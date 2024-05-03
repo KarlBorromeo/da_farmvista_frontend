@@ -80,7 +80,7 @@
 										type="password"
 									></v-text-field>
 								</v-col>
-								<v-btn dark color="primary" block>Log In</v-btn>
+								<v-btn dark color="primary" block to="/dashboard">Log In</v-btn>
 							</v-row>
 						</v-container>
 					</v-form>

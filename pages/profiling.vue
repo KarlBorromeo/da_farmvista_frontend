@@ -22,5 +22,8 @@ export default {
 			dialog: false,
 		}
 	},
+	beforeMount() {
+		this.$store.commit('udpateHeaderTitle', 'PROFILING')
+	},
 }
 </script>

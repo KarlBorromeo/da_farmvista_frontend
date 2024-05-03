@@ -44,13 +44,13 @@
 							color="white"
 						>
 							<v-row class="ma-0">
-								<v-col cols="4" class="header_dropdown_btns">
+								<v-col cols="3" class="header_dropdown_btns">
 									<v-icon>{{ item.icon }}</v-icon>
 								</v-col>
-								<v-col cols="5" class="header_dropdown_btns">
+								<v-col cols="5" class="header_dropdown_btns text-start">
 									{{ item.title }}
 								</v-col>
-								<v-col cols="3" class="header_dropdown_btns">
+								<v-col cols="4" class="header_dropdown_btns">
 									<v-icon>{{ item.sub_icon }}</v-icon>
 								</v-col>
 							</v-row>
@@ -67,61 +67,26 @@ export default {
 	name: 'DefaultLayout',
 	data() {
 		return {
-			clipped: false,
-			drawer: false,
-			fixed: false,
-			items: [
-				{
-					icon: 'mdi-tablet-dashboard',
-					title: 'Dashboard',
-					to: '/dashboard',
-				},
-				{
-					icon: 'mdi-account-key',
-					title: 'Account',
-					to: '/auth/login',
-				},
-				{
-					icon: 'mdi-file-upload',
-					title: 'Upload File',
-					to: '/upload',
-				},
-				{
-					icon: 'mdi-account',
-					title: 'Profiling',
-					to: '/profiling',
-				},
-			],
-			miniVariant: false,
-			right: true,
-			rightDrawer: false,
-			title: 'FarmVista',
 			dropdown: [
 				{
-					icon: 'mdi-finance',
+					icon: 'mdi-history',
 					sub_icon: 'mdi-chevron-right',
 					title: 'Logs',
-					to: '/dashboard',
+					to: '/logs',
 				},
 				{
 					icon: 'mdi-account-circle-outline',
 					sub_icon: 'mdi-chevron-right',
 					title: 'My Profile',
-					to: '/dashboard',
+					to: '/profile',
 				},
 				{
 					icon: 'mdi-logout',
 					title: 'Logout',
-					to: '/dashboard',
+					to: '/',
 				},
 			],
 		}
-	},
-	computed: {
-		currentPageTitle() {
-			console.log('pageTitle: ', this.$store.getters['pageNameGetter'])
-			return this.$store.getters['pageNameGetter']
-		},
 	},
 }
 </script>
