@@ -1,5 +1,5 @@
 export const state = () => ({
-  form:{
+  form: {
     SurveyInformation: {},
   },
   isSurveyInformationValidated: false,
@@ -17,10 +17,10 @@ export const mutations = {
     state.isSurveyInformationValidated = bool
   },
   /* save the Suvey Information data */
-  SurveyInformation(state,data){
+  SurveyInformation(state, data) {
     state.form.SurveyInformation = data
-    console.log('state:',state.form)
-  }
+    console.log('state:', state.form)
+  },
 }
 
 export const actions = {}

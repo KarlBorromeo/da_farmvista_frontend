@@ -44,7 +44,7 @@
           v-on="on"
           class="mb-3"
         >
-      </v-text-field>
+        </v-text-field>
       </template>
       <v-time-picker
         v-if="timeStartPicker"
@@ -84,18 +84,19 @@
     </v-menu>
 
     <div class="mb-4">
-    <v-select
-      v-model="municipality"
-      :items="municipalities"
-      append-icon="mdi-city"
-      menu-props="auto"
-      hide-details
-      label="City/Municipality"
-      class="border"
-      dense
-    ></v-select>
-    <p v-if="!municipality" class="red--text caption mt-1">
-        You must select Municipality/City! </p>
+      <v-select
+        v-model="municipality"
+        :items="municipalities"
+        append-icon="mdi-city"
+        menu-props="auto"
+        hide-details
+        label="City/Municipality"
+        class="border"
+        dense
+      ></v-select>
+      <p v-if="!municipality" class="red--text caption mt-1">
+        You must select Municipality/City!
+      </p>
     </div>
 
     <v-text-field
@@ -165,57 +166,57 @@ export default {
       'TANDAG',
       'TRENTO',
       'TUBAJON',
-      'TUBAY'
+      'TUBAY',
     ],
-    barangay:null,
-    barangayRule:[(v) => !!v || 'Barangay is required']
+    barangay: null,
+    barangayRule: [(v) => !!v || 'Barangay is required'],
   }),
 
   methods: {
     /* test if the form is valid, return boolean */
     validate() {
-      if(this.$refs.form.validate() && this.municipality && this.interviewer){
+      if (this.$refs.form.validate() && this.municipality && this.interviewer) {
         return true
       }
-      return false;
+      return false
     },
     /* return the data of this form as an object */
-    getData(){
+    getData() {
       return {
-        interviewer:this.interviewer,
+        interviewer: this.interviewer,
         date: this.date,
         time_start: this.interviewStart,
         time_end: this.interviewEnd,
         municipality: this.municipality,
-        barangay: this.barangay
+        barangay: this.barangay,
       }
     },
     /* validate the form, decide to enable next tab, save the data */
-    validation(){
-      const isValidated = this.validate();
-      this.$store.commit('questionnaire/SurveyInformationValidate',isValidated)
-      if(isValidated){
-        const data = this.getData();
-        this.$store.commit('questionnaire/SurveyInformation',data)
+    validation() {
+      const isValidated = this.validate()
+      this.$store.commit('questionnaire/SurveyInformationValidate', isValidated)
+      if (isValidated) {
+        const data = this.getData()
+        this.$store.commit('questionnaire/SurveyInformation', data)
       }
     },
   },
-  watch:{
-    interviewer(){
+  watch: {
+    interviewer() {
       this.validation()
     },
-    interviewStart(){
+    interviewStart() {
       this.validation()
     },
-    interviewEnd(){
+    interviewEnd() {
       this.validation()
     },
-    municipality(){
+    municipality() {
       this.validation()
     },
-    barangay(){
+    barangay() {
       this.validation()
-    }
-  }
+    },
+  },
 }
 </script>

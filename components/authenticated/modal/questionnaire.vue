@@ -20,7 +20,9 @@
     <v-toolbar light elevation="0">
       <template>
         <v-tabs fixed-tabs show-arrows center-active slider-color="red">
-          <v-tab @click="clicked('SurveyInformation')" class="body-1"> Survey Information </v-tab>
+          <v-tab @click="clicked('SurveyInformation')" class="body-1">
+            Survey Information
+          </v-tab>
           <v-tab
             class="body-1"
             @click="clicked('FormTwo')"
@@ -53,7 +55,7 @@ import FormTwo from './questionnaire_forms/FormTwo.vue'
 import SurveyInformation from './questionnaire_forms/SurveyInformation.vue'
 
 export default {
-  components: { SurveyInformation, FormTwo},
+  components: { SurveyInformation, FormTwo },
   data() {
     return {
       current: 'SurveyInformation',
