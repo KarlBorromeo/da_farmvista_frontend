@@ -43,11 +43,9 @@
 </template>
 
 <script>
-import FormOne from './questionnaire_forms/FormOne.vue'
 import FormTwo from './questionnaire_forms/FormTwo.vue'
-
 export default {
-  components: { FormOne, FormTwo },
+  components: { FormTwo },
   data() {
     return {
       current: 'FormTwo',

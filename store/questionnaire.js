@@ -1,18 +1,26 @@
 export const state = () => ({
-  isFormOneValidated: false,
+  form:{
+    SurveyInformation: {},
+  },
+  isSurveyInformationValidated: false,
 })
 
 export const getters = {
-  FormOneValidatedGetter(state) {
-    return state.isFormOneValidated
+  SurveyInformationValidated(state) {
+    return state.isSurveyInformationValidated
   },
 }
 
 export const mutations = {
-  toggleFormOneValdiation(state, bool) {
-    console.log('toggled mutation')
-    state.isFormOneValidated = bool
+  /* set the Survey Information validation */
+  SurveyInformationValidate(state, bool) {
+    state.isSurveyInformationValidated = bool
   },
+  /* save the Suvey Information data */
+  SurveyInformation(state,data){
+    state.form.SurveyInformation = data
+    console.log('state:',state.form)
+  }
 }
 
 export const actions = {}

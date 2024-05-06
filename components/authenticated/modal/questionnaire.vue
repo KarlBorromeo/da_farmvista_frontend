@@ -20,18 +20,18 @@
     <v-toolbar light elevation="0">
       <template>
         <v-tabs fixed-tabs show-arrows center-active slider-color="red">
-          <v-tab @click="clicked('FormOne')" class="body-1"> FormOne </v-tab>
+          <v-tab @click="clicked('SurveyInformation')" class="body-1"> Survey Information </v-tab>
           <v-tab
             class="body-1"
             @click="clicked('FormTwo')"
-            :disabled="tabOneValidated"
+            :disabled="SurveyInformationValidated"
           >
             FormTwo
           </v-tab>
           <v-tab
             class="body-1"
             @click="clicked('FormTwo')"
-            :disabled="tabOneValidated"
+            :disabled="SurveyInformationValidated"
           >
             FormTwo
           </v-tab>
@@ -49,14 +49,14 @@
 </template>
 
 <script>
-import FormOne from './questionnaire_forms/FormOne.vue'
 import FormTwo from './questionnaire_forms/FormTwo.vue'
+import SurveyInformation from './questionnaire_forms/SurveyInformation.vue'
 
 export default {
-  components: { FormOne, FormTwo },
+  components: { SurveyInformation, FormTwo},
   data() {
     return {
-      current: 'FormOne',
+      current: 'SurveyInformation',
       commodity: [{ title: 'Coffee' }, { title: 'Mango' }, { title: 'Cacao' }],
     }
   },
@@ -66,8 +66,8 @@ export default {
     },
   },
   computed: {
-    tabOneValidated() {
-      return !this.$store.getters['questionnaire/FormOneValidatedGetter']
+    SurveyInformationValidated() {
+      return !this.$store.getters['questionnaire/SurveyInformationValidated']
     },
   },
 }
