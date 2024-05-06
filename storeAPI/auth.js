@@ -1,22 +1,15 @@
-import axios from 'axios'
-const baseURL = process.env.baseUrlApi;
+// import axios from 'axios'
+// const baseURL = process.env.baseUrlApi;
 
 export async function login(credentials){
     try{
-       const response = await axios.post(baseURL+'auth/login',credentials);
-       console.log(response.data);
-       return response.data;
+    //    const response = await axios.post(baseURL+'auth/login',credentials);
+    //    return response.data;
+       await new Promise(resolve => setTimeout(resolve,2000))
+       throw new Error('Crendetials Error')
     }catch(error){
-        console.error('error: ',error.response.data.message);
-    }
-}
-
-export async function register(credentials){
-    try{
-       const response = await axios.post(baseURL+'auth/register',credentials);
-       console.log(response.data);
-       return response.data;
-    }catch(error){
-        console.error('error: ',error.response.data.message);
+        console.log(error);
+        throw error
+        // console.error('error: ',error.response.data.message);
     }
 }

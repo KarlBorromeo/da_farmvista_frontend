@@ -51,6 +51,7 @@ export default {
     baseURL: '/',
   },
 
+
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {
     manifest: {

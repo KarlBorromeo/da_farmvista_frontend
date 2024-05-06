@@ -11,7 +11,7 @@
 		>
 			<v-row>
 				<v-col cols="12" md="9" lg="6" class="pa-6">
-					<v-form v-model="valid">
+					<v-form v-model="valid" ref="form" >
 						<v-container>
 							<v-row>
 								<v-col cols="12">
@@ -73,14 +73,13 @@
 									<v-text-field
 										v-model="password"
 										:rules="passwordRules"
-										:counter="10"
 										label="Password"
 										required
 										placeholder="Your Password"
 										type="password"
 									></v-text-field>
 								</v-col>
-								<v-btn dark color="primary" block to="/dashboard">Log In</v-btn>
+								<v-btn dark color="primary" block @click="login">Log In</v-btn>
 							</v-row>
 						</v-container>
 					</v-form>
@@ -93,12 +92,14 @@
 				/>
 			</v-row>
 		</v-col>
+		<snackbar-vue ref="snackbar"/>
 	</v-row>
 </template>
 <script>
 import authLogo from '~/components/authentication/TheLogo.vue'
+import snackbarVue from '~/components/snackbar.vue'
 export default {
-	components: { authLogo },
+	components: { authLogo, snackbarVue },
 	layout: 'authentication',
 	data: () => ({
 		valid: false,
@@ -110,10 +111,41 @@ export default {
 		password: '',
 		passwordRules: [
 			(v) => !!v || 'Password is required',
-			(v) => v.length >= 8 || 'Password too short.',
 		],
 	}),
+	methods:{
+		validate () {
+			return this.$refs.form.validate()
+		},
+		reset () {
+			this.$refs.form.reset()
+		},
+		resetValidation () {
+			this.$refs.form.resetValidation()
+		},
+		showBar(showBar){
+			this.showBar();
+		},
+		async login(){
+			if(this.validate()){
+				const credentials = {username: this.username, password: this.password};
+				try{
+					await this.$store.dispatch('auth/login',credentials)
+					this.$router.push('/dashboard')
+				}catch(error){
+					this.$refs.snackbar.showBar(error,'red');
+				}
+				
+			}
+		}
+	},
+	computed:{
+		snackbarVisible(){
+			return this.snackbar;
+		}
+	}
 }
+
 </script>
 
 <style scoped>
@@ -122,6 +154,7 @@ export default {
 	background-color: white;
 	border-radius: 0.5rem;
 	box-shadow: 0 2px 3px 3px rgba(0, 0, 0, 0.2);
+	z-index: 5;
 }
 #auth_bg::before {
 	content: '';
