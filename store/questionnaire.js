@@ -1,20 +1,18 @@
 export const state = () => ({
-    isFormOneValidated: false
+  isFormOneValidated: false,
 })
 
 export const getters = {
-    FormOneValidatedGetter(state){
-        return state.isFormOneValidated;
-    }
+  FormOneValidatedGetter(state) {
+    return state.isFormOneValidated
+  },
 }
 
 export const mutations = {
-    toggleFormOneValdiation(state,bool){
-        console.log('toggled mutation')
-        state.isFormOneValidated = bool;
-    }
+  toggleFormOneValdiation(state, bool) {
+    console.log('toggled mutation')
+    state.isFormOneValidated = bool
+  },
 }
 
-export const actions = {
-
-}
+export const actions = {}

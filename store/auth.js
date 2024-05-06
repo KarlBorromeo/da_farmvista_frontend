@@ -1,25 +1,18 @@
-import * as api from '../storeAPI/auth.js';
-export const state = () => ({
-    
-})
-  
-export const getters = {
+import * as api from '../storeAPI/auth.js'
+export const state = () => ({})
 
-}
-  
-export const mutations = {
+export const getters = {}
 
-}
+export const mutations = {}
 
 export const actions = {
-    async login(context,credentials){
-        console.log('credentials: ',credentials);
-        try{
-            await api.login(credentials);
-        }catch(error){
-            console.log(error)
-            throw error;
-        }
-        
+  async login(__, credentials) {
+    console.log('credentials: ', credentials)
+    try {
+      await api.login(credentials)
+    } catch (error) {
+      console.log(error)
+      throw error
     }
+  },
 }
