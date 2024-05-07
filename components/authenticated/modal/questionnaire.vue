@@ -8,7 +8,6 @@
             <v-icon>mdi-dots-vertical</v-icon>
           </v-btn>
         </template>
-
         <v-list elevation="15">
           <v-list-item v-for="(item, i) in commodity" :key="i">
             <v-list-item-title>{{ item.title }}</v-list-item-title>
@@ -57,6 +56,9 @@
           <v-tab class="caption" @click="clicked('AssetsFarmStructure')">
             Assets Farm Structure
           </v-tab>
+          <v-tab class="caption" @click="clicked('InformationDwellingPlace')">
+            Information Dwelling Place
+          </v-tab>
         </v-tabs>
       </template>
     </v-toolbar>
@@ -82,7 +84,7 @@ import AssetsFarmTools from './questionnaire_forms/AssetsFarmTools.vue'
 import AssetsFarmMachinery from './questionnaire_forms/AssetsFarmMachinery.vue'
 import AssetsFarmPoultryLivestock from './questionnaire_forms/AssetsFarmPoultryLivestock.vue'
 import AssetsFarmStructure from './questionnaire_forms/AssetsFarmStructure.vue'
-
+import InformationDwellingPlace from './questionnaire_forms/InformationDwellingPlace.vue'
 export default {
   components: {
     SurveyInformation,
@@ -96,10 +98,11 @@ export default {
     AssetsFarmMachinery,
     AssetsFarmPoultryLivestock,
     AssetsFarmStructure,
+    InformationDwellingPlace,
   },
   data() {
     return {
-      current: 'AssetsFarmStructure',
+      current: 'SurveyInformation',
       commodity: [{ title: 'Coffee' }, { title: 'Mango' }, { title: 'Cacao' }],
     }
   },
