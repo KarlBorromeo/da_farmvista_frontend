@@ -1,12 +1,20 @@
 <template>
   <v-form ref="form" v-model="valid" lazy-validation>
+    <v-text-field
+      v-model="surveyNumber"
+      :rules="surveyNumberRule"
+      label="Survey Number"
+      required
+      type="number"
+      class="mb-3"
+    ></v-text-field>
+
     <v-radio-group v-model="interviewer">
       <v-radio
         v-for="item in items"
         :key="item.value"
         :label="item.label"
         :value="item.value"
-        :rules="[(v) => !!interviewer || 'You must select an inteviewer!']"
       ></v-radio>
       <div v-if="!interviewer" class="red--text caption">
         You must select an option!
@@ -83,7 +91,23 @@
       ></v-time-picker>
     </v-menu>
 
-    <div class="mb-4">
+    <div class="mb-4" style="margin-top: 2rem!important">
+      <v-select
+        v-model="region_province"
+        :items="regions_provinces"
+        append-icon="mdi-city"
+        menu-props="auto"
+        hide-details
+        label="Region/Pronvince"
+        class="border mb-4"
+        dense
+      ></v-select>
+      <p v-if="!municipality" class="red--text caption mt-1">
+        You must select Region/Province!
+      </p>
+    </div>
+    <v-spacer />
+    <div class="mb-4 mt-4" style="margin-top: 2rem!important">
       <v-select
         v-model="municipality"
         :items="municipalities"
@@ -113,6 +137,8 @@
 export default {
   data: () => ({
     valid: false,
+    surveyNumber:'',
+    surveyNumberRule:[(v) => !!v || 'survey number is required'],
     interviewer: null,
     items: [
       { label: 'Jhon Warren S. Batondo', value: 'Jhon Warren S. Batondo' },
@@ -125,9 +151,17 @@ export default {
     interviewStart: '',
     timeStartPicker: false,
     interviewStartRule: [(v) => !!v || 'time start is required'],
-    interviewEnd: null,
+    interviewEnd: '',
     timeEndPicker: false,
     interviewEndRule: [(v) => !!v || 'time end is required'],
+    region_province: '',
+    regions_provinces: [
+      'AGUSAN DEL NORTE',
+      'AGUSAN DEL SUR',
+      'DINAGAT ISLAND',
+      'SURIGAO DEL NORTE',
+      'SURIGAO DEL SUR'
+    ],
     municipality: null,
     municipalities: [
       'ALEGRIA',
@@ -175,7 +209,7 @@ export default {
   methods: {
     /* test if the form is valid, return boolean */
     validate() {
-      if (this.$refs.form.validate() && this.municipality && this.interviewer) {
+      if (this.$refs.form.validate() && this.municipality && this.region_province && this.interviewer) {
         return true
       }
       return false
@@ -183,17 +217,20 @@ export default {
     /* return the data of this form as an object */
     getData() {
       return {
-        interviewer: this.interviewer,
-        date: this.date,
-        time_start: this.interviewStart,
-        time_end: this.interviewEnd,
-        municipality: this.municipality,
+        survey_no: this.suveryNumber,
+        validator_name: this.interviewer,
+        date_of_interview: this.date,
+        interview_start: this.interviewStart,
+        interview_end: this.interviewEnd,
+        region_province: this.region_province,
+        city_municipality: this.municipality,
         barangay: this.barangay,
       }
     },
     /* validate the form, decide to enable next tab, save the data */
     validation() {
       const isValidated = this.validate()
+      console.log('validated: ',isValidated)
       this.$store.commit('questionnaire/SurveyInformationValidate', isValidated)
       if (isValidated) {
         const data = this.getData()
@@ -202,6 +239,9 @@ export default {
     },
   },
   watch: {
+    surveyNumber(){
+      this.validation()
+    },
     interviewer() {
       this.validation()
     },

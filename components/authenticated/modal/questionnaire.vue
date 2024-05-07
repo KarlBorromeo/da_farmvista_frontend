@@ -25,17 +25,16 @@
           </v-tab>
           <v-tab
             class="body-1"
-            @click="clicked('FormTwo')"
+            @click="clicked('BasicInformation')"
             :disabled="SurveyInformationValidated"
           >
-            FormTwo
+            Farmer's Basic Information
           </v-tab>
           <v-tab
             class="body-1"
-            @click="clicked('FormTwo')"
-            :disabled="SurveyInformationValidated"
+            @click="clicked('GeneralInformation')"
           >
-            FormTwo
+            General Information
           </v-tab>
         </v-tabs>
       </template>
@@ -51,14 +50,16 @@
 </template>
 
 <script>
-import FormTwo from './questionnaire_forms/FormTwo.vue'
 import SurveyInformation from './questionnaire_forms/SurveyInformation.vue'
+import BasicInformation from './questionnaire_forms/BasicInformation.vue'
+import GeneralInformation from './questionnaire_forms/GeneralInformation.vue'
+
 
 export default {
-  components: { SurveyInformation, FormTwo },
+  components: { SurveyInformation,BasicInformation, GeneralInformation, },
   data() {
     return {
-      current: 'SurveyInformation',
+      current: 'GeneralInformation',
       commodity: [{ title: 'Coffee' }, { title: 'Mango' }, { title: 'Cacao' }],
     }
   },

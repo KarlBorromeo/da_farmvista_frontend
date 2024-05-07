@@ -2,7 +2,7 @@ export const state = () => ({
   form: {
     SurveyInformation: {},
   },
-  isSurveyInformationValidated: false,
+  isSurveyInformationValidated: true,
 })
 
 export const getters = {

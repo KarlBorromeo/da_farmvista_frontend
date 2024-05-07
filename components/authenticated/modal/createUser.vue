@@ -43,25 +43,7 @@
 </template>
 
 <script>
-import FormTwo from './questionnaire_forms/FormTwo.vue'
 export default {
-  components: { FormTwo },
-  data() {
-    return {
-      current: 'FormTwo',
-      commodity: [{ title: 'Coffee' }, { title: 'Mango' }, { title: 'Cacao' }],
-    }
-  },
-  methods: {
-    clicked(item) {
-      this.current = item
-    },
-  },
-  computed: {
-    tabOneValidated() {
-      return !this.$store.getters['questionnaire/FormOneValidatedGetter']
-    },
-  },
 }
 </script>
 

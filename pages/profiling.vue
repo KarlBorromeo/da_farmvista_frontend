@@ -35,7 +35,7 @@ export default {
   components: { TabDescription, QuestionnaireVue, UploadButton },
   data() {
     return {
-      dialog: false,
+      dialog: true,
       description:
         'This module simplifies farm profiling by offering easy Excel uploads or manual survey input, allowing  to capture comprehensive data about coffee farmers.',
     }
