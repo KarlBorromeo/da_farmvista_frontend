@@ -30,58 +30,31 @@
           >
             Farmer's Basic Information
           </v-tab>
-          <v-tab
-            class="caption"
-            @click="clicked('GeneralInformation')"
-          >
+          <v-tab class="caption" @click="clicked('GeneralInformation')">
             General Information
           </v-tab>
-          <v-tab
-            class="caption"
-            @click="clicked('FamilyAffiliated')"
-          >
+          <v-tab class="caption" @click="clicked('FamilyAffiliated')">
             Family Affiliated
           </v-tab>
-          <v-tab
-            class="caption"
-            @click="clicked('FamilyIncome')"
-          >
+          <v-tab class="caption" @click="clicked('FamilyIncome')">
             Family Income
           </v-tab>
-          <v-tab
-            class="caption"
-            @click="clicked('FarmIncome')"
-          >
+          <v-tab class="caption" @click="clicked('FarmIncome')">
             Farm Income
           </v-tab>
-          <v-tab
-            class="caption"
-            @click="clicked('HouseholdExpenses')"
-          >
+          <v-tab class="caption" @click="clicked('HouseholdExpenses')">
             Household Expenses
           </v-tab>
-          <v-tab
-            class="caption"
-            @click="clicked('AssetsFarmTools')"
-          >
+          <v-tab class="caption" @click="clicked('AssetsFarmTools')">
             Assets Farm Tools
           </v-tab>
-          <v-tab
-            class="caption"
-            @click="clicked('AssetsFarmMachinery')"
-          >
+          <v-tab class="caption" @click="clicked('AssetsFarmMachinery')">
             Assets Farm Machinery
           </v-tab>
-          <v-tab
-            class="caption"
-            @click="clicked('AssetsFarmPoultryLivestock')"
-          >
+          <v-tab class="caption" @click="clicked('AssetsFarmPoultryLivestock')">
             Assets Farm Poultry Livestock
           </v-tab>
-          <v-tab
-            class="caption"
-            @click="clicked('AssetsFarmStructure')"
-          >
+          <v-tab class="caption" @click="clicked('AssetsFarmStructure')">
             Assets Farm Structure
           </v-tab>
         </v-tabs>
@@ -111,18 +84,18 @@ import AssetsFarmPoultryLivestock from './questionnaire_forms/AssetsFarmPoultryL
 import AssetsFarmStructure from './questionnaire_forms/AssetsFarmStructure.vue'
 
 export default {
-  components: { 
+  components: {
     SurveyInformation,
-    BasicInformation, 
-    GeneralInformation, 
-    FamilyAffiliated, 
+    BasicInformation,
+    GeneralInformation,
+    FamilyAffiliated,
     FamilyIncome,
     FarmIncome,
     HouseholdExpenses,
     AssetsFarmTools,
     AssetsFarmMachinery,
     AssetsFarmPoultryLivestock,
-    AssetsFarmStructure
+    AssetsFarmStructure,
   },
   data() {
     return {

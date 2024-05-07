@@ -9,7 +9,7 @@
             label="* Survey Number"
             required
             type="number"
-          ></v-text-field>          
+          ></v-text-field>
         </v-col>
 
         <v-col cols="12" class="py-0">
@@ -103,7 +103,7 @@
         </v-col>
 
         <v-col cols="12" class="py-0 my-0">
-          <div class="" style="margin-top: 2rem!important">
+          <div class="" style="margin-top: 2rem !important">
             <v-select
               v-model="region_province"
               :items="regions_provinces"
@@ -119,7 +119,7 @@
           </div>
         </v-col>
         <v-col cols="12" class="py-0 my-0">
-          <div style="margin-top: 2rem!important">
+          <div style="margin-top: 2rem !important">
             <v-select
               v-model="municipality"
               :items="municipalities"
@@ -153,8 +153,8 @@
 export default {
   data: () => ({
     valid: false,
-    surveyNumber:'',
-    surveyNumberRule:[(v) => !!v || 'survey number is required'],
+    surveyNumber: '',
+    surveyNumberRule: [(v) => !!v || 'survey number is required'],
     interviewer: null,
     items: [
       { label: 'Jhon Warren S. Batondo', value: 'Jhon Warren S. Batondo' },
@@ -176,7 +176,7 @@ export default {
       'AGUSAN DEL SUR',
       'DINAGAT ISLAND',
       'SURIGAO DEL NORTE',
-      'SURIGAO DEL SUR'
+      'SURIGAO DEL SUR',
     ],
     municipality: null,
     municipalities: [
@@ -225,7 +225,12 @@ export default {
   methods: {
     /* test if the form is valid, return boolean */
     validate() {
-      if (this.$refs.form.validate() && this.municipality && this.region_province && this.interviewer) {
+      if (
+        this.$refs.form.validate() &&
+        this.municipality &&
+        this.region_province &&
+        this.interviewer
+      ) {
         return true
       }
       return false
@@ -246,7 +251,7 @@ export default {
     /* validate the form, decide to enable next tab, save the data */
     validation() {
       const isValidated = this.validate()
-      console.log('validated: ',isValidated)
+      console.log('validated: ', isValidated)
       this.$store.commit('questionnaire/SurveyInformationValidate', isValidated)
       if (isValidated) {
         const data = this.getData()
@@ -255,7 +260,7 @@ export default {
     },
   },
   watch: {
-    surveyNumber(){
+    surveyNumber() {
       this.validation()
     },
     interviewer() {

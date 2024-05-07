@@ -56,40 +56,39 @@ export default {
     valid: false,
     surename: '',
     firstname: '',
-    requiredRules: [
-      (v) => !!v || 'This field is required'
-    ], 
-    middleInitial:'',
-    middleInitialRules:[,
+    requiredRules: [(v) => !!v || 'This field is required'],
+    middleInitial: '',
+    middleInitialRules: [
+      ,
       (v) => {
-        if(v){
-            if(v.length==1){
-              return true
-            } 
-            return 'Must be 1 characters or fewer'
+        if (v) {
+          if (v.length == 1) {
+            return true
+          }
+          return 'Must be 1 characters or fewer'
         }
         return 'This field is required'
       },
     ],
-    constactNumber:'',
+    constactNumber: '',
     constactNumberRules: [
-       (v) => {
-        if(v){
-            if(v.length==11 && v[0]=='0' && v[1]=='9'){
-              return true
-            }
-            return 'Invalid Phone Number'
+      (v) => {
+        if (v) {
+          if (v.length == 11 && v[0] == '0' && v[1] == '9') {
+            return true
+          }
+          return 'Invalid Phone Number'
         }
         return 'This field is required'
       },
     ],
     farmerCode: '',
   }),
-  methods:{
+  methods: {
     /* test if the form is valid, return boolean */
     validate() {
-      console.log('validated: ',this.$refs.form.validate());
+      console.log('validated: ', this.$refs.form.validate())
     },
-  }
+  },
 }
 </script>
