@@ -18,10 +18,9 @@
           >
         </v-col>
       </v-row>
-      <v-container
+      <form-card
         v-for="i in items"
         :key="i"
-        class="border mb-3 item-container"
       >
         <v-row>
           <v-col cols="12" class="mb-0 pb-0">
@@ -100,14 +99,16 @@
             </v-radio-group>
           </v-col>
         </v-row>
-      </v-container>
+      </form-card>
     </v-container>
     <v-btn @click="validate">Validate</v-btn>
   </v-form>
 </template>
 
 <script>
+import formCard from '../../cards/formCard.vue'
 export default {
+  components:{ formCard },
   data: () => ({
     valid: false,
     items: 1,
@@ -143,10 +144,3 @@ export default {
   },
 }
 </script>
-
-<style scoped>
-.item-container {
-  border-radius: 0.2rem;
-  box-shadow: 0 3px 3px 3px rgba(0, 0, 0, 0.1);
-}
-</style>
