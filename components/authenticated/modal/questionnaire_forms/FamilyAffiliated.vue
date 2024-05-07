@@ -9,60 +9,63 @@
                <v-btn block small color="warning" @click="decrement" class="black--text">Remove last item <v-icon>mdi-minus</v-icon></v-btn>
             </v-col>
         </v-row>
-        <v-row v-for="i in items" :key="i" class="border mb-3 item-container">  
-            <v-col cols="12" class="mb-0 pb-0">
-                <p class="ma-0 pa-0 font-weight-black">{{ i }}</p>
-            </v-col>
-            <v-col cols="12" md="4" class="py-0 pb-2 my-0" >
-                <v-text-field
-                    v-model="nameFamilyMember[i]"
-                    :rules="requiredRule"
-                    label="Name of Family Member"
-                ></v-text-field>
-            </v-col>
-            <v-col cols="12" md="4" class="py-0 pb-2 my-0" >
-                <v-text-field
-                    v-model="position[i]"
-                    :rules="requiredRule"
-                    label="Position"
-                ></v-text-field>
-            </v-col>
-            <v-col cols="12" md="4" class="py-0 pb-2 my-0" >
-                <v-text-field
-                    v-model="nameOrganization[i]"
-                    :rules="requiredRule"
-                    label="Name of Institution/Organization"
-                ></v-text-field>
-            </v-col>
-            <v-col cols="12" md="4" class="py-0 pb-2 my-0" >
-                <v-text-field
-                    v-model="typeOrganization[i]"
-                    :rules="requiredRule"
-                    label="Type of Institution/Organization"
-                ></v-text-field>
-            </v-col>
-            <v-col cols="12" md="4" class="py-0 pb-2 my-0" >
-                <v-text-field
-                    v-model="numberYearsMember[i]"
-                    :rules="requiredRule"
-                    label="No. of years as a member"
-                ></v-text-field>
-            </v-col>
-            <v-col cols="12" md="4" class="py-0 pb-2 my-0" >
-                <v-text-field
-                    v-model="statusMembership[i]"
-                    :rules="requiredRule"
-                    label="Status of Membership"
-                ></v-text-field>
-            </v-col>
-            <v-col cols="12" md="4" class="py-0 pb-2 my-0" >
-                <v-text-field
-                    v-model="statusOrganization[i]"
-                    :rules="requiredRule"
-                    label="Status of Organization"
-                ></v-text-field>
-            </v-col>
-        </v-row>
+        <v-container v-for="i in items" :key="i" class="border mb-3 item-container"> 
+            <v-row>
+                <v-col cols="12" class="mb-0 pb-0">
+                    <p class="ma-0 pa-0 font-weight-black">{{ i }}</p>
+                </v-col>
+                <v-col cols="12" md="4" class="py-0 pb-2 my-0" >
+                    <v-text-field
+                        v-model="nameFamilyMember[i]"
+                        :rules="requiredRule"
+                        label="* Name of Family Member"
+                    ></v-text-field>
+                </v-col>
+                <v-col cols="12" md="4" class="py-0 pb-2 my-0" >
+                    <v-text-field
+                        v-model="position[i]"
+                        :rules="requiredRule"
+                        label="* Position"
+                    ></v-text-field>
+                </v-col>
+                <v-col cols="12" md="4" class="py-0 pb-2 my-0" >
+                    <v-text-field
+                        v-model="nameOrganization[i]"
+                        :rules="requiredRule"
+                        label="* Name of Institution/Organization"
+                    ></v-text-field>
+                </v-col>
+                <v-col cols="12" md="4" class="py-0 pb-2 my-0" >
+                    <v-text-field
+                        v-model="typeOrganization[i]"
+                        :rules="requiredRule"
+                        label="* Type of Institution/Organization"
+                    ></v-text-field>
+                </v-col>
+                <v-col cols="12" md="4" class="py-0 pb-2 my-0" >
+                    <v-text-field
+                        v-model="numberYearsMember[i]"
+                        :rules="requiredRule"
+                        label="* No. of years as a member"
+                        type="number"
+                    ></v-text-field>
+                </v-col>
+                <v-col cols="12" md="4" class="py-0 pb-2 my-0" >
+                    <v-text-field
+                        v-model="statusMembership[i]"
+                        :rules="requiredRule"
+                        label="* Status of Membership"
+                    ></v-text-field>
+                </v-col>
+                <v-col cols="12" md="4" class="py-0 pb-2 my-0" >
+                    <v-text-field
+                        v-model="statusOrganization[i]"
+                        :rules="requiredRule"
+                        label="* Status of Organization"
+                    ></v-text-field>
+                </v-col>
+            </v-row>
+        </v-container>
     </v-container>
     <v-btn @click="validate">Validate</v-btn>
   </v-form>

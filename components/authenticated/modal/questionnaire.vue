@@ -42,6 +42,12 @@
           >
             Family Affiliated
           </v-tab>
+          <v-tab
+            class="body-1"
+            @click="clicked('FamilyIncome')"
+          >
+            Family Income
+          </v-tab>
         </v-tabs>
       </template>
     </v-toolbar>
@@ -60,12 +66,13 @@ import SurveyInformation from './questionnaire_forms/SurveyInformation.vue'
 import BasicInformation from './questionnaire_forms/BasicInformation.vue'
 import GeneralInformation from './questionnaire_forms/GeneralInformation.vue'
 import FamilyAffiliated from './questionnaire_forms/FamilyAffiliated.vue'
+import FamilyIncome from './questionnaire_forms/FamilyIncome.vue'
 
 export default {
-  components: { SurveyInformation,BasicInformation, GeneralInformation, FamilyAffiliated },
+  components: { SurveyInformation,BasicInformation, GeneralInformation, FamilyAffiliated, FamilyIncome },
   data() {
     return {
-      current: 'FamilyAffiliated',
+      current: 'FamilyIncome',
       commodity: [{ title: 'Coffee' }, { title: 'Mango' }, { title: 'Cacao' }],
     }
   },
