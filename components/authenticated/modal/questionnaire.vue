@@ -20,33 +20,45 @@
     <v-toolbar light elevation="0">
       <template>
         <v-tabs fixed-tabs show-arrows center-active slider-color="red">
-          <v-tab @click="clicked('SurveyInformation')" class="body-1">
+          <v-tab @click="clicked('SurveyInformation')" class="caption">
             Survey Information
           </v-tab>
           <v-tab
-            class="body-1"
+            class="caption"
             @click="clicked('BasicInformation')"
             :disabled="SurveyInformationValidated"
           >
             Farmer's Basic Information
           </v-tab>
           <v-tab
-            class="body-1"
+            class="caption"
             @click="clicked('GeneralInformation')"
           >
             General Information
           </v-tab>
           <v-tab
-            class="body-1"
+            class="caption"
             @click="clicked('FamilyAffiliated')"
           >
             Family Affiliated
           </v-tab>
           <v-tab
-            class="body-1"
+            class="caption"
             @click="clicked('FamilyIncome')"
           >
             Family Income
+          </v-tab>
+          <v-tab
+            class="caption"
+            @click="clicked('FarmIncome')"
+          >
+            Farm Income
+          </v-tab>
+          <v-tab
+            class="caption"
+            @click="clicked('HouseholdExpenses')"
+          >
+            Household Expenses
           </v-tab>
         </v-tabs>
       </template>
@@ -67,12 +79,21 @@ import BasicInformation from './questionnaire_forms/BasicInformation.vue'
 import GeneralInformation from './questionnaire_forms/GeneralInformation.vue'
 import FamilyAffiliated from './questionnaire_forms/FamilyAffiliated.vue'
 import FamilyIncome from './questionnaire_forms/FamilyIncome.vue'
-
+import FarmIncome from './questionnaire_forms/FarmIncome.vue'
+import HouseholdExpenses from './questionnaire_forms/HouseholdExpenses.vue'
 export default {
-  components: { SurveyInformation,BasicInformation, GeneralInformation, FamilyAffiliated, FamilyIncome },
+  components: { 
+    SurveyInformation,
+    BasicInformation, 
+    GeneralInformation, 
+    FamilyAffiliated, 
+    FamilyIncome,
+    FarmIncome,
+    HouseholdExpenses
+  },
   data() {
     return {
-      current: 'FamilyIncome',
+      current: 'HouseholdExpenses',
       commodity: [{ title: 'Coffee' }, { title: 'Mango' }, { title: 'Cacao' }],
     }
   },

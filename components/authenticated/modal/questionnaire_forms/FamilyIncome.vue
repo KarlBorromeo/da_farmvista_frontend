@@ -18,14 +18,14 @@
                 <v-text-field
                     v-model="name[i]"
                     :rules="requiredRule"
-                    label="*Name"
+                    label="* Name"
                 ></v-text-field>
             </v-col>
             <v-col cols="12" md="4" class="py-0 pb-2 my-0" >
                 <v-text-field
                     v-model="age[i]"
                     :rules="requiredRule"
-                    label="*Age"
+                    label="* Age"
                     type="number"
                 ></v-text-field>
             </v-col>
@@ -47,21 +47,21 @@
                 <v-text-field
                     v-model="roleFamily[i]"
                     :rules="requiredRule"
-                    label="*Role in the family"
+                    label="* Role in the family"
                 ></v-text-field>
             </v-col>
             <v-col cols="12" md="4" class="py-0 pb-2 my-0" >
                 <v-text-field
                     v-model="educationsAttainment[i]"
                     :rules="requiredRule"
-                    label="*Educational Attainment"
+                    label="* Educational Attainment"
                 ></v-text-field>
             </v-col>
             <v-col cols="12" md="4" class="py-0 pb-2 my-0" >
                 <v-text-field
                     v-model="contributionAmount[i]"
                     :rules="requiredRule"
-                    label="*Contributiong (PHP) income/month"
+                    label="* Contributiong (PHP) income/month"
                     type="number"
                 ></v-text-field>
             </v-col>
@@ -69,7 +69,7 @@
                 <v-text-field
                     v-model="involveCoffeefarm[i]"
                     :rules="requiredRule"
-                    label="*Involve in coffee farm"
+                    label="* Involve in coffee farm"
                 ></v-text-field>
             </v-col>
              <v-col cols="12" md="4" class="py-0 my-0" >
