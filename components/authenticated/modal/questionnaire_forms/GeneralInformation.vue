@@ -2,7 +2,7 @@
   <v-form ref="form" v-model="valid" lazy-validation>
     <v-container>
       <v-row>
-        <v-col cols="12" md="4" class="pb-0 mb-0 pl-5">
+        <v-col cols="12" md="4" class="py-0 pb-2 my-0" >
           <v-text-field
             v-model="age"
             :rules="ageRule"
@@ -12,8 +12,8 @@
           ></v-text-field>
         </v-col>
 
-        <v-col cols="12" md="4" class="pb-0 mb-0">
-            <v-radio-group v-model="sex" class="pa-0 pl-2 ma-0">
+        <v-col cols="12" md="4" class="py-0 my-0" >
+            <v-radio-group v-model="sex" class="pa-0 ma-0">
                 <p class="pa-0 ma-0">* Sex:</p>
                 <v-radio
                     v-for="item in sexItems"
@@ -27,8 +27,8 @@
             </v-radio-group>            
         </v-col>
 
-        <v-col cols="12" md="4" class="pb-0 mb-0">
-            <v-radio-group v-model="civilStatus" class="pa-0 pl-2 ma-0">
+        <v-col cols="12" md="4" class="py-0 my-0" >
+            <v-radio-group v-model="civilStatus" class="pa-0 ma-0">
                 <p class="pa-0 ma-0">* Civil Status:</p>
                 <v-radio
                     v-for="item in civilStatusItems"
@@ -43,7 +43,7 @@
         </v-col>
 
 
-        <v-col cols="12" md="4" class="pb-0 pl-5">
+        <v-col cols="12" md="4" class="py-0 pb-2" >
           <v-text-field
             v-model="religion"
             :rules="requiredRule"
@@ -52,7 +52,7 @@
           ></v-text-field>
         </v-col>
 
-        <v-col cols="12" md="4" class="pb-0 pl-5">
+        <v-col cols="12" md="4" class="py-0 pb-2" >
           <v-text-field
             v-model="highestEducationAttained"
             :rules="requiredRule"
@@ -60,8 +60,8 @@
           ></v-text-field>
         </v-col>
 
-        <v-col cols="12" md="4" class="pb-0">
-            <v-radio-group v-model="isBelongMarginalizedSector" class="pa-2">
+        <v-col cols="12" md="4" class="py-0 my-0 pb-2" >
+            <v-radio-group v-model="isBelongMarginalizedSector" class="py-0 my-0">
                 <p class="pa-0 ma-0">* Belongs to the Marginalized Sector:</p>
                 <v-radio
                     v-for="item in isBelongMarginalizedSectorItems"
@@ -75,7 +75,7 @@
             </v-radio-group>            
         </v-col>
         
-        <v-col v-if="isBelongMarginalizedSector=='no'" cols="12" md="4" class="pb-0 ml-2">
+        <v-col v-if="isBelongMarginalizedSector=='no'" cols="12" md="4" class="py-0 my-0" >
             <p class="pa-0 ma-0 mb-2">* If you answered 'no' to the previous question: please specify</p>
             <v-checkbox
                 v-for="item in nonMarginalizedSectorItems"
@@ -85,7 +85,7 @@
                 :label="item.label"
                 class="ma-0 pa-0"
             ></v-checkbox>  
-            <div v-if="emptyNonMarginalizedSector" class="red--text caption">
+            <div v-if="emptyNonMarginalizedSector" class="red--text caption pa-0 ma-0">
                     You must select at least one option!
             </div>          
         </v-col>
@@ -95,6 +95,7 @@
     <v-btn @click="validate">Validate</v-btn>
   </v-form>
 </template>
+
 <script>
 export default {
   data: () => ({
@@ -102,10 +103,10 @@ export default {
     age: null,
     ageRule:[(v)=>{
         if(v){
-            if(v > 0){
+            if(v > 0 && v < 100){
                 return true
             }
-            return 'Age must be more than 0' 
+            return 'Age must be more than 0 and less than 100' 
         }
         return 'Age is required'
     }],

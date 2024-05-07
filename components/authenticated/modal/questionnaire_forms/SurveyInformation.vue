@@ -1,135 +1,151 @@
 <template>
   <v-form ref="form" v-model="valid" lazy-validation>
-    <v-text-field
-      v-model="surveyNumber"
-      :rules="surveyNumberRule"
-      label="Survey Number"
-      required
-      type="number"
-      class="mb-3"
-    ></v-text-field>
+    <v-container>
+      <v-row>
+        <v-col cols="12" class="py-0 pb-3 my-0" style="border: 1px solid black">
+          <v-text-field
+            v-model="surveyNumber"
+            :rules="surveyNumberRule"
+            label="* Survey Number"
+            required
+            type="number"
+          ></v-text-field>          
+        </v-col>
 
-    <v-radio-group v-model="interviewer">
-      <v-radio
-        v-for="item in items"
-        :key="item.value"
-        :label="item.label"
-        :value="item.value"
-      ></v-radio>
-      <div v-if="!interviewer" class="red--text caption">
-        You must select an option!
-      </div>
-    </v-radio-group>
+        <v-col cols="12" class="py-0" style="border: 1px solid black">
+          <p class="pa-0 ma-0">* Name of Interviewer:</p>
+          <v-radio-group v-model="interviewer" class="ma-0">
+            <v-radio
+              v-for="item in items"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            ></v-radio>
+            <div v-if="!interviewer" class="red--text caption">
+              You must select an option!
+            </div>
+          </v-radio-group>
+        </v-col>
 
-    <v-text-field
-      v-model="date"
-      :rules="dateRule"
-      label="Date of Interview"
-      required
-      type="date"
-      class="mb-3"
-    ></v-text-field>
+        <v-col cols="12" class="pb-0 mb-0" style="border: 1px solid black">
+          <v-text-field
+            v-model="date"
+            :rules="dateRule"
+            label="Date of Interview"
+            required
+            type="date"
+          ></v-text-field>
+        </v-col>
 
-    <v-menu
-      ref="timeStartPicker"
-      v-model="timeStartPicker"
-      :close-on-content-click="false"
-      :nudge-right="40"
-      :return-value.sync="interviewStart"
-      transition="scale-transition"
-      offset-y
-      max-width="290px"
-      min-width="290px"
-    >
-      <template v-slot:activator="{ on, attrs }">
-        <v-text-field
-          v-model="interviewStart"
-          label="Interview Start (24 hrs format)"
-          :rules="interviewStartRule"
-          append-icon="mdi-clock-time-four-outline"
-          readonly
-          v-bind="attrs"
-          v-on="on"
-          class="mb-3"
-        >
-        </v-text-field>
-      </template>
-      <v-time-picker
-        v-if="timeStartPicker"
-        v-model="interviewStart"
-        full-width
-        @click:minute="$refs.timeStartPicker.save(interviewStart)"
-      ></v-time-picker>
-    </v-menu>
+        <v-col cols="12" class="pb-0 mb-0" style="border: 1px solid black">
+          <v-menu
+            ref="timeStartPicker"
+            v-model="timeStartPicker"
+            :close-on-content-click="false"
+            :nudge-right="40"
+            :return-value.sync="interviewStart"
+            transition="scale-transition"
+            offset-y
+            max-width="290px"
+            min-width="290px"
+          >
+            <template v-slot:activator="{ on, attrs }">
+              <v-text-field
+                v-model="interviewStart"
+                label="Interview Start (24 hrs format)"
+                :rules="interviewStartRule"
+                append-icon="mdi-clock-time-four-outline"
+                readonly
+                v-bind="attrs"
+                v-on="on"
+                class="mb-3"
+              >
+              </v-text-field>
+            </template>
+            <v-time-picker
+              v-if="timeStartPicker"
+              v-model="interviewStart"
+              full-width
+              @click:minute="$refs.timeStartPicker.save(interviewStart)"
+            ></v-time-picker>
+          </v-menu>
+        </v-col>
 
-    <v-menu
-      ref="timeEndPicker"
-      v-model="timeEndPicker"
-      :close-on-content-click="false"
-      :nudge-right="40"
-      :return-value.sync="interviewEnd"
-      transition="scale-transition"
-      offset-y
-    >
-      <template v-slot:activator="{ on, attrs }">
-        <v-text-field
-          v-model="interviewEnd"
-          label="Interview Start (24 hrs format)"
-          :rules="interviewEndRule"
-          append-icon="mdi-clock-time-four-outline"
-          readonly
-          v-bind="attrs"
-          v-on="on"
-          class="mb-5"
-        ></v-text-field>
-      </template>
-      <v-time-picker
-        v-if="timeEndPicker"
-        v-model="interviewEnd"
-        full-width
-        @click:minute="$refs.timeEndPicker.save(interviewEnd)"
-      ></v-time-picker>
-    </v-menu>
+        <v-col cols="12" class="pb-0 mb-0" style="border: 1px solid black">
+          <v-menu
+            ref="timeEndPicker"
+            v-model="timeEndPicker"
+            :close-on-content-click="false"
+            :nudge-right="40"
+            :return-value.sync="interviewEnd"
+            transition="scale-transition"
+            offset-y
+          >
+            <template v-slot:activator="{ on, attrs }">
+              <v-text-field
+                v-model="interviewEnd"
+                label="Interview Start (24 hrs format)"
+                :rules="interviewEndRule"
+                append-icon="mdi-clock-time-four-outline"
+                readonly
+                v-bind="attrs"
+                v-on="on"
+                class="mb-5"
+              ></v-text-field>
+            </template>
+            <v-time-picker
+              v-if="timeEndPicker"
+              v-model="interviewEnd"
+              full-width
+              @click:minute="$refs.timeEndPicker.save(interviewEnd)"
+            ></v-time-picker>
+          </v-menu>
+        </v-col>
 
-    <div class="mb-4" style="margin-top: 2rem!important">
-      <v-select
-        v-model="region_province"
-        :items="regions_provinces"
-        append-icon="mdi-city"
-        menu-props="auto"
-        hide-details
-        label="Region/Pronvince"
-        class="border mb-4"
-        dense
-      ></v-select>
-      <p v-if="!municipality" class="red--text caption mt-1">
-        You must select Region/Province!
-      </p>
-    </div>
-    <v-spacer />
-    <div class="mb-4 mt-4" style="margin-top: 2rem!important">
-      <v-select
-        v-model="municipality"
-        :items="municipalities"
-        append-icon="mdi-city"
-        menu-props="auto"
-        hide-details
-        label="City/Municipality"
-        class="border"
-        dense
-      ></v-select>
-      <p v-if="!municipality" class="red--text caption mt-1">
-        You must select Municipality/City!
-      </p>
-    </div>
+        <v-col cols="12" class="py-0 my-0" style="border: 1px solid black">
+          <div class="" style="margin-top: 2rem!important">
+            <v-select
+              v-model="region_province"
+              :items="regions_provinces"
+              append-icon="mdi-city"
+              menu-props="auto"
+              hide-details
+              label="Region/Pronvince"
+              dense
+            ></v-select>
+            <p v-if="!municipality" class="red--text caption mt-1">
+              You must select Region/Province!
+            </p>
+          </div>
+        </v-col>
+        <v-col cols="12" class="py-0 my-0" style="border: 1px solid black">
+          <div style="margin-top: 2rem!important">
+            <v-select
+              v-model="municipality"
+              :items="municipalities"
+              append-icon="mdi-city"
+              menu-props="auto"
+              hide-details
+              label="City/Municipality"
+              dense
+            ></v-select>
+            <p v-if="!municipality" class="red--text caption mt-1">
+              You must select Municipality/City!
+            </p>
+          </div>
+        </v-col>
 
-    <v-text-field
-      v-model="barangay"
-      :rules="barangayRule"
-      label="Barangay"
-      required
-      class="mb-2"
-    ></v-text-field>
+        <v-col cols="12" class="py-0 my-0" style="border: 1px solid black">
+          <v-text-field
+            v-model="barangay"
+            :rules="barangayRule"
+            label="Barangay"
+            required
+            class="mb-2"
+          ></v-text-field>
+        </v-col>
+      </v-row>
+    </v-container>
   </v-form>
 </template>
 

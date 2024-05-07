@@ -49,6 +49,7 @@
     <v-btn @click="validate">Validate</v-btn>
   </v-form>
 </template>
+
 <script>
 export default {
   data: () => ({
