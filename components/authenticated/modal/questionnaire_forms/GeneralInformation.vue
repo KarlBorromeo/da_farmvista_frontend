@@ -90,6 +90,66 @@
             </div>          
         </v-col>
 
+        <v-col cols="12" md="4" class="py-0 pb-2" >
+          <v-text-field
+            v-model="dialectSpoken"
+            :rules="requiredRule"
+            label="* Dialect Spoken"
+          ></v-text-field>
+        </v-col>
+
+        <v-col cols="12" md="4" class="py-0 my-0 pb-2" >
+            <v-radio-group v-model="isMemberOrgranization" class="py-0 my-0">
+                <p class="pa-0 ma-0">* Member of a farmer organization or cooperative?</p>
+                <v-radio
+                    v-for="item in isMemberOrgranizationItems"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                ></v-radio>
+                <div v-if="!isMemberOrgranization" class="red--text caption">
+                    You must select an option!
+                </div>
+            </v-radio-group>            
+        </v-col>
+
+        <v-col v-if="isMemberOrgranization=='yes'" cols="12" md="4" class="py-0 my-0 pb-2" >
+            <v-radio-group v-model="typeMembership" class="py-0 my-0">
+                <p class="pa-0 ma-0">* If you answered 'yes' to the previous question, Please select type of Membership:</p>
+                <v-radio
+                    v-for="item in typeMembershipItems"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                ></v-radio>
+                <div v-if="!typeMembership" class="red--text caption">
+                    You must select an option!
+                </div>
+            </v-radio-group>            
+        </v-col>
+
+        <v-col v-if="isMemberOrgranization=='yes'" cols="12" md="4" class="py-0 pb-2" >
+          <v-text-field
+            v-model="organizationName"
+            :rules="requiredRule"
+            label="* Name of Organization/Cooperative:"
+          ></v-text-field>
+        </v-col>
+
+        <v-col cols="12" md="4" class="py-0 my-0 pb-2" >
+            <v-radio-group v-model="isAnyHouseholdMemberOrg" class="py-0 my-0">
+                <p class="pa-0 ma-0">*  Any household member affiliated to any farming organization/association?</p>
+                <v-radio
+                    v-for="item in isAnyHouseholdMemberOrgItems"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                ></v-radio>
+                <div v-if="!isAnyHouseholdMemberOrg" class="red--text caption">
+                    You must select an option!
+                </div>
+            </v-radio-group>            
+        </v-col>
       </v-row>
     </v-container>
     <v-btn @click="validate">Validate</v-btn>
@@ -131,6 +191,14 @@ export default {
         {value:'person with disability',label:'Person with Disability'},
         {value:'4Ps beneficiary',label:'4Ps Beneficiary'}
     ],
+    dialectSpoken: '',
+    isMemberOrgranization: '',
+    isMemberOrgranizationItems: [{value:'yes',label:'Yes'},{value:'no',label:'No'}],
+    typeMembership: '',
+    typeMembershipItems: [{value:'member',label:'Member'},{value:'Officer',label:'Officer'}],
+    organizationName: '',
+    isAnyHouseholdMemberOrg: '',
+    isAnyHouseholdMemberOrgItems: [{value:'yes',label:'Yes'},{value:'no',label:'No'}],
     requiredRule: [(v) => !!v || 'This field is required'],
   }),
   methods:{

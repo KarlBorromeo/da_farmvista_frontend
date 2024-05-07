@@ -2,7 +2,7 @@
   <v-form ref="form" v-model="valid" lazy-validation>
     <v-container>
       <v-row>
-        <v-col cols="12" class="py-0 pb-3 my-0" style="border: 1px solid black">
+        <v-col cols="12" class="py-0 pb-3 my-0">
           <v-text-field
             v-model="surveyNumber"
             :rules="surveyNumberRule"
@@ -12,7 +12,7 @@
           ></v-text-field>          
         </v-col>
 
-        <v-col cols="12" class="py-0" style="border: 1px solid black">
+        <v-col cols="12" class="py-0">
           <p class="pa-0 ma-0">* Name of Interviewer:</p>
           <v-radio-group v-model="interviewer" class="ma-0">
             <v-radio
@@ -27,7 +27,7 @@
           </v-radio-group>
         </v-col>
 
-        <v-col cols="12" class="pb-0 mb-0" style="border: 1px solid black">
+        <v-col cols="12" class="pb-0 mb-0">
           <v-text-field
             v-model="date"
             :rules="dateRule"
@@ -37,7 +37,7 @@
           ></v-text-field>
         </v-col>
 
-        <v-col cols="12" class="pb-0 mb-0" style="border: 1px solid black">
+        <v-col cols="12" class="pb-0 mb-0">
           <v-menu
             ref="timeStartPicker"
             v-model="timeStartPicker"
@@ -71,7 +71,7 @@
           </v-menu>
         </v-col>
 
-        <v-col cols="12" class="pb-0 mb-0" style="border: 1px solid black">
+        <v-col cols="12" class="pb-0 mb-0">
           <v-menu
             ref="timeEndPicker"
             v-model="timeEndPicker"
@@ -102,7 +102,7 @@
           </v-menu>
         </v-col>
 
-        <v-col cols="12" class="py-0 my-0" style="border: 1px solid black">
+        <v-col cols="12" class="py-0 my-0">
           <div class="" style="margin-top: 2rem!important">
             <v-select
               v-model="region_province"
@@ -118,7 +118,7 @@
             </p>
           </div>
         </v-col>
-        <v-col cols="12" class="py-0 my-0" style="border: 1px solid black">
+        <v-col cols="12" class="py-0 my-0">
           <div style="margin-top: 2rem!important">
             <v-select
               v-model="municipality"
@@ -135,7 +135,7 @@
           </div>
         </v-col>
 
-        <v-col cols="12" class="py-0 my-0" style="border: 1px solid black">
+        <v-col cols="12" class="py-0 my-0">
           <v-text-field
             v-model="barangay"
             :rules="barangayRule"
