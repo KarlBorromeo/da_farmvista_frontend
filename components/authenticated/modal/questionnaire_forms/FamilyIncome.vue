@@ -72,7 +72,7 @@
                     label="* Involve in coffee farm"
                 ></v-text-field>
             </v-col>
-             <v-col cols="12" md="4" class="py-0 my-0" >
+            <v-col cols="12" md="4" class="py-0 my-0" >
                 <v-radio-group v-model="involveCoffeefarm[i]" class="pa-0 ma-0">
                     <p class="pa-0 ma-0">* Involved in coffee farm:</p>
                     <v-radio

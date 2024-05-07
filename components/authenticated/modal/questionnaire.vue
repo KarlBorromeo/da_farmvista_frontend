@@ -60,6 +60,30 @@
           >
             Household Expenses
           </v-tab>
+          <v-tab
+            class="caption"
+            @click="clicked('AssetsFarmTools')"
+          >
+            Assets Farm Tools
+          </v-tab>
+          <v-tab
+            class="caption"
+            @click="clicked('AssetsFarmMachinery')"
+          >
+            Assets Farm Machinery
+          </v-tab>
+          <v-tab
+            class="caption"
+            @click="clicked('AssetsFarmPoultryLivestock')"
+          >
+            Assets Farm Poultry Livestock
+          </v-tab>
+          <v-tab
+            class="caption"
+            @click="clicked('AssetsFarmStructure')"
+          >
+            Assets Farm Structure
+          </v-tab>
         </v-tabs>
       </template>
     </v-toolbar>
@@ -81,6 +105,11 @@ import FamilyAffiliated from './questionnaire_forms/FamilyAffiliated.vue'
 import FamilyIncome from './questionnaire_forms/FamilyIncome.vue'
 import FarmIncome from './questionnaire_forms/FarmIncome.vue'
 import HouseholdExpenses from './questionnaire_forms/HouseholdExpenses.vue'
+import AssetsFarmTools from './questionnaire_forms/AssetsFarmTools.vue'
+import AssetsFarmMachinery from './questionnaire_forms/AssetsFarmMachinery.vue'
+import AssetsFarmPoultryLivestock from './questionnaire_forms/AssetsFarmPoultryLivestock.vue'
+import AssetsFarmStructure from './questionnaire_forms/AssetsFarmStructure.vue'
+
 export default {
   components: { 
     SurveyInformation,
@@ -89,11 +118,15 @@ export default {
     FamilyAffiliated, 
     FamilyIncome,
     FarmIncome,
-    HouseholdExpenses
+    HouseholdExpenses,
+    AssetsFarmTools,
+    AssetsFarmMachinery,
+    AssetsFarmPoultryLivestock,
+    AssetsFarmStructure
   },
   data() {
     return {
-      current: 'HouseholdExpenses',
+      current: 'AssetsFarmStructure',
       commodity: [{ title: 'Coffee' }, { title: 'Mango' }, { title: 'Cacao' }],
     }
   },

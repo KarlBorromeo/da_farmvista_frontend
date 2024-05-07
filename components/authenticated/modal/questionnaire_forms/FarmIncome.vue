@@ -58,14 +58,6 @@
                     type="number"
                 ></v-text-field>
             </v-col>
-            <v-col cols="12" md="4" class="py-0 pb-2 my-0" >
-                <v-text-field
-                    v-model="grandTotalAmt"
-                    label="Grand Total"
-                    type="number"
-                    readonly
-                ></v-text-field>
-            </v-col>
         </v-row>
     </v-container>
     <v-btn @click="validate">Validate</v-btn>
@@ -83,7 +75,6 @@ export default {
     otherLivelihood: '',
     nonFarmIncome: '',
     otherSources: '',
-    grandTotal: '',
     requiredRule: [
         (v) => !!v || 'This field is required',
         (v) => parseInt(v) >= 0 || 'invalid value'
@@ -95,10 +86,5 @@ export default {
       console.log('validated: ',this.$refs.form.validate());
     },
   },
-  computed:{
-    grandTotalAmt(){
-        return parseInt(this.coffee) + parseInt(this.crops) + parseInt(this.livestock) + parseInt(this.agroforestry) + parseInt(this.otherLivelihood) + parseInt(this.nonFarmIncome) + parseInt(this.otherSources)
-    }
-  }
 }
 </script>
