@@ -250,6 +250,7 @@ export default {
     validate() {
       const valid = this.$refs.form.validate();
       const radioCheckBoxValid = this.validateRadioCheckbox()
+      console.log('non marginalized sctor',this.nonMarginalizedSector);
       if(valid && radioCheckBoxValid){
         const data = this.getData();
         console.log(data);
@@ -278,8 +279,7 @@ export default {
       if(!this.sex || 
         !this.civilStatus || 
         !this.isBelongMarginalizedSector || 
-        !this.isMemberOrgranization || 
-        !this.typeMembership || 
+        !this.isMemberOrgranization ||
         !this.isAnyHouseholdMemberOrg){
         return false
       }
@@ -303,12 +303,12 @@ export default {
   },
   watch:{
     isBelongMarginalizedSector(value){
-      if(value == 'no'){
+      if(value == 'yes'){
         this.nonMarginalizedSector = [];
       }
     },
     isMemberOrgranization(value){
-      if(value == 'yes'){
+      if(value == 'no'){
         this.typeMembership = '';
         this.organizationName = '';
       }
