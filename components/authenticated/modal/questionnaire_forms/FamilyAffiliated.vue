@@ -23,16 +23,16 @@
           <v-col cols="12" class="mb-0 pb-0">
             <p class="ma-0 pa-0 font-weight-black">{{ i }}</p>
           </v-col>
-          <v-col cols="12" md="4" class="py-0 pb-2 my-0">
+          <form-input-container>
             <v-text-field
               v-model="nameFamilyMember[i - 1]"
               :rules="requiredRule"
               label="* Name of Family Member"
             ></v-text-field>
-          </v-col>
-          <v-col cols="12" md="4" class="py-0 my-0 pb-2">
+          </form-input-container>
+
+          <form-radio-container title="Position">
             <v-radio-group v-model="position[i - 1]" class="py-0 my-0">
-              <p class="pa-0 ma-0">* Position</p>
               <v-radio
                 v-for="item in positionItems"
                 :key="item"
@@ -50,17 +50,18 @@
                 You must select an option!
               </div>
             </v-radio-group>
-          </v-col>
-          <v-col cols="12" md="4" class="py-0 pb-2 my-0">
+          </form-radio-container>
+
+          <form-input-container>
             <v-text-field
               v-model="nameOrganization[i - 1]"
               :rules="requiredRule"
               label="* Name of Institution/Organization"
             ></v-text-field>
-          </v-col>
-          <v-col cols="12" md="4" class="py-0 my-0 pb-2">
+          </form-input-container>
+
+          <form-radio-container title="Type of Institution/Organization">
             <v-radio-group v-model="typeOrganization[i - 1]" class="py-0 my-0">
-              <p class="pa-0 ma-0">* Type of Institution/Organization</p>
               <v-radio
                 v-for="item in typeOrganizationItems"
                 :key="item"
@@ -78,18 +79,19 @@
                 You must select an option!
               </div>
             </v-radio-group>
-          </v-col>
-          <v-col cols="12" md="4" class="py-0 pb-2 my-0">
+          </form-radio-container>
+
+          <form-input-container>
             <v-text-field
               v-model="numberYearsMember[i - 1]"
               :rules="requiredRule"
               label="* No. of years as a member"
               type="number"
             ></v-text-field>
-          </v-col>
-          <v-col cols="12" md="4" class="py-0 my-0 pb-2">
+          </form-input-container>
+
+          <form-radio-container title="Status of Membership">
             <v-radio-group v-model="statusMembership[i - 1]" class="py-0 my-0">
-              <p class="pa-0 ma-0">* Type of Institution/Organization</p>
               <v-radio
                 v-for="item in statusMembershipItems"
                 :key="item"
@@ -100,13 +102,13 @@
                 You must select an option!
               </div>
             </v-radio-group>
-          </v-col>
-          <v-col cols="12" md="4" class="py-0 my-0 pb-2">
+          </form-radio-container>
+
+          <form-radio-container title="Status of Organization">
             <v-radio-group
               v-model="statusOrganization[i - 1]"
               class="py-0 my-0"
             >
-              <p class="pa-0 ma-0">* Type of Institution/Organization</p>
               <v-radio
                 v-for="item in statusOrganizationItems"
                 :key="item"
@@ -117,7 +119,7 @@
                 You must select an option!
               </div>
             </v-radio-group>
-          </v-col>
+          </form-radio-container>
         </v-row>
       </form-card>
     </v-container>
@@ -127,8 +129,10 @@
 
 <script>
 import formCard from '../../cards/formCard.vue'
+import FormInputContainer from '../../cards/formInputContainer.vue'
+import FormRadioContainer from '../../cards/formRadioContainer.vue'
 export default {
-  components: { formCard },
+  components: { formCard, FormInputContainer, FormRadioContainer },
   data: () => ({
     valid: false,
     items: 1,

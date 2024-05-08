@@ -2,7 +2,7 @@
   <v-form ref="form" v-model="valid" lazy-validation>
     <v-container>
       <v-row>
-        <v-col cols="12" class="py-0 pb-3 my-0">
+        <form-input-container>
           <v-text-field
             v-model="surveyNumber"
             :rules="surveyNumberRule"
@@ -10,10 +10,9 @@
             required
             type="number"
           ></v-text-field>
-        </v-col>
+        </form-input-container>
 
-        <v-col cols="12" class="py-0">
-          <p class="pa-0 ma-0">* Name of Interviewer:</p>
+        <form-radio-container title="Name of Interviewer">
           <v-radio-group v-model="interviewer" class="ma-0">
             <v-radio
               v-for="item in items"
@@ -25,9 +24,9 @@
               You must select an option!
             </div>
           </v-radio-group>
-        </v-col>
+        </form-radio-container>
 
-        <v-col cols="12" class="pb-0 mb-0">
+        <form-input-container>
           <v-text-field
             v-model="date"
             :rules="dateRule"
@@ -35,9 +34,9 @@
             required
             type="date"
           ></v-text-field>
-        </v-col>
+        </form-input-container>
 
-        <v-col cols="12" class="pb-0 mb-0">
+        <form-menu-container>
           <v-menu
             ref="timeStartPicker"
             v-model="timeStartPicker"
@@ -48,6 +47,7 @@
             offset-y
             max-width="290px"
             min-width="290px"
+            class="my-0 py-0"
           >
             <template v-slot:activator="{ on, attrs }">
               <v-text-field
@@ -69,9 +69,9 @@
               @click:minute="$refs.timeStartPicker.save(interviewStart)"
             ></v-time-picker>
           </v-menu>
-        </v-col>
+        </form-menu-container>
 
-        <v-col cols="12" class="pb-0 mb-0">
+        <form-menu-container>
           <v-menu
             ref="timeEndPicker"
             v-model="timeEndPicker"
@@ -100,9 +100,9 @@
               @click:minute="$refs.timeEndPicker.save(interviewEnd)"
             ></v-time-picker>
           </v-menu>
-        </v-col>
+        </form-menu-container>
 
-        <v-col cols="12" class="py-0 my-0">
+        <form-select-container>
           <div class="" style="margin-top: 2rem !important">
             <v-select
               v-model="regionProvince"
@@ -117,15 +117,14 @@
               You must select Region/Province!
             </p>
           </div>
-        </v-col>
-        <v-col cols="12" class="py-0 my-0">
+        </form-select-container>
+
+        <form-select-container>
           <div style="margin-top: 2rem !important">
             <v-select
               v-model="municipality"
               :items="municipalityItems"
               append-icon="mdi-city"
-              menu-props="auto"
-              hide-details
               label="City/Municipality"
               dense
             ></v-select>
@@ -133,9 +132,9 @@
               You must select Municipality/City!
             </p>
           </div>
-        </v-col>
+        </form-select-container>
 
-        <v-col cols="12" class="py-0 my-0">
+        <form-input-container>
           <v-text-field
             v-model="barangay"
             :rules="barangayRule"
@@ -143,14 +142,24 @@
             required
             class="mb-2"
           ></v-text-field>
-        </v-col>
+        </form-input-container>
       </v-row>
     </v-container>
   </v-form>
 </template>
 
 <script>
+import formInputContainer from '../../cards/formInputContainer.vue'
+import FormMenuContainer from '../../cards/formMenuContainer.vue'
+import FormRadioContainer from '../../cards/formRadioContainer.vue'
+import FormSelectContainer from '../../cards/formSelectContainer.vue'
 export default {
+  components: {
+    formInputContainer,
+    FormRadioContainer,
+    FormMenuContainer,
+    FormSelectContainer,
+  },
   data: () => ({
     valid: false,
     surveyNumber: '',

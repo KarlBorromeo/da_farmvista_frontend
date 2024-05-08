@@ -2,48 +2,48 @@
   <v-form ref="form" v-model="valid" lazy-validation>
     <v-container>
       <v-row>
-        <v-col cols="12" md="4" class="pb-0">
+        <form-input-container>
           <v-text-field
             v-model="surename"
             :rules="requiredRules"
             label="* Farmer's Surename"
             required
           ></v-text-field>
-        </v-col>
+        </form-input-container>
 
-        <v-col cols="12" md="4" class="pb-0">
+        <form-input-container>
           <v-text-field
             v-model="firstname"
             :rules="requiredRules"
             label="* Farmer's Firstname"
             required
           ></v-text-field>
-        </v-col>
+        </form-input-container>
 
-        <v-col cols="12" md="4" class="pb-0">
+        <form-input-container>
           <v-text-field
             v-model="middleInitial"
             :rules="middleInitialRules"
             label="* Farmer's Middle Initial"
             required
           ></v-text-field>
-        </v-col>
+        </form-input-container>
 
-        <v-col cols="12" md="4" class="pb-0">
+        <form-input-container>
           <v-text-field
             v-model="constactNumber"
             :rules="constactNumberRules"
             label="* Farmer's Phone Number"
             required
           ></v-text-field>
-        </v-col>
+        </form-input-container>
 
-        <v-col cols="12" md="4" class="pb-0">
+        <form-input-container>
           <v-text-field
             v-model="farmerCode"
             label="Farmer's Code Number"
           ></v-text-field>
-        </v-col>
+        </form-input-container>
       </v-row>
     </v-container>
     <v-btn @click="validate">Validate</v-btn>
@@ -51,7 +51,9 @@
 </template>
 
 <script>
+import formInputContainer from '../../cards/formInputContainer.vue'
 export default {
+  components: { formInputContainer },
   data: () => ({
     valid: false,
     surename: '',

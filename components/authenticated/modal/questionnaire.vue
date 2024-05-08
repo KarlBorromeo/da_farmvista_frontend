@@ -108,7 +108,7 @@ export default {
     AssetsFarmStructure,
     InformationDwellingPlace,
     GeneralFarmingInformation,
-    ParcelInformation
+    ParcelInformation,
   },
   data() {
     return {

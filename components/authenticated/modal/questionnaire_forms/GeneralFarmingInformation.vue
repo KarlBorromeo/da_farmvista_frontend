@@ -2,27 +2,28 @@
   <v-form ref="form" v-model="valid" lazy-validation>
     <v-container>
       <v-row>
-        <v-col cols="12" md="4" class="py-0 pb-2 my-0">
+        <form-input-container>
           <v-text-field
             v-model="avgYearsGeneralFarming"
             :rules="requiredRule"
             label="* Average years in general farming"
             type="number"
           ></v-text-field>
-        </v-col>
-        <v-col cols="12" md="4" class="py-0 pb-2 my-0">
+        </form-input-container>
+
+        <form-input-container>
           <v-text-field
             v-model="avgYearsContourFarming"
             :rules="requiredRule"
             label="* Average years in contour farming/agroforestry"
             type="number"
           ></v-text-field>
-        </v-col>
-        <v-col cols="12" md="4" class="py-0 my-0">
+        </form-input-container>
+
+        <form-radio-container
+          title="Did acquire through government or programs?"
+        >
           <v-radio-group v-model="isThereStoppedFarming" class="pa-0 ma-0">
-            <p class="pa-0 ma-0">
-              * Did acquire through government or programs:
-            </p>
             <v-radio
               v-for="item in isThereStoppedFarmingItems"
               :key="item.value"
@@ -33,30 +34,33 @@
               You must select an option!
             </div>
           </v-radio-group>
-        </v-col>
-        <v-col v-if="isStopped" cols="12" md="4" class="py-0 pb-2 my-0">
+        </form-radio-container>
+
+        <form-input-container v-if="isStopped">
           <v-text-field
             v-model="yearStopped"
             :rules="yearRule"
             label="* Specify year stopped"
             type="number"
           ></v-text-field>
-        </v-col>
-        <v-col v-if="isStopped" cols="12" md="4" class="py-0 pb-2 my-0">
+        </form-input-container>
+
+        <form-input-container v-if="isStopped">
           <v-text-field
             v-model="yearResumed"
             :rules="yearRule"
             label="* Specify year resumed"
             type="number"
           ></v-text-field>
-        </v-col>
-        <v-col v-if="isStopped" cols="12" md="4" class="py-0 pb-2 my-0">
+        </form-input-container>
+
+        <form-input-container v-if="isStopped">
           <v-text-field
             v-model="reasonStopping"
             :rules="reasonRule"
             label="* Provide reason for stopping"
           ></v-text-field>
-        </v-col>
+        </form-input-container>
       </v-row>
     </v-container>
     <v-btn @click="validate">Validate</v-btn>
@@ -64,7 +68,10 @@
 </template>
 
 <script>
+import FormInputContainer from '../../cards/formInputContainer.vue'
+import FormRadioContainer from '../../cards/formRadioContainer.vue'
 export default {
+  components: { FormInputContainer, FormRadioContainer },
   data: () => ({
     valid: false,
     avgYearsGeneralFarming: '',

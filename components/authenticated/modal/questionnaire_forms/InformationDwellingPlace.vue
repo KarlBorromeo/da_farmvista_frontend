@@ -2,16 +2,16 @@
   <v-form ref="form" v-model="valid" lazy-validation>
     <v-container>
       <v-row>
-        <v-col cols="12" class="pt-3 pb-5 my-0">
+        <form-input-container>
           <v-text-field
             v-model="yearsResidence"
             :rules="numberRules"
             label="* years resided in current residence"
             type="number"
           ></v-text-field>
-        </v-col>
-        <v-col cols="12" class="py-0">
-          <p class="pa-0 ma-0">* House Ownership:</p>
+        </form-input-container>
+
+        <form-radio-container title="House Ownership">
           <v-radio-group v-model="houseOwernship" class="ma-0">
             <v-radio
               v-for="item in houseOwernshipItems"
@@ -30,17 +30,18 @@
               You must select an option!
             </div>
           </v-radio-group>
-        </v-col>
-        <v-col cols="12" class="pt-0 pb-5 my-0">
+        </form-radio-container>
+
+        <form-input-container>
           <v-text-field
             v-model="numberRooms"
             :rules="numberRules"
             label="* Number of rooms"
             type="number"
           ></v-text-field>
-        </v-col>
-        <v-col cols="12" class="py-0">
-          <p class="pa-0 ma-0">* Materials roof made:</p>
+        </form-input-container>
+
+        <form-radio-container title="Materials Roof Made">
           <v-radio-group v-model="typeRoofMade" class="ma-0">
             <v-radio
               v-for="item in typeRoofMadeItems"
@@ -59,9 +60,9 @@
               You must select an option!
             </div>
           </v-radio-group>
-        </v-col>
-        <v-col cols="12" class="py-0">
-          <p class="pa-0 ma-0">* Materials wall made:</p>
+        </form-radio-container>
+
+        <form-radio-container title="Materials Wall Made">
           <v-radio-group v-model="typeWallMade" class="ma-0">
             <v-radio
               v-for="item in typeWallMadeItems"
@@ -80,9 +81,9 @@
               You must select an option!
             </div>
           </v-radio-group>
-        </v-col>
-        <v-col cols="12" class="py-0">
-          <p class="pa-0 ma-0">* Kind toilet facility:</p>
+        </form-radio-container>
+
+        <form-radio-container title="Kind toilet facility">
           <v-radio-group v-model="kindToilet" class="ma-0">
             <v-radio
               v-for="item in kindToiletItems"
@@ -101,9 +102,9 @@
               You must select an option!
             </div>
           </v-radio-group>
-        </v-col>
-        <v-col cols="12" class="py-0">
-          <p class="pa-0 ma-0">* Kind lighting facility:</p>
+        </form-radio-container>
+
+        <form-radio-container title="Kind lighting facility">
           <v-radio-group v-model="lightingFacility" class="ma-0">
             <v-radio
               v-for="item in lightingFacilityItems"
@@ -122,9 +123,9 @@
               You must select an option!
             </div>
           </v-radio-group>
-        </v-col>
-        <v-col cols="12" class="py-0">
-          <p class="pa-0 ma-0">* Source cooking fuel:</p>
+        </form-radio-container>
+
+        <form-radio-container title="Source cooking fuel">
           <v-radio-group v-model="sourceCooking" class="ma-0">
             <v-radio
               v-for="item in sourceCookingItems"
@@ -143,9 +144,9 @@
               You must select an option!
             </div>
           </v-radio-group>
-        </v-col>
-        <v-col cols="12" class="py-0">
-          <p class="pa-0 ma-0">* Drinking water supply:</p>
+        </form-radio-container>
+
+        <form-radio-container title="Drinking water supply">
           <v-radio-group v-model="sourceWaterDrink" class="ma-0">
             <v-radio
               v-for="item in sourceWaterDrinkItems"
@@ -164,7 +165,7 @@
               You must select an option!
             </div>
           </v-radio-group>
-        </v-col>
+        </form-radio-container>
       </v-row>
     </v-container>
     <v-btn @click="validate">Validate</v-btn>
@@ -172,9 +173,10 @@
 </template>
 
 <script>
-import formCard from '../../cards/formCard.vue'
+import FormInputContainer from '../../cards/formInputContainer.vue'
+import FormRadioContainer from '../../cards/formRadioContainer.vue'
 export default {
-  components: { formCard },
+  components: { FormInputContainer, FormRadioContainer },
   data: () => ({
     valid: false,
     items: 1,

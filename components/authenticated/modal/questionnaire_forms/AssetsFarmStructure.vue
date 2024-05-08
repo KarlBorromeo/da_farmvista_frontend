@@ -23,21 +23,21 @@
           <v-col cols="12" class="mb-0 pb-0">
             <p class="ma-0 pa-0 font-weight-black">{{ i }}</p>
           </v-col>
-          <v-col cols="12" class="py-0 my-0">
+          <form-select-container>
             <div class="mt-3">
               <v-select
                 v-model="structureBldgName[i - 1]"
                 :items="structureBldgNameItems"
-                menu-props="auto"
-                hide-details
-                label="* Items/Farm Asset"
-                dense
+                append-icon="mdi-barn"
+                label="* Structure Items"
+                class="pb-0 mb-0"
               ></v-select>
               <v-text-field
                 v-if="structureBldgName[i - 1] == 'others'"
                 v-model="structureBldgNameOther[i - 1]"
                 :rules="structureBldgNameOtherRule"
-                label="* Please Specify"
+                label="* Others Please Specify"
+                class="my-0 py-0"
               ></v-text-field>
               <p
                 v-if="!structureBldgName[i - 1]"
@@ -46,23 +46,24 @@
                 This field is required!
               </p>
             </div>
-          </v-col>
-          <v-col cols="12" md="4" class="py-0 pb-2 pt-4 my-0">
+          </form-select-container>
+
+          <form-input-container>
             <v-text-field
               v-model="structureBldgQuantity[i - 1]"
               :rules="requiredRule"
               label="* How many currently own"
               type="number"
             ></v-text-field>
-          </v-col>
-          <v-col cols="12" md="4" class="py-0 my-0">
+          </form-input-container>
+
+          <form-radio-container
+            title="Did acquire through government or programs?"
+          >
             <v-radio-group
               v-model="isstructureBldgAquiredGovtProg[i - 1]"
               class="pa-0 ma-0"
             >
-              <p class="pa-0 ma-0">
-                * Did acquire through government or programs:
-              </p>
               <v-radio
                 v-for="item in isstructureBldgAquiredGovtProgItems"
                 :key="item.value"
@@ -76,14 +77,15 @@
                 You must select an option!
               </div>
             </v-radio-group>
-          </v-col>
-          <v-col cols="12" md="4" class="py-0 pb-2 my-0">
+          </form-radio-container>
+
+          <form-input-container>
             <v-text-field
               v-model="structureBldgAge[i - 1]"
               :rules="requiredRule"
               label="* age of the item"
             ></v-text-field>
-          </v-col>
+          </form-input-container>
         </v-row>
       </form-card>
     </v-container>
@@ -93,8 +95,16 @@
 
 <script>
 import formCard from '../../cards/formCard.vue'
+import FormInputContainer from '../../cards/formInputContainer.vue'
+import FormRadioContainer from '../../cards/formRadioContainer.vue'
+import FormSelectContainer from '../../cards/formSelectContainer.vue'
 export default {
-  components: { formCard },
+  components: {
+    formCard,
+    FormInputContainer,
+    FormRadioContainer,
+    FormSelectContainer,
+  },
   data: () => ({
     valid: false,
     items: 1,

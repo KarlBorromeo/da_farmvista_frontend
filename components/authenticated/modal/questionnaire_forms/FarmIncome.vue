@@ -2,62 +2,68 @@
   <v-form ref="form" v-model="valid" lazy-validation>
     <v-container>
       <v-row>
-        <v-col cols="12" md="4" class="py-0 pb-2 my-0">
+        <form-input-container>
           <v-text-field
             v-model="coffee"
             :rules="requiredRule"
             label="* Coffee"
             type="number"
           ></v-text-field>
-        </v-col>
-        <v-col cols="12" md="4" class="py-0 pb-2 my-0">
+        </form-input-container>
+
+        <form-input-container>
           <v-text-field
             v-model="crops"
             :rules="requiredRule"
             label="* Crops (other than coffee such as cacao, etc.)"
             type="number"
           ></v-text-field>
-        </v-col>
-        <v-col cols="12" md="4" class="py-0 pb-2 my-0">
+        </form-input-container>
+
+        <form-input-container>
           <v-text-field
             v-model="livestock"
             :rules="requiredRule"
             label="* Livestock (pigs, cattle, chicken)"
             type="number"
           ></v-text-field>
-        </v-col>
-        <v-col cols="12" md="4" class="py-0 pb-2 my-0">
+        </form-input-container>
+
+        <form-input-container>
           <v-text-field
             v-model="agroforestry"
             :rules="requiredRule"
             label="* Agroforestry (falcata, rubber, coconut)"
             type="number"
           ></v-text-field>
-        </v-col>
-        <v-col cols="12" md="4" class="py-0 pb-2 my-0">
+        </form-input-container>
+
+        <form-input-container>
           <v-text-field
             v-model="otherLivelihood"
             :rules="requiredRule"
             label="* Other Livelihood (vermicomposting, organic fertilizer)"
             type="number"
           ></v-text-field>
-        </v-col>
-        <v-col cols="12" md="4" class="py-0 pb-2 my-0">
+        </form-input-container>
+
+        <form-input-container>
           <v-text-field
             v-model="nonFarmIncome"
             :rules="requiredRule"
             label="* Non-farm Income (Salaries, Business)"
             type="number"
           ></v-text-field>
-        </v-col>
-        <v-col cols="12" md="4" class="py-0 pb-2 my-0">
+        </form-input-container>
+
+        <form-input-container>
           <v-text-field
             v-model="otherSources"
             :rules="requiredRule"
             label="* Other Sources (Remittance, Pension, 4Ps)"
             type="number"
           ></v-text-field>
-        </v-col>
+        </form-input-container>
       </v-row>
     </v-container>
     <v-btn @click="validate">Validate</v-btn>
@@ -65,7 +71,9 @@
 </template>
 
 <script>
+import FormInputContainer from '../../cards/formInputContainer.vue'
 export default {
+  components: { FormInputContainer },
   data: () => ({
     valid: false,
     coffee: '',

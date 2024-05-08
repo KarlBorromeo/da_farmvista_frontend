@@ -2,7 +2,7 @@
   <v-form ref="form" v-model="valid" lazy-validation>
     <v-container>
       <v-row>
-        <v-col cols="12" md="4" class="py-0 pb-2 my-0">
+        <form-input-container>
           <v-text-field
             v-model="age"
             :rules="ageRule"
@@ -10,11 +10,10 @@
             type="number"
             required
           ></v-text-field>
-        </v-col>
+        </form-input-container>
 
-        <v-col cols="12" md="4" class="py-0 my-0">
+        <form-radio-container title="Sex">
           <v-radio-group v-model="sex" class="pa-0 ma-0">
-            <p class="pa-0 ma-0">* Sex:</p>
             <v-radio
               v-for="item in sexItems"
               :key="item.value"
@@ -25,11 +24,10 @@
               You must select an option!
             </div>
           </v-radio-group>
-        </v-col>
+        </form-radio-container>
 
-        <v-col cols="12" md="4" class="py-0 my-0">
+        <form-radio-container title="Civil Status">
           <v-radio-group v-model="civilStatus" class="pa-0 ma-0">
-            <p class="pa-0 ma-0">* Civil Status:</p>
             <v-radio
               v-for="item in civilStatusItems"
               :key="item.value"
@@ -40,28 +38,27 @@
               You must select an option!
             </div>
           </v-radio-group>
-        </v-col>
+        </form-radio-container>
 
-        <v-col cols="12" md="4" class="py-0 pb-2">
+        <form-input-container>
           <v-text-field
             v-model="religion"
             :rules="requiredRule"
             label="* Religion"
             required
           ></v-text-field>
-        </v-col>
+        </form-input-container>
 
-        <v-col cols="12" md="4" class="py-0 pb-2">
+        <form-input-container>
           <v-text-field
             v-model="highestEducationAttained"
             :rules="requiredRule"
             label="* Highest Educational Attainment"
           ></v-text-field>
-        </v-col>
+        </form-input-container>
 
-        <v-col cols="12" md="4" class="py-0 my-0 pb-2">
+        <form-radio-container title="Belongs to the Marginalized Sector">
           <v-radio-group v-model="isBelongMarginalizedSector" class="py-0 my-0">
-            <p class="pa-0 ma-0">* Belongs to the Marginalized Sector:</p>
             <v-radio
               v-for="item in isBelongMarginalizedSectorItems"
               :key="item.value"
@@ -72,16 +69,12 @@
               You must select an option!
             </div>
           </v-radio-group>
-        </v-col>
-        <v-col
+        </form-radio-container>
+
+        <form-checkbox-container
           v-if="isBelongMarginalizedSector == 'no'"
-          cols="12"
-          md="4"
-          class="py-0 my-0"
+          title="If you answered 'no' to the previous question: please specify"
         >
-          <p class="pa-0 ma-0 mb-2">
-            * If you answered 'no' to the previous question: please specify
-          </p>
           <v-checkbox
             v-for="item in nonMarginalizedSectorItems"
             v-model="nonMarginalizedSector"
@@ -96,21 +89,20 @@
           >
             You must select at least one option!
           </div>
-        </v-col>
+        </form-checkbox-container>
 
-        <v-col cols="12" md="4" class="py-0 pb-2">
+        <form-input-container>
           <v-text-field
             v-model="dialectSpoken"
             :rules="requiredRule"
             label="* Dialect Spoken"
           ></v-text-field>
-        </v-col>
+        </form-input-container>
 
-        <v-col cols="12" md="4" class="py-0 my-0 pb-2">
+        <form-radio-container
+          title="Member of a farmer organization or cooperative?"
+        >
           <v-radio-group v-model="isMemberOrgranization" class="py-0 my-0">
-            <p class="pa-0 ma-0">
-              * Member of a farmer organization or cooperative?
-            </p>
             <v-radio
               v-for="item in isMemberOrgranizationItems"
               :key="item.value"
@@ -121,19 +113,13 @@
               You must select an option!
             </div>
           </v-radio-group>
-        </v-col>
+        </form-radio-container>
 
-        <v-col
+        <form-radio-container
           v-if="isMemberOrgranization == 'yes'"
-          cols="12"
-          md="4"
-          class="py-0 my-0 pb-2"
+          title=" If you answered 'yes' to the previous question, select type of Membership"
         >
           <v-radio-group v-model="typeMembership" class="py-0 my-0">
-            <p class="pa-0 ma-0">
-              * If you answered 'yes' to the previous question, Please select
-              type of Membership:
-            </p>
             <v-radio
               v-for="item in typeMembershipItems"
               :key="item.value"
@@ -144,22 +130,19 @@
               You must select an option!
             </div>
           </v-radio-group>
-        </v-col>
+        </form-radio-container>
 
-        <v-col
-          v-if="isMemberOrgranization == 'yes'"
-          cols="12"
-          md="4"
-          class="py-0 pb-2"
-        >
+        <form-input-container v-if="isMemberOrgranization == 'yes'">
           <v-text-field
             v-model="organizationName"
             :rules="requiredRule"
             label="* Name of Organization/Cooperative:"
           ></v-text-field>
-        </v-col>
+        </form-input-container>
 
-        <v-col cols="12" md="4" class="py-0 my-0 pb-2">
+        <form-radio-container
+          title="Any household member affiliated to any farming organization/association?"
+        >
           <v-radio-group v-model="isAnyHouseholdMemberOrg" class="py-0 my-0">
             <p class="pa-0 ma-0">
               * Any household member affiliated to any farming
@@ -175,7 +158,7 @@
               You must select an option!
             </div>
           </v-radio-group>
-        </v-col>
+        </form-radio-container>
       </v-row>
     </v-container>
     <v-btn @click="validate">Validate</v-btn>
@@ -183,7 +166,11 @@
 </template>
 
 <script>
+import FormInputContainer from '../../cards/formInputContainer.vue'
+import FormRadioContainer from '../../cards/formRadioContainer.vue'
+import FormCheckboxContainer from '../../cards/formCheckboxContainer.vue'
 export default {
+  components: { FormInputContainer, FormRadioContainer, FormCheckboxContainer },
   data: () => ({
     valid: false,
     age: null,

@@ -307,18 +307,18 @@ export const state = () => ({
     Sex: {
       FEMALE: 'female',
       MALE: 'male',
-    },    
+    },
     Agree: {
       YES: 'yes',
       NO: 'no',
       PARTIALLY: 'partially',
-    },    
+    },
     PrintMaterials: {
       NEWSPAPER: 'newspaper',
       BROCHURES: 'brochures',
       PAMPHLETS: 'pamphlets',
       MAGAZINES: 'magazines',
-    },    
+    },
     PestControlAdvice: {
       NEIGHBOR: 'neighbor',
       EXTENSION_TECHNICIAN: 'extension technician',
@@ -326,26 +326,26 @@ export const state = () => ({
       PESTICIDE_SALES_AGENTS: 'pesticide sales agents',
       MASS_MEDIA: 'mass media',
       OTHERS: 'others',
-    },    
+    },
     PesticideConsideration: {
       PRICE: 'price',
       EFFECTIVENESS: 'effectiveness (killing efficiency)',
       PACKAGING: 'packaging',
       ENDORSEMENT_BY_SALES_AGENT: 'endorsement by the sales agent',
       OTHERS: 'others',
-    },    
+    },
     PesticideInformationSource: {
       NEIGHBOR_OR_OTHER_FARMERS: 'neighbor/other farmers',
       EXTENSION_TECHNICIAN: 'extension technician',
       PESTICIDE_SALES_AGENTS: 'pesticide sales agents',
       GROUP: 'group',
       MASS_MEDIA: 'mass media',
-    },    
+    },
     SprayingEquipment: {
       KNAPSACK: 'knapsack',
       HAND_SPRAYER: 'hand sprayer',
       OTHER: 'other',
-    },    
+    },
     AgriWasteReutilizationInformationSource: {
       SOCIAL_MEDIA: 'social media',
       OWN_KNOWLEDGE: 'own knowledge',
@@ -354,7 +354,7 @@ export const state = () => ({
       TRAINING: 'training',
       EXPERIENCE_FROM_OTHERS: 'experience from others',
       OTHERS: 'others',
-    },    
+    },
     WasteDisposalMethod: {
       THROW_AWAY_VACANT_LOT: 'throw away in a vacant lot far from people',
       STORED_FOR_REUSE: 'stored for reutilization',
@@ -362,36 +362,35 @@ export const state = () => ({
       COLLECTED_GARBAGE_COLLECTORS: 'collected by garbage collectors',
       BURN_AGRI_WASTE: 'burn the agri-waste',
       OTHERS: 'others',
-    },    
+    },
     AgriculturalSystem: {
       CROP_PRODUCTION: 'crop production',
       LIVESTOCK_PRODUCTION: 'livestock production',
       AQUACULTURE: 'aquaculture',
       AGROFORESTRY: 'agroforestry',
       OTHERS: 'others',
-    },    
+    },
     Topography: {
       FLAT_PLAIN: 'flat/plain',
       HILLY_ROLLING: 'hilly/rolling',
       STEEP_MOUNTAINOUS: 'steep/mountainous',
       OTHERS: 'others',
-    },    
+    },
     SoilFertility: {
       VERY_FERTILE: 'very fertile',
       MODERATE: 'moderate',
       POOR: 'poor',
       VER_POOR: 'very poor',
       NOT_PRODUCTIVE: 'not productive',
-    },    
+    },
     CroppingSystem: {
       MONO_CROPPING: 'mono-cropping',
       MULTIPLE_DIVERSIFIED_CROPPING: 'multiple/diversified cropping',
       INTERCROPPING: 'intercropping',
       RELAY_CROPPING: 'relay cropping',
       OTHERS: 'others',
-    }
-  }
-
+    },
+  },
 })
 
 /* this function gets the values of 
@@ -511,48 +510,24 @@ export const getters = {
     return state.codes.Code1
   },
   // TODO:
-  Rate(){
-
+  Rate() {},
+  Sex() {},
+  Agree() {},
+  PrintMaterials() {},
+  PestControlAdvice() {},
+  PesticideConsideration() {},
+  PesticideInformationSource() {},
+  SprayingEquipment() {},
+  AgriWasteReutilizationInformationSource() {},
+  WasteDisposalMethod() {},
+  AgriculturalSystem() {},
+  Topography(state) {
+    return generateArray(state.codes.Topography)
   },
-  Sex(){
-    
+  SoilFertility(state) {
+    return generateArray(state.codes.SoilFertility)
   },
-  Agree(){
-    
-  },
-  PrintMaterials(){
-    
-  },
-  PestControlAdvice(){
-    
-  },
-  PesticideConsideration(){
-    
-  },
-  PesticideInformationSource(){
-    
-  },
-  SprayingEquipment(){
-    
-  },
-  AgriWasteReutilizationInformationSource(){
-    
-  },
-  WasteDisposalMethod(){
-    
-  },
-  AgriculturalSystem(){
-    
-  },
-  Topography(){
-    
-  },
-  SoilFertility(){
-    
-  },
-  CroppingSystem(){
-    
-  },
+  CroppingSystem() {},
 }
 
 export const mutations = {}
