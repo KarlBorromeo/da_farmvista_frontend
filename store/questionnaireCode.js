@@ -299,7 +299,7 @@ export const state = () => ({
   },
 })
 
-/* this functions gets the values of 
+/* this function gets the values of 
 the object and convert it into array and return it */
 function generateArray(object){
   const keys = Object.keys(object);
@@ -323,34 +323,34 @@ export const getters = {
     return generateArray(state.codes.Code3_4);
   },
   Code5FarmImplementsTools(state){
-    return state.codes.Code5FarmImplementsTools;
+    return generateArray(state.codes.Code5FarmImplementsTools);
   },
   Code5FarmMachinery(state){
-    return state.codes.Code5FarmMachinery;
+    return generateArray(state.codes.Code5FarmMachinery);
   },
   Code5PoultryAndLivestock(state){
-    return state.codes.Code5PoultryAndLivestock;
+    return generateArray(state.codes.Code5PoultryAndLivestock);
   },
   Code5StructuresBuilding(state){
-    return state.codes.Code5StructuresBuilding;
+    return generateArray(state.codes.Code5StructuresBuilding);
   },
   Code6(state){
-    return state.codes.Code6;
+    return generateArray(state.codes.Code6);
   },
   Code7_8(state){
-    return state.codes.Code7_8;
+    return generateArray(state.codes.Code7_8);
   },
   Code9(state){
-    return state.codes.Code9;
+    return generateArray(state.codes.Code9);
   },
   Code10(state){
-    return state.codes.Code10;
+    return generateArray(state.codes.Code10);
   },
   Code11(state){
-    return state.codes.Code11;
+    return generateArray(state.codes.Code11);
   },
   Code12(state){
-    return state.codes.Code12;
+    return generateArray(state.codes.Code12);
   },
   Code13(state){
     return state.codes.Code13;

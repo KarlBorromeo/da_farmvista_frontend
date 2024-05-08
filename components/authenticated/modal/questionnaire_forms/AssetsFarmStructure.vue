@@ -29,51 +29,51 @@
           <v-col cols="12" class="py-0 my-0">
             <div class="mt-3">
               <v-select
-                v-model="structureName[i]"
-                :items="structureNameItems"
+                v-model="structureBldgName[i-1]"
+                :items="structureBldgNameItems"
                 menu-props="auto"
                 hide-details
                 label="* Items/Farm Asset"
                 dense
               ></v-select>
-              <p v-if="!structureName[i]" class="red--text caption mt-1">
+              <v-text-field
+                v-if="structureBldgName[i-1] == 'others'"
+                v-model="structureBldgNameOther[i-1]"
+                :rules="structureBldgNameOtherRule"
+                label="* Please Specify"
+              ></v-text-field>
+              <p v-if="!structureBldgName[i-1]" class="red--text caption mt-1">
                 This field is required!
               </p>
             </div>
           </v-col>
           <v-col cols="12" md="4" class="py-0 pb-2 pt-4 my-0">
             <v-text-field
-              v-model="structureQuantity[i]"
+              v-model="structureBldgQuantity[i-1]"
               :rules="requiredRule"
               label="* How many currently own"
               type="number"
             ></v-text-field>
           </v-col>
           <v-col cols="12" md="4" class="py-0 my-0">
-            <v-radio-group
-              v-model="isstructureAquiredGovtProg[i]"
-              class="pa-0 ma-0"
-            >
+            <v-radio-group v-model="isstructureBldgAquiredGovtProg[i-1]" class="pa-0 ma-0">
               <p class="pa-0 ma-0">
                 * Did acquire through government or programs:
               </p>
               <v-radio
-                v-for="item in isstructureAquiredGovtProgItems"
+                v-for="item in isstructureBldgAquiredGovtProgItems"
                 :key="item.value"
                 :label="item.label"
                 :value="item.value"
               ></v-radio>
-              <div
-                v-if="!isstructureAquiredGovtProg[i]"
-                class="red--text caption"
-              >
+              <div v-if="!isstructureBldgAquiredGovtProg[i-1]" class="red--text caption">
                 You must select an option!
               </div>
             </v-radio-group>
           </v-col>
           <v-col cols="12" md="4" class="py-0 pb-2 my-0">
             <v-text-field
-              v-model="structureAge[i]"
+              v-model="structureBldgAge[i-1]"
               :rules="requiredRule"
               label="* age of the item"
             ></v-text-field>
@@ -92,31 +92,78 @@ export default {
   data: () => ({
     valid: false,
     items: 1,
-    structureName: [],
-    structureNameItems: ['structure 1', 'structure 2', 'structure 3'],
-    structureQuantity: [],
-    isstructureAquiredGovtProg: [],
-    isstructureAquiredGovtProgItems: [
+    structureBldgName: [],
+    structureBldgNameItems: [],
+    structureBldgNameOther: [],
+    structureBldgNameOtherRule: [
+      (v) => !!v || 'this field is required'
+    ],
+    structureBldgQuantity: [],
+    isstructureBldgAquiredGovtProg: [],
+    isstructureBldgAquiredGovtProgItems: [
       { value: 'yes', label: 'Yes' },
       { value: 'no', label: 'No' },
     ],
-    structureAge: [],
+    structureBldgAge: [],
     requiredRule: [
       (v) => !!v || 'This field is required',
-      (v) => parseInt(v) >= 0 || 'invalid value',
+      (v) => parseFloat(v) >= 0 || 'invalid value',
     ],
   }),
   methods: {
     /* test if the form is valid, return boolean */
     validate() {
-      console.log('validated: ', this.$refs.form.validate())
+      const valid = this.$refs.form.validate();
+      const radioCheckboxValid = this.validateRadioCheckbox();
+      if(valid && radioCheckboxValid){
+        const data = this.getData()
+        console.log(data);
+      }
+    },
+    /* check if radio inputs are not empty */
+    validateRadioCheckbox(){
+      for(let i=0; i<this.items; i++){
+        if(!this.structureBldgName[i] || !this.isstructureBldgAquiredGovtProg[i]){
+          return false
+        }
+      }
+      return true;
+    },
+    /* concatenate each indexes and return new array (ex: structureBldgName, structureBldgNameOther)*/
+    concatinateEachIndexes(originalList,otherList){
+      const arr = [];
+      for(let i=0; i<this.items; i++){
+        let other = '';
+        if(otherList[i]){
+          other = ' '+ otherList[i]
+        }
+        arr.push(originalList[i] + other )
+      }
+      return arr;
+    },
+    /* get the data and convert it into expected key/value formats in BackEnd */
+    getData(){
+      return{
+        structure_bldg_land_name: this.concatinateEachIndexes(this.structureBldgName,this.structureBldgNameOther),
+        structure_bldg_land_quantity: this.structureBldgQuantity,
+        is_acquired_govt_program: this.isstructureBldgAquiredGovtProg,
+        structure_bldg_land_age: this.structureBldgAge
+      }
     },
     // decrement the count of items
     decrement() {
       if (this.items > 1) {
-        this.items--
+        this.items--;
+        this.structureBldgName.pop();
+        this.structureBldgNameItems.pop();
+        this.structureBldgQuantity.pop();
+        this.isstructureBldgAquiredGovtProg.pop();
+        this.structureBldgAge.pop();
       }
     },
   },
+  beforeMount(){
+    this.structureBldgNameItems = this.$store.getters['questionnaireCode/Code5StructuresBuilding']
+  }
 }
 </script>

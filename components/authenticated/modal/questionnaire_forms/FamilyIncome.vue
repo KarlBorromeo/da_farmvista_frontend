@@ -28,21 +28,21 @@
           </v-col>
           <v-col cols="12" md="4" class="py-0 pb-2 my-0">
             <v-text-field
-              v-model="name[i]"
+              v-model="name[i-1]"
               :rules="requiredRule"
               label="* Name"
             ></v-text-field>
           </v-col>
           <v-col cols="12" md="4" class="py-0 pb-2 my-0">
             <v-text-field
-              v-model="age[i]"
+              v-model="age[i-1]"
               :rules="requiredRule"
               label="* Age"
               type="number"
             ></v-text-field>
           </v-col>
           <v-col cols="12" md="4" class="py-0 my-0">
-            <v-radio-group v-model="sex[i]" class="pa-0 ma-0">
+            <v-radio-group v-model="sex[i-1]" class="pa-0 ma-0">
               <p class="pa-0 ma-0">* Sex:</p>
               <v-radio
                 v-for="item in sexItems"
@@ -50,42 +50,35 @@
                 :label="item.label"
                 :value="item.value"
               ></v-radio>
-              <div v-if="!sex[i]" class="red--text caption">
+              <div v-if="!sex[i-1]" class="red--text caption">
                 You must select an option!
               </div>
             </v-radio-group>
           </v-col>
           <v-col cols="12" md="4" class="py-0 pb-2 my-0">
             <v-text-field
-              v-model="roleFamily[i]"
+              v-model="roleFamily[i-1]"
               :rules="requiredRule"
               label="* Role in the family"
             ></v-text-field>
           </v-col>
           <v-col cols="12" md="4" class="py-0 pb-2 my-0">
             <v-text-field
-              v-model="educationsAttainment[i]"
+              v-model="educationsAttainment[i-1]"
               :rules="requiredRule"
               label="* Educational Attainment"
             ></v-text-field>
           </v-col>
           <v-col cols="12" md="4" class="py-0 pb-2 my-0">
             <v-text-field
-              v-model="contributionAmount[i]"
+              v-model="contributionAmount[i-1]"
               :rules="requiredRule"
               label="* Contributiong (PHP) income/month"
               type="number"
             ></v-text-field>
           </v-col>
-          <v-col cols="12" md="4" class="py-0 pb-2 my-0">
-            <v-text-field
-              v-model="involveCoffeefarm[i]"
-              :rules="requiredRule"
-              label="* Involve in coffee farm"
-            ></v-text-field>
-          </v-col>
           <v-col cols="12" md="4" class="py-0 my-0">
-            <v-radio-group v-model="involveCoffeefarm[i]" class="pa-0 ma-0">
+            <v-radio-group v-model="involveCoffeefarm[i-1]" class="pa-0 ma-0">
               <p class="pa-0 ma-0">* Involved in coffee farm:</p>
               <v-radio
                 v-for="item in involveCoffeefarmItems"
@@ -93,7 +86,7 @@
                 :label="item.label"
                 :value="item.value"
               ></v-radio>
-              <div v-if="!involveCoffeefarm[i]" class="red--text caption">
+              <div v-if="!involveCoffeefarm[i-1]" class="red--text caption">
                 You must select an option!
               </div>
             </v-radio-group>
@@ -132,13 +125,54 @@ export default {
   methods: {
     /* test if the form is valid, return boolean */
     validate() {
-      alert(this.sex)
-      console.log('validated: ', this.$refs.form.validate())
+      const valid = this.$refs.form.validate();
+      const radioValid = this.validateRadio();
+      if(valid && radioValid){
+        const data = this.getData()
+        console.log(data);
+      }else{
+        alert('invalid')
+      }
+    },
+    /* get the data and convert it into expected key/value formats in BackEnd */
+    getData(){
+      return{
+        full_name: this.name,
+        age: this.age,
+        sex: this.sex,
+        role_in_family: this.roleFamily,
+        education_attainment: this.educationsAttainment,
+        estimated_contribution: this.contributionAmount,
+        is_involved_cofeeFarm: this.involveCoffeefarm,
+      }
+    },
+    /* check if radio inputs are not empty */
+    validateRadio(){
+      for(let i=0; i<this.items; i++){
+        if(!this.name[i] || 
+          !this.age[i] || 
+          !this.sex[i] || 
+          !this.roleFamily[i] ||
+          !this.educationsAttainment[i] ||
+          !this.contributionAmount[i] ||
+          !this.involveCoffeefarm[i]
+        ){
+          return false
+        }  
+      }
+      return true;
     },
     // decrement the count of items
     decrement() {
       if (this.items > 1) {
-        this.items--
+        this.items--;
+        this.name.pop();
+        this.age.pop();
+        this.sex.pop();
+        this.roleFamily.pop();
+        this.educationsAttainment.pop();
+        this.contributionAmount.pop();
+        this.involveCoffeefarm.pop();
       }
     },
   },

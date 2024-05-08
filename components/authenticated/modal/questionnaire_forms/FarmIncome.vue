@@ -83,7 +83,23 @@ export default {
   methods: {
     /* test if the form is valid, return boolean */
     validate() {
-      console.log('validated: ', this.$refs.form.validate())
+      const valid = this.$refs.form.validate()
+      if(valid){
+        const data = this.getData();
+        console.log('data: ',data);
+      }
+    },
+    /* get the data and convert it into expected key/value formats in BackEnd */
+    getData(){
+      return{
+        coffee: this.coffee,
+        crops: this.crops,
+        livestock: this.livestock,
+        agroforestry: this.agroforestry,
+        other_livelihodd: this.otherLivelihood,
+        non_farm: this.nonFarmIncome,
+        other_source: this.otherSources     
+      }
     },
   },
 }

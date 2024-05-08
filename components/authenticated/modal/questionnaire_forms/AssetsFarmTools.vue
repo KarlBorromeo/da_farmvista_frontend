@@ -29,28 +29,28 @@
           <v-col cols="12" class="py-0 my-0">
             <div class="mt-3">
               <v-select
-                v-model="toolName[i]"
+                v-model="toolName[i-1]"
                 :items="toolNameItems"
                 menu-props="auto"
                 hide-details
                 label="* Items/Farm Asset"
                 dense
               ></v-select>
-              <p v-if="!toolName[i]" class="red--text caption mt-1">
+              <p v-if="!toolName[i-1]" class="red--text caption mt-1">
                 This field is required!
               </p>
             </div>
           </v-col>
           <v-col cols="12" md="4" class="py-0 pb-2 pt-4 my-0">
             <v-text-field
-              v-model="toolQuantity[i]"
+              v-model="toolQuantity[i-1]"
               :rules="requiredRule"
               label="* How many currently own"
               type="number"
             ></v-text-field>
           </v-col>
           <v-col cols="12" md="4" class="py-0 my-0">
-            <v-radio-group v-model="isToolAquiredGovtProg[i]" class="pa-0 ma-0">
+            <v-radio-group v-model="isToolAquiredGovtProg[i-1]" class="pa-0 ma-0">
               <p class="pa-0 ma-0">
                 * Did acquire through government or programs:
               </p>
@@ -60,14 +60,14 @@
                 :label="item.label"
                 :value="item.value"
               ></v-radio>
-              <div v-if="!isToolAquiredGovtProg[i]" class="red--text caption">
+              <div v-if="!isToolAquiredGovtProg[i-1]" class="red--text caption">
                 You must select an option!
               </div>
             </v-radio-group>
           </v-col>
           <v-col cols="12" md="4" class="py-0 pb-2 my-0">
             <v-text-field
-              v-model="toolAge[i]"
+              v-model="toolAge[i-1]"
               :rules="requiredRule"
               label="* age of the item"
             ></v-text-field>
@@ -87,19 +87,7 @@ export default {
     valid: false,
     items: 1,
     toolName: [],
-    toolNameItems: [
-      'Hand hoe (piko)',
-      'spaged/shover (pala)',
-      'Weed Slasher (harabas)',
-      'Sickle (karet/galab)',
-      'Watering Can',
-      'Panga knife(sundang,bolo,etc)',
-      'Rake',
-      'Axe (atsa)',
-      'Plough (daro)',
-      'Knapsack sprayer',
-      'Traeadle pump (bubma)',
-    ],
+    toolNameItems: [],
     toolQuantity: [],
     isToolAquiredGovtProg: [],
     isToolAquiredGovtProgItems: [
@@ -109,20 +97,51 @@ export default {
     toolAge: [],
     requiredRule: [
       (v) => !!v || 'This field is required',
-      (v) => parseInt(v) >= 0 || 'invalid value',
+      (v) => parseFloat(v) >= 0 || 'invalid value',
     ],
   }),
   methods: {
     /* test if the form is valid, return boolean */
     validate() {
-      console.log('validated: ', this.$refs.form.validate())
+      const valid = this.$refs.form.validate();
+      const radioCheckboxValid = this.validateRadioCheckbox();
+      if(valid && radioCheckboxValid){
+        const data = this.getData()
+        console.log(data);
+      }
+    },
+    /* check if radio inputs are not empty */
+    validateRadioCheckbox(){
+      for(let i=0; i<this.items; i++){
+        if(!this.toolName[i] || !this.isToolAquiredGovtProg[i]){
+          return false
+        }
+      }
+      return true;
+    },
+    /* get the data and convert it into expected key/value formats in BackEnd */
+    getData(){
+      return{
+        farmtool_name: this.toolName,
+        farmtool_quantity: this.toolQuantity,
+        is_acquired_govt_program: this.isToolAquiredGovtProg,
+        farmtool_age: this.toolAge,
+      }
     },
     // decrement the count of items
     decrement() {
       if (this.items > 1) {
-        this.items--
+        this.items--;
+        this.toolName.pop();
+        this.toolNameItems.pop();
+        this.toolQuantity.pop();
+        this.isToolAquiredGovtProg.pop();
+        this.toolAge.pop();
       }
     },
   },
+  beforeMount(){
+    this.toolNameItems = this.$store.getters['questionnaireCode/Code5FarmImplementsTools']
+  }
 }
 </script>

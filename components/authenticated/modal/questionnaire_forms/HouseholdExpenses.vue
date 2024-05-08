@@ -120,7 +120,7 @@ export default {
     specialOccasions: '',
     otherExpenses: '',
     otherExpensesRule: [
-      (v) => !!v || 'This field is required, put n/a if none',
+      (v) => !!v || 'Example response: Alcohol - 1000, n/a if none',
     ],
     requiredRule: [
       (v) => !!v || 'This field is required',
@@ -130,7 +130,28 @@ export default {
   methods: {
     /* test if the form is valid, return boolean */
     validate() {
-      console.log('validated: ', this.$refs.form.validate())
+      const valid = this.$refs.form.validate()
+      if(valid){
+        const data = this.getData();
+        console.log(data);
+      }
+    },
+    /* get the data and convert it into expected key/value formats in BackEnd */
+    getData(){
+      return{
+        food: this.food,
+        clothing: this.clothing,
+        utilities: this.utilities,
+        household: this.householdFacilities,
+        non_food_items: this.nonFoodItems,
+        health_expenses: this.healthExpenses,
+        transportation: this.transportation,
+        communication: this.communication,
+        recreation: this.recreation,
+        education: this.education,
+        special_occasions: this.specialOccasions,
+        others: this.otherExpenses,
+      }
     },
   },
 }

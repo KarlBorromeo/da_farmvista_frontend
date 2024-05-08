@@ -218,7 +218,6 @@ export default {
       { value: 'yes', label: 'Yes' },
       { value: 'no', label: 'No' },
     ],
-    // fdsfdsafsdafdsafsadfdsafdsafdsafsdafdasfdsafsdfdsafadsfads
     nonMarginalizedSector: [],
     nonMarginalizedSectorItems: [
       { value: 'senior citizen', label: 'Senior Citizen' },

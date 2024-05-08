@@ -29,51 +29,45 @@
           <v-col cols="12" class="py-0 my-0">
             <div class="mt-3">
               <v-select
-                v-model="machineName[i]"
+                v-model="machineName[i-1]"
                 :items="machineNameItems"
                 menu-props="auto"
                 hide-details
                 label="* Items/Farm Asset"
                 dense
               ></v-select>
-              <p v-if="!machineName[i]" class="red--text caption mt-1">
+              <p v-if="!machineName[i-1]" class="red--text caption mt-1">
                 This field is required!
               </p>
             </div>
           </v-col>
           <v-col cols="12" md="4" class="py-0 pb-2 pt-4 my-0">
             <v-text-field
-              v-model="machineQuantity[i]"
+              v-model="machineQuantity[i-1]"
               :rules="requiredRule"
               label="* How many currently own"
               type="number"
             ></v-text-field>
           </v-col>
           <v-col cols="12" md="4" class="py-0 my-0">
-            <v-radio-group
-              v-model="isMachineAquiredGovtProg[i]"
-              class="pa-0 ma-0"
-            >
+            <v-radio-group v-model="ismachineAquiredGovtProg[i-1]" class="pa-0 ma-0">
               <p class="pa-0 ma-0">
                 * Did acquire through government or programs:
               </p>
               <v-radio
-                v-for="item in isMachineAquiredGovtProgItems"
+                v-for="item in ismachineAquiredGovtProgItems"
                 :key="item.value"
                 :label="item.label"
                 :value="item.value"
               ></v-radio>
-              <div
-                v-if="!isMachineAquiredGovtProg[i]"
-                class="red--text caption"
-              >
+              <div v-if="!ismachineAquiredGovtProg[i-1]" class="red--text caption">
                 You must select an option!
               </div>
             </v-radio-group>
           </v-col>
           <v-col cols="12" md="4" class="py-0 pb-2 my-0">
             <v-text-field
-              v-model="machineAge[i]"
+              v-model="machineAge[i-1]"
               :rules="requiredRule"
               label="* age of the item"
             ></v-text-field>
@@ -93,30 +87,61 @@ export default {
     valid: false,
     items: 1,
     machineName: [],
-    machineNameItems: ['machine1', 'machine2', 'machine3'],
+    machineNameItems: [],
     machineQuantity: [],
-    isMachineAquiredGovtProg: [],
-    isMachineAquiredGovtProgItems: [
+    ismachineAquiredGovtProg: [],
+    ismachineAquiredGovtProgItems: [
       { value: 'yes', label: 'Yes' },
       { value: 'no', label: 'No' },
     ],
     machineAge: [],
     requiredRule: [
       (v) => !!v || 'This field is required',
-      (v) => parseInt(v) >= 0 || 'invalid value',
+      (v) => parseFloat(v) >= 0 || 'invalid value',
     ],
   }),
   methods: {
     /* test if the form is valid, return boolean */
     validate() {
-      console.log('validated: ', this.$refs.form.validate())
+      const valid = this.$refs.form.validate();
+      const radioCheckboxValid = this.validateRadioCheckbox();
+      if(valid && radioCheckboxValid){
+        const data = this.getData()
+        console.log(data);
+      }
+    },
+    /* check if radio inputs are not empty */
+    validateRadioCheckbox(){
+      for(let i=0; i<this.items; i++){
+        if(!this.machineName[i] || !this.ismachineAquiredGovtProg[i]){
+          return false
+        }
+      }
+      return true;
+    },
+    /* get the data and convert it into expected key/value formats in BackEnd */
+    getData(){
+      return{
+        farm_machinery_name: this.machineName,
+        farm_machinery_quantity: this.machineQuantity,
+        is_acquired_govt_program: this.ismachineAquiredGovtProg,
+        farm_machinery_age: this.machineAge
+      }
     },
     // decrement the count of items
     decrement() {
       if (this.items > 1) {
-        this.items--
+        this.items--;
+        this.machineName.pop();
+        this.machineNameItems.pop();
+        this.machineQuantity.pop();
+        this.ismachineAquiredGovtProg.pop();
+        this.machineAge.pop();
       }
     },
   },
+  beforeMount(){
+    this.machineNameItems = this.$store.getters['questionnaireCode/Code5FarmMachinery']
+  }
 }
 </script>

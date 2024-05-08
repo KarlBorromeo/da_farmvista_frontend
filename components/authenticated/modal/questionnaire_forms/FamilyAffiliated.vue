@@ -177,7 +177,7 @@ export default {
         status_organization: this.statusOrganization        
       }
     },
-    /* concatenate each indexes and return new array */
+    /* concatenate each indexes and return new array (ex: position, positionOthers)*/
     concatinateEachIndexes(originalList,otherList){
       const arr = [];
       for(let i=0; i<this.items; i++){
@@ -191,12 +191,12 @@ export default {
     },
     /* check if radio inputs are not empty */
     validateRadio(){
-     for(let i=0; i<this.items; i++){
+      for(let i=0; i<this.items; i++){
         if(!this.position[i] || !this.typeOrganization[i] || !this.statusMembership[i] || !this.statusOrganization[i]){
           return false
-        }
-        return true;
+        } 
       }
+      return true;
     },
     /* decrement the count of items, pop the end index */
     decrement() {

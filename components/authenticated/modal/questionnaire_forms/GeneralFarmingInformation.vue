@@ -105,7 +105,32 @@ export default {
   methods: {
     /* test if the form is valid, return boolean */
     validate() {
-      console.log('validated: ', this.$refs.form.validate())
+      const valid = this.$refs.form.validate();
+      const validRadio = this.validateRadio();
+      if(valid && validRadio){
+        const data = this.getData();
+        console.log(data);
+      }else{
+        alert('invalid')
+      }
+    },
+    /* check if radio inputs are not empty */
+    validateRadio(){
+      if(!this.isThereStoppedFarming){
+        return false;
+      }
+      return true
+    },
+    /* get the data and convert it into expected key/value formats in BackEnd */
+    getData(){
+      return{
+        avgyrs_general_farming: this.avgYearsGeneralFarming,
+        avgyrs_ctr_farming: this.avgYearsContourFarming,
+        is_there_time_stopped_farming: this.isThereStoppedFarming,
+        year_stopped_farming: this.yearStopped,
+        year_resumed_farming: this.yearResumed,
+        reason_stopping: this.reasonStopping  
+      }
     },
   },
   computed:{
@@ -114,6 +139,16 @@ export default {
         return true;
       }
       return false;
+    }
+  },
+  watch:{
+    /* reset other fields to empty if chose 'no' */
+    isThereStoppedFarming(value){
+      if(value == 'no'){
+        this.yearStopped = '';
+        this.yearResumed = '';
+        this.reasonStopping = ''
+      }
     }
   }
 }
