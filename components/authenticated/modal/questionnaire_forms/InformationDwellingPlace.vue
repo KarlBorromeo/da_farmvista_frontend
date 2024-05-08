@@ -185,7 +185,7 @@ export default {
     numberRooms: '',
     typeRoofMade: '',
     typeRoofMadeItems: [],
-    typeRoofMadeOther:'',
+    typeRoofMadeOther: '',
     typeWallMade: '',
     typeWallMadeItems: [],
     typeWallMadeOther: '',
@@ -210,63 +210,84 @@ export default {
   methods: {
     /* test if the form is valid, return boolean */
     validate() {
-      const valid = this.$refs.form.validate();
-      const validRadio = this.validateRadio();
-      if(valid && validRadio){
-        const data = this.getData();
-        console.log(data);
-      }else{
+      const valid = this.$refs.form.validate()
+      const validRadio = this.validateRadio()
+      if (valid && validRadio) {
+        const data = this.getData()
+        console.log(data)
+      } else {
         alert('invalid')
       }
     },
     /* check if radio inputs are not empty */
-    validateRadio(){
-      for(let i=0; i<this.items; i++){
-        if(
+    validateRadio() {
+      for (let i = 0; i < this.items; i++) {
+        if (
           !this.houseOwernship ||
           !this.typeRoofMade ||
           !this.typeWallMade ||
           !this.kindToilet ||
           !this.lightingFacility ||
           !this.sourceCooking ||
-          !this.sourceWaterDrink 
-        ){
+          !this.sourceWaterDrink
+        ) {
           return false
-        } 
+        }
       }
-      return true;
+      return true
     },
     /* get the data and convert it into expected key/value formats in BackEnd */
-    getData(){
-      return{
+    getData() {
+      return {
         number_year: this.yearsResidence,
-        house_ownerhsip: this.concatinateValues(this.houseOwernship,this.houseOwernshipOther),
+        house_ownerhsip: this.concatinateValues(
+          this.houseOwernship,
+          this.houseOwernshipOther
+        ),
         number_of_rooms: this.numberRooms,
-        roof_materials_made: this.concatinateValues(this.typeRoofMade,this.typeRoofMadeOther),
-        walls_materials_made: this.concatinateValues(this.typeWallMade,this.typeWallMadeOther),
-        kind_toilet_facilty: this.concatinateValues(this.kindToilet,this.kindToiletOther),
-        kind_lighting_facility: this.concatinateValues(this.lightingFacility,this.lightingFacilityOther),
-        source_cooking_fuel: this.concatinateValues(this.sourceCooking,this.sourceCookingOther),
-        source_drinking_supply: this.concatinateValues(this.sourceWaterDrink,this.sourceWaterDrinkOther)
+        roof_materials_made: this.concatinateValues(
+          this.typeRoofMade,
+          this.typeRoofMadeOther
+        ),
+        walls_materials_made: this.concatinateValues(
+          this.typeWallMade,
+          this.typeWallMadeOther
+        ),
+        kind_toilet_facilty: this.concatinateValues(
+          this.kindToilet,
+          this.kindToiletOther
+        ),
+        kind_lighting_facility: this.concatinateValues(
+          this.lightingFacility,
+          this.lightingFacilityOther
+        ),
+        source_cooking_fuel: this.concatinateValues(
+          this.sourceCooking,
+          this.sourceCookingOther
+        ),
+        source_drinking_supply: this.concatinateValues(
+          this.sourceWaterDrink,
+          this.sourceWaterDrinkOther
+        ),
       }
     },
     /* concatenate two value holders for field that has others (ex: kindToilet, kindToiletOthers)*/
-    concatinateValues(original,other){
-      let text = original;
-      if(!!other){
-        text += ' '+ other;
+    concatinateValues(original, other) {
+      let text = original
+      if (!!other) {
+        text += ' ' + other
       }
-      return text;
+      return text
     },
   },
-  beforeMount(){
-    this.houseOwernshipItems = this.$store.getters['questionnaireCode/Code6'];
-    this.typeRoofMadeItems = this.$store.getters['questionnaireCode/Code7_8'];
-    this.typeWallMadeItems = this.$store.getters['questionnaireCode/Code7_8'];
-    this.kindToiletItems = this.$store.getters['questionnaireCode/Code9'];
-    this.lightingFacilityItems = this.$store.getters['questionnaireCode/Code10'];
-    this.sourceCookingItems = this.$store.getters['questionnaireCode/Code11'];
-    this.sourceWaterDrinkItems = this.$store.getters['questionnaireCode/Code12'];
-  }
+  beforeMount() {
+    this.houseOwernshipItems = this.$store.getters['questionnaireCode/Code6']
+    this.typeRoofMadeItems = this.$store.getters['questionnaireCode/Code7_8']
+    this.typeWallMadeItems = this.$store.getters['questionnaireCode/Code7_8']
+    this.kindToiletItems = this.$store.getters['questionnaireCode/Code9']
+    this.lightingFacilityItems = this.$store.getters['questionnaireCode/Code10']
+    this.sourceCookingItems = this.$store.getters['questionnaireCode/Code11']
+    this.sourceWaterDrinkItems = this.$store.getters['questionnaireCode/Code12']
+  },
 }
 </script>

@@ -131,14 +131,14 @@ export default {
     /* test if the form is valid, return boolean */
     validate() {
       const valid = this.$refs.form.validate()
-      if(valid){
-        const data = this.getData();
-        console.log(data);
+      if (valid) {
+        const data = this.getData()
+        console.log(data)
       }
     },
     /* get the data and convert it into expected key/value formats in BackEnd */
-    getData(){
-      return{
+    getData() {
+      return {
         food: this.food,
         clothing: this.clothing,
         utilities: this.utilities,

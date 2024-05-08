@@ -247,19 +247,19 @@ export default {
   methods: {
     /* test if the form is valid, return boolean */
     validate() {
-      const valid = this.$refs.form.validate();
+      const valid = this.$refs.form.validate()
       const radioCheckBoxValid = this.validateRadioCheckbox()
-      console.log('non marginalized sctor',this.nonMarginalizedSector);
-      if(valid && radioCheckBoxValid){
-        const data = this.getData();
-        console.log(data);
-      }else{
+      console.log('non marginalized sctor', this.nonMarginalizedSector)
+      if (valid && radioCheckBoxValid) {
+        const data = this.getData()
+        console.log(data)
+      } else {
         alert('invalid')
       }
     },
     /* get the data and convert it into expected key/value formats in BackEnd */
-    getData(){
-      return{
+    getData() {
+      return {
         age: this.age,
         sex: this.sex,
         civil_status: this.civilStatus,
@@ -270,25 +270,30 @@ export default {
         dialect_spoken: this.dialectSpoken,
         is_member_farmer_organization: this.isMemberOrgranization,
         organization_type_membership: this.typeMembership,
-        organization_name: this.organizationName
+        organization_name: this.organizationName,
       }
     },
     /* check if radio inputs and checkboxes are not empty, return true if validated */
-    validateRadioCheckbox(){
-      if(!this.sex || 
-        !this.civilStatus || 
-        !this.isBelongMarginalizedSector || 
+    validateRadioCheckbox() {
+      if (
+        !this.sex ||
+        !this.civilStatus ||
+        !this.isBelongMarginalizedSector ||
         !this.isMemberOrgranization ||
-        !this.isAnyHouseholdMemberOrg){
+        !this.isAnyHouseholdMemberOrg
+      ) {
         return false
       }
-      if(this.isBelongMarginalizedSector == 'no' && this.nonMarginalizedSector.length == 0){
+      if (
+        this.isBelongMarginalizedSector == 'no' &&
+        this.nonMarginalizedSector.length == 0
+      ) {
         return false
       }
-      if(this.isMemberOrgranization == 'yes' && !this.typeMembership){
+      if (this.isMemberOrgranization == 'yes' && !this.typeMembership) {
         return false
       }
-      return true;
+      return true
     },
   },
   computed: {
@@ -300,18 +305,18 @@ export default {
       }
     },
   },
-  watch:{
-    isBelongMarginalizedSector(value){
-      if(value == 'yes'){
-        this.nonMarginalizedSector = [];
+  watch: {
+    isBelongMarginalizedSector(value) {
+      if (value == 'yes') {
+        this.nonMarginalizedSector = []
       }
     },
-    isMemberOrgranization(value){
-      if(value == 'no'){
-        this.typeMembership = '';
-        this.organizationName = '';
+    isMemberOrgranization(value) {
+      if (value == 'no') {
+        this.typeMembership = ''
+        this.organizationName = ''
       }
-    }
-  }
+    },
+  },
 }
 </script>

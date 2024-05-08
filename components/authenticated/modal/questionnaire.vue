@@ -103,7 +103,7 @@ export default {
     AssetsFarmPoultryLivestock,
     AssetsFarmStructure,
     InformationDwellingPlace,
-    GeneralFarmingInformation
+    GeneralFarmingInformation,
   },
   data() {
     return {

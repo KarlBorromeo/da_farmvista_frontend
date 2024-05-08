@@ -88,20 +88,20 @@ export default {
     /* test if the form is valid, return boolean */
     validate() {
       const valid = this.$refs.form.validate()
-      if(valid){
-        const data = this.getData();
-        console.log('basic information data: ',data);
+      if (valid) {
+        const data = this.getData()
+        console.log('basic information data: ', data)
       }
     },
-    getData(){
-      return{
+    getData() {
+      return {
         last_name: this.surename,
         first_name: this.firstname,
         middle_initial: this.middleInitial,
         contact_number: this.constactNumber,
         farmer_code: this.farmerCode,
       }
-    }
+    },
   },
 }
 </script>

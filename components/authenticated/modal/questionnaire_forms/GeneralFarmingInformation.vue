@@ -19,10 +19,7 @@
           ></v-text-field>
         </v-col>
         <v-col cols="12" md="4" class="py-0 my-0">
-          <v-radio-group
-            v-model="isThereStoppedFarming"
-            class="pa-0 ma-0"
-          >
+          <v-radio-group v-model="isThereStoppedFarming" class="pa-0 ma-0">
             <p class="pa-0 ma-0">
               * Did acquire through government or programs:
             </p>
@@ -32,10 +29,7 @@
               :label="item.label"
               :value="item.value"
             ></v-radio>
-            <div
-              v-if="!isThereStoppedFarming"
-              class="red--text caption"
-            >
+            <div v-if="!isThereStoppedFarming" class="red--text caption">
               You must select an option!
             </div>
           </v-radio-group>
@@ -77,26 +71,26 @@ export default {
     avgYearsContourFarming: '',
     isThereStoppedFarming: '',
     isThereStoppedFarmingItems: [
-      {value:'yes',label:'Yes'},
-      {value:'no',label:'No'},
-      {value:'partially',label:'Partially'}
+      { value: 'yes', label: 'Yes' },
+      { value: 'no', label: 'No' },
+      { value: 'partially', label: 'Partially' },
     ],
     yearStopped: '',
     yearResumed: '',
     yearRule: [
       (v) => {
-        const year = parseInt(v);
-        const currentDate = new Date();
-        const currentYear = currentDate.getFullYear();
-        if(year > 1900 && year <= currentYear){
+        const year = parseInt(v)
+        const currentDate = new Date()
+        const currentYear = currentDate.getFullYear()
+        if (year > 1900 && year <= currentYear) {
           return true
-        }else{
+        } else {
           return 'invalid year'
         }
-      }
+      },
     ],
     reasonStopping: '',
-    reasonRule: [ (v) => !!v || 'this field is required' ],
+    reasonRule: [(v) => !!v || 'this field is required'],
     requiredRule: [
       (v) => !!v || 'This field is required',
       (v) => parseFloat(v) > 0 || 'invalid value',
@@ -105,51 +99,54 @@ export default {
   methods: {
     /* test if the form is valid, return boolean */
     validate() {
-      const valid = this.$refs.form.validate();
-      const validRadio = this.validateRadio();
-      if(valid && validRadio){
-        const data = this.getData();
-        console.log(data);
-      }else{
+      const valid = this.$refs.form.validate()
+      const validRadio = this.validateRadio()
+      if (valid && validRadio) {
+        const data = this.getData()
+        console.log(data)
+      } else {
         alert('invalid')
       }
     },
     /* check if radio inputs are not empty */
-    validateRadio(){
-      if(!this.isThereStoppedFarming){
-        return false;
+    validateRadio() {
+      if (!this.isThereStoppedFarming) {
+        return false
       }
       return true
     },
     /* get the data and convert it into expected key/value formats in BackEnd */
-    getData(){
-      return{
+    getData() {
+      return {
         avgyrs_general_farming: this.avgYearsGeneralFarming,
         avgyrs_ctr_farming: this.avgYearsContourFarming,
         is_there_time_stopped_farming: this.isThereStoppedFarming,
         year_stopped_farming: this.yearStopped,
         year_resumed_farming: this.yearResumed,
-        reason_stopping: this.reasonStopping  
+        reason_stopping: this.reasonStopping,
       }
     },
   },
-  computed:{
-    isStopped(){
-      if(this.isThereStoppedFarming === 'yes' || this.isThereStoppedFarming === 'partially'){
-        return true;
+  computed: {
+    isStopped() {
+      if (
+        this.isThereStoppedFarming === 'yes' ||
+        this.isThereStoppedFarming === 'partially'
+      ) {
+        return true
       }
-      return false;
-    }
+      return false
+    },
   },
-  watch:{
+  watch: {
     /* reset other fields to empty if chose 'no' */
-    isThereStoppedFarming(value){
-      if(value == 'no'){
-        this.yearStopped = '';
-        this.yearResumed = '';
+    isThereStoppedFarming(value) {
+      if (value == 'no') {
+        this.yearStopped = ''
+        this.yearResumed = ''
         this.reasonStopping = ''
       }
-    }
-  }
+    },
+  },
 }
 </script>

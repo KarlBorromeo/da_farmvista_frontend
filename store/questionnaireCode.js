@@ -301,11 +301,11 @@ export const state = () => ({
 
 /* this function gets the values of 
 the object and convert it into array and return it */
-function generateArray(object){
-  const keys = Object.keys(object);
-  const array = [];
-  if(keys.length>0){
-    for(let i=0; i<keys.length; i++){
+function generateArray(object) {
+  const keys = Object.keys(object)
+  const array = []
+  if (keys.length > 0) {
+    for (let i = 0; i < keys.length; i++) {
       array.push(object[keys[i]])
     }
   }
@@ -313,107 +313,107 @@ function generateArray(object){
 }
 
 export const getters = {
-  Code1(state){
-    return generateArray(state.codes.Code1);
+  Code1(state) {
+    return generateArray(state.codes.Code1)
   },
-  Code2(state){
-    return generateArray(state.codes.Code2);
+  Code2(state) {
+    return generateArray(state.codes.Code2)
   },
-  Code3_4(state){
-    return generateArray(state.codes.Code3_4);
+  Code3_4(state) {
+    return generateArray(state.codes.Code3_4)
   },
-  Code5FarmImplementsTools(state){
-    return generateArray(state.codes.Code5FarmImplementsTools);
+  Code5FarmImplementsTools(state) {
+    return generateArray(state.codes.Code5FarmImplementsTools)
   },
-  Code5FarmMachinery(state){
-    return generateArray(state.codes.Code5FarmMachinery);
+  Code5FarmMachinery(state) {
+    return generateArray(state.codes.Code5FarmMachinery)
   },
-  Code5PoultryAndLivestock(state){
-    return generateArray(state.codes.Code5PoultryAndLivestock);
+  Code5PoultryAndLivestock(state) {
+    return generateArray(state.codes.Code5PoultryAndLivestock)
   },
-  Code5StructuresBuilding(state){
-    return generateArray(state.codes.Code5StructuresBuilding);
+  Code5StructuresBuilding(state) {
+    return generateArray(state.codes.Code5StructuresBuilding)
   },
-  Code6(state){
-    return generateArray(state.codes.Code6);
+  Code6(state) {
+    return generateArray(state.codes.Code6)
   },
-  Code7_8(state){
-    return generateArray(state.codes.Code7_8);
+  Code7_8(state) {
+    return generateArray(state.codes.Code7_8)
   },
-  Code9(state){
-    return generateArray(state.codes.Code9);
+  Code9(state) {
+    return generateArray(state.codes.Code9)
   },
-  Code10(state){
-    return generateArray(state.codes.Code10);
+  Code10(state) {
+    return generateArray(state.codes.Code10)
   },
-  Code11(state){
-    return generateArray(state.codes.Code11);
+  Code11(state) {
+    return generateArray(state.codes.Code11)
   },
-  Code12(state){
-    return generateArray(state.codes.Code12);
+  Code12(state) {
+    return generateArray(state.codes.Code12)
   },
-  Code13(state){
-    return state.codes.Code13;
+  Code13(state) {
+    return state.codes.Code13
   },
-  Code14(state){
-    return state.codes.Code14;
+  Code14(state) {
+    return state.codes.Code14
   },
-  Code15(state){
-    return state.codes.Code15;
+  Code15(state) {
+    return state.codes.Code15
   },
-  Code16A(state){
-    return state.codes.Code16A;
+  Code16A(state) {
+    return state.codes.Code16A
   },
-  Code16B(state){
-    return state.codes.Code16B;
+  Code16B(state) {
+    return state.codes.Code16B
   },
-  Code17(state){
-    return state.codes.Code17;
+  Code17(state) {
+    return state.codes.Code17
   },
-  Code18(state){
-    return state.codes.Code18;
+  Code18(state) {
+    return state.codes.Code18
   },
-  Code19(state){
-    return state.codes.Code19;
+  Code19(state) {
+    return state.codes.Code19
   },
-  Code20(state){
-    return state.codes.Code20;
+  Code20(state) {
+    return state.codes.Code20
   },
-  Code21A(state){
-    return state.codes.Code21A;
+  Code21A(state) {
+    return state.codes.Code21A
   },
-  Code21B(state){
-    return state.codes.Code21B;
+  Code21B(state) {
+    return state.codes.Code21B
   },
-  Code21C(state){
-    return state.codes.Code21C;
+  Code21C(state) {
+    return state.codes.Code21C
   },
-  Code21D(state){
-    return state.codes.Code21D;
+  Code21D(state) {
+    return state.codes.Code21D
   },
-  Code21E(state){
-    return state.codes.Code21E;
+  Code21E(state) {
+    return state.codes.Code21E
   },
-  Code21F(state){
-    return state.codes.Code21F;
+  Code21F(state) {
+    return state.codes.Code21F
   },
-  Code22(state){
-    return state.codes.Code22;
+  Code22(state) {
+    return state.codes.Code22
   },
-  Code23(state){
-    return state.codes.Code1;
+  Code23(state) {
+    return state.codes.Code1
   },
-  Code24(state){
-    return state.codes.Code1;
+  Code24(state) {
+    return state.codes.Code1
   },
-  Code25(state){
-    return state.codes.Code1;
+  Code25(state) {
+    return state.codes.Code1
   },
-  Code26(state){
-    return state.codes.Code1;
+  Code26(state) {
+    return state.codes.Code1
   },
-  Code27(state){
-    return state.codes.Code1;
+  Code27(state) {
+    return state.codes.Code1
   },
 }
 
