@@ -73,7 +73,6 @@
             </div>
           </v-radio-group>
         </v-col>
-
         <v-col
           v-if="isBelongMarginalizedSector == 'no'"
           cols="12"
@@ -219,10 +218,11 @@ export default {
       { value: 'yes', label: 'Yes' },
       { value: 'no', label: 'No' },
     ],
+    // fdsfdsafsdafdsafsadfdsafdsafdsafsdafdasfdsafsdfdsafadsfads
     nonMarginalizedSector: [],
     nonMarginalizedSectorItems: [
       { value: 'senior citizen', label: 'Senior Citizen' },
-      { value: 'ingigenous people', label: 'Indigenous People' },
+      { value: 'indigenous people', label: 'Indigenous People' },
       { value: 'person with disability', label: 'Person with Disability' },
       { value: '4Ps beneficiary', label: '4Ps Beneficiary' },
     ],
@@ -248,8 +248,48 @@ export default {
   methods: {
     /* test if the form is valid, return boolean */
     validate() {
-      console.log('validated: ', this.$refs.form.validate())
-      console.log('checkboxes', this.nonMarginalizedSector)
+      const valid = this.$refs.form.validate();
+      const radioCheckBoxValid = this.validateRadioCheckbox()
+      if(valid && radioCheckBoxValid){
+        const data = this.getData();
+        console.log(data);
+      }else{
+        alert('invalid')
+      }
+    },
+    /* get the data and convert it into expected key/value formats in BackEnd */
+    getData(){
+      return{
+        age: this.age,
+        sex: this.sex,
+        civil_status: this.civilStatus,
+        religion: this.religion,
+        highest_education_attained: this.highestEducationAttained,
+        is_belong_marginalized_sector: this.isBelongMarginalizedSector,
+        if_no_marginalized_sector_name: this.nonMarginalizedSector,
+        dialect_spoken: this.dialectSpoken,
+        is_member_farmer_organization: this.isMemberOrgranization,
+        organization_type_membership: this.typeMembership,
+        organization_name: this.organizationName
+      }
+    },
+    /* check if radio inputs and checkboxes are not empty, return true if validated */
+    validateRadioCheckbox(){
+      if(!this.sex || 
+        !this.civilStatus || 
+        !this.isBelongMarginalizedSector || 
+        !this.isMemberOrgranization || 
+        !this.typeMembership || 
+        !this.isAnyHouseholdMemberOrg){
+        return false
+      }
+      if(this.isBelongMarginalizedSector == 'no' && this.nonMarginalizedSector.length == 0){
+        return false
+      }
+      if(this.isMemberOrgranization == 'yes' && !this.typeMembership){
+        return false
+      }
+      return true;
     },
   },
   computed: {
@@ -261,5 +301,18 @@ export default {
       }
     },
   },
+  watch:{
+    isBelongMarginalizedSector(value){
+      if(value == 'no'){
+        this.nonMarginalizedSector = [];
+      }
+    },
+    isMemberOrgranization(value){
+      if(value == 'yes'){
+        this.typeMembership = '';
+        this.organizationName = '';
+      }
+    }
+  }
 }
 </script>

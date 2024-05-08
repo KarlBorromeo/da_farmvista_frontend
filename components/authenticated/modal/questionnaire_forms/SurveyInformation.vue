@@ -105,8 +105,8 @@
         <v-col cols="12" class="py-0 my-0">
           <div class="" style="margin-top: 2rem !important">
             <v-select
-              v-model="region_province"
-              :items="regions_provinces"
+              v-model="regionProvince"
+              :items="regionProvinceItems"
               append-icon="mdi-city"
               menu-props="auto"
               hide-details
@@ -122,7 +122,7 @@
           <div style="margin-top: 2rem !important">
             <v-select
               v-model="municipality"
-              :items="municipalities"
+              :items="municipalityItems"
               append-icon="mdi-city"
               menu-props="auto"
               hide-details
@@ -170,8 +170,8 @@ export default {
     interviewEnd: '',
     timeEndPicker: false,
     interviewEndRule: [(v) => !!v || 'time end is required'],
-    region_province: '',
-    regions_provinces: [
+    regionProvince: '',
+    regionProvinceItems: [
       'AGUSAN DEL NORTE',
       'AGUSAN DEL SUR',
       'DINAGAT ISLAND',
@@ -179,7 +179,7 @@ export default {
       'SURIGAO DEL SUR',
     ],
     municipality: null,
-    municipalities: [
+    municipalityItems: [
       'ALEGRIA',
       'BACUAG',
       'BAROBO',
@@ -228,7 +228,7 @@ export default {
       if (
         this.$refs.form.validate() &&
         this.municipality &&
-        this.region_province &&
+        this.regionProvince &&
         this.interviewer
       ) {
         return true
@@ -243,7 +243,7 @@ export default {
         date_of_interview: this.date,
         interview_start: this.interviewStart,
         interview_end: this.interviewEnd,
-        region_province: this.region_province,
+        region_province: this.regionProvince,
         city_municipality: this.municipality,
         barangay: this.barangay,
       }

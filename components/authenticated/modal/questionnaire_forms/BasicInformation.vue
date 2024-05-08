@@ -22,7 +22,7 @@
 
         <v-col cols="12" md="4" class="pb-0">
           <v-text-field
-            v-model="middileInnitial"
+            v-model="middleInitial"
             :rules="middleInitialRules"
             label="* Farmer's Middle Initial"
             required
@@ -87,8 +87,21 @@ export default {
   methods: {
     /* test if the form is valid, return boolean */
     validate() {
-      console.log('validated: ', this.$refs.form.validate())
+      const valid = this.$refs.form.validate()
+      if(valid){
+        const data = this.getData();
+        console.log('basic information data: ',data);
+      }
     },
+    getData(){
+      return{
+        last_name: this.surename,
+        first_name: this.firstname,
+        middle_initial: this.middleInitial,
+        contact_number: this.constactNumber,
+        farmer_code: this.farmerCode,
+      }
+    }
   },
 }
 </script>
