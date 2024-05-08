@@ -27,37 +27,40 @@
             @click="clicked('BasicInformation')"
             :disabled="SurveyInformationValidated"
           >
-            Farmer's Basic Information
+            I. Farmer's Basic Information
           </v-tab>
           <v-tab class="caption" @click="clicked('GeneralInformation')">
-            General Information
+            II. General Information
           </v-tab>
           <v-tab class="caption" @click="clicked('FamilyAffiliated')">
-            Family Affiliated
+            II. Family Affiliated
           </v-tab>
           <v-tab class="caption" @click="clicked('FamilyIncome')">
-            Family Income
+            III. Family Income
           </v-tab>
           <v-tab class="caption" @click="clicked('FarmIncome')">
-            Farm Income
+            III. Farm Income
           </v-tab>
           <v-tab class="caption" @click="clicked('HouseholdExpenses')">
-            Household Expenses
+            IV. Household Expenses
           </v-tab>
           <v-tab class="caption" @click="clicked('AssetsFarmTools')">
-            Assets Farm Tools
+            V. Assets Farm Tools
           </v-tab>
           <v-tab class="caption" @click="clicked('AssetsFarmMachinery')">
-            Assets Farm Machinery
+            V. Assets Farm Machinery
           </v-tab>
           <v-tab class="caption" @click="clicked('AssetsFarmPoultryLivestock')">
-            Assets Farm Poultry Livestock
+            V. Assets Farm Poultry Livestock
           </v-tab>
           <v-tab class="caption" @click="clicked('AssetsFarmStructure')">
-            Assets Farm Structure
+            V. Assets Farm Structure
           </v-tab>
           <v-tab class="caption" @click="clicked('InformationDwellingPlace')">
-            Information Dwelling Place
+            VI. Information Dwelling Place
+          </v-tab>
+          <v-tab class="caption" @click="clicked('GeneralFarmingInformation')">
+            VII. General Farming Information
           </v-tab>
         </v-tabs>
       </template>
@@ -85,6 +88,7 @@ import AssetsFarmMachinery from './questionnaire_forms/AssetsFarmMachinery.vue'
 import AssetsFarmPoultryLivestock from './questionnaire_forms/AssetsFarmPoultryLivestock.vue'
 import AssetsFarmStructure from './questionnaire_forms/AssetsFarmStructure.vue'
 import InformationDwellingPlace from './questionnaire_forms/InformationDwellingPlace.vue'
+import GeneralFarmingInformation from './questionnaire_forms/GeneralFarmingInformation.vue'
 export default {
   components: {
     SurveyInformation,
@@ -99,6 +103,7 @@ export default {
     AssetsFarmPoultryLivestock,
     AssetsFarmStructure,
     InformationDwellingPlace,
+    GeneralFarmingInformation
   },
   data() {
     return {
