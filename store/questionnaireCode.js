@@ -296,7 +296,102 @@ export const state = () => ({
       BORROWED_FUNDS: 'borrowed funds',
       MIXED_FUNDS: 'mixed funds',
     },
-  },
+    // TODO:
+    Rate: {
+      STRONGLY_AGREEE: 'strongly agree',
+      AGREE: 'agree',
+      NEUTRAL: 'neutral',
+      DISAGREE: 'disagree',
+      STRONGLY_DISAGREE: 'strongly disgaree',
+    },
+    Sex: {
+      FEMALE: 'female',
+      MALE: 'male',
+    },    
+    Agree: {
+      YES: 'yes',
+      NO: 'no',
+      PARTIALLY: 'partially',
+    },    
+    PrintMaterials: {
+      NEWSPAPER: 'newspaper',
+      BROCHURES: 'brochures',
+      PAMPHLETS: 'pamphlets',
+      MAGAZINES: 'magazines',
+    },    
+    PestControlAdvice: {
+      NEIGHBOR: 'neighbor',
+      EXTENSION_TECHNICIAN: 'extension technician',
+      RELATIVES: 'relatives',
+      PESTICIDE_SALES_AGENTS: 'pesticide sales agents',
+      MASS_MEDIA: 'mass media',
+      OTHERS: 'others',
+    },    
+    PesticideConsideration: {
+      PRICE: 'price',
+      EFFECTIVENESS: 'effectiveness (killing efficiency)',
+      PACKAGING: 'packaging',
+      ENDORSEMENT_BY_SALES_AGENT: 'endorsement by the sales agent',
+      OTHERS: 'others',
+    },    
+    PesticideInformationSource: {
+      NEIGHBOR_OR_OTHER_FARMERS: 'neighbor/other farmers',
+      EXTENSION_TECHNICIAN: 'extension technician',
+      PESTICIDE_SALES_AGENTS: 'pesticide sales agents',
+      GROUP: 'group',
+      MASS_MEDIA: 'mass media',
+    },    
+    SprayingEquipment: {
+      KNAPSACK: 'knapsack',
+      HAND_SPRAYER: 'hand sprayer',
+      OTHER: 'other',
+    },    
+    AgriWasteReutilizationInformationSource: {
+      SOCIAL_MEDIA: 'social media',
+      OWN_KNOWLEDGE: 'own knowledge',
+      TV_ADVERTISEMENT: 'TV/advertisement',
+      SCHOOL_UNIVERSITY_INSTITUTION: 'school/university/institution',
+      TRAINING: 'training',
+      EXPERIENCE_FROM_OTHERS: 'experience from others',
+      OTHERS: 'others',
+    },    
+    WasteDisposalMethod: {
+      THROW_AWAY_VACANT_LOT: 'throw away in a vacant lot far from people',
+      STORED_FOR_REUSE: 'stored for reutilization',
+      BURY_WASTE_DISPOSAL_AREA: 'bury in waste disposal area in the farm',
+      COLLECTED_GARBAGE_COLLECTORS: 'collected by garbage collectors',
+      BURN_AGRI_WASTE: 'burn the agri-waste',
+      OTHERS: 'others',
+    },    
+    AgriculturalSystem: {
+      CROP_PRODUCTION: 'crop production',
+      LIVESTOCK_PRODUCTION: 'livestock production',
+      AQUACULTURE: 'aquaculture',
+      AGROFORESTRY: 'agroforestry',
+      OTHERS: 'others',
+    },    
+    Topography: {
+      FLAT_PLAIN: 'flat/plain',
+      HILLY_ROLLING: 'hilly/rolling',
+      STEEP_MOUNTAINOUS: 'steep/mountainous',
+      OTHERS: 'others',
+    },    
+    SoilFertility: {
+      VERY_FERTILE: 'very fertile',
+      MODERATE: 'moderate',
+      POOR: 'poor',
+      VER_POOR: 'very poor',
+      NOT_PRODUCTIVE: 'not productive',
+    },    
+    CroppingSystem: {
+      MONO_CROPPING: 'mono-cropping',
+      MULTIPLE_DIVERSIFIED_CROPPING: 'multiple/diversified cropping',
+      INTERCROPPING: 'intercropping',
+      RELAY_CROPPING: 'relay cropping',
+      OTHERS: 'others',
+    }
+  }
+
 })
 
 /* this function gets the values of 
@@ -353,13 +448,13 @@ export const getters = {
     return generateArray(state.codes.Code12)
   },
   Code13(state) {
-    return state.codes.Code13
+    return generateArray(state.codes.Code13)
   },
   Code14(state) {
-    return state.codes.Code14
+    return generateArray(state.codes.Code14)
   },
   Code15(state) {
-    return state.codes.Code15
+    return generateArray(state.codes.Code15)
   },
   Code16A(state) {
     return state.codes.Code16A
@@ -414,6 +509,49 @@ export const getters = {
   },
   Code27(state) {
     return state.codes.Code1
+  },
+  // TODO:
+  Rate(){
+
+  },
+  Sex(){
+    
+  },
+  Agree(){
+    
+  },
+  PrintMaterials(){
+    
+  },
+  PestControlAdvice(){
+    
+  },
+  PesticideConsideration(){
+    
+  },
+  PesticideInformationSource(){
+    
+  },
+  SprayingEquipment(){
+    
+  },
+  AgriWasteReutilizationInformationSource(){
+    
+  },
+  WasteDisposalMethod(){
+    
+  },
+  AgriculturalSystem(){
+    
+  },
+  Topography(){
+    
+  },
+  SoilFertility(){
+    
+  },
+  CroppingSystem(){
+    
   },
 }
 

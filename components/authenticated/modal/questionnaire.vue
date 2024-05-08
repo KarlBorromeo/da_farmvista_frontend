@@ -62,6 +62,9 @@
           <v-tab class="caption" @click="clicked('GeneralFarmingInformation')">
             VII. General Farming Information
           </v-tab>
+          <v-tab class="caption" @click="clicked('ParcelInformation')">
+            VII.IV Parcel Information
+          </v-tab>
         </v-tabs>
       </template>
     </v-toolbar>
@@ -89,6 +92,7 @@ import AssetsFarmPoultryLivestock from './questionnaire_forms/AssetsFarmPoultryL
 import AssetsFarmStructure from './questionnaire_forms/AssetsFarmStructure.vue'
 import InformationDwellingPlace from './questionnaire_forms/InformationDwellingPlace.vue'
 import GeneralFarmingInformation from './questionnaire_forms/GeneralFarmingInformation.vue'
+import ParcelInformation from './questionnaire_forms/ParcelInformation.vue'
 export default {
   components: {
     SurveyInformation,
@@ -104,10 +108,11 @@ export default {
     AssetsFarmStructure,
     InformationDwellingPlace,
     GeneralFarmingInformation,
+    ParcelInformation
   },
   data() {
     return {
-      current: 'SurveyInformation',
+      current: 'ParcelInformation',
       commodity: [{ title: 'Coffee' }, { title: 'Mango' }, { title: 'Cacao' }],
     }
   },
