@@ -474,22 +474,22 @@ export const getters = {
     return generateArray(state.codes.Code20)
   },
   Code21A(state) {
-    return state.codes.Code21A
+    return generateArray(state.codes.Code21A)
   },
   Code21B(state) {
-    return state.codes.Code21B
+    return generateArray(state.codes.Code21B)
   },
   Code21C(state) {
-    return state.codes.Code21C
+    return  generateArray(state.codes.Code21C)
   },
   Code21D(state) {
-    return state.codes.Code21D
+    return generateArray(state.codes.Code21D)
   },
   Code21E(state) {
-    return state.codes.Code21E
+    return generateArray(state.codes.Code21E)
   },
   Code21F(state) {
-    return state.codes.Code21F
+    return generateArray(state.codes.Code21F)
   },
   Code22(state) {
     return state.codes.Code22

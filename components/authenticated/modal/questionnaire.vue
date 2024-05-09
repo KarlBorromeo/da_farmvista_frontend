@@ -83,6 +83,9 @@
           <v-tab class="caption" @click="clicked('CroppingPatternCalendar')">
             VIII.IV Cropping Pattern Calendar
           </v-tab>
+          <v-tab class="caption" @click="clicked('DetailsCoffeeProduction')">
+            IX Details Coffee Production
+          </v-tab>
         </v-tabs>
       </template>
     </v-toolbar>
@@ -116,6 +119,7 @@ import InfrastructureDistanceAccessibility from './questionnaire_forms/Infrastru
 import FarmActivities from './questionnaire_forms/FarmActivities.vue'
 import FarmWasteManagement from './questionnaire_forms/FarmWasteManagement.vue'
 import CroppingPatternCalendar from './questionnaire_forms/CroppingPatternCalendar.vue'
+import DetailsCoffeeProduction from './questionnaire_forms/DetailsCoffeeProduction.vue'
 export default {
   components: {
     SurveyInformation,
@@ -137,10 +141,11 @@ export default {
     FarmActivities,
     FarmWasteManagement,
     CroppingPatternCalendar,
+    DetailsCoffeeProduction
   },
   data() {
     return {
-      current: 'CroppingPatternCalendar',
+      current: 'DetailsCoffeeProduction',
       commodity: [{ title: 'Coffee' }, { title: 'Mango' }, { title: 'Cacao' }],
     }
   },
