@@ -1,23 +1,7 @@
 <template>
   <v-form ref="form" v-model="valid" lazy-validation>
     <v-container>
-      <v-row class="mb-1 pa-4">
-        <v-col cols="12" md="6" class="d-flex pa-0 ma-0 mb-2">
-          <v-btn block small color="success" @click="items += 1"
-            >Add <v-icon>mdi-plus</v-icon></v-btn
-          >
-        </v-col>
-        <v-col cols="12" md="6" class="d-flex pa-0 ma-0">
-          <v-btn
-            block
-            small
-            color="warning"
-            @click="decrement"
-            class="black--text"
-            >Remove last item <v-icon>mdi-minus</v-icon></v-btn
-          >
-        </v-col>
-      </v-row>
+      <form-card-button @emitIncrement="increment" @emitDecrement="decrement" />
       <form-card v-for="i in items" :key="i">
         <v-row>
           <v-col cols="12" class="mb-0 pb-0">
@@ -181,12 +165,14 @@
 
 <script>
 import formCard from '../../cards/formCard.vue'
+import formCardButton from '../../cards/formCardButton.vue'
 import FormInputContainer from '../../cards/formInputContainer.vue'
 import FormRadioContainer from '../../cards/formRadioContainer.vue'
 import FormSelectContainer from '../../cards/formSelectContainer.vue'
 export default {
   components: {
     formCard,
+    formCardButton,
     FormInputContainer,
     FormRadioContainer,
     FormSelectContainer,
@@ -287,6 +273,9 @@ export default {
         this.cropsPlanted.pop();
       }
     },
+    increment(){
+      this.items++;
+    }
   },
   beforeMount() {
     this.tenureItems = this.$store.getters['questionnaireCode/Code13']
