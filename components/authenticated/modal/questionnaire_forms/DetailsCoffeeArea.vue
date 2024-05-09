@@ -282,12 +282,6 @@ export default {
 		validate() {
 			const valid = this.$refs.form.validate()
 			const validRadio = this.validateRadio()
-			console.log(
-				this.concatinateValues(
-					this.seedSourceReasons,
-					this.seedSourceReasonsOther
-				)
-			)
 			if (valid && validRadio) {
 				const data = this.getData()
 				console.log(data)
@@ -297,11 +291,10 @@ export default {
 		},
 		/* check if radio inputs are not empty */
 		validateRadio() {
-			if (
-				(!this.plantingDistanceReasons,
-				!this.intercropVarietyReasons,
-				!this.seedSourceDetails,
-				!this.seedSourceReasons)
+			if (!this.plantingDistanceReasons ||
+				!this.intercropVarietyReasons ||
+				!this.seedSourceDetails ||
+				!this.seedSourceReasons
 			) {
 				return false
 			}

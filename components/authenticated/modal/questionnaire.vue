@@ -68,6 +68,9 @@
           <v-tab class="caption" @click="clicked('DetailsCoffeeArea')">
             VII.V Details Coffee Area
           </v-tab>
+          <v-tab class="caption" @click="clicked('InfrastructureDistanceAccessibility')">
+            VII.VI Infrastructure Distance Accessibility
+          </v-tab>
         </v-tabs>
       </template>
     </v-toolbar>
@@ -97,6 +100,7 @@ import InformationDwellingPlace from './questionnaire_forms/InformationDwellingP
 import GeneralFarmingInformation from './questionnaire_forms/GeneralFarmingInformation.vue'
 import ParcelInformation from './questionnaire_forms/ParcelInformation.vue'
 import DetailsCoffeeArea from './questionnaire_forms/DetailsCoffeeArea.vue'
+import InfrastructureDistanceAccessibility from './questionnaire_forms/InfrastructureDistanceAccessibility.vue'
 export default {
   components: {
     SurveyInformation,
@@ -114,10 +118,11 @@ export default {
     GeneralFarmingInformation,
     ParcelInformation,
     DetailsCoffeeArea,
+    InfrastructureDistanceAccessibility
   },
   data() {
     return {
-      current: 'DetailsCoffeeArea',
+      current: 'InfrastructureDistanceAccessibility',
       commodity: [{ title: 'Coffee' }, { title: 'Mango' }, { title: 'Cacao' }],
     }
   },
