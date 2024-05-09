@@ -471,7 +471,7 @@ export const getters = {
     return generateArray(state.codes.Code19)
   },
   Code20(state) {
-    return state.codes.Code20
+    return generateArray(state.codes.Code20)
   },
   Code21A(state) {
     return state.codes.Code21A
