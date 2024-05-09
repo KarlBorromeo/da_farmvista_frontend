@@ -65,6 +65,9 @@
           <v-tab class="caption" @click="clicked('ParcelInformation')">
             VII.IV Parcel Information
           </v-tab>
+          <v-tab class="caption" @click="clicked('DetailsCoffeeArea')">
+            VII.V Details Coffee Area
+          </v-tab>
         </v-tabs>
       </template>
     </v-toolbar>
@@ -93,6 +96,7 @@ import AssetsFarmStructure from './questionnaire_forms/AssetsFarmStructure.vue'
 import InformationDwellingPlace from './questionnaire_forms/InformationDwellingPlace.vue'
 import GeneralFarmingInformation from './questionnaire_forms/GeneralFarmingInformation.vue'
 import ParcelInformation from './questionnaire_forms/ParcelInformation.vue'
+import DetailsCoffeeArea from './questionnaire_forms/DetailsCoffeeArea.vue'
 export default {
   components: {
     SurveyInformation,
@@ -109,10 +113,11 @@ export default {
     InformationDwellingPlace,
     GeneralFarmingInformation,
     ParcelInformation,
+    DetailsCoffeeArea,
   },
   data() {
     return {
-      current: 'ParcelInformation',
+      current: 'DetailsCoffeeArea',
       commodity: [{ title: 'Coffee' }, { title: 'Mango' }, { title: 'Cacao' }],
     }
   },

@@ -456,10 +456,10 @@ export const getters = {
     return generateArray(state.codes.Code15)
   },
   Code16A(state) {
-    return state.codes.Code16A
+    return generateArray(state.codes.Code16A)
   },
   Code16B(state) {
-    return state.codes.Code16B
+    return generateArray(state.codes.Code16B)
   },
   Code17(state) {
     return state.codes.Code17
