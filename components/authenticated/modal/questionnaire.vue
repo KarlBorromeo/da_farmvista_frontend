@@ -72,7 +72,10 @@
             VII.VI Infrastructure Distance Accessibility
           </v-tab>
           <v-tab class="caption" @click="clicked('FarmActivities')">
-            VII.VI Farm Activities
+            VIII Farm Activities
+          </v-tab>
+          <v-tab class="caption" @click="clicked('FarmWasteManagement')">
+            VIII.IV Farm Waste Management
           </v-tab>
         </v-tabs>
       </template>
@@ -105,7 +108,7 @@ import ParcelInformation from './questionnaire_forms/ParcelInformation.vue'
 import DetailsCoffeeArea from './questionnaire_forms/DetailsCoffeeArea.vue'
 import InfrastructureDistanceAccessibility from './questionnaire_forms/InfrastructureDistanceAccessibility.vue'
 import FarmActivities from './questionnaire_forms/FarmActivities.vue'
-
+import FarmWasteManagement from './questionnaire_forms/FarmWasteManagement.vue'
 export default {
   components: {
     SurveyInformation,
@@ -124,11 +127,12 @@ export default {
     ParcelInformation,
     DetailsCoffeeArea,
     InfrastructureDistanceAccessibility,
-    FarmActivities
+    FarmActivities,
+    FarmWasteManagement
   },
   data() {
     return {
-      current: 'FarmActivities',
+      current: 'FarmWasteManagement',
       commodity: [{ title: 'Coffee' }, { title: 'Mango' }, { title: 'Cacao' }],
     }
   },
