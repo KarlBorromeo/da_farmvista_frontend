@@ -527,7 +527,9 @@ export const getters = {
   SoilFertility(state) {
     return generateArray(state.codes.SoilFertility)
   },
-  CroppingSystem() {},
+  CroppingSystem(state) {
+    return generateArray(state.codes.CroppingSystem)
+  },
 }
 
 export const mutations = {}
