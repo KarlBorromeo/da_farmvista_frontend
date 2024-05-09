@@ -137,9 +137,9 @@ export default {
         this.machineAge.pop()
       }
     },
-    increment(){
-      this.items++;
-    }
+    increment() {
+      this.items++
+    },
   },
   beforeMount() {
     this.machineNameItems =

@@ -167,9 +167,9 @@ export default {
         this.structureBldgAge.pop()
       }
     },
-    increment(){
-      this.items++;
-    }
+    increment() {
+      this.items++
+    },
   },
   beforeMount() {
     this.structureBldgNameItems =

@@ -90,7 +90,12 @@ import FormInputContainer from '../../cards/formInputContainer.vue'
 import FormRadioContainer from '../../cards/formRadioContainer.vue'
 
 export default {
-  components: { formCard, formCardButton, FormInputContainer, FormRadioContainer },
+  components: {
+    formCard,
+    formCardButton,
+    FormInputContainer,
+    FormRadioContainer,
+  },
   data: () => ({
     valid: false,
     items: 1,
@@ -165,9 +170,9 @@ export default {
         this.involveCoffeefarm.pop()
       }
     },
-    increment(){
-      this.items++;
-    }
+    increment() {
+      this.items++
+    },
   },
 }
 </script>

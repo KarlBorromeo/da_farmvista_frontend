@@ -68,7 +68,10 @@
           <v-tab class="caption" @click="clicked('DetailsCoffeeArea')">
             VII.V Details Coffee Area
           </v-tab>
-          <v-tab class="caption" @click="clicked('InfrastructureDistanceAccessibility')">
+          <v-tab
+            class="caption"
+            @click="clicked('InfrastructureDistanceAccessibility')"
+          >
             VII.VI Infrastructure Distance Accessibility
           </v-tab>
           <v-tab class="caption" @click="clicked('FarmActivities')">
@@ -133,7 +136,7 @@ export default {
     InfrastructureDistanceAccessibility,
     FarmActivities,
     FarmWasteManagement,
-    CroppingPatternCalendar
+    CroppingPatternCalendar,
   },
   data() {
     return {

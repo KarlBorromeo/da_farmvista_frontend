@@ -144,9 +144,9 @@ export default {
         this.poultryLivestockAge.pop()
       }
     },
-    increment(){
-      this.items++;
-    }
+    increment() {
+      this.items++
+    },
   },
   beforeMount() {
     this.poultryLivestockNameItems =

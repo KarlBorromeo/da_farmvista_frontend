@@ -137,9 +137,9 @@ export default {
         this.toolAge.pop()
       }
     },
-    increment(){
-      this.items++;
-    }
+    increment() {
+      this.items++
+    },
   },
   beforeMount() {
     this.toolNameItems =

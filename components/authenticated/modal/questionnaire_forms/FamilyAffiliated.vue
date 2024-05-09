@@ -117,7 +117,12 @@ import formCardButton from '../../cards/formCardButton.vue'
 import FormInputContainer from '../../cards/formInputContainer.vue'
 import FormRadioContainer from '../../cards/formRadioContainer.vue'
 export default {
-  components: { formCard, formCardButton, FormInputContainer, FormRadioContainer },
+  components: {
+    formCard,
+    formCardButton,
+    FormInputContainer,
+    FormRadioContainer,
+  },
   data: () => ({
     valid: false,
     items: 1,
@@ -207,7 +212,7 @@ export default {
     },
     increment() {
       this.items++
-    }
+    },
   },
   beforeMount() {
     this.positionItems = this.$store.getters['questionnaireCode/Code1']

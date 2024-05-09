@@ -64,7 +64,7 @@
               </div>
             </v-radio-group>
           </form-radio-container>
-          
+
           <form-radio-container title="Soil Fertility">
             <v-radio-group v-model="soilFertility[i - 1]" class="pa-0 ma-0">
               <v-radio
@@ -222,13 +222,15 @@ export default {
     /* check if radio inputs are not empty */
     validateRadio() {
       for (let i = 0; i < this.items; i++) {
-        if (!this.tenure[i] ||
+        if (
+          !this.tenure[i] ||
           !this.topography[i] ||
           !this.soilFertility[i] ||
           !this.croppingSystem[i] ||
           !this.sourceWater[i] ||
           !this.landUseStatus[i] ||
-          !this.cropsPlanted[i]) {
+          !this.cropsPlanted[i]
+        ) {
           return false
         }
       }
@@ -251,37 +253,51 @@ export default {
       return {
         parcel_number: this.parcelNumber,
         area: this.area,
-        tenure: this.concatinateEachIndexes(this.tenure,this.tenureOther),
-        topography: this.concatinateEachIndexes(this.topography,this.topographyOther),
+        tenure: this.concatinateEachIndexes(this.tenure, this.tenureOther),
+        topography: this.concatinateEachIndexes(
+          this.topography,
+          this.topographyOther
+        ),
         soil_fertility: this.soilFertility,
-        cropping_system: this.concatinateEachIndexes(this.croppingSystem,this.croppingSystemOther),
-        source_of_water: this.concatinateEachIndexes(this.sourceWater,this.sourceWaterOther),
-        land_use_status: this.concatinateEachIndexes(this.landUseStatus,this.landUseStatusOther),
+        cropping_system: this.concatinateEachIndexes(
+          this.croppingSystem,
+          this.croppingSystemOther
+        ),
+        source_of_water: this.concatinateEachIndexes(
+          this.sourceWater,
+          this.sourceWaterOther
+        ),
+        land_use_status: this.concatinateEachIndexes(
+          this.landUseStatus,
+          this.landUseStatusOther
+        ),
         crops_planted: this.cropsPlanted,
       }
     },
     // decrement the count of items
     decrement() {
       if (this.items > 1) {
-        this.items--;
-        this.tenure.pop();
-        this.topography.pop();
-        this.soilFertility.pop();
-        this.croppingSystem.pop();
-        this.sourceWater.pop();
-        this.landUseStatus.pop();
-        this.cropsPlanted.pop();
+        this.items--
+        this.tenure.pop()
+        this.topography.pop()
+        this.soilFertility.pop()
+        this.croppingSystem.pop()
+        this.sourceWater.pop()
+        this.landUseStatus.pop()
+        this.cropsPlanted.pop()
       }
     },
-    increment(){
-      this.items++;
-    }
+    increment() {
+      this.items++
+    },
   },
   beforeMount() {
     this.tenureItems = this.$store.getters['questionnaireCode/Code13']
     this.topographyItems = this.$store.getters['questionnaireCode/Topography']
-    this.soilFertilityItems = this.$store.getters['questionnaireCode/SoilFertility']
-    this.croppingSystemItems = this.$store.getters['questionnaireCode/CroppingSystem']
+    this.soilFertilityItems =
+      this.$store.getters['questionnaireCode/SoilFertility']
+    this.croppingSystemItems =
+      this.$store.getters['questionnaireCode/CroppingSystem']
     this.sourceWaterItems = this.$store.getters['questionnaireCode/Code14']
     this.landUseStatusItems = this.$store.getters['questionnaireCode/Code15']
   },
