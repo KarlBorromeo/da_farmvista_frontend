@@ -510,17 +510,23 @@ export const getters = {
     return state.codes.Code1
   },
   // TODO:
-  Rate() {},
-  Sex() {},
-  Agree() {},
-  PrintMaterials() {},
-  PestControlAdvice() {},
-  PesticideConsideration() {},
-  PesticideInformationSource() {},
-  SprayingEquipment() {},
-  AgriWasteReutilizationInformationSource() {},
-  WasteDisposalMethod() {},
-  AgriculturalSystem() {},
+  Rate(state) {},
+  Sex(state) {},
+  Agree(state) {},
+  PrintMaterials(state) {},
+  PestControlAdvice(state) {},
+  PesticideConsideration(state) {},
+  PesticideInformationSource(state) {},
+  SprayingEquipment(state) {},
+  AgriWasteReutilizationInformationSource(state) {
+    return generateArray(state.codes.AgriWasteReutilizationInformationSource)
+  },
+  WasteDisposalMethod(state) {
+    return generateArray(state.codes.WasteDisposalMethod)
+  },
+  AgriculturalSystem(state) {
+    return generateArray(state.codes.AgriculturalSystem)
+  },
   Topography(state) {
     return generateArray(state.codes.Topography)
   },

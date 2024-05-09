@@ -71,6 +71,9 @@
           <v-tab class="caption" @click="clicked('InfrastructureDistanceAccessibility')">
             VII.VI Infrastructure Distance Accessibility
           </v-tab>
+          <v-tab class="caption" @click="clicked('FarmActivities')">
+            VII.VI Farm Activities
+          </v-tab>
         </v-tabs>
       </template>
     </v-toolbar>
@@ -101,6 +104,8 @@ import GeneralFarmingInformation from './questionnaire_forms/GeneralFarmingInfor
 import ParcelInformation from './questionnaire_forms/ParcelInformation.vue'
 import DetailsCoffeeArea from './questionnaire_forms/DetailsCoffeeArea.vue'
 import InfrastructureDistanceAccessibility from './questionnaire_forms/InfrastructureDistanceAccessibility.vue'
+import FarmActivities from './questionnaire_forms/FarmActivities.vue'
+
 export default {
   components: {
     SurveyInformation,
@@ -118,11 +123,12 @@ export default {
     GeneralFarmingInformation,
     ParcelInformation,
     DetailsCoffeeArea,
-    InfrastructureDistanceAccessibility
+    InfrastructureDistanceAccessibility,
+    FarmActivities
   },
   data() {
     return {
-      current: 'InfrastructureDistanceAccessibility',
+      current: 'FarmActivities',
       commodity: [{ title: 'Coffee' }, { title: 'Mango' }, { title: 'Cacao' }],
     }
   },
