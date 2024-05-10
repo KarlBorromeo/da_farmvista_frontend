@@ -86,6 +86,9 @@
           <v-tab class="caption" @click="clicked('DetailsCoffeeProduction')">
             IX Details Coffee Production
           </v-tab>
+          <v-tab class="caption" @click="clicked('LaborUtilizationOperations')">
+            IX.II Labor Utilization Operations
+          </v-tab>
         </v-tabs>
       </template>
     </v-toolbar>
@@ -120,6 +123,7 @@ import FarmActivities from './questionnaire_forms/FarmActivities.vue'
 import FarmWasteManagement from './questionnaire_forms/FarmWasteManagement.vue'
 import CroppingPatternCalendar from './questionnaire_forms/CroppingPatternCalendar.vue'
 import DetailsCoffeeProduction from './questionnaire_forms/DetailsCoffeeProduction.vue'
+import LaborUtilizationOperations from './questionnaire_forms/LaborUtilizationOperations.vue'
 export default {
   components: {
     SurveyInformation,
@@ -141,11 +145,12 @@ export default {
     FarmActivities,
     FarmWasteManagement,
     CroppingPatternCalendar,
-    DetailsCoffeeProduction
+    DetailsCoffeeProduction,
+    LaborUtilizationOperations
   },
   data() {
     return {
-      current: 'DetailsCoffeeProduction',
+      current: 'LaborUtilizationOperations',
       commodity: [{ title: 'Coffee' }, { title: 'Mango' }, { title: 'Cacao' }],
     }
   },
