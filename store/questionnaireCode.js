@@ -217,12 +217,14 @@ export const state = () => ({
       SEEDS: 'seeds',
       SEEDLINGS: 'seedlings',
       ASEXUALLY_PROPAGATED_MATERIALS: 'asexually propagated materials',
+      OTHERS: 'others'
     },
     Code21B: {
       ARABICA: 'arabica',
       ROBUSTA: 'robusta',
       LIBERICA: 'liberica',
       EXCELSA: 'excelsa',
+      OTHERS: 'others'
     },
     Code21C: {
       ZERO_TILLAGE: 'zero tillage',
@@ -236,6 +238,7 @@ export const state = () => ({
     Code21D: {
       EAST_WEST: 'east-west',
       NORTH_SOUTH: 'north-south',
+      OTHERS: 'others',
     },
     Code21E: {
       PHYSICAL: 'physical',
@@ -252,6 +255,7 @@ export const state = () => ({
       BAND_PLACEMENT: 'band placement',
       FOLIAR_APPLICATION: 'foliar application',
       FERTIGATION: 'fertigation',
+      OTHERS: 'others',
     },
     Code22: {
       FAMILY_LABOR: 'family labor',

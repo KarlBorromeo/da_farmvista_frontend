@@ -18,7 +18,12 @@ export default {
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: ['~/assets/fonts/poppins-font'],
+  css: [
+    // global font family
+    '~/assets/fonts/poppins-font',
+    // global questionnaire css
+    '~/assets/css/questionnaire.css',
+  ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [],
