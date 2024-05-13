@@ -10,42 +10,52 @@
         v-on="on"
       >
         <v-icon class="mr-2">mdi-microsoft-excel</v-icon>
-        UPLOAD
+          UPLOAD
         <v-icon class="mr-2" style="position: absolute; right: 0"
           >mdi-chevron-down</v-icon
         >
       </v-btn>
     </template>
-    <v-list>
-      <v-list-item v-for="(item, index) in items" :key="index">
-        <v-list-item-title>{{ item.title }}</v-list-item-title>
-      </v-list-item>
-    </v-list>
     <v-dialog v-model="dialog" width="700">
       <template v-slot:activator="{ on, attrs }">
-        <v-btn block color="success" large v-bind="attrs" v-on="on">
-          <v-icon class="mr-2">mdi-text-box-edit-outline</v-icon>
-          MANUAL SURVEY
-        </v-btn>
-      </template>
-      <questionnaire-vue />
+      <v-list>
+        <v-list-item v-for="item in items" :key="item">
+            <v-btn 
+              color="white" 
+              block 
+              elevation="0"
+              v-bind="attrs" 
+              v-on="on" 
+              @click="openModal(item)"
+            >{{ item }}</v-btn>
+        </v-list-item>
+      </v-list>
+    </template>
+      <upload-vue :commodity="commodity"/>
     </v-dialog>
   </v-menu>
 </template>
 
 <script>
-import questionnaireVue from '../modal/questionnaire.vue'
+import uploadVue from '../modal/upload.vue'
 export default {
-  components: {questionnaireVue},
+  components: { uploadVue },
   data() {
     return {
+      dialog: false,
       items: [
-        { title: 'Coffee' },
-        { title: 'Mango' },
-        { title: 'Corn' },
+        'Coffee Beans',
+        'Mango',
+        'Corn' 
       ],
+      commodity: '',
     }
   },
+  methods: {
+    openModal(item){
+      this.commodity = item
+    }
+  }
 }
 </script>
 

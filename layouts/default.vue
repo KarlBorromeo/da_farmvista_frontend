@@ -116,7 +116,6 @@ export default {
   },
   computed: {
     currentPageTitle() {
-      console.log('pageTitle: ', this.$store.getters['pageNameGetter'])
       return this.$store.getters['pageNameGetter']
     },
   },

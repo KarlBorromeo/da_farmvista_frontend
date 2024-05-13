@@ -15,6 +15,7 @@
         </v-col>
       </v-row>
     </v-container>
+    <div style="height: 300px"></div>
   </tab-description>
 </template>
 

@@ -11,7 +11,6 @@ export const getters = {
 export const mutations = {
   udpateHeaderTitle(state, pageName) {
     state.pageName = pageName
-    console.log('enterd anotherpage')
   },
 }
 
