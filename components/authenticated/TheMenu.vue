@@ -24,18 +24,16 @@
       <v-list>
         <v-list-item class="d-flex justify-center">
           <v-icon x-large class="mr-3">mdi-account-circle-outline</v-icon>
-          <h4>Karlito</h4>
+          <h4>{{ UserFirstname }}</h4>
         </v-list-item>
         <v-divider />
         <v-list-item
           v-for="(item, index) in dropdown"
           :key="index"
-          :to="item.to"
-          router
           color="white"
         >
           <v-list-item-title>
-            <v-btn block width="210" class="pa-0 ma-0" color="white">
+            <v-btn block width="210" class="pa-0 ma-0" color="white" @click="dynamicMethod(item.method)">
               <v-row class="ma-0">
                 <v-col cols="3" class="header_dropdown_btns">
                   <v-icon>{{ item.icon }}</v-icon>
@@ -65,22 +63,47 @@ export default {
           icon: 'mdi-history',
           sub_icon: 'mdi-chevron-right',
           title: 'Logs',
-          to: '/logs',
+          method: 'routeLogs',
         },
         {
           icon: 'mdi-account-circle-outline',
           sub_icon: 'mdi-chevron-right',
           title: 'My Profile',
-          to: '/profile',
+          method: 'routeMyProfile',
         },
         {
           icon: 'mdi-logout',
           title: 'Logout',
-          to: '/',
+          method: 'logout',
         },
       ],
     }
   },
+  computed: {
+    UserFirstname(){
+      return this.$store.getters['auth/currentFirstName']
+    },  
+  },
+  methods: {
+    /* dynamic choose what method to add on event listener like @click */
+    dynamicMethod(methodName){
+       this[methodName]();
+    },
+    logout(){
+      alert('logging out')
+      this.$store.commit('auth/logout')
+      this.$router.replace('/auth')
+    },
+    routeMyProfile(){
+      this.$router.push('/profile')
+    },
+    routeLogs(){
+      this.$router.push('logs')
+    },
+    aw(){
+      alert('awww')
+    }
+  }
 }
 </script>
 

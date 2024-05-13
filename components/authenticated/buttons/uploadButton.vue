@@ -21,17 +21,28 @@
         <v-list-item-title>{{ item.title }}</v-list-item-title>
       </v-list-item>
     </v-list>
+    <v-dialog v-model="dialog" width="700">
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn block color="success" large v-bind="attrs" v-on="on">
+          <v-icon class="mr-2">mdi-text-box-edit-outline</v-icon>
+          MANUAL SURVEY
+        </v-btn>
+      </template>
+      <questionnaire-vue />
+    </v-dialog>
   </v-menu>
 </template>
 
 <script>
+import questionnaireVue from '../modal/questionnaire.vue'
 export default {
+  components: {questionnaireVue},
   data() {
     return {
       items: [
-        { title: 'Click Me' },
-        { title: 'Click Me' },
-        { title: 'Click Me' },
+        { title: 'Coffee' },
+        { title: 'Mango' },
+        { title: 'Corn' },
       ],
     }
   },

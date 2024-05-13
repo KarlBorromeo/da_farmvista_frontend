@@ -8,7 +8,6 @@
       <p class="caption">Accepted File: .xlsx</p>
       <v-row>
         <v-col cols="12" sm="6" class="pt-0">
-          <!--  -->
           <upload-button />
         </v-col>
         <v-col cols="12" sm="6" class="pt-0">
@@ -35,7 +34,7 @@ export default {
   components: { TabDescription, QuestionnaireVue, UploadButton },
   data() {
     return {
-      dialog: true,
+      dialog: false,
       description:
         'This module simplifies farm profiling by offering easy Excel uploads or manual survey input, allowing  to capture comprehensive data about coffee farmers.',
     }

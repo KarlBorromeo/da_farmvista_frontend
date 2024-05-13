@@ -89,12 +89,12 @@ export default {
   layout: 'authentication',
   data: () => ({
     valid: false,
-    username: '',
+    username: 'karlborromeo',
     usernameRules: [
       (v) => !!v || 'Username is required',
-      (v) => v.length <= 10 || 'Name must be less than 10 characters',
+      (v) => v.length >= 5 || 'Name must be less than 10 characters',
     ],
-    password: '',
+    password: 'Password@123',
     passwordRules: [(v) => !!v || 'Password is required'],
   }),
   methods: {
@@ -112,7 +112,18 @@ export default {
     },
     async login() {
       if (this.validate()) {
-        const credentials = { username: this.username, password: this.password }
+        const credentials = { 
+          identifier: this.username, 
+          password: this.password,
+          device: {
+            deviceType: "Browser",
+            model: "Chrome",
+            modelVersion: "69.0",
+            os: "Mac",
+            osVersion: "10.13",
+            manufacturer: "Apple"
+          } 
+        }
         try {
           await this.$store.dispatch('auth/login', credentials)
           this.$router.push('/dashboard')
