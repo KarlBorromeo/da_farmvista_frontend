@@ -73,7 +73,9 @@
 <script>
 import TheLogo from '~/components/authenticated/TheLogo.vue'
 import TheMenu from '~/components/authenticated/TheMenu.vue'
+
 export default {
+  middleware: 'auth',
   components: { TheLogo, TheMenu },
   name: 'DefaultLayout',
   data() {
@@ -118,7 +120,7 @@ export default {
     currentPageTitle() {
       return this.$store.getters['pageNameGetter']
     },
-  },
+  }
 }
 </script>
 
