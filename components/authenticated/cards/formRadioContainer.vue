@@ -1,5 +1,5 @@
 <template>
-  <v-col cols="12" class="py-0" style="border: 1px dashed blue">
+  <v-col cols="12" class="py-0" >
     <p class="pa-0 ma-0">* {{ title }}:</p>
     <slot />
   </v-col>

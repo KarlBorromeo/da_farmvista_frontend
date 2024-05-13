@@ -1,5 +1,5 @@
 <template>
-  <v-row class="mb-1 pa-4" style="border: 3px solid black">
+  <v-row class="mb-1 pa-4">
     <v-col cols="12" md="6" class="d-flex pa-0 ma-0 mb-2">
       <v-btn block small color="success" @click="increment"
         >Add <v-icon>mdi-plus</v-icon></v-btn

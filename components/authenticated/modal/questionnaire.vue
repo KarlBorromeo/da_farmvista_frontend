@@ -81,7 +81,7 @@
             VIII.IV Farm Waste Management
           </v-tab>
           <v-tab class="caption" @click="clicked('CroppingPatternCalendar')">
-            VIII.IV Cropping Pattern Calendar
+            VIII.V Cropping Pattern Calendar
           </v-tab>
           <v-tab class="caption" @click="clicked('DetailsCoffeeProduction')">
             IX Details Coffee Production
@@ -92,6 +92,49 @@
           <v-tab class="caption" @click="clicked('DetailWageOperation')">
             IX.III Detail Wage Operation
           </v-tab>
+         <!-- TODO:  -->
+          <v-tab class="caption" @click="clicked('CostInputsCoffee')">
+						IX.IV Cost Inputs Coffee
+					</v-tab>
+					<v-tab
+						class="caption"
+						@click="clicked('PestDamageObserved')"
+					>
+						X Pest Damage Observed
+					</v-tab>
+					<v-tab
+						class="caption"
+						@click="clicked('PestManagementPractice')"
+					>
+						X.I Pest Management Practice
+					</v-tab>
+					<v-tab
+						class="caption"
+						@click="clicked('CoffeeHarvestMarketing')"
+					>
+						XI Coffee Harvest Marketing
+					</v-tab>
+					<v-tab class="caption" @click="clicked('TechAwareness')">
+						XII Technology Awareness
+					</v-tab>
+					<v-tab
+						class="caption"
+						@click="clicked('InformationKnowledgeSources')"
+					>
+						XIII Information Knowledge Sources
+					</v-tab>
+					<v-tab
+						class="caption"
+						@click="clicked('OpenEndedQuestions')"
+					>
+						XIV Open Ended Questions
+					</v-tab>
+					<v-tab
+						class="caption"
+						@click="clicked('OpenEndedQuestionRating')"
+					>
+						XV Open EndedQuestion Rating
+					</v-tab>
         </v-tabs>
       </template>
     </v-toolbar>
@@ -128,6 +171,14 @@ import CroppingPatternCalendar from './questionnaire_forms/CroppingPatternCalend
 import DetailsCoffeeProduction from './questionnaire_forms/DetailsCoffeeProduction.vue'
 import LaborUtilizationOperations from './questionnaire_forms/LaborUtilizationOperations.vue'
 import DetailWageOperation from './questionnaire_forms/DetailWageOperation.vue'
+import CostInputsCoffee from './questionnaire_forms/CostInputsCoffee.vue'
+import PestDamageObserved from './questionnaire_forms/PestDamageObserved.vue'
+import PestManagementPractice from './questionnaire_forms/PestManagementPractice.vue'
+import CoffeeHarvestMarketing from './questionnaire_forms/CoffeeHarvestMarketing.vue'
+import TechAwareness from './questionnaire_forms/TechAwareness.vue'
+import InformationKnowledgeSources from './questionnaire_forms/InformationKnowledgeSources.vue'
+import OpenEndedQuestions from './questionnaire_forms/OpenEndedQuestions.vue'
+import OpenEndedQuestionRating from './questionnaire_forms/OpenEndedQuestionRating.vue'
 export default {
   components: {
     SurveyInformation,
@@ -151,11 +202,19 @@ export default {
     CroppingPatternCalendar,
     DetailsCoffeeProduction,
     LaborUtilizationOperations,
-    DetailWageOperation
+    DetailWageOperation,
+    CostInputsCoffee,
+    PestDamageObserved,
+    PestManagementPractice,
+    CoffeeHarvestMarketing,
+    TechAwareness,
+    InformationKnowledgeSources,
+    OpenEndedQuestions,
+    OpenEndedQuestionRating
   },
   data() {
     return {
-      current: 'DetailWageOperation',
+      current: 'SurveyInformation',
       commodity: [{ title: 'Coffee' }, { title: 'Mango' }, { title: 'Cacao' }],
     }
   },
