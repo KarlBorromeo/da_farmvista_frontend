@@ -1,7 +1,7 @@
 <template>
   <v-card light class="pa-4">
     <div class="d-flex align-center justify-space-between pa-4">
-      <h2 class="pa-0 ma-0 headline font-weight-bold">Survey Questionaire</h2>
+      <h2 class="pa-0 ma-0 headline font-weight-bold">Survey Questionaire {{ currentCommodity }}</h2>
       <v-menu bottom left>
         <template v-slot:activator="{ on, attrs }">
           <v-btn icon v-bind="attrs" v-on="on" color="primary">
@@ -10,138 +10,149 @@
         </template>
         <v-list elevation="15">
           <v-list-item v-for="(item, i) in commodity" :key="i">
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
+            <v-list-item-title @click="switchCommodity(item)">{{ item}}</v-list-item-title>
           </v-list-item>
         </v-list>
       </v-menu>
     </div>
     <v-divider />
     <v-toolbar light elevation="0">
-      <template>
+      <template v-if="currentCommodity == 'Coffee Beans'">
         <v-tabs fixed-tabs show-arrows center-active slider-color="red">
-          <v-tab @click="clicked('SurveyInformation')" class="caption">
+          <v-tab @click="selectTab('SurveyInformation')" class="caption">
             Survey Information
           </v-tab>
           <v-tab
             class="caption"
-            @click="clicked('BasicInformation')"
+            @click="selectTab('BasicInformation')"
             :disabled="SurveyInformationValidated"
           >
             I. Farmer's Basic Information
           </v-tab>
-          <v-tab class="caption" @click="clicked('GeneralInformation')">
+          <v-tab class="caption" @click="selectTab('GeneralInformation')">
             II. General Information
           </v-tab>
-          <v-tab class="caption" @click="clicked('FamilyAffiliated')">
+          <v-tab class="caption" @click="selectTab('FamilyAffiliated')">
             II. Family Affiliated
           </v-tab>
-          <v-tab class="caption" @click="clicked('FamilyIncome')">
+          <v-tab class="caption" @click="selectTab('FamilyIncome')">
             III. Family Income
           </v-tab>
-          <v-tab class="caption" @click="clicked('FarmIncome')">
+          <v-tab class="caption" @click="selectTab('FarmIncome')">
             III. Farm Income
           </v-tab>
-          <v-tab class="caption" @click="clicked('HouseholdExpenses')">
+          <v-tab class="caption" @click="selectTab('HouseholdExpenses')">
             IV. Household Expenses
           </v-tab>
-          <v-tab class="caption" @click="clicked('AssetsFarmTools')">
+          <v-tab class="caption" @click="selectTab('AssetsFarmTools')">
             V. Assets Farm Tools
           </v-tab>
-          <v-tab class="caption" @click="clicked('AssetsFarmMachinery')">
+          <v-tab class="caption" @click="selectTab('AssetsFarmMachinery')">
             V. Assets Farm Machinery
           </v-tab>
-          <v-tab class="caption" @click="clicked('AssetsFarmPoultryLivestock')">
+          <v-tab class="caption" @click="selectTab('AssetsFarmPoultryLivestock')">
             V. Assets Farm Poultry Livestock
           </v-tab>
-          <v-tab class="caption" @click="clicked('AssetsFarmStructure')">
+          <v-tab class="caption" @click="selectTab('AssetsFarmStructure')">
             V. Assets Farm Structure
           </v-tab>
-          <v-tab class="caption" @click="clicked('InformationDwellingPlace')">
+          <v-tab class="caption" @click="selectTab('InformationDwellingPlace')">
             VI. Information Dwelling Place
           </v-tab>
-          <v-tab class="caption" @click="clicked('GeneralFarmingInformation')">
+          <v-tab class="caption" @click="selectTab('GeneralFarmingInformation')">
             VII. General Farming Information
           </v-tab>
-          <v-tab class="caption" @click="clicked('ParcelInformation')">
+          <v-tab class="caption" @click="selectTab('ParcelInformation')">
             VII.IV Parcel Information
           </v-tab>
-          <v-tab class="caption" @click="clicked('DetailsCoffeeArea')">
+          <v-tab class="caption" @click="selectTab('DetailsCoffeeArea')">
             VII.V Details Coffee Area
           </v-tab>
           <v-tab
             class="caption"
-            @click="clicked('InfrastructureDistanceAccessibility')"
+            @click="selectTab('InfrastructureDistanceAccessibility')"
           >
             VII.VI Infrastructure Distance Accessibility
           </v-tab>
-          <v-tab class="caption" @click="clicked('FarmActivities')">
+          <v-tab class="caption" @click="selectTab('FarmActivities')">
             VIII Farm Activities
           </v-tab>
-          <v-tab class="caption" @click="clicked('FarmWasteManagement')">
+          <v-tab class="caption" @click="selectTab('FarmWasteManagement')">
             VIII.IV Farm Waste Management
           </v-tab>
-          <v-tab class="caption" @click="clicked('CroppingPatternCalendar')">
+          <v-tab class="caption" @click="selectTab('CroppingPatternCalendar')">
             VIII.V Cropping Pattern Calendar
           </v-tab>
-          <v-tab class="caption" @click="clicked('DetailsCoffeeProduction')">
+          <v-tab class="caption" @click="selectTab('DetailsCoffeeProduction')">
             IX Details Coffee Production
           </v-tab>
-          <v-tab class="caption" @click="clicked('LaborUtilizationOperations')">
+          <v-tab class="caption" @click="selectTab('LaborUtilizationOperations')">
             IX.II Labor Utilization Operations
           </v-tab>
-          <v-tab class="caption" @click="clicked('DetailWageOperation')">
+          <v-tab class="caption" @click="selectTab('DetailWageOperation')">
             IX.III Detail Wage Operation
           </v-tab>
          <!-- TODO:  -->
-          <v-tab class="caption" @click="clicked('CostInputsCoffee')">
+          <v-tab class="caption" @click="selectTab('CostInputsCoffee')">
 						IX.IV Cost Inputs Coffee
 					</v-tab>
 					<v-tab
 						class="caption"
-						@click="clicked('PestDamageObserved')"
+						@click="selectTab('PestDamageObserved')"
 					>
 						X Pest Damage Observed
 					</v-tab>
 					<v-tab
 						class="caption"
-						@click="clicked('PestManagementPractice')"
+						@click="selectTab('PestManagementPractice')"
 					>
 						X.I Pest Management Practice
 					</v-tab>
 					<v-tab
 						class="caption"
-						@click="clicked('CoffeeHarvestMarketing')"
+						@click="selectTab('CoffeeHarvestMarketing')"
 					>
 						XI Coffee Harvest Marketing
 					</v-tab>
-					<v-tab class="caption" @click="clicked('TechAwareness')">
+					<v-tab class="caption" @click="selectTab('TechAwareness')">
 						XII Technology Awareness
 					</v-tab>
 					<v-tab
 						class="caption"
-						@click="clicked('InformationKnowledgeSources')"
+						@click="selectTab('InformationKnowledgeSources')"
 					>
 						XIII Information Knowledge Sources
 					</v-tab>
 					<v-tab
 						class="caption"
-						@click="clicked('OpenEndedQuestions')"
+						@click="selectTab('OpenEndedQuestions')"
 					>
 						XIV Open Ended Questions
 					</v-tab>
 					<v-tab
 						class="caption"
-						@click="clicked('OpenEndedQuestionRating')"
+						@click="selectTab('OpenEndedQuestionRating')"
 					>
 						XV Open EndedQuestion Rating
 					</v-tab>
         </v-tabs>
       </template>
+      <template v-else>
+        <v-tabs fixed-tabs show-arrows center-active slider-color="red">
+          <v-tab>TAB 1</v-tab>
+          <v-tab>TAB 2</v-tab>
+        </v-tabs>
+      </template>
     </v-toolbar>
     <v-tabs-items>
-      <v-card>
+      <v-card v-if="currentCommodity == 'Coffee Beans'">
         <keep-alive>
           <component :is="current"></component>
+        </keep-alive>
+      </v-card>
+      <v-card v-else>
+        <keep-alive>
+          EMPTY HERE
         </keep-alive>
       </v-card>
     </v-tabs-items>
@@ -215,19 +226,26 @@ export default {
   data() {
     return {
       current: 'SurveyInformation',
-      commodity: [{ title: 'Coffee' }, { title: 'Mango' }, { title: 'Cacao' }],
+      currentCommodity: 'Coffee Beans',
+      commodity: ['Coffee Beans' , 'Mango' , 'Cacao' ],
     }
   },
   methods: {
-    clicked(item) {
+    selectTab(item) {
       this.current = item
     },
+    switchCommodity(commodity){
+      this.currentCommodity = commodity
+    }
   },
   computed: {
     SurveyInformationValidated() {
       return !this.$store.getters['questionnaire/SurveyInformationValidated']
     },
   },
+  async beforeMount(){
+    await this.$store.dispatch('questionnaireCode/fetchAllCodes','coffee beans');
+  }
 }
 </script>
 

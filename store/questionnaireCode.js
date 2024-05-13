@@ -1,3 +1,4 @@
+import * as api from '../storeAPI/questionnaireCode.js'
 export const state = () => ({
   codes: {
     Code1: {
@@ -544,4 +545,12 @@ export const getters = {
 
 export const mutations = {}
 
-export const actions = {}
+export const actions = {
+  async fetchAllCodes(_,commodity){
+      try{
+        await api.fetchAllCodes(commodity);
+      }catch(error){
+  
+      }
+  }
+}
