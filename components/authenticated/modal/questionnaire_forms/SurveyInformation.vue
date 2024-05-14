@@ -13,22 +13,13 @@
         </form-input-container>
 
         <form-radio-container title="Name of Interviewer">
-          <v-text-field
-            v-model="interviewer"
-            :rules="requiredRule"
-            required
-            class="hiddenRequiredField"
-          />
-          <v-radio-group v-model="interviewer" class="ma-0">
+          <v-radio-group :rules="requiredRule" v-model="interviewer" class="ma-0">
             <v-radio
               v-for="item in items"
               :key="item.value"
               :label="item.label"
               :value="item.value"
             ></v-radio>
-            <div v-if="!interviewer" class="red--text caption">
-              You must select an option!
-            </div>
           </v-radio-group>
         </form-radio-container>
 
@@ -117,14 +108,9 @@
             :items="regionProvinceItems"
             append-icon="mdi-city"
             :rules="requiredRule"
-            menu-props="auto"
-            hide-details
             label="Region/Pronvince"
             dense
           ></v-select>
-          <p v-if="!municipality" class="red--text caption mt-1">
-            You must select Region/Province!
-          </p>
         </form-select-container>
 
         <form-select-container>
@@ -136,9 +122,6 @@
             label="City/Municipality"
             dense
           ></v-select>
-          <p v-if="!municipality" class="red--text caption mt-1">
-            You must select Municipality/City!
-          </p>
         </form-select-container>
 
         <form-input-container>

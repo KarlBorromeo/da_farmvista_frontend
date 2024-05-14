@@ -171,6 +171,7 @@
 </template>
 
 <script>
+import { concatinateEachIndexes } from '~/reusableFunctions/questionnaireValidation'
 import formCard from '../../form/formCard.vue'
 import formCardButton from '../../form/formCardButton.vue'
 import FormInputContainer from '../../form/formInputContainer.vue'
@@ -220,38 +221,26 @@ export default {
       const valid = this.$refs.form.validate()
       console.log(valid, this.getData())
     },
-    /* concatenate each indexes and return new array (ex: tenure, tenureOthers)*/
-    concatinateEachIndexes(originalList, otherList) {
-      const arr = []
-      for (let i = 0; i < this.items; i++) {
-        let other = ''
-        if (otherList[i]) {
-          other = ' ' + otherList[i]
-        }
-        arr.push(originalList[i] + other)
-      }
-      return arr
-    },
     /* get the data and convert it into expected key/value formats in BackEnd */
     getData() {
       return {
         parcelNumber: this.parcelNumber,
         area: this.area,
-        tenure: this.concatinateEachIndexes(this.tenure, this.tenureOther),
-        topography: this.concatinateEachIndexes(
+        tenure: concatinateEachIndexes(this.tenure, this.tenureOther),
+        topography: concatinateEachIndexes(
           this.topography,
           this.topographyOther
         ),
         soilFertility: this.soilFertility,
-        croppingSystem: this.concatinateEachIndexes(
+        croppingSystem: concatinateEachIndexes(
           this.croppingSystem,
           this.croppingSystemOther
         ),
-        sourceOfWater: this.concatinateEachIndexes(
+        sourceOfWater: concatinateEachIndexes(
           this.sourceWater,
           this.sourceWaterOther
         ),
-        landUseStatus: this.concatinateEachIndexes(
+        landUseStatus: concatinateEachIndexes(
           this.landUseStatus,
           this.landUseStatusOther
         ),

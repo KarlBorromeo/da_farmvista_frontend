@@ -423,6 +423,7 @@
 import formCard from '../../form/formCard.vue'
 import FormInputContainer from '../../form/formInputContainer.vue'
 import FormRadioContainer from '../../form/formRadioContainer.vue'
+import { concatinateOtherValueToString } from '~/reusableFunctions/questionnaireValidation'
 export default {
   components: {
     formCard,
@@ -508,11 +509,11 @@ export default {
         farmToNearestRoad: {
           distanceQty: this.farmToNearestRoad.qty,
           distanceUnit: this.farmToNearestRoad.unit,
-          dominantTransportation: this.concatinateValues(
+          dominantTransportation: concatinateOtherValueToString(
             this.farmToNearestRoad.dominantTransportation,
             this.farmToNearestRoad.dominantTransportationOther
           ),
-          dominantTypeRoad: this.concatinateValues(
+          dominantTypeRoad: concatinateOtherValueToString(
             this.farmToNearestRoad.dominantRoad,
             this.farmToNearestRoad.dominantRoadOther
           ),
@@ -520,11 +521,11 @@ export default {
         farmToResidence: {
           distanceQty: this.farmToResidence.qty,
           distanceUnit: this.farmToResidence.unit,
-          dominantTransportation: this.concatinateValues(
+          dominantTransportation: concatinateOtherValueToString(
             this.farmToResidence.dominantTransportation,
             this.farmToResidence.dominantTransportationOther
           ),
-          dominantTypeRoad: this.concatinateValues(
+          dominantTypeRoad: concatinateOtherValueToString(
             this.farmToResidence.dominantRoad,
             this.farmToResidence.dominantRoadOther
           ),
@@ -532,11 +533,11 @@ export default {
         farmToOutputMarket: {
           distanceQty: this.farmToMarket.qty,
           distanceUnit: this.farmToMarket.unit,
-          dominantTransportation: this.concatinateValues(
+          dominantTransportation: concatinateOtherValueToString(
             this.farmToMarket.dominantTransportation,
             this.farmToMarket.dominantTransportationOther
           ),
-          dominantTypeRoad: this.concatinateValues(
+          dominantTypeRoad: concatinateOtherValueToString(
             this.farmToMarket.dominantRoad,
             this.farmToMarket.dominantRoadOther
           ),
@@ -544,11 +545,11 @@ export default {
         residenceToOutputMarket: {
           distanceQty: this.residenceToMarket.qty,
           distanceUnit: this.residenceToMarket.unit,
-          dominantTransportation: this.concatinateValues(
+          dominantTransportation: concatinateOtherValueToString(
             this.residenceToMarket.dominantTransportation,
             this.residenceToMarket.dominantTransportationOther
           ),
-          dominantTypeRoad: this.concatinateValues(
+          dominantTypeRoad: concatinateOtherValueToString(
             this.residenceToMarket.dominantRoad,
             this.residenceToMarket.dominantRoadOther
           ),
@@ -556,11 +557,11 @@ export default {
         farmToInputsSupply: {
           distanceQty: this.farmToInputSupply.qty,
           distanceUnit: this.farmToInputSupply.unit,
-          dominantTransportation: this.concatinateValues(
+          dominantTransportation: concatinateOtherValueToString(
             this.farmToInputSupply.dominantTransportation,
             this.farmToInputSupply.dominantTransportationOther
           ),
-          dominantTypeRoad: this.concatinateValues(
+          dominantTypeRoad: concatinateOtherValueToString(
             this.farmToInputSupply.dominantRoad,
             this.farmToInputSupply.dominantRoadOther
           ),
@@ -568,11 +569,11 @@ export default {
         residenceToInputsSupply: {
           distanceQty: this.residenceToInputSupply.qty,
           distanceUnit: this.residenceToInputSupply.unit,
-          dominantTransportation: this.concatinateValues(
+          dominantTransportation: concatinateOtherValueToString(
             this.residenceToInputSupply.dominantTransportation,
             this.residenceToInputSupply.dominantTransportationOther
           ),
-          dominantTypeRoad: this.concatinateValues(
+          dominantTypeRoad: concatinateOtherValueToString(
             this.residenceToInputSupply.dominantRoad,
             this.residenceToInputSupply.dominantRoadOther
           ),

@@ -37,13 +37,8 @@
           <form-radio-container
             title="Did acquire through government or programs?"
           >
-            <v-text-field
-              v-model="isstructureBldgAquiredGovtProg[i - 1]"
-              :rules="requiredRule"
-              required
-              class="hiddenRequiredField"
-            />
             <v-radio-group
+              :rules="requiredRule"
               v-model="isstructureBldgAquiredGovtProg[i - 1]"
               class="pa-0 ma-0"
             >
@@ -53,12 +48,6 @@
                 :label="item.label"
                 :value="item.value"
               ></v-radio>
-              <div
-                v-if="!isstructureBldgAquiredGovtProg[i - 1]"
-                class="red--text caption"
-              >
-                You must select an option!
-              </div>
             </v-radio-group>
           </form-radio-container>
 
@@ -83,6 +72,7 @@ import formCardButton from '../../form/formCardButton.vue'
 import FormInputContainer from '../../form/formInputContainer.vue'
 import FormRadioContainer from '../../form/formRadioContainer.vue'
 import FormSelectContainer from '../../form/formSelectContainer.vue'
+import { concatinateEachIndexes } from '~/reusableFunctions/questionnaireValidation'
 export default {
   components: {
     formCard,
@@ -116,22 +106,10 @@ export default {
       const valid = this.$refs.form.validate()
       console.log(valid)
     },
-    /* concatenate each indexes and return new array (ex: structureBldgName, structureBldgNameOther)*/
-    concatinateEachIndexes(originalList, otherList) {
-      const arr = []
-      for (let i = 0; i < this.items; i++) {
-        let other = ''
-        if (otherList[i]) {
-          other = ' ' + otherList[i]
-        }
-        arr.push(originalList[i] + other)
-      }
-      return arr
-    },
     /* get the data and convert it into expected key/value formats in BackEnd */
     getData() {
       return {
-        structureBldgLandName: this.concatinateEachIndexes(
+        structureBldgLandName: concatinateEachIndexes(
           this.structureBldgName,
           this.structureBldgNameOther
         ),

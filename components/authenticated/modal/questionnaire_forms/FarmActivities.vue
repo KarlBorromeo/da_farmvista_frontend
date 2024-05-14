@@ -92,6 +92,7 @@
 import FormCheckboxContainer from '../../form/formCheckboxContainer.vue'
 import FormInputContainer from '../../form/formInputContainer.vue'
 import FormRadioContainer from '../../form/formRadioContainer.vue'
+import { concatOtherValueToList } from '~/reusableFunctions/questionnaireValidation'
 export default {
   components: {
     FormInputContainer,
@@ -121,18 +122,6 @@ export default {
       const valid = this.$refs.form.validate()
       console.log(valid)
     },
-    /* concatenate the value of other into the index of list that has 'other' */
-    concatOtherValue(list, other) {
-      if (!!other) {
-        for (let i = 0; i < list.length; i++) {
-          if (list[i] == 'others') {
-            list[i] += ' ' + other
-            break
-          }
-        }
-      }
-      return list
-    },
     /* check if 'other' checkbox is ticked */
     isOtherTicked(list) {
       for (let i = 0; i < list.length; i++) {
@@ -145,16 +134,16 @@ export default {
     /* get the data and convert it into expected key/value formats in BackEnd */
     getData() {
       return {
-        agriculturalSystem: this.concatOtherValue(
+        agriculturalSystem: concatOtherValueToList(
           this.agriculturalSystem,
           this.agriculturalSystemOther
         ),
         knowProperReutilizationAgriwaste: this.didKnowProperReutilization,
-        whereDisposedUnutilizedAgriwaste: this.concatOtherValue(
+        whereDisposedUnutilizedAgriwaste: concatOtherValueToList(
           this.whereDisposedUnutilizedAgriwaste,
           this.whereDisposedUnutilizedAgriwasteOther
         ),
-        whereHearAboutReutilization: this.concatOtherValue(
+        whereHearAboutReutilization: concatOtherValueToList(
           this.whereHearAboutReutilization,
           this.whereHearAboutReutilizationOther
         ),

@@ -13,42 +13,24 @@
         </form-input-container>
 
         <form-radio-container title="Sex">
-          <v-text-field
-            v-model="sex"
-            :rules="requiredRule"
-            required
-            class="hiddenRequiredField"
-          />
-          <v-radio-group v-model="sex" class="pa-0 ma-0">
+          <v-radio-group :rules="requiredRule" v-model="sex" class="pa-0 ma-0">
             <v-radio
               v-for="item in sexItems"
               :key="item.value"
               :label="item.label"
               :value="item.value"
             ></v-radio>
-            <div v-if="!sex" class="red--text caption">
-              You must select an option!
-            </div>
           </v-radio-group>
         </form-radio-container>
 
         <form-radio-container title="Civil Status">
-          <v-text-field
-            v-model="civilStatus"
-            :rules="requiredRule"
-            required
-            class="hiddenRequiredField"
-          />
-          <v-radio-group v-model="civilStatus" class="pa-0 ma-0">
+          <v-radio-group :rules="requiredRule" v-model="civilStatus" class="pa-0 ma-0">
             <v-radio
               v-for="item in civilStatusItems"
               :key="item.value"
               :label="item.label"
               :value="item.value"
             ></v-radio>
-            <div v-if="!civilStatus" class="red--text caption">
-              You must select an option!
-            </div>
           </v-radio-group>
         </form-radio-container>
 
@@ -70,22 +52,13 @@
         </form-input-container>
 
         <form-radio-container title="Belongs to the Marginalized Sector">
-          <v-text-field
-            v-model="isBelongMarginalizedSector"
-            :rules="requiredRule"
-            required
-            class="hiddenRequiredField"
-          />
-          <v-radio-group v-model="isBelongMarginalizedSector" class="py-0 my-0">
+          <v-radio-group :rules="requiredRule" v-model="isBelongMarginalizedSector" class="py-0 my-0">
             <v-radio
               v-for="item in isBelongMarginalizedSectorItems"
               :key="item.value"
               :label="item.label"
               :value="item.value"
             ></v-radio>
-            <div v-if="!isBelongMarginalizedSector" class="red--text caption">
-              You must select an option!
-            </div>
           </v-radio-group>
         </form-radio-container>
 
@@ -93,26 +66,15 @@
           v-if="isBelongMarginalizedSector == 'no'"
           title="If you answered 'no' to the previous question: please specify"
         >
-          <v-text-field
-            v-model="nonMarginalizedSector"
-            :rules="listRule"
-            required
-            class="hiddenRequiredField"
-          />
           <v-checkbox
             v-for="item in nonMarginalizedSectorItems"
             v-model="nonMarginalizedSector"
+            :rules="listRule"
             :key="item.value"
             :value="item.value"
             :label="item.label"
             class="ma-0 pa-0"
           ></v-checkbox>
-          <div
-            v-if="emptyNonMarginalizedSector"
-            class="red--text caption pa-0 ma-0"
-          >
-            You must select at least one option!
-          </div>
         </form-checkbox-container>
 
         <form-input-container>
@@ -126,22 +88,13 @@
         <form-radio-container
           title="Member of a farmer organization or cooperative?"
         >
-          <v-text-field
-            v-model="isMemberOrgranization"
-            :rules="requiredRule"
-            required
-            class="hiddenRequiredField"
-          />
-          <v-radio-group v-model="isMemberOrgranization" class="py-0 my-0">
+          <v-radio-group :rules="requiredRule" v-model="isMemberOrgranization" class="py-0 my-0">
             <v-radio
               v-for="item in isMemberOrgranizationItems"
               :key="item.value"
               :label="item.label"
               :value="item.value"
             ></v-radio>
-            <div v-if="!isMemberOrgranization" class="red--text caption">
-              You must select an option!
-            </div>
           </v-radio-group>
         </form-radio-container>
 
@@ -149,22 +102,13 @@
           v-if="isMemberOrgranization == 'yes'"
           title=" If you answered 'yes' to the previous question, select type of Membership"
         >
-          <v-text-field
-            v-model="typeMembership"
-            :rules="requiredRule"
-            required
-            class="hiddenRequiredField"
-          />
-          <v-radio-group v-model="typeMembership" class="py-0 my-0">
+          <v-radio-group :rules="requiredRule" v-model="typeMembership" class="py-0 my-0">
             <v-radio
               v-for="item in typeMembershipItems"
               :key="item.value"
               :label="item.label"
               :value="item.value"
             ></v-radio>
-            <div v-if="!typeMembership" class="red--text caption">
-              You must select an option!
-            </div>
           </v-radio-group>
         </form-radio-container>
 
@@ -179,13 +123,7 @@
         <form-radio-container
           title="Any household member affiliated to any farming organization/association?"
         >
-          <v-text-field
-            v-model="isAnyHouseholdMemberOrg"
-            :rules="requiredRule"
-            required
-            class="hiddenRequiredField"
-          />
-          <v-radio-group v-model="isAnyHouseholdMemberOrg" class="py-0 my-0">
+          <v-radio-group :rules="requiredRule" v-model="isAnyHouseholdMemberOrg" class="py-0 my-0">
             <p class="pa-0 ma-0">
               * Any household member affiliated to any farming
               organization/association?
@@ -196,9 +134,6 @@
               :label="item.label"
               :value="item.value"
             ></v-radio>
-            <div v-if="!isAnyHouseholdMemberOrg" class="red--text caption">
-              You must select an option!
-            </div>
           </v-radio-group>
         </form-radio-container>
       </v-row>

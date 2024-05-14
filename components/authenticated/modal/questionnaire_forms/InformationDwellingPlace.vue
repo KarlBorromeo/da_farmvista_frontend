@@ -182,6 +182,7 @@
 <script>
 import FormInputContainer from '../../form/formInputContainer.vue'
 import FormRadioContainer from '../../form/formRadioContainer.vue'
+import { concatinateOtherValueToString } from '~/reusableFunctions/questionnaireValidation'
 export default {
   components: { FormInputContainer, FormRadioContainer },
   data: () => ({
@@ -226,45 +227,37 @@ export default {
     getData() {
       return {
         numberYear: this.yearsResidence,
-        houseOwnership: this.concatinateValues(
+        houseOwnership: concatinateOtherValueToString(
           this.houseOwernship,
           this.houseOwernshipOther
         ),
         numberOfRooms: this.numberRooms,
-        roofMaterialsMade: this.concatinateValues(
+        roofMaterialsMade: concatinateOtherValueToString(
           this.typeRoofMade,
           this.typeRoofMadeOther
         ),
-        wallsMaterialsMade: this.concatinateValues(
+        wallsMaterialsMade: concatinateOtherValueToString(
           this.typeWallMade,
           this.typeWallMadeOther
         ),
-        kindToiletFacility: this.concatinateValues(
+        kindToiletFacility: concatinateOtherValueToString(
           this.kindToilet,
           this.kindToiletOther
         ),
-        kindLightingFacility: this.concatinateValues(
+        kindLightingFacility: concatinateOtherValueToString(
           this.lightingFacility,
           this.lightingFacilityOther
         ),
-        sourceCookingFuel: this.concatinateValues(
+        sourceCookingFuel: concatinateOtherValueToString(
           this.sourceCooking,
           this.sourceCookingOther
         ),
-        sourceDrinkingSupply: this.concatinateValues(
+        sourceDrinkingSupply: concatinateOtherValueToString(
           this.sourceWaterDrink,
           this.sourceWaterDrinkOther
         ),
       }
-    },
-    /* concatenate two value holders for field that has others (ex: kindToilet, kindToiletOthers)*/
-    concatinateValues(original, other) {
-      let text = original
-      if (!!other) {
-        text += ' ' + other
-      }
-      return text
-    },
+    }
   },
   beforeMount() {
     this.houseOwernshipItems = this.$store.getters['questionnaireCode/Code6']

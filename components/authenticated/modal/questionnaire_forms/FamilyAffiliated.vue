@@ -16,13 +16,7 @@
           </form-input-container>
 
           <form-radio-container title="Position">
-            <v-text-field
-              v-model="position[i - 1]"
-              :rules="requiredRule"
-              required
-              class="hiddenRequiredField"
-            />
-            <v-radio-group v-model="position[i - 1]" class="py-0 my-0">
+            <v-radio-group :rules="requiredRule" v-model="position[i - 1]" class="py-0 my-0">
               <v-radio
                 v-for="item in positionItems"
                 :key="item"
@@ -36,9 +30,6 @@
                 label="Others:"
                 class="my-0 py-0 pt-1"
               ></v-text-field>
-              <div v-if="!position[i - 1]" class="red--text caption">
-                You must select an option!
-              </div>
             </v-radio-group>
           </form-radio-container>
 
@@ -51,13 +42,7 @@
           </form-input-container>
 
           <form-radio-container title="Type of Institution/Organization">
-            <v-text-field
-              v-model="typeOrganization[i - 1]"
-              :rules="requiredRule"
-              required
-              class="hiddenRequiredField"
-            />
-            <v-radio-group v-model="typeOrganization[i - 1]" class="py-0 my-0">
+            <v-radio-group :rules="requiredRule" v-model="typeOrganization[i - 1]" class="py-0 my-0">
               <v-radio
                 v-for="item in typeOrganizationItems"
                 :key="item"
@@ -71,9 +56,6 @@
                 label="Other:"
                 class="my-0 py-0 pt-1"
               ></v-text-field>
-              <div v-if="!typeOrganization[i - 1]" class="red--text caption">
-                You must select an option!
-              </div>
             </v-radio-group>
           </form-radio-container>
 
@@ -87,33 +69,19 @@
           </form-input-container>
 
           <form-radio-container title="Status of Membership">
-            <v-text-field
-              v-model="statusMembership[i - 1]"
-              :rules="requiredRule"
-              required
-              class="hiddenRequiredField"
-            />
-            <v-radio-group v-model="statusMembership[i - 1]" class="py-0 my-0">
+            <v-radio-group :rules="requiredRule" v-model="statusMembership[i - 1]" class="py-0 my-0">
               <v-radio
                 v-for="item in statusMembershipItems"
                 :key="item"
                 :label="item"
                 :value="item"
               ></v-radio>
-              <div v-if="!statusMembership[i - 1]" class="red--text caption">
-                You must select an option!
-              </div>
             </v-radio-group>
           </form-radio-container>
 
           <form-radio-container title="Status of Organization">
-            <v-text-field
-              v-model="statusOrganization[i - 1]"
-              :rules="requiredRule"
-              required
-              class="hiddenRequiredField"
-            />
             <v-radio-group
+            :rules="requiredRule"
               v-model="statusOrganization[i - 1]"
               class="py-0 my-0"
             >
@@ -123,9 +91,6 @@
                 :label="item"
                 :value="item"
               ></v-radio>
-              <div v-if="!statusOrganization[i - 1]" class="red--text caption">
-                You must select an option!
-              </div>
             </v-radio-group>
           </form-radio-container>
         </v-row>
@@ -140,6 +105,7 @@ import formCard from '../../form/formCard.vue'
 import formCardButton from '../../form/formCardButton.vue'
 import FormInputContainer from '../../form/formInputContainer.vue'
 import FormRadioContainer from '../../form/formRadioContainer.vue'
+import { concatinateEachIndexes } from '~/reusableFunctions/questionnaireValidation'
 export default {
   components: {
     formCard,
@@ -175,31 +141,21 @@ export default {
     getData() {
       return {
         fullName: this.nameFamilyMember,
-        position: this.concatinateEachIndexes(
+        position: concatinateEachIndexes(
           this.position,
-          this.positionOthers
+          this.positionOthers,
+          this.items
         ),
         nameOrganization: this.nameOrganization,
-        typeOrganization: this.concatinateEachIndexes(
+        typeOrganization: concatinateEachIndexes(
           this.typeOrganization,
-          this.typeOrganizationOthers
+          this.typeOrganizationOthers,
+          this.items
         ),
         yearsAsMember: this.numberYearsMember,
         statusMembership: this.statusMembership,
         statusOrganization: this.statusOrganization,
       }
-    },
-    /* concatenate each indexes and return new array (ex: position, positionOthers)*/
-    concatinateEachIndexes(originalList, otherList) {
-      const arr = []
-      for (let i = 0; i < this.items; i++) {
-        let other = ''
-        if (otherList[i]) {
-          other = ' ' + otherList[i]
-        }
-        arr.push(originalList[i] + other)
-      }
-      return arr
     },
     /* decrement the count of items, pop the end index */
     decrement() {

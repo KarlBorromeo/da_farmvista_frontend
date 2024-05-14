@@ -30,13 +30,8 @@
           <form-radio-container
             title="Did acquire through government or programs?"
           >
-            <v-text-field
-              v-model="ispoultryLivestockAquiredGovtProg[i - 1]"
-              :rules="requiredRule"
-              required
-              class="hiddenRequiredField"
-            />
             <v-radio-group
+              :rules="requiredRule"
               v-model="ispoultryLivestockAquiredGovtProg[i - 1]"
               class="pa-0 ma-0"
             >
@@ -46,12 +41,6 @@
                 :label="item.label"
                 :value="item.value"
               ></v-radio>
-              <div
-                v-if="!ispoultryLivestockAquiredGovtProg[i - 1]"
-                class="red--text caption"
-              >
-                You must select an option!
-              </div>
             </v-radio-group>
           </form-radio-container>
 

@@ -25,22 +25,13 @@
           </form-input-container>
 
           <form-radio-container title="Sex">
-            <v-text-field
-              v-model="sex[i - 1]"
-              :rules="requiredRule"
-              required
-              class="hiddenRequiredField"
-            />
-            <v-radio-group v-model="sex[i - 1]" class="pa-0 ma-0">
+            <v-radio-group :rules="requiredRule" v-model="sex[i - 1]" class="pa-0 ma-0">
               <v-radio
                 v-for="item in sexItems"
                 :key="item.value"
                 :label="item.label"
                 :value="item.value"
               ></v-radio>
-              <div v-if="!sex[i - 1]" class="red--text caption">
-                You must select an option!
-              </div>
             </v-radio-group>
           </form-radio-container>
 
@@ -71,22 +62,13 @@
           </form-input-container>
 
           <form-radio-container title="Involved in coffee farm">
-            <v-text-field
-              v-model="involveCoffeefarm[i - 1]"
-              :rules="requiredRule"
-              required
-              class="hiddenRequiredField"
-            />
-            <v-radio-group v-model="involveCoffeefarm[i - 1]" class="pa-0 ma-0">
+            <v-radio-group :rules="requiredRule" v-model="involveCoffeefarm[i - 1]" class="pa-0 ma-0">
               <v-radio
                 v-for="item in involveCoffeefarmItems"
                 :key="item.value"
                 :label="item.label"
                 :value="item.value"
               ></v-radio>
-              <div v-if="!involveCoffeefarm[i - 1]" class="red--text caption">
-                You must select an option!
-              </div>
             </v-radio-group>
           </form-radio-container>
         </v-row>
