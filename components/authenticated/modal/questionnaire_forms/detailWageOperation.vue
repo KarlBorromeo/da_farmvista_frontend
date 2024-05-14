@@ -8,7 +8,7 @@
             :rules="numberRule"
             :label="item.label"
             type="number"
-            min=0
+            min="0"
           ></v-text-field>
         </form-input-container>
       </v-row>
@@ -24,20 +24,26 @@ export default {
   data: () => ({
     valid: false,
     formData: {
-        amntPaidLabor: '',
-        goodsProvidedLabor: '',
-        expectedWageOtherfarms: '',
-        amntPaidCattleWithOperator: '',
-        amntPaidCattleOnly: '',
-        amntPaidManMachine: '',        
+      amntPaidLabor: '',
+      goodsProvidedLabor: '',
+      expectedWageOtherfarms: '',
+      amntPaidCattleWithOperator: '',
+      amntPaidCattleOnly: '',
+      amntPaidManMachine: '',
     },
     list: [
-        {key:'amntPaidLabor',label: 'paid for labor' },
-        {key:'goodsProvidedLabor',label: 'value of food, cigarettes and other' },
-        {key:'expectedWageOtherfarms',label: 'expected wage other farms' },
-        {key:'amntPaidCattleWithOperator',label: 'paid for cattle with operator' },
-        {key:'amntPaidCattleOnly',label: 'paid for cattle only' },
-        {key:'amntPaidManMachine',label: 'paid for Man-Machine' },
+      { key: 'amntPaidLabor', label: 'paid for labor' },
+      {
+        key: 'goodsProvidedLabor',
+        label: 'value of food, cigarettes and other',
+      },
+      { key: 'expectedWageOtherfarms', label: 'expected wage other farms' },
+      {
+        key: 'amntPaidCattleWithOperator',
+        label: 'paid for cattle with operator',
+      },
+      { key: 'amntPaidCattleOnly', label: 'paid for cattle only' },
+      { key: 'amntPaidManMachine', label: 'paid for Man-Machine' },
     ],
     numberRule: [
       (v) => !!v || 'This field is required',
@@ -55,12 +61,12 @@ export default {
     },
     /* get the data and convert it into expected key/value formats in BackEnd */
     getData() {
-        const data = {};
-        for(let i=0; i<this.list.length; i++){
-            const keyName = this.list[i].key;
-            data[keyName] = this.formData[keyName];
-        }
-        return data;
+      const data = {}
+      for (let i = 0; i < this.list.length; i++) {
+        const keyName = this.list[i].key
+        data[keyName] = this.formData[keyName]
+      }
+      return data
     },
   },
 }

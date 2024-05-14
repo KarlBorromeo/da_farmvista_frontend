@@ -120,7 +120,7 @@ export default {
     currentPageTitle() {
       return this.$store.getters['pageNameGetter']
     },
-  }
+  },
 }
 </script>
 

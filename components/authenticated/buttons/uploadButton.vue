@@ -10,7 +10,7 @@
         v-on="on"
       >
         <v-icon class="mr-2">mdi-microsoft-excel</v-icon>
-          UPLOAD
+        UPLOAD
         <v-icon class="mr-2" style="position: absolute; right: 0"
           >mdi-chevron-down</v-icon
         >
@@ -18,20 +18,21 @@
     </template>
     <v-dialog v-model="dialog" width="700">
       <template v-slot:activator="{ on, attrs }">
-      <v-list>
-        <v-list-item v-for="item in items" :key="item">
-            <v-btn 
-              color="white" 
-              block 
+        <v-list>
+          <v-list-item v-for="item in items" :key="item">
+            <v-btn
+              color="white"
+              block
               elevation="0"
-              v-bind="attrs" 
-              v-on="on" 
+              v-bind="attrs"
+              v-on="on"
               @click="openModal(item)"
-            >{{ item }}</v-btn>
-        </v-list-item>
-      </v-list>
-    </template>
-      <upload-vue :commodity="commodity"/>
+              >{{ item }}</v-btn
+            >
+          </v-list-item>
+        </v-list>
+      </template>
+      <upload-vue :commodity="commodity" />
     </v-dialog>
   </v-menu>
 </template>
@@ -43,19 +44,15 @@ export default {
   data() {
     return {
       dialog: false,
-      items: [
-        'Coffee Beans',
-        'Mango',
-        'Corn' 
-      ],
+      items: ['Coffee Beans', 'Mango', 'Corn'],
       commodity: '',
     }
   },
   methods: {
-    openModal(item){
+    openModal(item) {
       this.commodity = item
-    }
-  }
+    },
+  },
 }
 </script>
 

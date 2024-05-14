@@ -158,7 +158,7 @@ export default {
     },
     /* get the data and convert it into expected key/value formats in BackEnd */
     getData() {
-      return {        
+      return {
         food: this.food,
         clothing: this.clothing,
         utilities: this.utilities,
@@ -172,7 +172,6 @@ export default {
         specialOccasions: this.specialOccasions,
         others: this.otherExpenses,
         otherSpecified: this.otherExpensesSpecify,
-
       }
     },
   },

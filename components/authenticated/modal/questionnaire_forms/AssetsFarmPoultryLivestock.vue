@@ -8,14 +8,14 @@
             <p class="ma-0 pa-0 font-weight-black">{{ i }}</p>
           </v-col>
           <form-select-container>
-              <v-select
-                v-model="poultryLivestockName[i - 1]"
-                :items="poultryLivestockNameItems"
-                :rules="requiredRule"
-                append-icon="mdi-cow"
-                label="* Livestock/Poultry Items"
-                dense
-              ></v-select>
+            <v-select
+              v-model="poultryLivestockName[i - 1]"
+              :items="poultryLivestockNameItems"
+              :rules="requiredRule"
+              append-icon="mdi-cow"
+              label="* Livestock/Poultry Items"
+              dense
+            ></v-select>
           </form-select-container>
 
           <form-input-container>
@@ -30,12 +30,12 @@
           <form-radio-container
             title="Did acquire through government or programs?"
           >
-              <v-text-field
-                  v-model="ispoultryLivestockAquiredGovtProg[i - 1]"
-                  :rules="requiredRule"
-                  required
-                  class="hiddenRequiredField"
-              /> 
+            <v-text-field
+              v-model="ispoultryLivestockAquiredGovtProg[i - 1]"
+              :rules="requiredRule"
+              required
+              class="hiddenRequiredField"
+            />
             <v-radio-group
               v-model="ispoultryLivestockAquiredGovtProg[i - 1]"
               class="pa-0 ma-0"
@@ -101,14 +101,13 @@ export default {
       (v) => !!v || 'This field is required',
       (v) => parseFloat(v) >= 0 || 'invalid value',
     ],
-    requiredRule: [
-      (v) => !!v || 'This field is required']
+    requiredRule: [(v) => !!v || 'This field is required'],
   }),
   methods: {
     /* test if the form is valid, return boolean */
     validate() {
       const valid = this.$refs.form.validate()
-      console.log(valid);
+      console.log(valid)
     },
     /* get the data and convert it into expected key/value formats in BackEnd */
     getData() {

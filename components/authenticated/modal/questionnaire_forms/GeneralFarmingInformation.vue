@@ -20,10 +20,12 @@
           ></v-text-field>
         </form-input-container>
 
-        <form-radio-container
-          title="Was there time stopped farming?"
-        >
-          <v-radio-group :rules="requiredRule" v-model="isThereStoppedFarming" class="pa-0 ma-0">
+        <form-radio-container title="Was there time stopped farming?">
+          <v-radio-group
+            :rules="requiredRule"
+            v-model="isThereStoppedFarming"
+            class="pa-0 ma-0"
+          >
             <v-radio
               v-for="item in isThereStoppedFarmingItems"
               :key="item.value"

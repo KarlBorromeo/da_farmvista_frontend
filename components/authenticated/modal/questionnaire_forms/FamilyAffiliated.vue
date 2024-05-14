@@ -21,7 +21,7 @@
               :rules="requiredRule"
               required
               class="hiddenRequiredField"
-            /> 
+            />
             <v-radio-group v-model="position[i - 1]" class="py-0 my-0">
               <v-radio
                 v-for="item in positionItems"
@@ -88,11 +88,11 @@
 
           <form-radio-container title="Status of Membership">
             <v-text-field
-                v-model="statusMembership[i - 1]"
-                :rules="requiredRule"
-                required
-                class="hiddenRequiredField"
-            /> 
+              v-model="statusMembership[i - 1]"
+              :rules="requiredRule"
+              required
+              class="hiddenRequiredField"
+            />
             <v-radio-group v-model="statusMembership[i - 1]" class="py-0 my-0">
               <v-radio
                 v-for="item in statusMembershipItems"
@@ -108,11 +108,11 @@
 
           <form-radio-container title="Status of Organization">
             <v-text-field
-                v-model="statusOrganization[i - 1]"
-                :rules="requiredRule"
-                required
-                class="hiddenRequiredField"
-            /> 
+              v-model="statusOrganization[i - 1]"
+              :rules="requiredRule"
+              required
+              class="hiddenRequiredField"
+            />
             <v-radio-group
               v-model="statusOrganization[i - 1]"
               class="py-0 my-0"
@@ -169,7 +169,7 @@ export default {
     /* test if the form is valid, return boolean */
     validate() {
       const valid = this.$refs.form.validate()
-      console.log(valid);
+      console.log(valid)
     },
     /* get the data and convert it into expected key/value formats in BackEnd */
     getData() {
@@ -179,7 +179,7 @@ export default {
           this.position,
           this.positionOthers
         ),
-        nameOrganization:  this.nameOrganization,
+        nameOrganization: this.nameOrganization,
         typeOrganization: this.concatinateEachIndexes(
           this.typeOrganization,
           this.typeOrganizationOthers
@@ -228,21 +228,21 @@ export default {
     this.statusOrganizationItems =
       this.$store.getters['questionnaireCode/Code3_4']
   },
-  watch:{
-    position(value){
-      value.forEach((element,index) => {
-        if(element !== 'others'){
-          this.positionOthers[index] = '';
+  watch: {
+    position(value) {
+      value.forEach((element, index) => {
+        if (element !== 'others') {
+          this.positionOthers[index] = ''
         }
-      });
+      })
     },
-    typeOrganization(value){
-      value.forEach((element,index) => {
-        if(element !== 'others'){
-          this.typeOrganizationOthers[index] = '';
+    typeOrganization(value) {
+      value.forEach((element, index) => {
+        if (element !== 'others') {
+          this.typeOrganizationOthers[index] = ''
         }
-      });
-    }
-  }
+      })
+    },
+  },
 }
 </script>

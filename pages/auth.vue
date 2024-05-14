@@ -112,17 +112,17 @@ export default {
     },
     async login() {
       if (this.validate()) {
-        const credentials = { 
-          identifier: this.username, 
+        const credentials = {
+          identifier: this.username,
           password: this.password,
           device: {
-            deviceType: "Browser",
-            model: "Chrome",
-            modelVersion: "69.0",
-            os: "Mac",
-            osVersion: "10.13",
-            manufacturer: "Apple"
-          } 
+            deviceType: 'Browser',
+            model: 'Chrome',
+            modelVersion: '69.0',
+            os: 'Mac',
+            osVersion: '10.13',
+            manufacturer: 'Apple',
+          },
         }
         try {
           await this.$store.dispatch('auth/login', credentials)

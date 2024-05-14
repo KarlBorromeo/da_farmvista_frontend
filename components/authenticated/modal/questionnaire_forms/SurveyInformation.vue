@@ -112,33 +112,33 @@
         </form-menu-container>
 
         <form-select-container>
-            <v-select
-              v-model="regionProvince"
-              :items="regionProvinceItems"
-              append-icon="mdi-city"
-              :rules="requiredRule"
-              menu-props="auto"
-              hide-details
-              label="Region/Pronvince"
-              dense
-            ></v-select>
-            <p v-if="!municipality" class="red--text caption mt-1">
-              You must select Region/Province!
-            </p>
+          <v-select
+            v-model="regionProvince"
+            :items="regionProvinceItems"
+            append-icon="mdi-city"
+            :rules="requiredRule"
+            menu-props="auto"
+            hide-details
+            label="Region/Pronvince"
+            dense
+          ></v-select>
+          <p v-if="!municipality" class="red--text caption mt-1">
+            You must select Region/Province!
+          </p>
         </form-select-container>
 
         <form-select-container>
-            <v-select
-              v-model="municipality"
-              :items="municipalityItems"
-              :rules="requiredRule"
-              append-icon="mdi-city"
-              label="City/Municipality"
-              dense
-            ></v-select>
-            <p v-if="!municipality" class="red--text caption mt-1">
-              You must select Municipality/City!
-            </p>
+          <v-select
+            v-model="municipality"
+            :items="municipalityItems"
+            :rules="requiredRule"
+            append-icon="mdi-city"
+            label="City/Municipality"
+            dense
+          ></v-select>
+          <p v-if="!municipality" class="red--text caption mt-1">
+            You must select Municipality/City!
+          </p>
         </form-select-container>
 
         <form-input-container>
@@ -237,7 +237,7 @@ export default {
     ],
     barangay: null,
     barangayRule: [(v) => !!v || 'Barangay is required'],
-    requiredRule: [(v) => !!v || 'This field is required']
+    requiredRule: [(v) => !!v || 'This field is required'],
   }),
 
   methods: {

@@ -34,7 +34,11 @@
           </form-input-container>
 
           <form-radio-container title="Utilized?">
-            <v-radio-group :rules="requiredRule" v-model="isUtilized[i - 1]" class="pa-0 ma-0">
+            <v-radio-group
+              :rules="requiredRule"
+              v-model="isUtilized[i - 1]"
+              class="pa-0 ma-0"
+            >
               <v-radio
                 v-for="item in isUtilizedItems"
                 :key="item.value"
@@ -83,7 +87,7 @@ export default {
     /* test if the form is valid, return boolean */
     validate() {
       const valid = this.$refs.form.validate()
-      console.log(valid);
+      console.log(valid)
     },
     /* get the data and convert it into expected key/value formats in BackEnd */
     getData() {

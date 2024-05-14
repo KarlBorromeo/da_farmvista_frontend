@@ -25,7 +25,11 @@
           </form-input-container>
 
           <form-radio-container title="Tenure">
-            <v-radio-group :rules="requiredRule" v-model="tenure[i - 1]" class="pa-0 ma-0">
+            <v-radio-group
+              :rules="requiredRule"
+              v-model="tenure[i - 1]"
+              class="pa-0 ma-0"
+            >
               <v-radio
                 v-for="item in tenureItems"
                 :key="item"
@@ -43,7 +47,11 @@
           </form-radio-container>
 
           <form-radio-container title="Topography">
-            <v-radio-group :rules="requiredRule" v-model="topography[i - 1]" class="pa-0 ma-0">
+            <v-radio-group
+              :rules="requiredRule"
+              v-model="topography[i - 1]"
+              class="pa-0 ma-0"
+            >
               <v-radio
                 v-for="item in topographyItems"
                 :key="item"
@@ -61,7 +69,11 @@
           </form-radio-container>
 
           <form-radio-container title="Soil Fertility">
-            <v-radio-group :rules="requiredRule" v-model="soilFertility[i - 1]" class="pa-0 ma-0">
+            <v-radio-group
+              :rules="requiredRule"
+              v-model="soilFertility[i - 1]"
+              class="pa-0 ma-0"
+            >
               <v-radio
                 v-for="item in soilFertilityItems"
                 :key="item"
@@ -79,7 +91,11 @@
           </form-radio-container>
 
           <form-radio-container title="Cropping System">
-            <v-radio-group :rules="requiredRule" v-model="croppingSystem[i - 1]" class="pa-0 ma-0">
+            <v-radio-group
+              :rules="requiredRule"
+              v-model="croppingSystem[i - 1]"
+              class="pa-0 ma-0"
+            >
               <v-radio
                 v-for="item in croppingSystemItems"
                 :key="item"
@@ -97,7 +113,11 @@
           </form-radio-container>
 
           <form-radio-container title="Source Water">
-            <v-radio-group :rules="requiredRule" v-model="sourceWater[i - 1]" class="pa-0 ma-0">
+            <v-radio-group
+              :rules="requiredRule"
+              v-model="sourceWater[i - 1]"
+              class="pa-0 ma-0"
+            >
               <v-radio
                 v-for="item in sourceWaterItems"
                 :key="item"
@@ -115,7 +135,11 @@
           </form-radio-container>
 
           <form-radio-container title="Land Use Status">
-            <v-radio-group :rules="requiredRule" v-model="landUseStatus[i - 1]" class="pa-0 ma-0">
+            <v-radio-group
+              :rules="requiredRule"
+              v-model="landUseStatus[i - 1]"
+              class="pa-0 ma-0"
+            >
               <v-radio
                 v-for="item in landUseStatusItems"
                 :key="item"
@@ -194,7 +218,7 @@ export default {
     /* test if the form is valid, return boolean */
     validate() {
       const valid = this.$refs.form.validate()
-      console.log(valid,this.getData());
+      console.log(valid, this.getData())
     },
     /* concatenate each indexes and return new array (ex: tenure, tenureOthers)*/
     concatinateEachIndexes(originalList, otherList) {
@@ -232,7 +256,6 @@ export default {
           this.landUseStatusOther
         ),
         cropsPlanted: this.cropsPlanted,
-
       }
     },
     // decrement the count of items
@@ -262,42 +285,42 @@ export default {
     this.sourceWaterItems = this.$store.getters['questionnaireCode/Code14']
     this.landUseStatusItems = this.$store.getters['questionnaireCode/Code15']
   },
-  watch:{
-    tenure(value){
-      value.forEach((element,index) => {
-      if(element !== 'others'){
-        this.tenureOther[index] = ''
-      }  
-      });
+  watch: {
+    tenure(value) {
+      value.forEach((element, index) => {
+        if (element !== 'others') {
+          this.tenureOther[index] = ''
+        }
+      })
     },
-    topography(value){
-      value.forEach((element,index) => {
-      if(element !== 'others'){
-        this.topographyOther[index] = ''
-      }  
-      });
+    topography(value) {
+      value.forEach((element, index) => {
+        if (element !== 'others') {
+          this.topographyOther[index] = ''
+        }
+      })
     },
-    croppingSystem(value){
-      value.forEach((element,index) => {
-      if(element !== 'others'){
-        this.croppingSystemOther[index] = ''
-      }  
-      });
+    croppingSystem(value) {
+      value.forEach((element, index) => {
+        if (element !== 'others') {
+          this.croppingSystemOther[index] = ''
+        }
+      })
     },
-    sourceWater(value){
-      value.forEach((element,index) => {
-      if(element !== 'others'){
-        this.sourceWaterOther[index] = ''
-      }  
-      });
+    sourceWater(value) {
+      value.forEach((element, index) => {
+        if (element !== 'others') {
+          this.sourceWaterOther[index] = ''
+        }
+      })
     },
-    landUseStatus(value){
-      value.forEach((element,index) => {
-      if(element !== 'others'){
-        this.landUseStatusOther[index] = ''
-      }  
-      });
+    landUseStatus(value) {
+      value.forEach((element, index) => {
+        if (element !== 'others') {
+          this.landUseStatusOther[index] = ''
+        }
+      })
     },
-  }
+  },
 }
 </script>

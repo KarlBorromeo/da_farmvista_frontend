@@ -1,7 +1,9 @@
 <template>
   <v-card light class="pa-4">
     <div class="d-flex align-center justify-space-between pa-4">
-      <h2 class="pa-0 ma-0 headline font-weight-bold">Survey Questionaire {{ currentCommodity }}</h2>
+      <h2 class="pa-0 ma-0 headline font-weight-bold">
+        Survey Questionaire {{ currentCommodity }}
+      </h2>
       <v-menu bottom left>
         <template v-slot:activator="{ on, attrs }">
           <v-btn icon v-bind="attrs" v-on="on" color="primary">
@@ -10,7 +12,9 @@
         </template>
         <v-list elevation="15">
           <v-list-item v-for="(item, i) in commodity" :key="i">
-            <v-list-item-title @click="switchCommodity(item)">{{ item}}</v-list-item-title>
+            <v-list-item-title @click="switchCommodity(item)">{{
+              item
+            }}</v-list-item-title>
           </v-list-item>
         </v-list>
       </v-menu>
@@ -50,7 +54,10 @@
           <v-tab class="caption" @click="selectTab('AssetsFarmMachinery')">
             V. Assets Farm Machinery
           </v-tab>
-          <v-tab class="caption" @click="selectTab('AssetsFarmPoultryLivestock')">
+          <v-tab
+            class="caption"
+            @click="selectTab('AssetsFarmPoultryLivestock')"
+          >
             V. Assets Farm Poultry Livestock
           </v-tab>
           <v-tab class="caption" @click="selectTab('AssetsFarmStructure')">
@@ -59,7 +66,10 @@
           <v-tab class="caption" @click="selectTab('InformationDwellingPlace')">
             VI. Information Dwelling Place
           </v-tab>
-          <v-tab class="caption" @click="selectTab('GeneralFarmingInformation')">
+          <v-tab
+            class="caption"
+            @click="selectTab('GeneralFarmingInformation')"
+          >
             VII. General Farming Information
           </v-tab>
           <v-tab class="caption" @click="selectTab('ParcelInformation')">
@@ -86,55 +96,43 @@
           <v-tab class="caption" @click="selectTab('DetailsCoffeeProduction')">
             IX Details Coffee Production
           </v-tab>
-          <v-tab class="caption" @click="selectTab('LaborUtilizationOperations')">
+          <v-tab
+            class="caption"
+            @click="selectTab('LaborUtilizationOperations')"
+          >
             IX.II Labor Utilization Operations
           </v-tab>
           <v-tab class="caption" @click="selectTab('DetailWageOperation')">
             IX.III Detail Wage Operation
           </v-tab>
-         <!-- TODO:  -->
+          <!-- TODO:  -->
           <v-tab class="caption" @click="selectTab('CostInputsCoffee')">
-						IX.IV Cost Inputs Coffee
-					</v-tab>
-					<v-tab
-						class="caption"
-						@click="selectTab('PestDamageObserved')"
-					>
-						X Pest Damage Observed
-					</v-tab>
-					<v-tab
-						class="caption"
-						@click="selectTab('PestManagementPractice')"
-					>
-						X.I Pest Management Practice
-					</v-tab>
-					<v-tab
-						class="caption"
-						@click="selectTab('CoffeeHarvestMarketing')"
-					>
-						XI Coffee Harvest Marketing
-					</v-tab>
-					<v-tab class="caption" @click="selectTab('TechAwareness')">
-						XII Technology Awareness
-					</v-tab>
-					<v-tab
-						class="caption"
-						@click="selectTab('InformationKnowledgeSources')"
-					>
-						XIII Information Knowledge Sources
-					</v-tab>
-					<v-tab
-						class="caption"
-						@click="selectTab('OpenEndedQuestions')"
-					>
-						XIV Open Ended Questions
-					</v-tab>
-					<v-tab
-						class="caption"
-						@click="selectTab('OpenEndedQuestionRating')"
-					>
-						XV Open EndedQuestion Rating
-					</v-tab>
+            IX.IV Cost Inputs Coffee
+          </v-tab>
+          <v-tab class="caption" @click="selectTab('PestDamageObserved')">
+            X Pest Damage Observed
+          </v-tab>
+          <v-tab class="caption" @click="selectTab('PestManagementPractice')">
+            X.I Pest Management Practice
+          </v-tab>
+          <v-tab class="caption" @click="selectTab('CoffeeHarvestMarketing')">
+            XI Coffee Harvest Marketing
+          </v-tab>
+          <v-tab class="caption" @click="selectTab('TechAwareness')">
+            XII Technology Awareness
+          </v-tab>
+          <v-tab
+            class="caption"
+            @click="selectTab('InformationKnowledgeSources')"
+          >
+            XIII Information Knowledge Sources
+          </v-tab>
+          <v-tab class="caption" @click="selectTab('OpenEndedQuestions')">
+            XIV Open Ended Questions
+          </v-tab>
+          <v-tab class="caption" @click="selectTab('OpenEndedQuestionRating')">
+            XV Open EndedQuestion Rating
+          </v-tab>
         </v-tabs>
       </template>
       <template v-else>
@@ -151,9 +149,7 @@
         </keep-alive>
       </v-card>
       <v-card v-else>
-        <keep-alive>
-          EMPTY HERE
-        </keep-alive>
+        <keep-alive> EMPTY HERE </keep-alive>
       </v-card>
     </v-tabs-items>
   </v-card>
@@ -221,31 +217,34 @@ export default {
     TechAwareness,
     InformationKnowledgeSources,
     OpenEndedQuestions,
-    OpenEndedQuestionRating
+    OpenEndedQuestionRating,
   },
   data() {
     return {
       current: 'OpenEndedQuestionRating',
       currentCommodity: 'Coffee Beans',
-      commodity: ['Coffee Beans' , 'Mango' , 'Cacao' ],
+      commodity: ['Coffee Beans', 'Mango', 'Cacao'],
     }
   },
   methods: {
     selectTab(item) {
       this.current = item
     },
-    switchCommodity(commodity){
+    switchCommodity(commodity) {
       this.currentCommodity = commodity
-    }
+    },
   },
   computed: {
     SurveyInformationValidated() {
       return !this.$store.getters['questionnaire/SurveyInformationValidated']
     },
   },
-  async beforeMount(){
-    await this.$store.dispatch('questionnaireCode/fetchAllCodes','coffee beans');
-  }
+  async beforeMount() {
+    await this.$store.dispatch(
+      'questionnaireCode/fetchAllCodes',
+      'coffee beans'
+    )
+  },
 }
 </script>
 

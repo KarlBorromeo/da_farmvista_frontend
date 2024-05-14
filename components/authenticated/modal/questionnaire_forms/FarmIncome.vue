@@ -105,9 +105,8 @@ export default {
         livestock: this.livestock,
         agroforestry: this.agroforestry,
         otherLivelihood: this.otherLivelihood,
-        nonFarm:  this.nonFarmIncome,
+        nonFarm: this.nonFarmIncome,
         otherSource: this.otherSources,
-
       }
     },
   },

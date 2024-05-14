@@ -96,9 +96,9 @@ export default {
       },
       topicsList: [
         { topic: 'awareness', listname: 'awarenessList' },
-        {topic: 'knowledge',listname: 'knowledgeList'},
-        {topic: 'attitude',listname: 'attitudeList'},
-        {topic: 'practices',listname: 'practiceList'}
+        { topic: 'knowledge', listname: 'knowledgeList' },
+        { topic: 'attitude', listname: 'attitudeList' },
+        { topic: 'practices', listname: 'practiceList' },
       ],
       awarenessList: [
         {

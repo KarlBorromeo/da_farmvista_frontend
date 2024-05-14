@@ -23,7 +23,11 @@
         <form-radio-container
           title="Did know proper reutilization of agri-waste?"
         >
-          <v-radio-group :rules="requiredRule" v-model="didKnowProperReutilization" class="pa-0 ma-0">
+          <v-radio-group
+            :rules="requiredRule"
+            v-model="didKnowProperReutilization"
+            class="pa-0 ma-0"
+          >
             <v-radio
               v-for="item in didKnowProperReutilizationItems"
               :key="item"
@@ -109,13 +113,13 @@ export default {
     whereHearAboutReutilizationItems: [],
     whereHearAboutReutilizationOther: '',
     requiredRule: [(v) => !!v || 'This field is required'],
-    listRule: [ (v) => v.length>0 || 'Must select at least one one']
+    listRule: [(v) => v.length > 0 || 'Must select at least one one'],
   }),
   methods: {
     /* test if the form is valid, return boolean */
     validate() {
       const valid = this.$refs.form.validate()
-      console.log(valid);
+      console.log(valid)
     },
     /* concatenate the value of other into the index of list that has 'other' */
     concatOtherValue(list, other) {
@@ -168,21 +172,21 @@ export default {
       ]
   },
   watch: {
-    agriculturalSystem(value){
-      if(value != 'others'){
+    agriculturalSystem(value) {
+      if (value != 'others') {
         this.agriculturalSystemOther = ''
       }
     },
-    whereDisposedUnutilizedAgriwaste(value){
-      if(value != 'others'){
+    whereDisposedUnutilizedAgriwaste(value) {
+      if (value != 'others') {
         this.whereDisposedUnutilizedAgriwasteOther = ''
       }
     },
-    whereHearAboutReutilization(value){
-      if(value != 'others'){
+    whereHearAboutReutilization(value) {
+      if (value != 'others') {
         this.whereHearAboutReutilizationOther = ''
       }
-    }
-  }
+    },
+  },
 }
 </script>

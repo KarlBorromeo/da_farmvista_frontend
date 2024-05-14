@@ -12,7 +12,11 @@
         </form-input-container>
 
         <form-radio-container title="House Ownership">
-          <v-radio-group :rules="requiredRule" v-model="houseOwernship"  class="ma-0">
+          <v-radio-group
+            :rules="requiredRule"
+            v-model="houseOwernship"
+            class="ma-0"
+          >
             <v-radio
               v-for="item in houseOwernshipItems"
               :key="item"
@@ -39,7 +43,11 @@
         </form-input-container>
 
         <form-radio-container title="Materials Roof Made">
-          <v-radio-group :rules="requiredRule" v-model="typeRoofMade" class="ma-0">
+          <v-radio-group
+            :rules="requiredRule"
+            v-model="typeRoofMade"
+            class="ma-0"
+          >
             <v-radio
               v-for="item in typeRoofMadeItems"
               :key="item"
@@ -57,7 +65,11 @@
         </form-radio-container>
 
         <form-radio-container title="Materials Wall Made">
-          <v-radio-group :rules="requiredRule" v-model="typeWallMade" class="ma-0">
+          <v-radio-group
+            :rules="requiredRule"
+            v-model="typeWallMade"
+            class="ma-0"
+          >
             <v-radio
               v-for="item in typeWallMadeItems"
               :key="item"
@@ -75,7 +87,11 @@
         </form-radio-container>
 
         <form-radio-container title="Kind toilet facility">
-          <v-radio-group :rules="requiredRule" v-model="kindToilet" class="ma-0">
+          <v-radio-group
+            :rules="requiredRule"
+            v-model="kindToilet"
+            class="ma-0"
+          >
             <v-radio
               v-for="item in kindToiletItems"
               :key="item"
@@ -93,7 +109,11 @@
         </form-radio-container>
 
         <form-radio-container title="Kind lighting facility">
-          <v-radio-group :rules="requiredRule" v-model="lightingFacility" class="ma-0">
+          <v-radio-group
+            :rules="requiredRule"
+            v-model="lightingFacility"
+            class="ma-0"
+          >
             <v-radio
               v-for="item in lightingFacilityItems"
               :key="item"
@@ -111,7 +131,11 @@
         </form-radio-container>
 
         <form-radio-container title="Source cooking fuel">
-          <v-radio-group :rules="requiredRule" v-model="sourceCooking" class="ma-0">
+          <v-radio-group
+            :rules="requiredRule"
+            v-model="sourceCooking"
+            class="ma-0"
+          >
             <v-radio
               v-for="item in sourceCookingItems"
               :key="item"
@@ -129,7 +153,11 @@
         </form-radio-container>
 
         <form-radio-container title="Drinking water supply">
-          <v-radio-group :rules="requiredRule" v-model="sourceWaterDrink" class="ma-0">
+          <v-radio-group
+            :rules="requiredRule"
+            v-model="sourceWaterDrink"
+            class="ma-0"
+          >
             <v-radio
               v-for="item in sourceWaterDrinkItems"
               :key="item"
@@ -192,7 +220,7 @@ export default {
     /* test if the form is valid, return boolean */
     validate() {
       const valid = this.$refs.form.validate()
-      console.log(valid,this.getData());
+      console.log(valid, this.getData())
     },
     /* get the data and convert it into expected key/value formats in BackEnd */
     getData() {
@@ -226,7 +254,7 @@ export default {
         sourceDrinkingSupply: this.concatinateValues(
           this.sourceWaterDrink,
           this.sourceWaterDrinkOther
-        )
+        ),
       }
     },
     /* concatenate two value holders for field that has others (ex: kindToilet, kindToiletOthers)*/
@@ -247,42 +275,42 @@ export default {
     this.sourceCookingItems = this.$store.getters['questionnaireCode/Code11']
     this.sourceWaterDrinkItems = this.$store.getters['questionnaireCode/Code12']
   },
-  watch:{
-    houseOwernship(value){
-      if(value !== 'others'){
+  watch: {
+    houseOwernship(value) {
+      if (value !== 'others') {
         this.houseOwernshipOther = ''
       }
     },
-    typeRoofMade(value){
-      if(value !== 'others'){
+    typeRoofMade(value) {
+      if (value !== 'others') {
         this.typeRoofMadeOther = ''
       }
     },
-    typeWallMade(value){
-      if(value !== 'others'){
+    typeWallMade(value) {
+      if (value !== 'others') {
         this.typeWallMadeOther = ''
       }
     },
-    kindToilet(value){
-      if(value !== 'others'){
+    kindToilet(value) {
+      if (value !== 'others') {
         this.kindToiletOther = ''
       }
     },
-    lightingFacility(value){
-      if(value !== 'others'){
+    lightingFacility(value) {
+      if (value !== 'others') {
         this.lightingFacilityOther = ''
       }
     },
-    sourceCooking(value){
-      if(value !== 'others'){
+    sourceCooking(value) {
+      if (value !== 'others') {
         this.sourceCookingOther = ''
       }
     },
-    sourceWaterDrink(value){
-      if(value !== 'others'){
+    sourceWaterDrink(value) {
+      if (value !== 'others') {
         this.sourceWaterDrinkOther = ''
       }
     },
-  }
+  },
 }
 </script>

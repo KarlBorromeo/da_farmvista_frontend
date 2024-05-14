@@ -8,14 +8,14 @@
             <p class="ma-0 pa-0 font-weight-black">{{ i }}</p>
           </v-col>
           <form-select-container>
-              <v-select
-                v-model="toolName[i - 1]"
-                :items="toolNameItems"
-                :rules="requiredRule"
-                append-icon="mdi-tools"
-                label="* Tool Items"
-                dense
-              ></v-select>
+            <v-select
+              v-model="toolName[i - 1]"
+              :items="toolNameItems"
+              :rules="requiredRule"
+              append-icon="mdi-tools"
+              label="* Tool Items"
+              dense
+            ></v-select>
           </form-select-container>
 
           <form-input-container>
@@ -31,10 +31,10 @@
             title="Did acquire through government or programs"
           >
             <v-text-field
-                v-model="isToolAquiredGovtProg[i - 1]"
-                :rules="requiredRule"
-                required
-                class="hiddenRequiredField"
+              v-model="isToolAquiredGovtProg[i - 1]"
+              :rules="requiredRule"
+              required
+              class="hiddenRequiredField"
             />
             <v-radio-group
               v-model="isToolAquiredGovtProg[i - 1]"
@@ -61,7 +61,7 @@
               :rules="numberRule"
               label="* age of the item"
               type="number"
-              min=0
+              min="0"
             ></v-text-field>
           </form-input-container>
         </v-row>
@@ -101,13 +101,13 @@ export default {
       (v) => !!v || 'This field is required',
       (v) => parseFloat(v) >= 0 || 'invalid value',
     ],
-    requiredRule: [ (v) => !!v || 'This field is required', ]
+    requiredRule: [(v) => !!v || 'This field is required'],
   }),
   methods: {
     /* test if the form is valid, return boolean */
     validate() {
       const valid = this.$refs.form.validate()
-      console.log(valid);
+      console.log(valid)
     },
     /* get the data and convert it into expected key/value formats in BackEnd */
     getData() {
@@ -115,7 +115,7 @@ export default {
         farmtoolName: this.toolName,
         farmtoolQuantity: this.toolQuantity,
         isAcquiredGovtProgram: this.isToolAquiredGovtProg,
-        farmtoolAge: this.toolAge
+        farmtoolAge: this.toolAge,
       }
     },
     // decrement the count of items

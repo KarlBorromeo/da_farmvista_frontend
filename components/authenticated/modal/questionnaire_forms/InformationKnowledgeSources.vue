@@ -6,7 +6,11 @@
           v-if="item.type == 'radio'"
           :title="camelToSpace(item.key)"
         >
-          <v-radio-group :rules="requiredRule" v-model="formData[item.key]" class="pa-0 ma-0">
+          <v-radio-group
+            :rules="requiredRule"
+            v-model="formData[item.key]"
+            class="pa-0 ma-0"
+          >
             <v-radio
               v-for="item in isAgreeItems"
               :key="item"
@@ -107,7 +111,7 @@ export default {
     /* test if the form is valid, return boolean */
     validate() {
       const valid = this.$refs.form.validate()
-      console.log(valid,this.getData())
+      console.log(valid, this.getData())
     },
     /* check if 'other' checkbox is ticked */
     isOtherTicked(list) {
@@ -161,13 +165,12 @@ export default {
       this.$store.getters['questionnaireCode/PrintMaterials']
   },
   watch: {
-    printMaterialsRead(value){
-      const otherTicked = value.forEach((element) => element == 'others');
-      if(otherTicked){
-        this.printMaterialsReadOther = '';
+    printMaterialsRead(value) {
+      const otherTicked = value.forEach((element) => element == 'others')
+      if (otherTicked) {
+        this.printMaterialsReadOther = ''
       }
-    }
-  }
+    },
+  },
 }
 </script>
-

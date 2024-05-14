@@ -14,11 +14,11 @@
 
         <form-radio-container title="Sex">
           <v-text-field
-              v-model="sex"
-              :rules="requiredRule"
-              required
-              class="hiddenRequiredField"
-          /> 
+            v-model="sex"
+            :rules="requiredRule"
+            required
+            class="hiddenRequiredField"
+          />
           <v-radio-group v-model="sex" class="pa-0 ma-0">
             <v-radio
               v-for="item in sexItems"
@@ -34,11 +34,11 @@
 
         <form-radio-container title="Civil Status">
           <v-text-field
-              v-model="civilStatus"
-              :rules="requiredRule"
-              required
-              class="hiddenRequiredField"
-          /> 
+            v-model="civilStatus"
+            :rules="requiredRule"
+            required
+            class="hiddenRequiredField"
+          />
           <v-radio-group v-model="civilStatus" class="pa-0 ma-0">
             <v-radio
               v-for="item in civilStatusItems"
@@ -75,7 +75,7 @@
             :rules="requiredRule"
             required
             class="hiddenRequiredField"
-          /> 
+          />
           <v-radio-group v-model="isBelongMarginalizedSector" class="py-0 my-0">
             <v-radio
               v-for="item in isBelongMarginalizedSectorItems"
@@ -150,11 +150,11 @@
           title=" If you answered 'yes' to the previous question, select type of Membership"
         >
           <v-text-field
-              v-model="typeMembership"
-              :rules="requiredRule"
-              required
-              class="hiddenRequiredField"
-          /> 
+            v-model="typeMembership"
+            :rules="requiredRule"
+            required
+            class="hiddenRequiredField"
+          />
           <v-radio-group v-model="typeMembership" class="py-0 my-0">
             <v-radio
               v-for="item in typeMembershipItems"
@@ -179,12 +179,12 @@
         <form-radio-container
           title="Any household member affiliated to any farming organization/association?"
         >
-            <v-text-field
-                v-model="isAnyHouseholdMemberOrg"
-                :rules="requiredRule"
-                required
-                class="hiddenRequiredField"
-            /> 
+          <v-text-field
+            v-model="isAnyHouseholdMemberOrg"
+            :rules="requiredRule"
+            required
+            class="hiddenRequiredField"
+          />
           <v-radio-group v-model="isAnyHouseholdMemberOrg" class="py-0 my-0">
             <p class="pa-0 ma-0">
               * Any household member affiliated to any farming
@@ -272,13 +272,13 @@ export default {
       { value: 'no', label: 'No' },
     ],
     requiredRule: [(v) => !!v || 'This field is required'],
-    listRule: [(v) => v.length>0 || 'This field is required'],
+    listRule: [(v) => v.length > 0 || 'This field is required'],
   }),
   methods: {
     /* test if the form is valid, return boolean */
     validate() {
       const valid = this.$refs.form.validate()
-      console.log(valid);
+      console.log(valid)
     },
     /* get the data and convert it into expected key/value formats in BackEnd */
     getData() {
@@ -294,7 +294,6 @@ export default {
         isMemberFarmerOrganization: this.isMemberOrgranization,
         organizationTypeMembership: this.typeMembership,
         organizationName: this.organizationName,
-
       }
     },
   },

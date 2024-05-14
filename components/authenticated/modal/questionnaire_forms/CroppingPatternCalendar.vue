@@ -282,7 +282,7 @@ export default {
     decemberOther: '',
     activityItems: [],
     requiredRule: [(v) => !!v || 'this field is required'],
-    listRule: [ (v) => v.length>0 || 'select at least one option' ]
+    listRule: [(v) => v.length > 0 || 'select at least one option'],
   }),
   methods: {
     /* test if the form is valid, return boolean */
@@ -320,79 +320,79 @@ export default {
   beforeMount() {
     this.activityItems = this.$store.getters['questionnaireCode/Code20']
   },
-  watch:{
-    january(value){
+  watch: {
+    january(value) {
       const otherTicked = value.findIndex((item) => item == 'others')
-      if(!otherTicked){
-        this.januaryOther= '';
+      if (!otherTicked) {
+        this.januaryOther = ''
       }
     },
-    february(value){
+    february(value) {
       const otherTicked = value.findIndex((item) => item == 'others')
-      if(!otherTicked){
-        this.februaryOther= '';
+      if (!otherTicked) {
+        this.februaryOther = ''
       }
     },
-    march(value){
+    march(value) {
       const otherTicked = value.findIndex((item) => item == 'others')
-      if(!otherTicked){
-        this.marchOther= '';
+      if (!otherTicked) {
+        this.marchOther = ''
       }
     },
-    april(value){
+    april(value) {
       const otherTicked = value.findIndex((item) => item == 'others')
-      if(!otherTicked){
-        this.aprilOther= '';
+      if (!otherTicked) {
+        this.aprilOther = ''
       }
     },
-    may(value){
+    may(value) {
       const otherTicked = value.findIndex((item) => item == 'others')
-      if(!otherTicked){
-        this.mayOther= '';
+      if (!otherTicked) {
+        this.mayOther = ''
       }
     },
-    june(value){
+    june(value) {
       const otherTicked = value.findIndex((item) => item == 'others')
-      if(!otherTicked){
-        this.juneOther= '';
+      if (!otherTicked) {
+        this.juneOther = ''
       }
     },
-    july(value){
+    july(value) {
       const otherTicked = value.findIndex((item) => item == 'others')
-      if(!otherTicked){
-        this.julyOther= '';
+      if (!otherTicked) {
+        this.julyOther = ''
       }
     },
-    august(value){
+    august(value) {
       const otherTicked = value.findIndex((item) => item == 'others')
-      if(!otherTicked){
-        this.augustOther= '';
+      if (!otherTicked) {
+        this.augustOther = ''
       }
     },
-    september(value){
+    september(value) {
       const otherTicked = value.findIndex((item) => item == 'others')
-      if(!otherTicked){
-        this.septemberOther= '';
+      if (!otherTicked) {
+        this.septemberOther = ''
       }
     },
-    october(value){
+    october(value) {
       const otherTicked = value.findIndex((item) => item == 'others')
-      if(!otherTicked){
-        this.octoberOther= '';
+      if (!otherTicked) {
+        this.octoberOther = ''
       }
     },
-    november(value){
+    november(value) {
       const otherTicked = value.findIndex((item) => item == 'others')
-      if(!otherTicked){
-        this.novemberOther= '';
+      if (!otherTicked) {
+        this.novemberOther = ''
       }
     },
-    december(value){
+    december(value) {
       const otherTicked = value.findIndex((item) => item == 'others')
-      if(!otherTicked){
-        this.decemberOther= '';
+      if (!otherTicked) {
+        this.decemberOther = ''
       }
-    }
-  }
+    },
+  },
 }
 </script>

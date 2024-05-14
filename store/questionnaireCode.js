@@ -218,14 +218,14 @@ export const state = () => ({
       SEEDS: 'seeds',
       SEEDLINGS: 'seedlings',
       ASEXUALLY_PROPAGATED_MATERIALS: 'asexually propagated materials',
-      OTHERS: 'others'
+      OTHERS: 'others',
     },
     Code21B: {
       ARABICA: 'arabica',
       ROBUSTA: 'robusta',
       LIBERICA: 'liberica',
       EXCELSA: 'excelsa',
-      OTHERS: 'others'
+      OTHERS: 'others',
     },
     Code21C: {
       ZERO_TILLAGE: 'zero tillage',
@@ -323,7 +323,7 @@ export const state = () => ({
       BROCHURES: 'brochures',
       PAMPHLETS: 'pamphlets',
       MAGAZINES: 'magazines',
-      OTHER: 'others'
+      OTHER: 'others',
     },
     PestControlAdvice: {
       NEIGHBOR: 'neighbor',
@@ -486,7 +486,7 @@ export const getters = {
     return generateArray(state.codes.Code21B)
   },
   Code21C(state) {
-    return  generateArray(state.codes.Code21C)
+    return generateArray(state.codes.Code21C)
   },
   Code21D(state) {
     return generateArray(state.codes.Code21D)
@@ -557,11 +557,9 @@ export const getters = {
 export const mutations = {}
 
 export const actions = {
-  async fetchAllCodes(_,commodity){
-      try{
-        await api.fetchAllCodes(commodity);
-      }catch(error){
-  
-      }
-  }
+  async fetchAllCodes(_, commodity) {
+    try {
+      await api.fetchAllCodes(commodity)
+    } catch (error) {}
+  },
 }

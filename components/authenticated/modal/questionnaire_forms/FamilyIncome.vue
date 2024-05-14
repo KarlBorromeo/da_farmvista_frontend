@@ -26,11 +26,11 @@
 
           <form-radio-container title="Sex">
             <v-text-field
-                v-model="sex[i - 1]"
-                :rules="requiredRule"
-                required
-                class="hiddenRequiredField"
-            /> 
+              v-model="sex[i - 1]"
+              :rules="requiredRule"
+              required
+              class="hiddenRequiredField"
+            />
             <v-radio-group v-model="sex[i - 1]" class="pa-0 ma-0">
               <v-radio
                 v-for="item in sexItems"
@@ -66,17 +66,17 @@
               :rules="requiredRule"
               label="* Contributiong (PHP) income/month"
               type="number"
-              min=0
+              min="0"
             ></v-text-field>
           </form-input-container>
 
           <form-radio-container title="Involved in coffee farm">
             <v-text-field
-                v-model="involveCoffeefarm[i - 1]"
-                :rules="requiredRule"
-                required
-                class="hiddenRequiredField"
-            /> 
+              v-model="involveCoffeefarm[i - 1]"
+              :rules="requiredRule"
+              required
+              class="hiddenRequiredField"
+            />
             <v-radio-group v-model="involveCoffeefarm[i - 1]" class="pa-0 ma-0">
               <v-radio
                 v-for="item in involveCoffeefarmItems"
@@ -134,7 +134,7 @@ export default {
     validate() {
       const valid = this.$refs.form.validate()
       console.log(valid)
-      console.log('data',this.getData())
+      console.log('data', this.getData())
     },
     /* get the data and convert it into expected key/value formats in BackEnd */
     getData() {

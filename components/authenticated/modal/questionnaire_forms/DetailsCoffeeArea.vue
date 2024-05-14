@@ -53,7 +53,11 @@
             ></v-text-field>
           </form-input-container>
           <form-radio-container title="Reason for Using">
-            <v-radio-group :rules="requiredRule"  v-model="plantingDistanceReasons" class="pa-0 ma-0">
+            <v-radio-group
+              :rules="requiredRule"
+              v-model="plantingDistanceReasons"
+              class="pa-0 ma-0"
+            >
               <v-radio
                 v-for="item in reasonUsingItems"
                 :key="item"
@@ -103,7 +107,11 @@
             ></v-text-field>
           </form-input-container>
           <form-radio-container title="Reason for Using">
-            <v-radio-group :rules="requiredRule"  v-model="intercropVarietyReasons" class="pa-0 ma-0">
+            <v-radio-group
+              :rules="requiredRule"
+              v-model="intercropVarietyReasons"
+              class="pa-0 ma-0"
+            >
               <v-radio
                 v-for="item in reasonUsingItems"
                 :key="item"
@@ -145,7 +153,11 @@
         <p class="my-2 pb-0 font-weight-medium">Seed Source</p>
         <v-row>
           <form-radio-container title="Details">
-            <v-radio-group :rules="requiredRule"  v-model="seedSourceDetails" class="pa-0 ma-0">
+            <v-radio-group
+              :rules="requiredRule"
+              v-model="seedSourceDetails"
+              class="pa-0 ma-0"
+            >
               <v-radio
                 v-for="item in seedSourceItems"
                 :key="item"
@@ -163,7 +175,11 @@
           </form-radio-container>
 
           <form-radio-container title="Reason for Using">
-            <v-radio-group :rules="requiredRule"  v-model="seedSourceReasons" class="pa-0 ma-0">
+            <v-radio-group
+              :rules="requiredRule"
+              v-model="seedSourceReasons"
+              class="pa-0 ma-0"
+            >
               <v-radio
                 v-for="item in reasonUsingItems"
                 :key="item"
@@ -240,7 +256,7 @@ export default {
     /* test if the form is valid, return boolean */
     validate() {
       const valid = this.$refs.form.validate()
-      console.log(valid);
+      console.log(valid)
     },
     /* concatenate two value holders for field that has others (ex: variable, variableOther)*/
     concatinateValues(original, other) {
@@ -301,26 +317,26 @@ export default {
     this.seedSourceItems = this.$store.getters['questionnaireCode/Code16A']
   },
   watch: {
-    plantingDistanceReasons(value){
-      if(value !== 'others'){
+    plantingDistanceReasons(value) {
+      if (value !== 'others') {
         this.plantingDistanceReasonsOther = ''
       }
     },
-    intercropVarietyReasons(value){
-      if(value !== 'others'){
+    intercropVarietyReasons(value) {
+      if (value !== 'others') {
         this.intercropVarietyReasonsOther = ''
       }
     },
-    seedSourceDetails(value){
-      if(value !== 'others'){
+    seedSourceDetails(value) {
+      if (value !== 'others') {
         this.seedSourceDetailsOther = ''
       }
     },
-    seedSourceReasons(value){
-      if(value !== 'others'){
+    seedSourceReasons(value) {
+      if (value !== 'others') {
         this.seedSourceReasonsOther = ''
       }
     },
-  }
+  },
 }
 </script>

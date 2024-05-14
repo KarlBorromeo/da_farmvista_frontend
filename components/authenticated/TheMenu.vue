@@ -33,7 +33,13 @@
           color="white"
         >
           <v-list-item-title>
-            <v-btn block width="210" class="pa-0 ma-0" color="white" @click="dynamicMethod(item.method)">
+            <v-btn
+              block
+              width="210"
+              class="pa-0 ma-0"
+              color="white"
+              @click="dynamicMethod(item.method)"
+            >
               <v-row class="ma-0">
                 <v-col cols="3" class="header_dropdown_btns">
                   <v-icon>{{ item.icon }}</v-icon>
@@ -80,30 +86,30 @@ export default {
     }
   },
   computed: {
-    UserFirstname(){
+    UserFirstname() {
       return this.$store.getters['auth/currentFirstName']
-    },  
+    },
   },
   methods: {
     /* dynamic choose what method to add on event listener like @click */
-    dynamicMethod(methodName){
-       this[methodName]();
+    dynamicMethod(methodName) {
+      this[methodName]()
     },
-    logout(){
+    logout() {
       alert('logging out')
       this.$store.commit('auth/logout')
       this.$router.replace('/auth')
     },
-    routeMyProfile(){
+    routeMyProfile() {
       this.$router.push('/profile')
     },
-    routeLogs(){
+    routeLogs() {
       this.$router.push('logs')
     },
-    aw(){
+    aw() {
       alert('awww')
-    }
-  }
+    },
+  },
 }
 </script>
 

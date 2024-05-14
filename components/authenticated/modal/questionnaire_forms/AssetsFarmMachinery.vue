@@ -8,14 +8,14 @@
             <p class="ma-0 pa-0 font-weight-black">{{ i }}</p>
           </v-col>
           <form-select-container>
-              <v-select
-                v-model="machineName[i - 1]"
-                :items="machineNameItems"
-                :rules="requiredRule"
-                append-icon="mdi-tractor"
-                label="* Machine Items"
-                dense
-              ></v-select>
+            <v-select
+              v-model="machineName[i - 1]"
+              :items="machineNameItems"
+              :rules="requiredRule"
+              append-icon="mdi-tractor"
+              label="* Machine Items"
+              dense
+            ></v-select>
           </form-select-container>
 
           <form-input-container>
@@ -30,12 +30,12 @@
           <form-radio-container
             title="Did acquire through government or programs?"
           >
-              <v-text-field
-                v-model="ismachineAquiredGovtProg[i - 1]"
-                :rules="requiredRule"
-                required
-                class="hiddenRequiredField"
-            /> 
+            <v-text-field
+              v-model="ismachineAquiredGovtProg[i - 1]"
+              :rules="requiredRule"
+              required
+              class="hiddenRequiredField"
+            />
             <v-radio-group
               v-model="ismachineAquiredGovtProg[i - 1]"
               class="pa-0 ma-0"
@@ -100,22 +100,21 @@ export default {
       (v) => !!v || 'This field is required',
       (v) => parseFloat(v) >= 0 || 'invalid value',
     ],
-    requiredRule: [ (v) => !!v || 'This field is required' ]
+    requiredRule: [(v) => !!v || 'This field is required'],
   }),
   methods: {
     /* test if the form is valid, return boolean */
     validate() {
       const valid = this.$refs.form.validate()
-      console.log(valid);
+      console.log(valid)
     },
     /* get the data and convert it into expected key/value formats in BackEnd */
     getData() {
       return {
         farmMachineryName: this.machineName,
-      farmMachineryQuantity: this.machineQuantity,
-      isAcquiredGovtProgram: this.ismachineAquiredGovtProg,
-      farmMachineryAge: this.machineAge,
-
+        farmMachineryQuantity: this.machineQuantity,
+        isAcquiredGovtProgram: this.ismachineAquiredGovtProg,
+        farmMachineryAge: this.machineAge,
       }
     },
     // decrement the count of items
