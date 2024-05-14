@@ -8,12 +8,8 @@
               <p class="ma-0 pa-0 font-weight-black">{{ i }}</p>
             </v-col>
             <form-radio-container title="Pest and Diseases Damage in Plants">
-              <v-text-field 
-                v-model="pestDiseaseDamagesPlants[i - 1]"
-                :rules="requiredRule"
-                class="requiredFieldHidden"
-              />
               <v-radio-group
+                :rules="requiredRule"
                 v-model="pestDiseaseDamagesPlants[i - 1]"
                 class="pa-0 ma-0"
               >
@@ -23,22 +19,12 @@
                   :label="item"
                   :value="item"
                 ></v-radio>
-                <div
-                  v-if="!pestDiseaseDamagesPlants[i - 1]"
-                  class="red--text caption"
-                >
-                  You must select an option!
-                </div>
               </v-radio-group>
             </form-radio-container>
 
             <form-radio-container title="Stage of Occurence">
-              <v-text-field 
-                v-model="stageOccurence[i - 1]"
-                :rules="requiredRule"
-                class="requiredFieldHidden"
-              />
               <v-radio-group
+                :rules="requiredRule"
                 v-model="stageOccurence[i - 1]"
                 class="pa-0 ma-0"
               >
@@ -48,22 +34,12 @@
                   :label="item"
                   :value="item"
                 ></v-radio>
-                <div
-                  v-if="!stageOccurence[i - 1]"
-                  class="red--text caption"
-                >
-                  You must select an option!
-                </div>
               </v-radio-group>
             </form-radio-container>
 
             <form-radio-container title="Management">
-              <v-text-field 
-                v-model="management[i - 1]"
-                :rules="requiredRule"
-                class="requiredFieldHidden"
-              />
               <v-radio-group
+                :rules="requiredRule"
                 v-model="management[i - 1]"
                 class="pa-0 ma-0"
               >
@@ -79,22 +55,12 @@
                 :rules="requiredRule"
                 label="please specify"
                 />
-                <div
-                  v-if="!management[i - 1]"
-                  class="red--text caption"
-                >
-                  You must select an option!
-                </div>
               </v-radio-group>
             </form-radio-container>
 
             <form-radio-container title="Perceived Effectiveness">
-              <v-text-field 
-                v-model="perceivedEffectiveness[i - 1]"
-                :rules="requiredRule"
-                class="requiredFieldHidden"
-              />
               <v-radio-group
+                :rules="requiredRule"
                 v-model="perceivedEffectiveness[i - 1]"
                 class="pa-0 ma-0"
               >
@@ -104,12 +70,6 @@
                   :label="item"
                   :value="item"
                 ></v-radio>
-                <div
-                  v-if="!perceivedEffectiveness[i - 1]"
-                  class="red--text caption"
-                >
-                  You must select an option!
-                </div>
               </v-radio-group>
             </form-radio-container>
           </v-row>
@@ -120,10 +80,11 @@
   </template>
   
   <script>
-  import formCard from '../../cards/formCard.vue'
-  import formCardButton from '../../cards/formCardButton.vue'
-  import FormInputContainer from '../../cards/formInputContainer.vue'
-  import FormRadioContainer from '../../cards/formRadioContainer.vue'
+  import { concatinateEachIndexes } from '~/reusableFunctions/questionnaireValidation'
+  import formCard from '../../form/formCard.vue'
+  import formCardButton from '../../form/formCardButton.vue'
+  import FormInputContainer from '../../form/formInputContainer.vue'
+  import FormRadioContainer from '../../form/formRadioContainer.vue'
   export default {
     components: {
       formCard,
@@ -173,14 +134,19 @@
         return {
           pestsDiseasesPlants: this.pestDiseaseDamagesPlants,
           stageOccurrence: this.stageOccurence,
-          management: this.concatinateEachIndexes(this.management,this.managementOther),
+          management: concatinateEachIndexes(this.management,this.managementOther,this.items),
           perceivedEffectiveness: this.perceivedEffectiveness,
         }
       },
       // decrement the count of items
       decrement() {
         if (this.items > 1) {
-          this.items--
+          this.items--;
+          this.pestDiseaseDamagesPlants.pop()
+          this.stageOccurence.pop()
+          this.management.pop()
+          this.managementOther.pop()
+          this.perceivedEffectiveness.pop()
         }
       },
       increment() {
@@ -193,12 +159,15 @@
       this.managementItems = this.$store.getters['questionnaireCode/Code25'];
       this.perceivedEffectivenessItems = this.$store.getters['questionnaireCode/Code26'];
     },
+    watch: {
+      management(value){
+        value.forEach((element,index) => {
+        if(element !== 'others'){
+          this.managementOther[index] = ''
+        }  
+        });
+      }
+    }
   }
-  </script>
-
-<style scoped>
-.requiredFieldHidden{
-  display: none!important;
-}
-</style>
+</script>
   

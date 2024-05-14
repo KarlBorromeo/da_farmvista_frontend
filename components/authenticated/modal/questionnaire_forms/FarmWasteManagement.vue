@@ -34,16 +34,13 @@
           </form-input-container>
 
           <form-radio-container title="Utilized?">
-            <v-radio-group v-model="isUtilized[i - 1]" class="pa-0 ma-0">
+            <v-radio-group :rules="requiredRule" v-model="isUtilized[i - 1]" class="pa-0 ma-0">
               <v-radio
                 v-for="item in isUtilizedItems"
                 :key="item.value"
                 :label="item.label"
                 :value="item.value"
               ></v-radio>
-              <div v-if="!isUtilized[i - 1]" class="red--text caption">
-                You must select an option!
-              </div>
             </v-radio-group>
           </form-radio-container>
         </v-row>
@@ -54,10 +51,10 @@
 </template>
 
 <script>
-import formCard from '../../cards/formCard.vue'
-import formCardButton from '../../cards/formCardButton.vue'
-import FormInputContainer from '../../cards/formInputContainer.vue'
-import FormRadioContainer from '../../cards/formRadioContainer.vue'
+import formCard from '../../form/formCard.vue'
+import formCardButton from '../../form/formCardButton.vue'
+import FormInputContainer from '../../form/formInputContainer.vue'
+import FormRadioContainer from '../../form/formRadioContainer.vue'
 export default {
   components: {
     formCard,
@@ -86,20 +83,7 @@ export default {
     /* test if the form is valid, return boolean */
     validate() {
       const valid = this.$refs.form.validate()
-      const radioCheckboxValid = this.validateRadioCheckbox()
-      if (valid && radioCheckboxValid) {
-        const data = this.getData()
-        console.log(data)
-      }
-    },
-    /* check if radio inputs are not empty */
-    validateRadioCheckbox() {
-      for (let i = 0; i < this.items; i++) {
-        if (!this.isUtilized[i]) {
-          return false
-        }
-      }
-      return true
+      console.log(valid);
     },
     /* get the data and convert it into expected key/value formats in BackEnd */
     getData() {

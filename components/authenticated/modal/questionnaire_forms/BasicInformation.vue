@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import formInputContainer from '../../cards/formInputContainer.vue'
+import formInputContainer from '../../form/formInputContainer.vue'
 export default {
   components: { formInputContainer },
   data: () => ({
@@ -97,11 +97,11 @@ export default {
     },
     getData() {
       return {
-        last_name: this.surename,
-        first_name: this.firstname,
-        middle_initial: this.middleInitial,
-        contact_number: this.constactNumber,
-        farmer_code: this.farmerCode,
+        lastName: this.surename,
+        firstName: this.firstname,
+        middleInitial: this.middleInitial,
+        contactNumber: this.constactNumber,
+        farmerCode: this.farmerCode,
       }
     },
   },

@@ -6,6 +6,7 @@
           <v-checkbox
             v-for="item in activityItems"
             v-model="january"
+            :rules="listRule"
             :key="item"
             :value="item"
             :label="item"
@@ -19,15 +20,13 @@
             :rules="requiredRule"
             label="* please specify"
           ></v-text-field>
-          <div v-if="january.length == 0" class="red--text caption pa-0 ma-0">
-            You must select at least one option!
-          </div>
         </form-checkbox-container>
 
         <form-checkbox-container title="February">
           <v-checkbox
             v-for="item in activityItems"
             v-model="february"
+            :rules="listRule"
             :key="item"
             :value="item"
             :label="item"
@@ -41,15 +40,13 @@
             :rules="requiredRule"
             label="* please specify"
           ></v-text-field>
-          <div v-if="february.length == 0" class="red--text caption pa-0 ma-0">
-            You must select at least one option!
-          </div>
         </form-checkbox-container>
 
         <form-checkbox-container title="March">
           <v-checkbox
             v-for="item in activityItems"
             v-model="march"
+            :rules="listRule"
             :key="item"
             :value="item"
             :label="item"
@@ -63,15 +60,13 @@
             :rules="requiredRule"
             label="* please specify"
           ></v-text-field>
-          <div v-if="march.length == 0" class="red--text caption pa-0 ma-0">
-            You must select at least one option!
-          </div>
         </form-checkbox-container>
 
         <form-checkbox-container title="April">
           <v-checkbox
             v-for="item in activityItems"
             v-model="april"
+            :rules="listRule"
             :key="item"
             :value="item"
             :label="item"
@@ -85,15 +80,13 @@
             :rules="requiredRule"
             label="* please specify"
           ></v-text-field>
-          <div v-if="april.length == 0" class="red--text caption pa-0 ma-0">
-            You must select at least one option!
-          </div>
         </form-checkbox-container>
 
         <form-checkbox-container title="May">
           <v-checkbox
             v-for="item in activityItems"
             v-model="may"
+            :rules="listRule"
             :key="item"
             :value="item"
             :label="item"
@@ -107,15 +100,13 @@
             :rules="requiredRule"
             label="* please specify"
           ></v-text-field>
-          <div v-if="may.length == 0" class="red--text caption pa-0 ma-0">
-            You must select at least one option!
-          </div>
         </form-checkbox-container>
 
         <form-checkbox-container title="June">
           <v-checkbox
             v-for="item in activityItems"
             v-model="june"
+            :rules="listRule"
             :key="item"
             :value="item"
             :label="item"
@@ -129,15 +120,13 @@
             :rules="requiredRule"
             label="* please specify"
           ></v-text-field>
-          <div v-if="june.length == 0" class="red--text caption pa-0 ma-0">
-            You must select at least one option!
-          </div>
         </form-checkbox-container>
 
         <form-checkbox-container title="July">
           <v-checkbox
             v-for="item in activityItems"
             v-model="july"
+            :rules="listRule"
             :key="item"
             :value="item"
             :label="item"
@@ -151,15 +140,13 @@
             :rules="requiredRule"
             label="* please specify"
           ></v-text-field>
-          <div v-if="july.length == 0" class="red--text caption pa-0 ma-0">
-            You must select at least one option!
-          </div>
         </form-checkbox-container>
 
         <form-checkbox-container title="August">
           <v-checkbox
             v-for="item in activityItems"
             v-model="august"
+            :rules="listRule"
             :key="item"
             :value="item"
             :label="item"
@@ -173,15 +160,13 @@
             :rules="requiredRule"
             label="* please specify"
           ></v-text-field>
-          <div v-if="august.length == 0" class="red--text caption pa-0 ma-0">
-            You must select at least one option!
-          </div>
         </form-checkbox-container>
 
         <form-checkbox-container title="September">
           <v-checkbox
             v-for="item in activityItems"
             v-model="september"
+            :rules="listRule"
             :key="item"
             :value="item"
             :label="item"
@@ -195,15 +180,13 @@
             :rules="requiredRule"
             label="* please specify"
           ></v-text-field>
-          <div v-if="september.length == 0" class="red--text caption pa-0 ma-0">
-            You must select at least one option!
-          </div>
         </form-checkbox-container>
 
         <form-checkbox-container title="October">
           <v-checkbox
             v-for="item in activityItems"
             v-model="october"
+            :rules="listRule"
             :key="item"
             :value="item"
             :label="item"
@@ -217,15 +200,13 @@
             :rules="requiredRule"
             label="* please specify"
           ></v-text-field>
-          <div v-if="october.length == 0" class="red--text caption pa-0 ma-0">
-            You must select at least one option!
-          </div>
         </form-checkbox-container>
 
         <form-checkbox-container title="November">
           <v-checkbox
             v-for="item in activityItems"
             v-model="november"
+            :rules="listRule"
             :key="item"
             :value="item"
             :label="item"
@@ -239,15 +220,13 @@
             :rules="requiredRule"
             label="* please specify"
           ></v-text-field>
-          <div v-if="november.length == 0" class="red--text caption pa-0 ma-0">
-            You must select at least one option!
-          </div>
         </form-checkbox-container>
 
         <form-checkbox-container title="December">
           <v-checkbox
             v-for="item in activityItems"
             v-model="december"
+            :rules="listRule"
             :key="item"
             :value="item"
             :label="item"
@@ -261,9 +240,6 @@
             :rules="requiredRule"
             label="* please specify"
           ></v-text-field>
-          <div v-if="december.length == 0" class="red--text caption pa-0 ma-0">
-            You must select at least one option!
-          </div>
         </form-checkbox-container>
       </v-row>
     </v-container>
@@ -272,7 +248,8 @@
 </template>
 
 <script>
-import FormCheckboxContainer from '../../cards/formCheckboxContainer.vue'
+import { concatOtherValueToList } from '~/reusableFunctions/questionnaireValidation'
+import FormCheckboxContainer from '../../form/formCheckboxContainer.vue'
 export default {
   components: {
     FormCheckboxContainer,
@@ -305,50 +282,13 @@ export default {
     decemberOther: '',
     activityItems: [],
     requiredRule: [(v) => !!v || 'this field is required'],
+    listRule: [ (v) => v.length>0 || 'select at least one option' ]
   }),
   methods: {
     /* test if the form is valid, return boolean */
     validate() {
       const valid = this.$refs.form.validate()
-      const validRadio = this.validateRadio()
-      if (valid && validRadio) {
-        const data = this.getData()
-        console.log(data)
-      } else {
-        alert('invalid')
-      }
-    },
-    /* check if radio inputs are not empty */
-    validateRadio() {
-      if (
-        this.january.length == 0 ||
-        this.february.length == 0 ||
-        this.march.length == 0 ||
-        this.april.length == 0 ||
-        this.may.length == 0 ||
-        this.june.length == 0 ||
-        this.july.length == 0 ||
-        this.august.length == 0 ||
-        this.september.length == 0 ||
-        this.october.length == 0 ||
-        this.november.length == 0 ||
-        this.december.length == 0
-      ) {
-        return false
-      }
-      return true
-    },
-    /* concatenate the value of other into the index of list that has 'other' */
-    concatOtherValue(list, other) {
-      if (!!other) {
-        for (let i = 0; i < list.length; i++) {
-          if (list[i] == 'others') {
-            list[i] += ' ' + other
-            break
-          }
-        }
-      }
-      return list
+      console.log(valid, this.getData())
     },
     /* check if 'other' checkbox is ticked */
     isOtherTicked(list) {
@@ -362,23 +302,97 @@ export default {
     /* get the data and convert it into expected key/value formats in BackEnd */
     getData() {
       return {
-        january: this.concatOtherValue(this.january, this.januaryOther),
-        february: this.concatOtherValue(this.february, this.februaryOther),
-        march: this.concatOtherValue(this.march, this.marchOther),
-        april: this.concatOtherValue(this.april, this.aprilOther),
-        may: this.concatOtherValue(this.may, this.mayOther),
-        june: this.concatOtherValue(this.june, this.juneOther),
-        july: this.concatOtherValue(this.july, this.julyOther),
-        august: this.concatOtherValue(this.august, this.augustOther),
-        september: this.concatOtherValue(this.september, this.septemberOther),
-        october: this.concatOtherValue(this.october, this.octoberOther),
-        november: this.concatOtherValue(this.november, this.novemberOther),
-        december: this.concatOtherValue(this.december, this.decemberOther),
+        january: concatOtherValueToList(this.january, this.januaryOther),
+        february: concatOtherValueToList(this.february, this.februaryOther),
+        march: concatOtherValueToList(this.march, this.marchOther),
+        april: concatOtherValueToList(this.april, this.aprilOther),
+        may: concatOtherValueToList(this.may, this.mayOther),
+        june: concatOtherValueToList(this.june, this.juneOther),
+        july: concatOtherValueToList(this.july, this.julyOther),
+        august: concatOtherValueToList(this.august, this.augustOther),
+        september: concatOtherValueToList(this.september, this.septemberOther),
+        october: concatOtherValueToList(this.october, this.octoberOther),
+        november: concatOtherValueToList(this.november, this.novemberOther),
+        december: concatOtherValueToList(this.december, this.decemberOther),
       }
     },
   },
   beforeMount() {
     this.activityItems = this.$store.getters['questionnaireCode/Code20']
   },
+  watch:{
+    january(value){
+      const otherTicked = value.findIndex((item) => item == 'others')
+      if(!otherTicked){
+        this.januaryOther= '';
+      }
+    },
+    february(value){
+      const otherTicked = value.findIndex((item) => item == 'others')
+      if(!otherTicked){
+        this.februaryOther= '';
+      }
+    },
+    march(value){
+      const otherTicked = value.findIndex((item) => item == 'others')
+      if(!otherTicked){
+        this.marchOther= '';
+      }
+    },
+    april(value){
+      const otherTicked = value.findIndex((item) => item == 'others')
+      if(!otherTicked){
+        this.aprilOther= '';
+      }
+    },
+    may(value){
+      const otherTicked = value.findIndex((item) => item == 'others')
+      if(!otherTicked){
+        this.mayOther= '';
+      }
+    },
+    june(value){
+      const otherTicked = value.findIndex((item) => item == 'others')
+      if(!otherTicked){
+        this.juneOther= '';
+      }
+    },
+    july(value){
+      const otherTicked = value.findIndex((item) => item == 'others')
+      if(!otherTicked){
+        this.julyOther= '';
+      }
+    },
+    august(value){
+      const otherTicked = value.findIndex((item) => item == 'others')
+      if(!otherTicked){
+        this.augustOther= '';
+      }
+    },
+    september(value){
+      const otherTicked = value.findIndex((item) => item == 'others')
+      if(!otherTicked){
+        this.septemberOther= '';
+      }
+    },
+    october(value){
+      const otherTicked = value.findIndex((item) => item == 'others')
+      if(!otherTicked){
+        this.octoberOther= '';
+      }
+    },
+    november(value){
+      const otherTicked = value.findIndex((item) => item == 'others')
+      if(!otherTicked){
+        this.novemberOther= '';
+      }
+    },
+    december(value){
+      const otherTicked = value.findIndex((item) => item == 'others')
+      if(!otherTicked){
+        this.decemberOther= '';
+      }
+    }
+  }
 }
 </script>

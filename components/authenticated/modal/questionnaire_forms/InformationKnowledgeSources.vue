@@ -6,21 +6,13 @@
           v-if="item.type == 'radio'"
           :title="camelToSpace(item.key)"
         >
-          <v-text-field
-            v-model="formData[item.key]"
-            :rules="requiredRule"
-            class="requiredFieldHidden"
-          />
-          <v-radio-group v-model="formData[item.key]" class="pa-0 ma-0">
+          <v-radio-group :rules="requiredRule" v-model="formData[item.key]" class="pa-0 ma-0">
             <v-radio
               v-for="item in isAgreeItems"
               :key="item"
               :label="item"
               :value="item"
             ></v-radio>
-            <div v-if="!formData[item.key]" class="red--text caption">
-              You must select an option!
-            </div>
           </v-radio-group>
         </form-radio-container>
 
@@ -28,12 +20,8 @@
           v-else-if="item.type == 'checkbox'"
           :title="camelToSpace(item.key)"
         >
-          <v-text-field
-            v-model="formData.printMaterialsRead"
-            :rules="listRule"
-            class="requiredFieldHidden"
-          />
           <v-checkbox
+            :rules="listRule"
             v-for="item in printMaterialsReadItems"
             v-model="formData.printMaterialsRead"
             :key="item"
@@ -49,12 +37,6 @@
             :rules="requiredRule"
             label="* please specify"
           ></v-text-field>
-          <div
-            v-if="formData.printMaterialsRead.length == 0"
-            class="red--text caption pa-0 ma-0"
-          >
-            You must select at least one option!
-          </div>
         </form-checkbox-container>
 
         <form-input-container v-else>
@@ -73,9 +55,11 @@
 </template>
 
 <script>
-import FormCheckboxContainer from '../../cards/formCheckboxContainer.vue'
-import FormInputContainer from '../../cards/formInputContainer.vue'
-import FormRadioContainer from '../../cards/formRadioContainer.vue'
+import { concatOtherValueToList } from '~/reusableFunctions/questionnaireValidation'
+import FormCheckboxContainer from '../../form/formCheckboxContainer.vue'
+import FormInputContainer from '../../form/formInputContainer.vue'
+import FormRadioContainer from '../../form/formRadioContainer.vue'
+
 export default {
   components: {
     FormCheckboxContainer,
@@ -123,10 +107,7 @@ export default {
     /* test if the form is valid, return boolean */
     validate() {
       const valid = this.$refs.form.validate()
-      if (valid) {
-        const data = this.getData()
-        console.log('data: ', data)
-      }
+      console.log(valid,this.getData())
     },
     /* check if 'other' checkbox is ticked */
     isOtherTicked(list) {
@@ -137,25 +118,13 @@ export default {
       }
       return false
     },
-    /* concatenate the value of other into the index of list that has 'other' */
-    concatOtherValue(list, other) {
-      if (!!other) {
-        for (let i = 0; i < list.length; i++) {
-          if (list[i] == 'others') {
-            list[i] += ' ' + other
-            break
-          }
-        }
-      }
-      return list
-    },
     /* get the data and convert it into expected key/value formats in BackEnd */
     getData() {
       const data = {}
       for (let i = 0; i < this.list.length; i++) {
         const keyName = this.list[i].key
         if (keyName == 'printMaterialsRead') {
-          data[keyName] = this.concatOtherValue(
+          data[keyName] = concatOtherValueToList(
             this.formData[keyName],
             this.formData.printMaterialsReadOther
           )
@@ -191,11 +160,14 @@ export default {
     this.printMaterialsReadItems =
       this.$store.getters['questionnaireCode/PrintMaterials']
   },
+  watch: {
+    printMaterialsRead(value){
+      const otherTicked = value.forEach((element) => element == 'others');
+      if(otherTicked){
+        this.printMaterialsReadOther = '';
+      }
+    }
+  }
 }
 </script>
 
-<style scoped>
-.requiredFieldHidden {
-  display: none !important;
-}
-</style>

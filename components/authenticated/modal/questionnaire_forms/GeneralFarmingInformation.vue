@@ -5,7 +5,7 @@
         <form-input-container>
           <v-text-field
             v-model="avgYearsGeneralFarming"
-            :rules="requiredRule"
+            :rules="numberRule"
             label="* Average years in general farming"
             type="number"
           ></v-text-field>
@@ -14,25 +14,22 @@
         <form-input-container>
           <v-text-field
             v-model="avgYearsContourFarming"
-            :rules="requiredRule"
+            :rules="numberRule"
             label="* Average years in contour farming/agroforestry"
             type="number"
           ></v-text-field>
         </form-input-container>
 
         <form-radio-container
-          title="Did acquire through government or programs?"
+          title="Was there time stopped farming?"
         >
-          <v-radio-group v-model="isThereStoppedFarming" class="pa-0 ma-0">
+          <v-radio-group :rules="requiredRule" v-model="isThereStoppedFarming" class="pa-0 ma-0">
             <v-radio
               v-for="item in isThereStoppedFarmingItems"
               :key="item.value"
               :label="item.label"
               :value="item.value"
             ></v-radio>
-            <div v-if="!isThereStoppedFarming" class="red--text caption">
-              You must select an option!
-            </div>
           </v-radio-group>
         </form-radio-container>
 
@@ -57,7 +54,7 @@
         <form-input-container v-if="isStopped">
           <v-text-field
             v-model="reasonStopping"
-            :rules="reasonRule"
+            :rules="requiredRule"
             label="* Provide reason for stopping"
           ></v-text-field>
         </form-input-container>
@@ -68,8 +65,8 @@
 </template>
 
 <script>
-import FormInputContainer from '../../cards/formInputContainer.vue'
-import FormRadioContainer from '../../cards/formRadioContainer.vue'
+import FormInputContainer from '../../form/formInputContainer.vue'
+import FormRadioContainer from '../../form/formRadioContainer.vue'
 export default {
   components: { FormInputContainer, FormRadioContainer },
   data: () => ({
@@ -97,8 +94,8 @@ export default {
       },
     ],
     reasonStopping: '',
-    reasonRule: [(v) => !!v || 'this field is required'],
-    requiredRule: [
+    requiredRule: [(v) => !!v || 'this field is required'],
+    numberRule: [
       (v) => !!v || 'This field is required',
       (v) => parseFloat(v) > 0 || 'invalid value',
     ],
@@ -107,30 +104,17 @@ export default {
     /* test if the form is valid, return boolean */
     validate() {
       const valid = this.$refs.form.validate()
-      const validRadio = this.validateRadio()
-      if (valid && validRadio) {
-        const data = this.getData()
-        console.log(data)
-      } else {
-        alert('invalid')
-      }
-    },
-    /* check if radio inputs are not empty */
-    validateRadio() {
-      if (!this.isThereStoppedFarming) {
-        return false
-      }
-      return true
+      console.log(valid)
     },
     /* get the data and convert it into expected key/value formats in BackEnd */
     getData() {
       return {
-        avgyrs_general_farming: this.avgYearsGeneralFarming,
-        avgyrs_ctr_farming: this.avgYearsContourFarming,
-        is_there_time_stopped_farming: this.isThereStoppedFarming,
-        year_stopped_farming: this.yearStopped,
-        year_resumed_farming: this.yearResumed,
-        reason_stopping: this.reasonStopping,
+        avgYrsGeneralFarming: this.avgYearsGeneralFarming,
+        avgYrsCtrFarming: this.avgYearsContourFarming,
+        isThereTimeStoppedFarming: this.isThereStoppedFarming,
+        yearStoppedFarming: this.yearStopped,
+        yearResumedFarming: this.yearResumed,
+        reasonStopping: this.reasonStopping,
       }
     },
   },

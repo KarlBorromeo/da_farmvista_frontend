@@ -11,12 +11,8 @@
           </form-input-container>
 
           <form-checkbox-container title="Source of planting material">
-            <v-text-field
-              v-model="sourcePlantingMaterial"
-              :rules="checkboxRule"
-              class="hiddenRequiredField"
-            ></v-text-field>
             <v-checkbox
+              :rules="listRule"
               v-for="item in sourcePlantingMaterialItems"
               v-model="sourcePlantingMaterial"
               :key="item"
@@ -32,21 +28,11 @@
               :rules="requiredRule"
               label="* please specify"
             ></v-text-field>
-            <div
-              v-if="sourcePlantingMaterial.length == 0"
-              class="red--text caption pa-0 ma-0"
-            >
-              You must select at least one option!
-            </div>
           </form-checkbox-container>
 
           <form-checkbox-container title="Coffee variety used">
-            <v-text-field
-              v-model="coffeeVariety"
-              :rules="checkboxRule"
-              class="hiddenRequiredField"
-            ></v-text-field>
             <v-checkbox
+              :rules="listRule"
               v-for="item in coffeeVarietyItems"
               v-model="coffeeVariety"
               :key="item"
@@ -62,23 +48,13 @@
               :rules="requiredRule"
               label="* please specify"
             ></v-text-field>
-            <div
-              v-if="coffeeVariety.length == 0"
-              class="red--text caption pa-0 ma-0"
-            >
-              You must select at least one option!
-            </div>
           </form-checkbox-container>
 
           <form-checkbox-container title="Method of land preparation">
-            <v-text-field
-              v-model="methodLandPreparation"
-              :rules="checkboxRule"
-              class="hiddenRequiredField"
-            ></v-text-field>
             <v-checkbox
               v-for="item in methodLandPreparationItems"
               v-model="methodLandPreparation"
+              :rules="listRule"
               :key="item"
               :value="item"
               :label="item"
@@ -92,23 +68,13 @@
               :rules="requiredRule"
               label="* please specify"
             ></v-text-field>
-            <div
-              v-if="methodLandPreparation.length == 0"
-              class="red--text caption pa-0 ma-0"
-            >
-              You must select at least one option!
-            </div>
           </form-checkbox-container>
 
           <form-checkbox-container title="Row orientation">
-            <v-text-field
-              v-model="rowOrientation"
-              :rules="checkboxRule"
-              class="hiddenRequiredField"
-            ></v-text-field>
             <v-checkbox
               v-for="item in rowOrientationItems"
               v-model="rowOrientation"
+              :rules="listRule"
               :key="item"
               :value="item"
               :label="item"
@@ -122,12 +88,6 @@
               :rules="requiredRule"
               label="* please specify"
             ></v-text-field>
-            <div
-              v-if="rowOrientation.length == 0"
-              class="red--text caption pa-0 ma-0"
-            >
-              You must select at least one option!
-            </div>
           </form-checkbox-container>
 
           <form-input-container>
@@ -146,14 +106,10 @@
           </form-input-container>
 
           <form-checkbox-container title="Weed Control">
-            <v-text-field
-              v-model="weedControl"
-              :rules="checkboxRule"
-              class="hiddenRequiredField"
-            ></v-text-field>
             <v-checkbox
               v-for="item in typeMethodItems"
               v-model="weedControl"
+              :rules="listRule"
               :key="item"
               :value="item"
               :label="item"
@@ -167,23 +123,13 @@
               :rules="requiredRule"
               label="* please specify"
             ></v-text-field>
-            <div
-              v-if="weedControl.length == 0"
-              class="red--text caption pa-0 ma-0"
-            >
-              You must select at least one option!
-            </div>
           </form-checkbox-container>
 
           <form-checkbox-container title="Insect Pest Management">
-            <v-text-field
-              v-model="insectPestManagement"
-              :rules="checkboxRule"
-              class="hiddenRequiredField"
-            ></v-text-field>
             <v-checkbox
               v-for="item in typeMethodItems"
               v-model="insectPestManagement"
+              :rules="listRule"
               :key="item"
               :value="item"
               :label="item"
@@ -197,23 +143,13 @@
               :rules="requiredRule"
               label="* please specify"
             ></v-text-field>
-            <div
-              v-if="insectPestManagement.length == 0"
-              class="red--text caption pa-0 ma-0"
-            >
-              You must select at least one option!
-            </div>
           </form-checkbox-container>
 
           <form-checkbox-container title="Disease Management">
-            <v-text-field
-              v-model="diseaseManagement"
-              :rules="checkboxRule"
-              class="hiddenRequiredField"
-            ></v-text-field>
             <v-checkbox
               v-for="item in typeMethodItems"
               v-model="diseaseManagement"
+              :rules="listRule"
               :key="item"
               :value="item"
               :label="item"
@@ -227,21 +163,11 @@
               :rules="requiredRule"
               label="* please specify"
             ></v-text-field>
-            <div
-              v-if="diseaseManagement.length == 0"
-              class="red--text caption pa-0 ma-0"
-            >
-              You must select at least one option!
-            </div>
           </form-checkbox-container>
 
           <form-radio-container title="Use of inorganic fertilizer">
-            <v-text-field
-              v-model="isUseInorganicFertilizer"
-              :rules="requiredRule"
-              class="hiddenRequiredField"
-            ></v-text-field>
             <v-radio-group
+              :rules="requiredRule"
               v-model="isUseInorganicFertilizer"
               class="pa-0 ma-0"
             >
@@ -251,12 +177,6 @@
                 :label="item"
                 :value="item"
               ></v-radio>
-              <div
-                v-if="!isUseInorganicFertilizer"
-                class="red--text caption"
-              >
-                You must select an option!
-              </div>
             </v-radio-group>
           </form-radio-container>
 
@@ -269,12 +189,8 @@
           </form-input-container>
 
           <form-radio-container v-if="isUseInorganicFertilizer == 'yes'" title=" Specify the method of inorganic application">
-            <v-text-field
-              v-model="methodInorganicApplication"
-              :rules="requiredRule"
-              class="hiddenRequiredField"
-            ></v-text-field>
             <v-radio-group
+              :rules="requiredRule"
               v-model="methodInorganicApplication"
               class="pa-0 ma-0"
             >
@@ -300,12 +216,8 @@
           </form-radio-container>
 
           <form-radio-container title="Use of organic fertilizer">
-            <v-text-field
-              v-model="isUseOrganicFertilizer"
-              :rules="requiredRule"
-              class="hiddenRequiredField"
-            ></v-text-field>
             <v-radio-group
+              :rules="requiredRule"
               v-model="isUseOrganicFertilizer"
               class="pa-0 ma-0"
             >
@@ -315,12 +227,6 @@
                 :label="item"
                 :value="item"
               ></v-radio>
-              <div
-                v-if="!isUseOrganicFertilizer"
-                class="red--text caption"
-              >
-                You must select an option!
-              </div>
             </v-radio-group>
           </form-radio-container>
 
@@ -333,12 +239,8 @@
           </form-input-container>
 
           <form-radio-container v-if="isUseOrganicFertilizer == 'yes'" title=" Specify the method of organic application">
-            <v-text-field
-              v-model="methodOrganicApplication"
-              :rules="requiredRule"
-              class="hiddenRequiredField"
-            ></v-text-field>
             <v-radio-group
+              :rules="requiredRule"
               v-model="methodOrganicApplication"
               class="pa-0 ma-0"
             >
@@ -354,22 +256,12 @@
                 :rules="requiredRule"
                 label="* this field is required"
               ></v-text-field>
-              <div
-                v-if="!methodOrganicApplication"
-                class="red--text caption"
-              >
-                You must select an option!
-              </div>
             </v-radio-group>
           </form-radio-container>
 
           <form-radio-container title="Practice green manuring">
-            <v-text-field
-              v-model="isPracticeGreenManuring"
-              :rules="requiredRule"
-              class="hiddenRequiredField"
-            ></v-text-field>
             <v-radio-group
+              :rules="requiredRule"
               v-model="isPracticeGreenManuring"
               class="pa-0 ma-0"
             >
@@ -379,22 +271,12 @@
                 :label="item"
                 :value="item"
               ></v-radio>
-              <div
-                v-if="!isPracticeGreenManuring"
-                class="red--text caption"
-              >
-                You must select an option!
-              </div>
             </v-radio-group>
           </form-radio-container>
 
           <form-radio-container title="Return crop residue">
-            <v-text-field
-              v-model="isReturnCropResidue"
-              :rules="requiredRule"
-              class="hiddenRequiredField"
-            ></v-text-field>
             <v-radio-group
+              :rules="requiredRule"
               v-model="isReturnCropResidue"
               class="pa-0 ma-0"
             >
@@ -404,12 +286,6 @@
                 :label="item"
                 :value="item"
               ></v-radio>
-              <div
-                v-if="!isReturnCropResidue"
-                class="red--text caption"
-              >
-                You must select an option!
-              </div>
             </v-radio-group>
           </form-radio-container>
 
@@ -427,9 +303,9 @@
 </template>
 
 <script>
-import FormCheckboxContainer from '../../cards/formCheckboxContainer.vue'
-import FormInputContainer from '../../cards/formInputContainer.vue'
-import FormRadioContainer from '../../cards/formRadioContainer.vue'
+import FormCheckboxContainer from '../../form/formCheckboxContainer.vue'
+import FormInputContainer from '../../form/formInputContainer.vue'
+import FormRadioContainer from '../../form/formRadioContainer.vue'
 import { concatOtherValueToList, concatinateOtherValueToString } from '~/reusableFunctions/questionnaireValidation'
 export default {
   components: {
@@ -478,14 +354,7 @@ export default {
     dateHarvesting: '',
     isAgreeItems: ['yes', 'no'], //items for isUseInorganicFertilizer, isUseOrganicFertilizer, isPracticeGreenManuring, isReturnCropResidue
     requiredRule: [(v) => !!v || 'This field is required'],
-    checkboxRule: [
-      (v) => {
-        if(v.length>0){
-          return true
-        }
-        return 'empty list'
-      }
-    ],
+    listRule: [ (v) => v.length>0 || 'select at least one option' ],
     yearRule: [
       (v) => !!v || 'This field is required',
       (v) => {
@@ -508,10 +377,7 @@ export default {
     /* test if the form is valid, return boolean */
     validate() {
       const valid = this.$refs.form.validate()
-      if (valid) {
-        const data = this.getData()
-        console.log(data)
-      }
+      console.log(valid, this.getData())
     },
     /* get the data and convert it into expected key/value formats in BackEnd */
     getData() {
@@ -527,10 +393,10 @@ export default {
         insectPestManagement: concatOtherValueToList(this.insectPestManagement,this.sourcePlantingMaterialOther),
         diseaseManagement: concatOtherValueToList(this.diseaseManagement,this.sourcePlantingMaterialOther),
         isUseInorganicFertilizer: this.isUseInorganicFertilizer,
-        specifyInorganicFertilizer: this.specifyInorganicFertilizer,
+        specifyInorganicFertilizer: this.kindInorganicFertilizer,
         methodInorganicApplication: concatinateOtherValueToString(this.methodInorganicApplication,this.methodInorganicApplicationOther),
         isUseOrganicFertilizer: this.isUseOrganicFertilizer,
-        specifyOrganicFertilizer: this.specifyOrganicFertilizer,
+        specifyOrganicFertilizer: this.kindOgranicFertilizer,
         methodOrganicApplication: concatinateOtherValueToString(this.methodOrganicApplication,this.methodInorganicApplicationOther),
         isPracticeGreenManuring: this.isPracticeGreenManuring,
         isReturnCropResidue: this.isReturnCropResidue,
@@ -558,5 +424,63 @@ export default {
     this.methodApplicationItems =
       this.$store.getters['questionnaireCode/Code21F']
   },
+  watch: {
+    isUseInorganicFertilizer(value){
+      if(value == 'no'){
+        this.kindInorganicFertilizer = '';
+        this.methodInorganicApplication = '';
+        this.methodInorganicApplicationOther = '';
+      }
+    },
+    isUseOrganicFertilizer(value){
+      if(value == 'no'){
+        this.kindOgranicFertilizer = '';
+        this.methodOrganicApplication = '';
+        this.methodOrganicApplicationOther = '';
+      }
+    },
+    sourcePlantingMaterial(value){
+      const otherTicked = value.findIndex((item)=>item == 'others');
+      if(!otherTicked){
+        this.sourcePlantingMaterialOther = '';
+      }
+    },
+    coffeeVariety(value){
+      const otherTicked = value.findIndex((item)=>item == 'others');
+      if(!otherTicked){
+        this.coffeeVarietyOther = '';
+      }
+    },
+    methodLandPreparation(value){
+      const otherTicked = value.findIndex((item)=>item == 'others');
+      if(!otherTicked){
+        this.methodLandPreparationOther = '';
+      }
+    },
+    rowOrientation(value){
+      const otherTicked = value.findIndex((item)=>item == 'others');
+      if(!otherTicked){
+        this.rowOrientationOther = '';
+      }
+    },
+    weedControl(value){
+      const otherTicked = value.findIndex((item)=>item == 'others');
+      if(!otherTicked){
+        this.weedControlOther = '';
+      }
+    },
+    insectPestManagement(value){
+      const otherTicked = value.findIndex((item)=>item == 'others');
+      if(!otherTicked){
+        this.insectPestManagementOther = '';
+      }
+    },
+    diseaseManagement(value){
+      const otherTicked = value.findIndex((item)=>item == 'others');
+      if(!otherTicked){
+        this.diseaseManagementOther = '';
+      }
+    },
+  }
 }
 </script>

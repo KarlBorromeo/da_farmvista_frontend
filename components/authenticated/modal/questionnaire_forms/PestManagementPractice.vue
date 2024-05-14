@@ -3,12 +3,8 @@
     <v-container>
       <v-row>
           <form-radio-container title="Did you use pesticide">
-            <v-text-field 
-              v-model="didUsePesticide"
-              :rules="requiredRule"
-              class="requiredFieldHidden"
-            />
             <v-radio-group
+                :rules="requiredRule"
                 v-model="didUsePesticide"
                 class="pa-0 ma-0"
               >
@@ -18,12 +14,6 @@
                   :label="item"
                   :value="item"
                 ></v-radio>
-                <div
-                  v-if="!didUsePesticide"
-                  class="red--text caption"
-                >
-                  You must select an option!
-                </div>
               </v-radio-group>
           </form-radio-container>
            
@@ -55,12 +45,8 @@
           </form-input-container>
 
           <form-radio-container title="Did you spary pesticided yourself?">
-            <v-text-field 
-              v-model="didSprayYourself"
-              :rules="requiredRule"
-              class="requiredFieldHidden"
-            />
             <v-radio-group
+                :rules="requiredRule"
                 v-model="didSprayYourself"
                 class="pa-0 ma-0"
               >
@@ -70,12 +56,6 @@
                   :label="item"
                   :value="item"
                 ></v-radio>
-                <div
-                  v-if="!didSprayYourself"
-                  class="red--text caption"
-                >
-                  You must select an option!
-                </div>
               </v-radio-group>
           </form-radio-container>
 
@@ -89,12 +69,8 @@
           </form-input-container>
 
           <form-radio-container title="Do you have a sprayer?">
-            <v-text-field 
-              v-model="haveSprayer"
-              :rules="requiredRule"
-              class="requiredFieldHidden"
-            />
             <v-radio-group
+                :rules="requiredRule"
                 v-model="haveSprayer"
                 class="pa-0 ma-0"
               >
@@ -104,22 +80,12 @@
                   :label="item"
                   :value="item"
                 ></v-radio>
-                <div
-                  v-if="!haveSprayer"
-                  class="red--text caption"
-                >
-                  You must select an option!
-                </div>
               </v-radio-group>
           </form-radio-container>
 
           <form-checkbox-container v-if="haveSprayer== 'yes'" title="Kind of sprayer do you have">
-            <v-text-field 
-              v-model="kindSprayerHave"
-              :rules="listRule"
-              class="requiredFieldHidden"
-            />
             <v-checkbox
+              :rules="listRule"
               v-for="item in kindSprayerHaveItems"
               v-model="kindSprayerHave"
               :key="item"
@@ -135,9 +101,6 @@
               :rules="requiredRule"
               label="* please specify"
             ></v-text-field>
-            <div v-if="kindSprayerHave.length == 0" class="red--text caption pa-0 ma-0">
-              You must select at least one option!
-            </div>
         </form-checkbox-container>
 
         <form-input-container v-else>
@@ -150,12 +113,8 @@
         </form-input-container>
 
         <form-radio-container title="first hear about using pesticide">
-            <v-text-field 
-              v-model="hearAboutPesticideUsed"
-              :rules="requiredRule"
-              class="requiredFieldHidden"
-            />
             <v-radio-group
+                :rules="requiredRule"
                 v-model="hearAboutPesticideUsed"
                 class="pa-0 ma-0"
               >
@@ -177,22 +136,12 @@
                   label="Mass Media: please specify"
                   :rules="requiredRule"
                 />
-                <div
-                  v-if="!hearAboutPesticideUsed"
-                  class="red--text caption"
-                >
-                  You must select an option!
-                </div>
               </v-radio-group>
           </form-radio-container>
 
           <form-radio-container title="most important consideration deciding for pesticide to buy">
-            <v-text-field 
-              v-model="importantConsiderationDecidingPesticide"
-              :rules="requiredRule"
-              class="requiredFieldHidden"
-            />
             <v-radio-group
+                :rules="requiredRule"
                 v-model="importantConsiderationDecidingPesticide"
                 class="pa-0 ma-0"
               >
@@ -208,22 +157,12 @@
                   label="Other: please specify"
                   :rules="requiredRule"
                 />
-                <div
-                  v-if="!importantConsiderationDecidingPesticide"
-                  class="red--text caption"
-                >
-                  You must select an option!
-                </div>
               </v-radio-group>
           </form-radio-container>
 
           <form-checkbox-container  title="Whom get pest control advice">
-            <v-text-field 
-              v-model="whomPestControlAdvice"
-              :rules="listRule"
-              class="requiredFieldHidden"
-            />
             <v-checkbox
+              :rules="listRule"
               v-for="item in whomPestControlAdviceItems"
               v-model="whomPestControlAdvice"
               :key="item"
@@ -247,17 +186,11 @@
               label="Others: specify"
               required
             />
-            <div v-if="whomPestControlAdvice.length == 0" class="red--text caption pa-0 ma-0">
-              You must select at least one option!
-            </div>
           </form-checkbox-container>
+
           <form-radio-container v-if="whomPestControlAdvice.length > 1" title="which of these the most credible advice to you?">
-            <v-text-field 
-              v-model="whichAdviceCredible"
-              :rules="requiredRule"
-              class="requiredFieldHidden"
-            />
             <v-radio-group
+                :rules="requiredRule"
                 v-model="whichAdviceCredible"
                 class="pa-0 ma-0"
               >
@@ -267,12 +200,6 @@
                   :label="item"
                   :value="item"
                 ></v-radio>
-                <div
-                  v-if="!whichAdviceCredible"
-                  class="red--text caption"
-                >
-                  You must select an option!
-                </div>
               </v-radio-group>
           </form-radio-container>
 
@@ -286,12 +213,8 @@
         </form-input-container>
 
         <form-radio-container title="Have you attended a training on pest management?">
-            <v-text-field 
-              v-model="attendedTrainingPestManagement"
-              :rules="requiredRule"
-              class="requiredFieldHidden"
-            />
             <v-radio-group
+                :rules="requiredRule"
                 v-model="attendedTrainingPestManagement"
                 class="pa-0 ma-0"
               >
@@ -301,12 +224,6 @@
                   :label="item"
                   :value="item"
                 ></v-radio>
-                <div
-                  v-if="!attendedTrainingPestManagement"
-                  class="red--text caption"
-                >
-                  You must select an option!
-                </div>
               </v-radio-group>
           </form-radio-container>
 
@@ -334,9 +251,10 @@
 </template>
 
 <script>
-import FormCheckboxContainer from '../../cards/formCheckboxContainer.vue'
-import FormInputContainer from '../../cards/formInputContainer.vue'
-import FormRadioContainer from '../../cards/formRadioContainer.vue'
+import { concatOtherValueToList, concatinateOtherValueToString } from '~/reusableFunctions/questionnaireValidation'
+import FormCheckboxContainer from '../../form/formCheckboxContainer.vue'
+import FormInputContainer from '../../form/formInputContainer.vue'
+import FormRadioContainer from '../../form/formRadioContainer.vue'
 export default {
   components: {
     FormCheckboxContainer,
@@ -390,10 +308,7 @@ export default {
     /* test if the form is valid, return boolean */
     validate() {
       const valid = this.$refs.form.validate()
-      if (valid) {
-        const data = this.getData()
-        console.log(data)
-      }
+      console.log(valid, this.getData())
     },
     /* check if 'other' checkbox is ticked */
     isOtherTicked(list) {
@@ -414,18 +329,6 @@ export default {
       }
       return false
     },
-    /* concatenate the value of other into the index of list that has 'other' */
-    concatOtherValue(list, other) {
-      if (!!other) {
-        for (let i = 0; i < list.length; i++) {
-          if (list[i] == 'others') {
-            list[i] += ' ' + other
-            break
-          }
-        }
-      }
-      return list
-    },
     /* concatenate two value holders for field that has others (ex: variable, variableOther)*/
     concatinateValues(original, other) {
       let text = original
@@ -444,12 +347,12 @@ export default {
         didSprayYourself: this.didSprayYourself,
         payLaborSpraying: this.payLaborSpraying,
         haveSprayer: this.haveSprayer,
-        kindSprayerHave: this.concatOtherValue(this.kindSprayerHave,this.kindSprayerHaveOther),
+        kindSprayerHave: concatOtherValueToList(this.kindSprayerHave,this.kindSprayerHaveOther),
         howGetSprayer: this.howGetSprayer,
         hearAboutPesticideUsed: this.hearAboutPesticideUsed,
         pesticideUsedMassMedia: this.pesticideUsedMassMedia,
         pesticideUsedGroup: this.pesticideUsedGroup,
-        importantConsiderationDecidingPesticide: this.concatinateValues(this.importantConsiderationDecidingPesticide,this.importantConsiderationDecidingPesticideOther),
+        importantConsiderationDecidingPesticide: concatinateOtherValueToString(this.importantConsiderationDecidingPesticide,this.importantConsiderationDecidingPesticideOther),
         whomPestControlAdvice: this.whomPestControlAdvice,
         controlAdviceMassMedia: this.controlAdviceMassMedia,
         whichAdviceCredible: this.whichAdviceCredible,
@@ -478,7 +381,31 @@ export default {
           }
         }
       }
-    }
+    },
+    didUsePesticide(value){
+      if(value !== 'yes'){
+        this.typeOfPesticide = '';
+      }
+    },
+    didSprayYourself(value){
+      if(value !== 'no'){
+        this.payLaborSpraying = '';
+      }
+    },
+    haveSprayer(value){
+      if(value == 'no'){
+        this.kindSprayerHave = [];
+        this.kindSprayerHaveOther = '';
+      }else{
+        this.howGetSprayer = '';
+      }
+    },
+    attendedTrainingPestManagement(value){
+      if(value !== 'yes'){
+        this.trainingAbout = ''
+        this.whoOrganizedTraining = ''   
+      }
+    }   
   },
   beforeMount() {
     this.kindSprayerHaveItems = this.$store.getters['questionnaireCode/SprayingEquipment'];

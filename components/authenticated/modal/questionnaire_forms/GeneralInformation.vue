@@ -13,6 +13,12 @@
         </form-input-container>
 
         <form-radio-container title="Sex">
+          <v-text-field
+              v-model="sex"
+              :rules="requiredRule"
+              required
+              class="hiddenRequiredField"
+          /> 
           <v-radio-group v-model="sex" class="pa-0 ma-0">
             <v-radio
               v-for="item in sexItems"
@@ -27,6 +33,12 @@
         </form-radio-container>
 
         <form-radio-container title="Civil Status">
+          <v-text-field
+              v-model="civilStatus"
+              :rules="requiredRule"
+              required
+              class="hiddenRequiredField"
+          /> 
           <v-radio-group v-model="civilStatus" class="pa-0 ma-0">
             <v-radio
               v-for="item in civilStatusItems"
@@ -58,6 +70,12 @@
         </form-input-container>
 
         <form-radio-container title="Belongs to the Marginalized Sector">
+          <v-text-field
+            v-model="isBelongMarginalizedSector"
+            :rules="requiredRule"
+            required
+            class="hiddenRequiredField"
+          /> 
           <v-radio-group v-model="isBelongMarginalizedSector" class="py-0 my-0">
             <v-radio
               v-for="item in isBelongMarginalizedSectorItems"
@@ -75,6 +93,12 @@
           v-if="isBelongMarginalizedSector == 'no'"
           title="If you answered 'no' to the previous question: please specify"
         >
+          <v-text-field
+            v-model="nonMarginalizedSector"
+            :rules="listRule"
+            required
+            class="hiddenRequiredField"
+          />
           <v-checkbox
             v-for="item in nonMarginalizedSectorItems"
             v-model="nonMarginalizedSector"
@@ -102,6 +126,12 @@
         <form-radio-container
           title="Member of a farmer organization or cooperative?"
         >
+          <v-text-field
+            v-model="isMemberOrgranization"
+            :rules="requiredRule"
+            required
+            class="hiddenRequiredField"
+          />
           <v-radio-group v-model="isMemberOrgranization" class="py-0 my-0">
             <v-radio
               v-for="item in isMemberOrgranizationItems"
@@ -119,6 +149,12 @@
           v-if="isMemberOrgranization == 'yes'"
           title=" If you answered 'yes' to the previous question, select type of Membership"
         >
+          <v-text-field
+              v-model="typeMembership"
+              :rules="requiredRule"
+              required
+              class="hiddenRequiredField"
+          /> 
           <v-radio-group v-model="typeMembership" class="py-0 my-0">
             <v-radio
               v-for="item in typeMembershipItems"
@@ -143,6 +179,12 @@
         <form-radio-container
           title="Any household member affiliated to any farming organization/association?"
         >
+            <v-text-field
+                v-model="isAnyHouseholdMemberOrg"
+                :rules="requiredRule"
+                required
+                class="hiddenRequiredField"
+            /> 
           <v-radio-group v-model="isAnyHouseholdMemberOrg" class="py-0 my-0">
             <p class="pa-0 ma-0">
               * Any household member affiliated to any farming
@@ -166,9 +208,9 @@
 </template>
 
 <script>
-import FormInputContainer from '../../cards/formInputContainer.vue'
-import FormRadioContainer from '../../cards/formRadioContainer.vue'
-import FormCheckboxContainer from '../../cards/formCheckboxContainer.vue'
+import FormInputContainer from '../../form/formInputContainer.vue'
+import FormRadioContainer from '../../form/formRadioContainer.vue'
+import FormCheckboxContainer from '../../form/formCheckboxContainer.vue'
 export default {
   components: { FormInputContainer, FormRadioContainer, FormCheckboxContainer },
   data: () => ({
@@ -230,57 +272,30 @@ export default {
       { value: 'no', label: 'No' },
     ],
     requiredRule: [(v) => !!v || 'This field is required'],
+    listRule: [(v) => v.length>0 || 'This field is required'],
   }),
   methods: {
     /* test if the form is valid, return boolean */
     validate() {
       const valid = this.$refs.form.validate()
-      const radioCheckBoxValid = this.validateRadioCheckbox()
-      console.log('non marginalized sctor', this.nonMarginalizedSector)
-      if (valid && radioCheckBoxValid) {
-        const data = this.getData()
-        console.log(data)
-      } else {
-        alert('invalid')
-      }
+      console.log(valid);
     },
     /* get the data and convert it into expected key/value formats in BackEnd */
     getData() {
       return {
         age: this.age,
         sex: this.sex,
-        civil_status: this.civilStatus,
+        civilStatus: this.civilStatus,
         religion: this.religion,
-        highest_education_attained: this.highestEducationAttained,
-        is_belong_marginalized_sector: this.isBelongMarginalizedSector,
-        if_no_marginalized_sector_name: this.nonMarginalizedSector,
-        dialect_spoken: this.dialectSpoken,
-        is_member_farmer_organization: this.isMemberOrgranization,
-        organization_type_membership: this.typeMembership,
-        organization_name: this.organizationName,
+        highestEducationAttained: this.highestEducationAttained,
+        isBelongMarginalizedSector: this.isBelongMarginalizedSector,
+        ifNoMarginalizedSectorName: this.nonMarginalizedSector,
+        dialectSpoken: this.dialectSpoken,
+        isMemberFarmerOrganization: this.isMemberOrgranization,
+        organizationTypeMembership: this.typeMembership,
+        organizationName: this.organizationName,
+
       }
-    },
-    /* check if radio inputs and checkboxes are not empty, return true if validated */
-    validateRadioCheckbox() {
-      if (
-        !this.sex ||
-        !this.civilStatus ||
-        !this.isBelongMarginalizedSector ||
-        !this.isMemberOrgranization ||
-        !this.isAnyHouseholdMemberOrg
-      ) {
-        return false
-      }
-      if (
-        this.isBelongMarginalizedSector == 'no' &&
-        this.nonMarginalizedSector.length == 0
-      ) {
-        return false
-      }
-      if (this.isMemberOrgranization == 'yes' && !this.typeMembership) {
-        return false
-      }
-      return true
     },
   },
   computed: {

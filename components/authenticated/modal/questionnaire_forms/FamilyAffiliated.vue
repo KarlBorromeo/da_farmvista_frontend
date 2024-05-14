@@ -16,6 +16,12 @@
           </form-input-container>
 
           <form-radio-container title="Position">
+            <v-text-field
+              v-model="position[i - 1]"
+              :rules="requiredRule"
+              required
+              class="hiddenRequiredField"
+            /> 
             <v-radio-group v-model="position[i - 1]" class="py-0 my-0">
               <v-radio
                 v-for="item in positionItems"
@@ -45,6 +51,12 @@
           </form-input-container>
 
           <form-radio-container title="Type of Institution/Organization">
+            <v-text-field
+              v-model="typeOrganization[i - 1]"
+              :rules="requiredRule"
+              required
+              class="hiddenRequiredField"
+            />
             <v-radio-group v-model="typeOrganization[i - 1]" class="py-0 my-0">
               <v-radio
                 v-for="item in typeOrganizationItems"
@@ -75,6 +87,12 @@
           </form-input-container>
 
           <form-radio-container title="Status of Membership">
+            <v-text-field
+                v-model="statusMembership[i - 1]"
+                :rules="requiredRule"
+                required
+                class="hiddenRequiredField"
+            /> 
             <v-radio-group v-model="statusMembership[i - 1]" class="py-0 my-0">
               <v-radio
                 v-for="item in statusMembershipItems"
@@ -89,6 +107,12 @@
           </form-radio-container>
 
           <form-radio-container title="Status of Organization">
+            <v-text-field
+                v-model="statusOrganization[i - 1]"
+                :rules="requiredRule"
+                required
+                class="hiddenRequiredField"
+            /> 
             <v-radio-group
               v-model="statusOrganization[i - 1]"
               class="py-0 my-0"
@@ -112,10 +136,10 @@
 </template>
 
 <script>
-import formCard from '../../cards/formCard.vue'
-import formCardButton from '../../cards/formCardButton.vue'
-import FormInputContainer from '../../cards/formInputContainer.vue'
-import FormRadioContainer from '../../cards/formRadioContainer.vue'
+import formCard from '../../form/formCard.vue'
+import formCardButton from '../../form/formCardButton.vue'
+import FormInputContainer from '../../form/formInputContainer.vue'
+import FormRadioContainer from '../../form/formRadioContainer.vue'
 export default {
   components: {
     formCard,
@@ -145,28 +169,24 @@ export default {
     /* test if the form is valid, return boolean */
     validate() {
       const valid = this.$refs.form.validate()
-      const validRadio = this.validateRadio()
-      if (valid && validRadio) {
-        const data = this.getData()
-        console.log('data of family affiliated: ', data)
-      }
+      console.log(valid);
     },
     /* get the data and convert it into expected key/value formats in BackEnd */
     getData() {
       return {
-        full_name: this.nameFamilyMember,
+        fullName: this.nameFamilyMember,
         position: this.concatinateEachIndexes(
           this.position,
           this.positionOthers
         ),
-        name_organization: this.nameOrganization,
-        type_organization: this.concatinateEachIndexes(
+        nameOrganization:  this.nameOrganization,
+        typeOrganization: this.concatinateEachIndexes(
           this.typeOrganization,
           this.typeOrganizationOthers
         ),
-        years_as_member: this.numberYearsMember,
-        status_membership: this.statusMembership,
-        status_organization: this.statusOrganization,
+        yearsAsMember: this.numberYearsMember,
+        statusMembership: this.statusMembership,
+        statusOrganization: this.statusOrganization,
       }
     },
     /* concatenate each indexes and return new array (ex: position, positionOthers)*/
@@ -180,20 +200,6 @@ export default {
         arr.push(originalList[i] + other)
       }
       return arr
-    },
-    /* check if radio inputs are not empty */
-    validateRadio() {
-      for (let i = 0; i < this.items; i++) {
-        if (
-          !this.position[i] ||
-          !this.typeOrganization[i] ||
-          !this.statusMembership[i] ||
-          !this.statusOrganization[i]
-        ) {
-          return false
-        }
-      }
-      return true
     },
     /* decrement the count of items, pop the end index */
     decrement() {
@@ -222,5 +228,21 @@ export default {
     this.statusOrganizationItems =
       this.$store.getters['questionnaireCode/Code3_4']
   },
+  watch:{
+    position(value){
+      value.forEach((element,index) => {
+        if(element !== 'others'){
+          this.positionOthers[index] = '';
+        }
+      });
+    },
+    typeOrganization(value){
+      value.forEach((element,index) => {
+        if(element !== 'others'){
+          this.typeOrganizationOthers[index] = '';
+        }
+      });
+    }
+  }
 }
 </script>

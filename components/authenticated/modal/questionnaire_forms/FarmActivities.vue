@@ -4,6 +4,7 @@
       <v-row>
         <form-checkbox-container title="Agricultural System">
           <v-checkbox
+            :rules="listRule"
             v-for="item in agriculturalSystemItems"
             v-model="agriculturalSystem"
             :key="item"
@@ -17,27 +18,18 @@
             :rules="requiredRule"
             label="* please specify"
           ></v-text-field>
-          <div
-            v-if="agriculturalSystem.length == 0"
-            class="red--text caption pa-0 ma-0"
-          >
-            You must select at least one option!
-          </div>
         </form-checkbox-container>
 
         <form-radio-container
           title="Did know proper reutilization of agri-waste?"
         >
-          <v-radio-group v-model="didKnowProperReutilization" class="pa-0 ma-0">
+          <v-radio-group :rules="requiredRule" v-model="didKnowProperReutilization" class="pa-0 ma-0">
             <v-radio
               v-for="item in didKnowProperReutilizationItems"
               :key="item"
               :label="item"
               :value="item"
             ></v-radio>
-            <div v-if="!didKnowProperReutilization" class="red--text caption">
-              You must select an option!
-            </div>
           </v-radio-group>
         </form-radio-container>
 
@@ -48,6 +40,7 @@
           <v-checkbox
             v-for="item in whereDisposedUnutilizedAgriwasteItems"
             v-model="whereDisposedUnutilizedAgriwaste"
+            :rules="listRule"
             :key="item"
             :value="item"
             :label="item"
@@ -59,12 +52,6 @@
             :rules="requiredRule"
             label="* please specify"
           ></v-text-field>
-          <div
-            v-if="whereDisposedUnutilizedAgriwaste.length == 0"
-            class="red--text caption pa-0 ma-0"
-          >
-            You must select at least one option!
-          </div>
         </form-checkbox-container>
 
         <form-checkbox-container
@@ -98,9 +85,9 @@
 </template>
 
 <script>
-import FormCheckboxContainer from '../../cards/formCheckboxContainer.vue'
-import FormInputContainer from '../../cards/formInputContainer.vue'
-import FormRadioContainer from '../../cards/formRadioContainer.vue'
+import FormCheckboxContainer from '../../form/formCheckboxContainer.vue'
+import FormInputContainer from '../../form/formInputContainer.vue'
+import FormRadioContainer from '../../form/formRadioContainer.vue'
 export default {
   components: {
     FormInputContainer,
@@ -121,36 +108,14 @@ export default {
     whereHearAboutReutilization: [],
     whereHearAboutReutilizationItems: [],
     whereHearAboutReutilizationOther: '',
-    requiredRule: [(v) => !!v || 'This field is required, n/a if none'],
+    requiredRule: [(v) => !!v || 'This field is required'],
+    listRule: [ (v) => v.length>0 || 'Must select at least one one']
   }),
   methods: {
     /* test if the form is valid, return boolean */
     validate() {
       const valid = this.$refs.form.validate()
-      const validRadio = this.validateRadio()
-      if (valid && validRadio) {
-        const data = this.getData()
-        console.log(data)
-      } else {
-        alert('invalid')
-      }
-    },
-    /* check if radio inputs are not empty */
-    validateRadio() {
-      if (
-        this.agriculturalSystem.length == 0 ||
-        this.didKnowProperReutilization.length == 0 ||
-        this.whereHearAboutReutilization.length == 0
-      ) {
-        return false
-      }
-      if (
-        this.didKnowProperReutilization == 'no' &&
-        this.whereDisposedUnutilizedAgriwaste.length == 0
-      ) {
-        return false
-      }
-      return true
+      console.log(valid);
     },
     /* concatenate the value of other into the index of list that has 'other' */
     concatOtherValue(list, other) {
@@ -202,5 +167,22 @@ export default {
         'questionnaireCode/AgriWasteReutilizationInformationSource'
       ]
   },
+  watch: {
+    agriculturalSystem(value){
+      if(value != 'others'){
+        this.agriculturalSystemOther = ''
+      }
+    },
+    whereDisposedUnutilizedAgriwaste(value){
+      if(value != 'others'){
+        this.whereDisposedUnutilizedAgriwasteOther = ''
+      }
+    },
+    whereHearAboutReutilization(value){
+      if(value != 'others'){
+        this.whereHearAboutReutilizationOther = ''
+      }
+    }
+  }
 }
 </script>

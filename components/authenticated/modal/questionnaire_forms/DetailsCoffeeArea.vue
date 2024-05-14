@@ -53,7 +53,7 @@
             ></v-text-field>
           </form-input-container>
           <form-radio-container title="Reason for Using">
-            <v-radio-group v-model="plantingDistanceReasons" class="pa-0 ma-0">
+            <v-radio-group :rules="requiredRule"  v-model="plantingDistanceReasons" class="pa-0 ma-0">
               <v-radio
                 v-for="item in reasonUsingItems"
                 :key="item"
@@ -67,9 +67,6 @@
                 label="* Please Specify"
                 class="my-0 py-0 pt-1"
               ></v-text-field>
-              <div v-if="!plantingDistanceReasons" class="red--text caption">
-                You must select an option!
-              </div>
             </v-radio-group>
           </form-radio-container>
         </v-row>
@@ -106,7 +103,7 @@
             ></v-text-field>
           </form-input-container>
           <form-radio-container title="Reason for Using">
-            <v-radio-group v-model="intercropVarietyReasons" class="pa-0 ma-0">
+            <v-radio-group :rules="requiredRule"  v-model="intercropVarietyReasons" class="pa-0 ma-0">
               <v-radio
                 v-for="item in reasonUsingItems"
                 :key="item"
@@ -120,9 +117,6 @@
                 label="* Please Specify"
                 class="my-0 py-0 pt-1"
               ></v-text-field>
-              <div v-if="!intercropVarietyReasons" class="red--text caption">
-                You must select an option!
-              </div>
             </v-radio-group>
           </form-radio-container>
         </v-row>
@@ -135,6 +129,7 @@
               v-model="totalAreaDetails"
               :rules="numberRule"
               label="* Details"
+              type="number"
             ></v-text-field>
           </form-input-container>
           <form-input-container>
@@ -150,7 +145,7 @@
         <p class="my-2 pb-0 font-weight-medium">Seed Source</p>
         <v-row>
           <form-radio-container title="Details">
-            <v-radio-group v-model="seedSourceDetails" class="pa-0 ma-0">
+            <v-radio-group :rules="requiredRule"  v-model="seedSourceDetails" class="pa-0 ma-0">
               <v-radio
                 v-for="item in seedSourceItems"
                 :key="item"
@@ -164,14 +159,11 @@
                 label="* Please Specify"
                 class="my-0 py-0 pt-1"
               ></v-text-field>
-              <div v-if="!seedSourceDetails" class="red--text caption">
-                You must select an option!
-              </div>
             </v-radio-group>
           </form-radio-container>
 
           <form-radio-container title="Reason for Using">
-            <v-radio-group v-model="seedSourceReasons" class="pa-0 ma-0">
+            <v-radio-group :rules="requiredRule"  v-model="seedSourceReasons" class="pa-0 ma-0">
               <v-radio
                 v-for="item in reasonUsingItems"
                 :key="item"
@@ -185,9 +177,6 @@
                 label="* Please Specify"
                 class="my-0 py-0 pt-1"
               ></v-text-field>
-              <div v-if="!seedSourceReasons" class="red--text caption">
-                You must select an option!
-              </div>
             </v-radio-group>
           </form-radio-container>
         </v-row>
@@ -198,9 +187,9 @@
 </template>
 
 <script>
-import formCard from '../../cards/formCard.vue'
-import FormInputContainer from '../../cards/formInputContainer.vue'
-import FormRadioContainer from '../../cards/formRadioContainer.vue'
+import formCard from '../../form/formCard.vue'
+import FormInputContainer from '../../form/formInputContainer.vue'
+import FormRadioContainer from '../../form/formRadioContainer.vue'
 export default {
   components: {
     formCard,
@@ -229,7 +218,7 @@ export default {
     seedSourceReasonsOther: '',
     seedSourceItems: [],
     reasonUsingItems: [],
-    requiredRule: [(v) => !!v || 'This field is required, n/a if none'],
+    requiredRule: [(v) => !!v || 'This field is required'],
     numberRule: [
       (v) => !!v || 'This field is required',
       (v) => parseFloat(v) >= 0 || 'invalid value',
@@ -251,26 +240,7 @@ export default {
     /* test if the form is valid, return boolean */
     validate() {
       const valid = this.$refs.form.validate()
-      const validRadio = this.validateRadio()
-      if (valid && validRadio) {
-        const data = this.getData()
-        console.log(data)
-      } else {
-        alert('invalid')
-      }
-    },
-    /* check if radio inputs are not empty */
-    validateRadio() {
-      if (
-        !this.plantingDistanceReasons ||
-        !this.intercropVarietyReasons ||
-        !this.seedSourceDetails ||
-        !this.seedSourceReasons
-      ) {
-        return false
-      }
-
-      return true
+      console.log(valid);
     },
     /* concatenate two value holders for field that has others (ex: variable, variableOther)*/
     concatinateValues(original, other) {
@@ -283,52 +253,46 @@ export default {
     /* get the data and convert it into expected key/value formats in BackEnd */
     getData() {
       return {
-        classification_crops: {
+        classificationCrops: {
           details: this.classificationCropsDetails,
-          reason_using: this.classificationCropsReasons,
+          reasonUsing: this.classificationCropsReasons,
         },
-        year_planted: {
+        yearPlanted: {
           details: this.yearPlantedDetails,
-          reason_using: this.yearPlantedReasons,
+          reasonUsing: this.yearPlantedReasons,
         },
-        planting_distance: {
+        plantingDistance: {
           details: this.plantingDistanceDetails,
-          reason_using: this.concatinateValues(
+          reasonUsing: this.concatinateValues(
             this.plantingDistanceReasons,
             this.plantingDistanceReasonsOther
           ),
         },
-        number_plants_stands: {
+        numberPlantsStands: {
           details: this.numberPlantsDetails,
-          reason_using: this.numberPlantsReasons,
+          reasonUsing: this.numberPlantsReasons,
         },
-        intercrop_variety: {
+        intercropVariety: {
           details: this.intercropVarietyDetails,
-          reason_using: this.concatinateValues(
+          reasonUsing: this.concatinateValues(
             this.intercropVarietyReasons,
             this.intercropVarietyReasonsOther
           ),
         },
-        total_area: {
+        totalArea: {
           details: this.totalAreaDetails,
-          reason_using: this.totalAreaReasons,
+          reasonUsing: this.totalAreaReasons,
         },
-        seed_source: {
+        seedSource: {
           details: this.concatinateValues(
             this.seedSourceDetails,
             this.seedSourceDetailsOther
           ),
-          reason_using: this.concatinateValues(
+          reasonUsing: this.concatinateValues(
             this.seedSourceReasons,
             this.seedSourceReasonsOther
           ),
         },
-      }
-    },
-    // decrement the count of items
-    decrement() {
-      if (this.items > 1) {
-        this.items--
       }
     },
   },
@@ -336,5 +300,27 @@ export default {
     this.reasonUsingItems = this.$store.getters['questionnaireCode/Code16B']
     this.seedSourceItems = this.$store.getters['questionnaireCode/Code16A']
   },
+  watch: {
+    plantingDistanceReasons(value){
+      if(value !== 'others'){
+        this.plantingDistanceReasonsOther = ''
+      }
+    },
+    intercropVarietyReasons(value){
+      if(value !== 'others'){
+        this.intercropVarietyReasonsOther = ''
+      }
+    },
+    seedSourceDetails(value){
+      if(value !== 'others'){
+        this.seedSourceDetailsOther = ''
+      }
+    },
+    seedSourceReasons(value){
+      if(value !== 'others'){
+        this.seedSourceReasonsOther = ''
+      }
+    },
+  }
 }
 </script>

@@ -71,7 +71,7 @@
 </template>
 
 <script>
-import FormInputContainer from '../../cards/formInputContainer.vue'
+import FormInputContainer from '../../form/formInputContainer.vue'
 export default {
   components: { FormInputContainer },
   data: () => ({
@@ -104,9 +104,10 @@ export default {
         crops: this.crops,
         livestock: this.livestock,
         agroforestry: this.agroforestry,
-        other_livelihodd: this.otherLivelihood,
-        non_farm: this.nonFarmIncome,
-        other_source: this.otherSources,
+        otherLivelihood: this.otherLivelihood,
+        nonFarm:  this.nonFarmIncome,
+        otherSource: this.otherSources,
+
       }
     },
   },

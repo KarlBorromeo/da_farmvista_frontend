@@ -12,7 +12,7 @@
         </form-input-container>
 
         <form-radio-container title="House Ownership">
-          <v-radio-group v-model="houseOwernship" class="ma-0">
+          <v-radio-group :rules="requiredRule" v-model="houseOwernship"  class="ma-0">
             <v-radio
               v-for="item in houseOwernshipItems"
               :key="item"
@@ -26,9 +26,6 @@
               label="Other:"
               class="my-0 py-0 pt-1"
             ></v-text-field>
-            <div v-if="!houseOwernship" class="red--text caption">
-              You must select an option!
-            </div>
           </v-radio-group>
         </form-radio-container>
 
@@ -42,7 +39,7 @@
         </form-input-container>
 
         <form-radio-container title="Materials Roof Made">
-          <v-radio-group v-model="typeRoofMade" class="ma-0">
+          <v-radio-group :rules="requiredRule" v-model="typeRoofMade" class="ma-0">
             <v-radio
               v-for="item in typeRoofMadeItems"
               :key="item"
@@ -56,14 +53,11 @@
               label="Other:"
               class="my-0 py-0 pt-1"
             ></v-text-field>
-            <div v-if="!typeRoofMade" class="red--text caption">
-              You must select an option!
-            </div>
           </v-radio-group>
         </form-radio-container>
 
         <form-radio-container title="Materials Wall Made">
-          <v-radio-group v-model="typeWallMade" class="ma-0">
+          <v-radio-group :rules="requiredRule" v-model="typeWallMade" class="ma-0">
             <v-radio
               v-for="item in typeWallMadeItems"
               :key="item"
@@ -77,14 +71,11 @@
               label="Other:"
               class="my-0 py-0 pt-1"
             ></v-text-field>
-            <div v-if="!typeWallMade" class="red--text caption">
-              You must select an option!
-            </div>
           </v-radio-group>
         </form-radio-container>
 
         <form-radio-container title="Kind toilet facility">
-          <v-radio-group v-model="kindToilet" class="ma-0">
+          <v-radio-group :rules="requiredRule" v-model="kindToilet" class="ma-0">
             <v-radio
               v-for="item in kindToiletItems"
               :key="item"
@@ -98,14 +89,11 @@
               label="Other:"
               class="my-0 py-0 pt-1"
             ></v-text-field>
-            <div v-if="!kindToilet" class="red--text caption">
-              You must select an option!
-            </div>
           </v-radio-group>
         </form-radio-container>
 
         <form-radio-container title="Kind lighting facility">
-          <v-radio-group v-model="lightingFacility" class="ma-0">
+          <v-radio-group :rules="requiredRule" v-model="lightingFacility" class="ma-0">
             <v-radio
               v-for="item in lightingFacilityItems"
               :key="item"
@@ -119,14 +107,11 @@
               label="Other:"
               class="my-0 py-0 pt-1"
             ></v-text-field>
-            <div v-if="!lightingFacility" class="red--text caption">
-              You must select an option!
-            </div>
           </v-radio-group>
         </form-radio-container>
 
         <form-radio-container title="Source cooking fuel">
-          <v-radio-group v-model="sourceCooking" class="ma-0">
+          <v-radio-group :rules="requiredRule" v-model="sourceCooking" class="ma-0">
             <v-radio
               v-for="item in sourceCookingItems"
               :key="item"
@@ -140,14 +125,11 @@
               label="Other:"
               class="my-0 py-0 pt-1"
             ></v-text-field>
-            <div v-if="!sourceCooking" class="red--text caption">
-              You must select an option!
-            </div>
           </v-radio-group>
         </form-radio-container>
 
         <form-radio-container title="Drinking water supply">
-          <v-radio-group v-model="sourceWaterDrink" class="ma-0">
+          <v-radio-group :rules="requiredRule" v-model="sourceWaterDrink" class="ma-0">
             <v-radio
               v-for="item in sourceWaterDrinkItems"
               :key="item"
@@ -161,9 +143,6 @@
               label="Other:"
               class="my-0 py-0 pt-1"
             ></v-text-field>
-            <div v-if="!sourceWaterDrink" class="red--text caption">
-              You must select an option!
-            </div>
           </v-radio-group>
         </form-radio-container>
       </v-row>
@@ -173,8 +152,8 @@
 </template>
 
 <script>
-import FormInputContainer from '../../cards/formInputContainer.vue'
-import FormRadioContainer from '../../cards/formRadioContainer.vue'
+import FormInputContainer from '../../form/formInputContainer.vue'
+import FormRadioContainer from '../../form/formRadioContainer.vue'
 export default {
   components: { FormInputContainer, FormRadioContainer },
   data: () => ({
@@ -213,64 +192,41 @@ export default {
     /* test if the form is valid, return boolean */
     validate() {
       const valid = this.$refs.form.validate()
-      const validRadio = this.validateRadio()
-      if (valid && validRadio) {
-        const data = this.getData()
-        console.log(data)
-      } else {
-        alert('invalid')
-      }
-    },
-    /* check if radio inputs are not empty */
-    validateRadio() {
-      for (let i = 0; i < this.items; i++) {
-        if (
-          !this.houseOwernship ||
-          !this.typeRoofMade ||
-          !this.typeWallMade ||
-          !this.kindToilet ||
-          !this.lightingFacility ||
-          !this.sourceCooking ||
-          !this.sourceWaterDrink
-        ) {
-          return false
-        }
-      }
-      return true
+      console.log(valid,this.getData());
     },
     /* get the data and convert it into expected key/value formats in BackEnd */
     getData() {
       return {
-        number_year: this.yearsResidence,
-        house_ownerhsip: this.concatinateValues(
+        numberYear: this.yearsResidence,
+        houseOwnership: this.concatinateValues(
           this.houseOwernship,
           this.houseOwernshipOther
         ),
-        number_of_rooms: this.numberRooms,
-        roof_materials_made: this.concatinateValues(
+        numberOfRooms: this.numberRooms,
+        roofMaterialsMade: this.concatinateValues(
           this.typeRoofMade,
           this.typeRoofMadeOther
         ),
-        walls_materials_made: this.concatinateValues(
+        wallsMaterialsMade: this.concatinateValues(
           this.typeWallMade,
           this.typeWallMadeOther
         ),
-        kind_toilet_facilty: this.concatinateValues(
+        kindToiletFacility: this.concatinateValues(
           this.kindToilet,
           this.kindToiletOther
         ),
-        kind_lighting_facility: this.concatinateValues(
+        kindLightingFacility: this.concatinateValues(
           this.lightingFacility,
           this.lightingFacilityOther
         ),
-        source_cooking_fuel: this.concatinateValues(
+        sourceCookingFuel: this.concatinateValues(
           this.sourceCooking,
           this.sourceCookingOther
         ),
-        source_drinking_supply: this.concatinateValues(
+        sourceDrinkingSupply: this.concatinateValues(
           this.sourceWaterDrink,
           this.sourceWaterDrinkOther
-        ),
+        )
       }
     },
     /* concatenate two value holders for field that has others (ex: kindToilet, kindToiletOthers)*/
@@ -291,5 +247,42 @@ export default {
     this.sourceCookingItems = this.$store.getters['questionnaireCode/Code11']
     this.sourceWaterDrinkItems = this.$store.getters['questionnaireCode/Code12']
   },
+  watch:{
+    houseOwernship(value){
+      if(value !== 'others'){
+        this.houseOwernshipOther = ''
+      }
+    },
+    typeRoofMade(value){
+      if(value !== 'others'){
+        this.typeRoofMadeOther = ''
+      }
+    },
+    typeWallMade(value){
+      if(value !== 'others'){
+        this.typeWallMadeOther = ''
+      }
+    },
+    kindToilet(value){
+      if(value !== 'others'){
+        this.kindToiletOther = ''
+      }
+    },
+    lightingFacility(value){
+      if(value !== 'others'){
+        this.lightingFacilityOther = ''
+      }
+    },
+    sourceCooking(value){
+      if(value !== 'others'){
+        this.sourceCookingOther = ''
+      }
+    },
+    sourceWaterDrink(value){
+      if(value !== 'others'){
+        this.sourceWaterDrinkOther = ''
+      }
+    },
+  }
 }
 </script>

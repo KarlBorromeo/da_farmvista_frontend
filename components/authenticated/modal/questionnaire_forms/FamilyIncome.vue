@@ -25,6 +25,12 @@
           </form-input-container>
 
           <form-radio-container title="Sex">
+            <v-text-field
+                v-model="sex[i - 1]"
+                :rules="requiredRule"
+                required
+                class="hiddenRequiredField"
+            /> 
             <v-radio-group v-model="sex[i - 1]" class="pa-0 ma-0">
               <v-radio
                 v-for="item in sexItems"
@@ -60,10 +66,17 @@
               :rules="requiredRule"
               label="* Contributiong (PHP) income/month"
               type="number"
+              min=0
             ></v-text-field>
           </form-input-container>
 
           <form-radio-container title="Involved in coffee farm">
+            <v-text-field
+                v-model="involveCoffeefarm[i - 1]"
+                :rules="requiredRule"
+                required
+                class="hiddenRequiredField"
+            /> 
             <v-radio-group v-model="involveCoffeefarm[i - 1]" class="pa-0 ma-0">
               <v-radio
                 v-for="item in involveCoffeefarmItems"
@@ -84,10 +97,10 @@
 </template>
 
 <script>
-import formCard from '../../cards/formCard.vue'
-import formCardButton from '../../cards/formCardButton.vue'
-import FormInputContainer from '../../cards/formInputContainer.vue'
-import FormRadioContainer from '../../cards/formRadioContainer.vue'
+import formCard from '../../form/formCard.vue'
+import formCardButton from '../../form/formCardButton.vue'
+import FormInputContainer from '../../form/formInputContainer.vue'
+import FormRadioContainer from '../../form/formRadioContainer.vue'
 
 export default {
   components: {
@@ -120,42 +133,20 @@ export default {
     /* test if the form is valid, return boolean */
     validate() {
       const valid = this.$refs.form.validate()
-      const radioValid = this.validateRadio()
-      if (valid && radioValid) {
-        const data = this.getData()
-        console.log(data)
-      } else {
-        alert('invalid')
-      }
+      console.log(valid)
+      console.log('data',this.getData())
     },
     /* get the data and convert it into expected key/value formats in BackEnd */
     getData() {
       return {
-        full_name: this.name,
+        fullName: this.name,
         age: this.age,
         sex: this.sex,
-        role_in_family: this.roleFamily,
-        education_attainment: this.educationsAttainment,
-        estimated_contribution: this.contributionAmount,
-        is_involved_cofeeFarm: this.involveCoffeefarm,
+        roleInFamily: this.roleFamily,
+        educationAttainment: this.educationsAttainment,
+        estimatedContribution: this.contributionAmount,
+        isInvolvedCoffeeFarm: this.involveCoffeefarm,
       }
-    },
-    /* check if radio inputs are not empty */
-    validateRadio() {
-      for (let i = 0; i < this.items; i++) {
-        if (
-          !this.name[i] ||
-          !this.age[i] ||
-          !this.sex[i] ||
-          !this.roleFamily[i] ||
-          !this.educationsAttainment[i] ||
-          !this.contributionAmount[i] ||
-          !this.involveCoffeefarm[i]
-        ) {
-          return false
-        }
-      }
-      return true
     },
     // decrement the count of items
     decrement() {

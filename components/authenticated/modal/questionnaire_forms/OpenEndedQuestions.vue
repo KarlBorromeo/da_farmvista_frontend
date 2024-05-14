@@ -36,9 +36,9 @@
   </template>
   
   <script>
-  import FormCheckboxContainer from '../../cards/formCheckboxContainer.vue'
-  import FormInputContainer from '../../cards/formInputContainer.vue'
-  import FormRadioContainer from '../../cards/formRadioContainer.vue'
+  import FormCheckboxContainer from '../../form/formCheckboxContainer.vue'
+  import FormInputContainer from '../../form/formInputContainer.vue'
+  import FormRadioContainer from '../../form/formRadioContainer.vue'
   export default {
     components: {
       FormCheckboxContainer,

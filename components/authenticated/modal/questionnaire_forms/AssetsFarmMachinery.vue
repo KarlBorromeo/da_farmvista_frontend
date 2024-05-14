@@ -8,24 +8,20 @@
             <p class="ma-0 pa-0 font-weight-black">{{ i }}</p>
           </v-col>
           <form-select-container>
-            <div class="mt-3">
               <v-select
                 v-model="machineName[i - 1]"
                 :items="machineNameItems"
+                :rules="requiredRule"
                 append-icon="mdi-tractor"
                 label="* Machine Items"
                 dense
               ></v-select>
-              <p v-if="!machineName[i - 1]" class="red--text caption mt-1">
-                This field is required!
-              </p>
-            </div>
           </form-select-container>
 
           <form-input-container>
             <v-text-field
               v-model="machineQuantity[i - 1]"
-              :rules="requiredRule"
+              :rules="numberRule"
               label="* How many currently own"
               type="number"
             ></v-text-field>
@@ -34,6 +30,12 @@
           <form-radio-container
             title="Did acquire through government or programs?"
           >
+              <v-text-field
+                v-model="ismachineAquiredGovtProg[i - 1]"
+                :rules="requiredRule"
+                required
+                class="hiddenRequiredField"
+            /> 
             <v-radio-group
               v-model="ismachineAquiredGovtProg[i - 1]"
               class="pa-0 ma-0"
@@ -56,8 +58,9 @@
           <form-input-container>
             <v-text-field
               v-model="machineAge[i - 1]"
-              :rules="requiredRule"
+              :rules="numberRule"
               label="* age of the item"
+              type="number"
             ></v-text-field>
           </form-input-container>
         </v-row>
@@ -68,11 +71,11 @@
 </template>
 
 <script>
-import formCard from '../../cards/formCard.vue'
-import formCardButton from '../../cards/formCardButton.vue'
-import FormInputContainer from '../../cards/formInputContainer.vue'
-import FormRadioContainer from '../../cards/formRadioContainer.vue'
-import FormSelectContainer from '../../cards/formSelectContainer.vue'
+import formCard from '../../form/formCard.vue'
+import formCardButton from '../../form/formCardButton.vue'
+import FormInputContainer from '../../form/formInputContainer.vue'
+import FormRadioContainer from '../../form/formRadioContainer.vue'
+import FormSelectContainer from '../../form/formSelectContainer.vue'
 export default {
   components: {
     formCard,
@@ -93,37 +96,26 @@ export default {
       { value: 'no', label: 'No' },
     ],
     machineAge: [],
-    requiredRule: [
+    numberRule: [
       (v) => !!v || 'This field is required',
       (v) => parseFloat(v) >= 0 || 'invalid value',
     ],
+    requiredRule: [ (v) => !!v || 'This field is required' ]
   }),
   methods: {
     /* test if the form is valid, return boolean */
     validate() {
       const valid = this.$refs.form.validate()
-      const radioCheckboxValid = this.validateRadioCheckbox()
-      if (valid && radioCheckboxValid) {
-        const data = this.getData()
-        console.log(data)
-      }
-    },
-    /* check if radio inputs are not empty */
-    validateRadioCheckbox() {
-      for (let i = 0; i < this.items; i++) {
-        if (!this.machineName[i] || !this.ismachineAquiredGovtProg[i]) {
-          return false
-        }
-      }
-      return true
+      console.log(valid);
     },
     /* get the data and convert it into expected key/value formats in BackEnd */
     getData() {
       return {
-        farm_machinery_name: this.machineName,
-        farm_machinery_quantity: this.machineQuantity,
-        is_acquired_govt_program: this.ismachineAquiredGovtProg,
-        farm_machinery_age: this.machineAge,
+        farmMachineryName: this.machineName,
+      farmMachineryQuantity: this.machineQuantity,
+      isAcquiredGovtProgram: this.ismachineAquiredGovtProg,
+      farmMachineryAge: this.machineAge,
+
       }
     },
     // decrement the count of items
@@ -131,7 +123,6 @@ export default {
       if (this.items > 1) {
         this.items--
         this.machineName.pop()
-        this.machineNameItems.pop()
         this.machineQuantity.pop()
         this.ismachineAquiredGovtProg.pop()
         this.machineAge.pop()

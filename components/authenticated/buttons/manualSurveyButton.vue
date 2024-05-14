@@ -16,7 +16,7 @@ export default {
     components: { QuestionnaireVue },
     data(){
         return{
-            dialog: false,
+            dialog: true,
         }
     }
 }

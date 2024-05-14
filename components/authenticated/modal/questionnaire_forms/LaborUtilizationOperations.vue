@@ -131,11 +131,11 @@
 </template>
 
 <script>
-import formCard from '../../cards/formCard.vue'
-import laborOperationContainer from '../../cards/laborOperationContainer.vue'
-import laborOperationColNumber from '../../cards/laborOperationColNumber.vue'
-import laborOperationColText from '../../cards/laborOperationColText.vue'
-import FormInputContainer from '../../cards/formInputContainer.vue'
+import formCard from '../../form/formCard.vue'
+import laborOperationContainer from '../../form/laborOperationContainer.vue'
+import laborOperationColNumber from '../../form/laborOperationColNumber.vue'
+import laborOperationColText from '../../form/laborOperationColText.vue'
+import FormInputContainer from '../../form/formInputContainer.vue'
 export default {
 	components: {
 		formCard,

@@ -5,7 +5,7 @@
         <form-input-container>
           <v-text-field
             v-model="food"
-            :rules="requiredRule"
+            :rules="numberRule"
             label="* Food in a week"
             type="number"
           ></v-text-field>
@@ -14,7 +14,7 @@
         <form-input-container>
           <v-text-field
             v-model="clothing"
-            :rules="requiredRule"
+            :rules="numberRule"
             label="* Clothing in a year"
             type="number"
           ></v-text-field>
@@ -23,7 +23,7 @@
         <form-input-container>
           <v-text-field
             v-model="utilities"
-            :rules="requiredRule"
+            :rules="numberRule"
             label="* Utilities in a month"
             type="number"
           ></v-text-field>
@@ -32,7 +32,7 @@
         <form-input-container>
           <v-text-field
             v-model="householdFacilities"
-            :rules="requiredRule"
+            :rules="numberRule"
             label="* Household Facilities in a year"
             type="number"
           ></v-text-field>
@@ -41,7 +41,7 @@
         <form-input-container>
           <v-text-field
             v-model="nonFoodItems"
-            :rules="requiredRule"
+            :rules="numberRule"
             label="* Non-Food Items in a month"
             type="number"
           ></v-text-field>
@@ -50,7 +50,7 @@
         <form-input-container>
           <v-text-field
             v-model="healthExpenses"
-            :rules="requiredRule"
+            :rules="numberRule"
             label="* Health Expenses in a year"
             type="number"
           ></v-text-field>
@@ -59,7 +59,7 @@
         <form-input-container>
           <v-text-field
             v-model="transportation"
-            :rules="requiredRule"
+            :rules="numberRule"
             label="* Transportation in a month"
             type="number"
           ></v-text-field>
@@ -68,7 +68,7 @@
         <form-input-container>
           <v-text-field
             v-model="communication"
-            :rules="requiredRule"
+            :rules="numberRule"
             label="* Communication in a month"
             type="number"
           ></v-text-field>
@@ -77,7 +77,7 @@
         <form-input-container>
           <v-text-field
             v-model="recreation"
-            :rules="requiredRule"
+            :rules="numberRule"
             label="* Recreation in a month"
             type="number"
           ></v-text-field>
@@ -86,7 +86,7 @@
         <form-input-container>
           <v-text-field
             v-model="education"
-            :rules="requiredRule"
+            :rules="numberRule"
             label="* Education in a semester"
             type="number"
           ></v-text-field>
@@ -95,7 +95,7 @@
         <form-input-container>
           <v-text-field
             v-model="specialOccasions"
-            :rules="requiredRule"
+            :rules="numberRule"
             label="* Special Occasions in a year"
             type="number"
           ></v-text-field>
@@ -104,8 +104,17 @@
         <form-input-container>
           <v-text-field
             v-model="otherExpenses"
-            :rules="otherExpensesRule"
+            :rules="numberRule"
             label="* Other expenses in a week"
+            type="number"
+          ></v-text-field>
+        </form-input-container>
+        <form-input-container>
+          <v-text-field
+            v-model="otherExpensesSpecify"
+            :rules="requiredRule"
+            label="* Other expenses Specify:"
+            hint="specify the other item name"
           ></v-text-field>
         </form-input-container>
       </v-row>
@@ -115,7 +124,7 @@
 </template>
 
 <script>
-import FormInputContainer from '../../cards/formInputContainer.vue'
+import FormInputContainer from '../../form/formInputContainer.vue'
 export default {
   components: { FormInputContainer },
   data: () => ({
@@ -132,10 +141,8 @@ export default {
     education: '',
     specialOccasions: '',
     otherExpenses: '',
-    otherExpensesRule: [
-      (v) => !!v || 'Example response: Alcohol - 1000, n/a if none',
-    ],
-    requiredRule: [
+    otherExpensesSpecify: '',
+    numberRule: [
       (v) => !!v || 'This field is required',
       (v) => v >= 0 || 'invalid value',
     ],
@@ -151,19 +158,21 @@ export default {
     },
     /* get the data and convert it into expected key/value formats in BackEnd */
     getData() {
-      return {
+      return {        
         food: this.food,
         clothing: this.clothing,
         utilities: this.utilities,
         household: this.householdFacilities,
-        non_food_items: this.nonFoodItems,
-        health_expenses: this.healthExpenses,
+        nonFoodItems: this.nonFoodItems,
+        healthExpenses: this.healthExpenses,
         transportation: this.transportation,
         communication: this.communication,
         recreation: this.recreation,
         education: this.education,
-        special_occasions: this.specialOccasions,
+        specialOccasions: this.specialOccasions,
         others: this.otherExpenses,
+        otherSpecified: this.otherExpensesSpecify,
+
       }
     },
   },

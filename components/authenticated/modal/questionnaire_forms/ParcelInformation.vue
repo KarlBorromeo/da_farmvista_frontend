@@ -20,11 +20,12 @@
               v-model="area[i - 1]"
               :rules="numberRule"
               label="* Area (ha)"
+              type="number"
             ></v-text-field>
           </form-input-container>
 
           <form-radio-container title="Tenure">
-            <v-radio-group v-model="tenure[i - 1]" class="pa-0 ma-0">
+            <v-radio-group :rules="requiredRule" v-model="tenure[i - 1]" class="pa-0 ma-0">
               <v-radio
                 v-for="item in tenureItems"
                 :key="item"
@@ -38,14 +39,11 @@
                 label="* Please Specify"
                 class="my-0 py-0 pt-1"
               ></v-text-field>
-              <div v-if="!tenure[i - 1]" class="red--text caption">
-                You must select an option!
-              </div>
             </v-radio-group>
           </form-radio-container>
 
           <form-radio-container title="Topography">
-            <v-radio-group v-model="topography[i - 1]" class="pa-0 ma-0">
+            <v-radio-group :rules="requiredRule" v-model="topography[i - 1]" class="pa-0 ma-0">
               <v-radio
                 v-for="item in topographyItems"
                 :key="item"
@@ -59,14 +57,11 @@
                 label="* Please Specify"
                 class="my-0 py-0 pt-1"
               ></v-text-field>
-              <div v-if="!topography[i - 1]" class="red--text caption">
-                You must select an option!
-              </div>
             </v-radio-group>
           </form-radio-container>
 
           <form-radio-container title="Soil Fertility">
-            <v-radio-group v-model="soilFertility[i - 1]" class="pa-0 ma-0">
+            <v-radio-group :rules="requiredRule" v-model="soilFertility[i - 1]" class="pa-0 ma-0">
               <v-radio
                 v-for="item in soilFertilityItems"
                 :key="item"
@@ -80,14 +75,11 @@
                 label="* Please Specify"
                 class="my-0 py-0 pt-1"
               ></v-text-field>
-              <div v-if="!soilFertility[i - 1]" class="red--text caption">
-                You must select an option!
-              </div>
             </v-radio-group>
           </form-radio-container>
 
           <form-radio-container title="Cropping System">
-            <v-radio-group v-model="croppingSystem[i - 1]" class="pa-0 ma-0">
+            <v-radio-group :rules="requiredRule" v-model="croppingSystem[i - 1]" class="pa-0 ma-0">
               <v-radio
                 v-for="item in croppingSystemItems"
                 :key="item"
@@ -101,14 +93,11 @@
                 label="* Please Specify"
                 class="my-0 py-0 pt-1"
               ></v-text-field>
-              <div v-if="!croppingSystem[i - 1]" class="red--text caption">
-                You must select an option!
-              </div>
             </v-radio-group>
           </form-radio-container>
 
           <form-radio-container title="Source Water">
-            <v-radio-group v-model="sourceWater[i - 1]" class="pa-0 ma-0">
+            <v-radio-group :rules="requiredRule" v-model="sourceWater[i - 1]" class="pa-0 ma-0">
               <v-radio
                 v-for="item in sourceWaterItems"
                 :key="item"
@@ -122,14 +111,11 @@
                 label="* Please Specify"
                 class="my-0 py-0 pt-1"
               ></v-text-field>
-              <div v-if="!sourceWater[i - 1]" class="red--text caption">
-                You must select an option!
-              </div>
             </v-radio-group>
           </form-radio-container>
 
           <form-radio-container title="Land Use Status">
-            <v-radio-group v-model="landUseStatus[i - 1]" class="pa-0 ma-0">
+            <v-radio-group :rules="requiredRule" v-model="landUseStatus[i - 1]" class="pa-0 ma-0">
               <v-radio
                 v-for="item in landUseStatusItems"
                 :key="item"
@@ -143,9 +129,6 @@
                 label="* Please Specify"
                 class="my-0 py-0 pt-1"
               ></v-text-field>
-              <div v-if="!landUseStatus[i - 1]" class="red--text caption">
-                You must select an option!
-              </div>
             </v-radio-group>
           </form-radio-container>
 
@@ -164,11 +147,11 @@
 </template>
 
 <script>
-import formCard from '../../cards/formCard.vue'
-import formCardButton from '../../cards/formCardButton.vue'
-import FormInputContainer from '../../cards/formInputContainer.vue'
-import FormRadioContainer from '../../cards/formRadioContainer.vue'
-import FormSelectContainer from '../../cards/formSelectContainer.vue'
+import formCard from '../../form/formCard.vue'
+import formCardButton from '../../form/formCardButton.vue'
+import FormInputContainer from '../../form/formInputContainer.vue'
+import FormRadioContainer from '../../form/formRadioContainer.vue'
+import FormSelectContainer from '../../form/formSelectContainer.vue'
 export default {
   components: {
     formCard,
@@ -211,30 +194,7 @@ export default {
     /* test if the form is valid, return boolean */
     validate() {
       const valid = this.$refs.form.validate()
-      const validRadio = this.validateRadio()
-      if (valid && validRadio) {
-        const data = this.getData()
-        console.log(data)
-      } else {
-        alert('invalid')
-      }
-    },
-    /* check if radio inputs are not empty */
-    validateRadio() {
-      for (let i = 0; i < this.items; i++) {
-        if (
-          !this.tenure[i] ||
-          !this.topography[i] ||
-          !this.soilFertility[i] ||
-          !this.croppingSystem[i] ||
-          !this.sourceWater[i] ||
-          !this.landUseStatus[i] ||
-          !this.cropsPlanted[i]
-        ) {
-          return false
-        }
-      }
-      return true
+      console.log(valid,this.getData());
     },
     /* concatenate each indexes and return new array (ex: tenure, tenureOthers)*/
     concatinateEachIndexes(originalList, otherList) {
@@ -251,27 +211,28 @@ export default {
     /* get the data and convert it into expected key/value formats in BackEnd */
     getData() {
       return {
-        parcel_number: this.parcelNumber,
+        parcelNumber: this.parcelNumber,
         area: this.area,
         tenure: this.concatinateEachIndexes(this.tenure, this.tenureOther),
         topography: this.concatinateEachIndexes(
           this.topography,
           this.topographyOther
         ),
-        soil_fertility: this.soilFertility,
-        cropping_system: this.concatinateEachIndexes(
+        soilFertility: this.soilFertility,
+        croppingSystem: this.concatinateEachIndexes(
           this.croppingSystem,
           this.croppingSystemOther
         ),
-        source_of_water: this.concatinateEachIndexes(
+        sourceOfWater: this.concatinateEachIndexes(
           this.sourceWater,
           this.sourceWaterOther
         ),
-        land_use_status: this.concatinateEachIndexes(
+        landUseStatus: this.concatinateEachIndexes(
           this.landUseStatus,
           this.landUseStatusOther
         ),
-        crops_planted: this.cropsPlanted,
+        cropsPlanted: this.cropsPlanted,
+
       }
     },
     // decrement the count of items
@@ -301,5 +262,42 @@ export default {
     this.sourceWaterItems = this.$store.getters['questionnaireCode/Code14']
     this.landUseStatusItems = this.$store.getters['questionnaireCode/Code15']
   },
+  watch:{
+    tenure(value){
+      value.forEach((element,index) => {
+      if(element !== 'others'){
+        this.tenureOther[index] = ''
+      }  
+      });
+    },
+    topography(value){
+      value.forEach((element,index) => {
+      if(element !== 'others'){
+        this.topographyOther[index] = ''
+      }  
+      });
+    },
+    croppingSystem(value){
+      value.forEach((element,index) => {
+      if(element !== 'others'){
+        this.croppingSystemOther[index] = ''
+      }  
+      });
+    },
+    sourceWater(value){
+      value.forEach((element,index) => {
+      if(element !== 'others'){
+        this.sourceWaterOther[index] = ''
+      }  
+      });
+    },
+    landUseStatus(value){
+      value.forEach((element,index) => {
+      if(element !== 'others'){
+        this.landUseStatusOther[index] = ''
+      }  
+      });
+    },
+  }
 }
 </script>

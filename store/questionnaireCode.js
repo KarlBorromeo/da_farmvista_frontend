@@ -323,6 +323,7 @@ export const state = () => ({
       BROCHURES: 'brochures',
       PAMPHLETS: 'pamphlets',
       MAGAZINES: 'magazines',
+      OTHER: 'others'
     },
     PestControlAdvice: {
       NEIGHBOR: 'neighbor',
@@ -349,7 +350,7 @@ export const state = () => ({
     SprayingEquipment: {
       KNAPSACK: 'knapsack',
       HAND_SPRAYER: 'hand sprayer',
-      OTHER: 'other',
+      OTHER: 'others',
     },
     AgriWasteReutilizationInformationSource: {
       SOCIAL_MEDIA: 'social media',
@@ -497,32 +498,42 @@ export const getters = {
     return generateArray(state.codes.Code21F)
   },
   Code22(state) {
-    return state.codes.Code22
+    return generateArray(state.codes.Code22)
   },
   Code23(state) {
-    return state.codes.Code1
+    return generateArray(state.codes.Code23)
   },
   Code24(state) {
-    return state.codes.Code1
+    return generateArray(state.codes.Code24)
   },
   Code25(state) {
-    return state.codes.Code1
+    return generateArray(state.codes.Code25)
   },
   Code26(state) {
-    return state.codes.Code1
+    return generateArray(state.codes.Code26)
   },
   Code27(state) {
-    return state.codes.Code1
+    return generateArray(state.codes.Code27)
   },
   // TODO:
   Rate(state) {},
   Sex(state) {},
   Agree(state) {},
-  PrintMaterials(state) {},
-  PestControlAdvice(state) {},
-  PesticideConsideration(state) {},
-  PesticideInformationSource(state) {},
-  SprayingEquipment(state) {},
+  PrintMaterials(state) {
+    return generateArray(state.codes.PrintMaterials)
+  },
+  PestControlAdvice(state) {
+    return generateArray(state.codes.PestControlAdvice)
+  },
+  PesticideConsideration(state) {
+    return generateArray(state.codes.PesticideConsideration)
+  },
+  PesticideInformationSource(state) {
+    return generateArray(state.codes.PesticideInformationSource)
+  },
+  SprayingEquipment(state) {
+    return generateArray(state.codes.SprayingEquipment)
+  },
   AgriWasteReutilizationInformationSource(state) {
     return generateArray(state.codes.AgriWasteReutilizationInformationSource)
   },

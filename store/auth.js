@@ -25,7 +25,6 @@ export const mutations = {
   },
   /* save the user data to the store which will be deleted if hard refresh */
   saveUserDataToStore(state,userData){
-    console.log(userData);
     state.currentUser.firstName = userData.firstName;
   },
   /* delete the local storage details when logged out */
@@ -34,7 +33,6 @@ export const mutations = {
   },
   /* check if there is already userData at the local storage when hard refreshed */
   getUserDataFromLocalStorage(state){
-    alert('getting from storage')
     const token = localStorage.getItem('token')
     const type = localStorage.getItem('type')
     if(!token || !type){

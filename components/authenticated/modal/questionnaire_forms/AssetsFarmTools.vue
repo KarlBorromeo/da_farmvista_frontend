@@ -8,24 +8,20 @@
             <p class="ma-0 pa-0 font-weight-black">{{ i }}</p>
           </v-col>
           <form-select-container>
-            <div class="mt-3">
               <v-select
                 v-model="toolName[i - 1]"
                 :items="toolNameItems"
+                :rules="requiredRule"
                 append-icon="mdi-tools"
                 label="* Tool Items"
                 dense
               ></v-select>
-              <p v-if="!toolName[i - 1]" class="red--text caption mt-1">
-                This field is required!
-              </p>
-            </div>
           </form-select-container>
 
           <form-input-container>
             <v-text-field
               v-model="toolQuantity[i - 1]"
-              :rules="requiredRule"
+              :rules="numberRule"
               label="* How many currently own"
               type="number"
             ></v-text-field>
@@ -34,6 +30,12 @@
           <form-radio-container
             title="Did acquire through government or programs"
           >
+            <v-text-field
+                v-model="isToolAquiredGovtProg[i - 1]"
+                :rules="requiredRule"
+                required
+                class="hiddenRequiredField"
+            />
             <v-radio-group
               v-model="isToolAquiredGovtProg[i - 1]"
               class="pa-0 ma-0"
@@ -56,8 +58,10 @@
           <form-input-container>
             <v-text-field
               v-model="toolAge[i - 1]"
-              :rules="requiredRule"
+              :rules="numberRule"
               label="* age of the item"
+              type="number"
+              min=0
             ></v-text-field>
           </form-input-container>
         </v-row>
@@ -68,11 +72,11 @@
 </template>
 
 <script>
-import formCard from '../../cards/formCard.vue'
-import formCardButton from '../../cards/formCardButton.vue'
-import FormInputContainer from '../../cards/formInputContainer.vue'
-import FormRadioContainer from '../../cards/formRadioContainer.vue'
-import FormSelectContainer from '../../cards/formSelectContainer.vue'
+import formCard from '../../form/formCard.vue'
+import formCardButton from '../../form/formCardButton.vue'
+import FormInputContainer from '../../form/formInputContainer.vue'
+import FormRadioContainer from '../../form/formRadioContainer.vue'
+import FormSelectContainer from '../../form/formSelectContainer.vue'
 export default {
   components: {
     formCard,
@@ -93,37 +97,25 @@ export default {
       { value: 'no', label: 'No' },
     ],
     toolAge: [],
-    requiredRule: [
+    numberRule: [
       (v) => !!v || 'This field is required',
       (v) => parseFloat(v) >= 0 || 'invalid value',
     ],
+    requiredRule: [ (v) => !!v || 'This field is required', ]
   }),
   methods: {
     /* test if the form is valid, return boolean */
     validate() {
       const valid = this.$refs.form.validate()
-      const radioCheckboxValid = this.validateRadioCheckbox()
-      if (valid && radioCheckboxValid) {
-        const data = this.getData()
-        console.log(data)
-      }
-    },
-    /* check if radio inputs are not empty */
-    validateRadioCheckbox() {
-      for (let i = 0; i < this.items; i++) {
-        if (!this.toolName[i] || !this.isToolAquiredGovtProg[i]) {
-          return false
-        }
-      }
-      return true
+      console.log(valid);
     },
     /* get the data and convert it into expected key/value formats in BackEnd */
     getData() {
       return {
-        farmtool_name: this.toolName,
-        farmtool_quantity: this.toolQuantity,
-        is_acquired_govt_program: this.isToolAquiredGovtProg,
-        farmtool_age: this.toolAge,
+        farmtoolName: this.toolName,
+        farmtoolQuantity: this.toolQuantity,
+        isAcquiredGovtProgram: this.isToolAquiredGovtProg,
+        farmtoolAge: this.toolAge
       }
     },
     // decrement the count of items
@@ -131,7 +123,6 @@ export default {
       if (this.items > 1) {
         this.items--
         this.toolName.pop()
-        this.toolNameItems.pop()
         this.toolQuantity.pop()
         this.isToolAquiredGovtProg.pop()
         this.toolAge.pop()

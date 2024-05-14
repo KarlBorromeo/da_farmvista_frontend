@@ -44,21 +44,13 @@
 						></v-text-field>
 					</form-input-container>
           <form-radio-container title="Cash/Credit">
-            <v-text-field
-              v-model="formData[item.key].cashCredit"
-							:rules="requiredRule"
-              class="requiredFieldHidden"
-						></v-text-field>
-            <v-radio-group v-model="formData[item.key].cashCredit" class="pa-0 ma-0">
+            <v-radio-group :rules="requiredRule" v-model="formData[item.key].cashCredit" class="pa-0 ma-0">
               <v-radio
                 v-for="item in cashCreditItems"
                 :key="item"
                 :label="item"
                 :value="item"
               ></v-radio>
-              <div v-if="!formData[item.key].cashCredit" class="red--text caption">
-                You must select an option!
-              </div>
             </v-radio-group>
           </form-radio-container>
           <form-input-container>
@@ -76,9 +68,9 @@
 </template>
 
 <script>
-import formCard from '../../cards/formCard.vue'
-import FormInputContainer from '../../cards/formInputContainer.vue'
-import FormRadioContainer from '../../cards/formRadioContainer.vue'
+import formCard from '../../form/formCard.vue'
+import FormInputContainer from '../../form/formInputContainer.vue'
+import FormRadioContainer from '../../form/formRadioContainer.vue'
 export default {
 	components: {
 		formCard,

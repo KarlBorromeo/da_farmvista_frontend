@@ -225,7 +225,7 @@ export default {
   },
   data() {
     return {
-      current: 'SurveyInformation',
+      current: 'OpenEndedQuestionRating',
       currentCommodity: 'Coffee Beans',
       commodity: ['Coffee Beans' , 'Mango' , 'Cacao' ],
     }

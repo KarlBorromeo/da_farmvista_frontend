@@ -8,10 +8,10 @@
             <p class="ma-0 pa-0 font-weight-black">{{ i }}</p>
           </v-col>
           <form-select-container>
-            <div class="mt-3">
               <v-select
                 v-model="structureBldgName[i - 1]"
                 :items="structureBldgNameItems"
+                :rules="requiredRule"
                 append-icon="mdi-barn"
                 label="* Structure Items"
                 class="pb-0 mb-0"
@@ -19,23 +19,16 @@
               <v-text-field
                 v-if="structureBldgName[i - 1] == 'others'"
                 v-model="structureBldgNameOther[i - 1]"
-                :rules="structureBldgNameOtherRule"
+                :rules="requiredRule"
                 label="* Others Please Specify"
                 class="my-0 py-0"
               ></v-text-field>
-              <p
-                v-if="!structureBldgName[i - 1]"
-                class="red--text caption mt-1"
-              >
-                This field is required!
-              </p>
-            </div>
           </form-select-container>
 
           <form-input-container>
             <v-text-field
               v-model="structureBldgQuantity[i - 1]"
-              :rules="requiredRule"
+              :rules="numberRule"
               label="* How many currently own"
               type="number"
             ></v-text-field>
@@ -44,6 +37,12 @@
           <form-radio-container
             title="Did acquire through government or programs?"
           >
+              <v-text-field
+                v-model="isstructureBldgAquiredGovtProg[i - 1]"
+                :rules="requiredRule"
+                required
+                class="hiddenRequiredField"
+            /> 
             <v-radio-group
               v-model="isstructureBldgAquiredGovtProg[i - 1]"
               class="pa-0 ma-0"
@@ -66,8 +65,9 @@
           <form-input-container>
             <v-text-field
               v-model="structureBldgAge[i - 1]"
-              :rules="requiredRule"
+              :rules="numberRule"
               label="* age of the item"
+              type="number"
             ></v-text-field>
           </form-input-container>
         </v-row>
@@ -78,11 +78,11 @@
 </template>
 
 <script>
-import formCard from '../../cards/formCard.vue'
-import formCardButton from '../../cards/formCardButton.vue'
-import FormInputContainer from '../../cards/formInputContainer.vue'
-import FormRadioContainer from '../../cards/formRadioContainer.vue'
-import FormSelectContainer from '../../cards/formSelectContainer.vue'
+import formCard from '../../form/formCard.vue'
+import formCardButton from '../../form/formCardButton.vue'
+import FormInputContainer from '../../form/formInputContainer.vue'
+import FormRadioContainer from '../../form/formRadioContainer.vue'
+import FormSelectContainer from '../../form/formSelectContainer.vue'
 export default {
   components: {
     formCard,
@@ -97,7 +97,6 @@ export default {
     structureBldgName: [],
     structureBldgNameItems: [],
     structureBldgNameOther: [],
-    structureBldgNameOtherRule: [(v) => !!v || 'this field is required'],
     structureBldgQuantity: [],
     isstructureBldgAquiredGovtProg: [],
     isstructureBldgAquiredGovtProgItems: [
@@ -105,32 +104,17 @@ export default {
       { value: 'no', label: 'No' },
     ],
     structureBldgAge: [],
-    requiredRule: [
+    numberRule: [
       (v) => !!v || 'This field is required',
       (v) => parseFloat(v) >= 0 || 'invalid value',
     ],
+    requiredRule: [ (v) => !!v || 'This field is required' ],
   }),
   methods: {
     /* test if the form is valid, return boolean */
     validate() {
       const valid = this.$refs.form.validate()
-      const radioCheckboxValid = this.validateRadioCheckbox()
-      if (valid && radioCheckboxValid) {
-        const data = this.getData()
-        console.log(data)
-      }
-    },
-    /* check if radio inputs are not empty */
-    validateRadioCheckbox() {
-      for (let i = 0; i < this.items; i++) {
-        if (
-          !this.structureBldgName[i] ||
-          !this.isstructureBldgAquiredGovtProg[i]
-        ) {
-          return false
-        }
-      }
-      return true
+      console.log(valid);
     },
     /* concatenate each indexes and return new array (ex: structureBldgName, structureBldgNameOther)*/
     concatinateEachIndexes(originalList, otherList) {
@@ -147,13 +131,14 @@ export default {
     /* get the data and convert it into expected key/value formats in BackEnd */
     getData() {
       return {
-        structure_bldg_land_name: this.concatinateEachIndexes(
+        structureBldgLandName: this.concatinateEachIndexes(
           this.structureBldgName,
           this.structureBldgNameOther
         ),
-        structure_bldg_land_quantity: this.structureBldgQuantity,
-        is_acquired_govt_program: this.isstructureBldgAquiredGovtProg,
-        structure_bldg_land_age: this.structureBldgAge,
+      structureBldgLandQuantity: this.structureBldgQuantity,
+      isAcquiredGovtProgram: this.isstructureBldgAquiredGovtProg,
+      structureBldgLandAge: this.structureBldgAge,
+
       }
     },
     // decrement the count of items
@@ -161,7 +146,6 @@ export default {
       if (this.items > 1) {
         this.items--
         this.structureBldgName.pop()
-        this.structureBldgNameItems.pop()
         this.structureBldgQuantity.pop()
         this.isstructureBldgAquiredGovtProg.pop()
         this.structureBldgAge.pop()
@@ -175,5 +159,14 @@ export default {
     this.structureBldgNameItems =
       this.$store.getters['questionnaireCode/Code5StructuresBuilding']
   },
+  watch:{
+    structureBldgName(value){
+      value.forEach((element,index) => {
+        if(element !== 'others'){
+          this.structureBldgNameOther[index] = '';
+        }
+      });
+    },
+  }
 }
 </script>

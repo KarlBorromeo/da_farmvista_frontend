@@ -13,6 +13,12 @@
         </form-input-container>
 
         <form-radio-container title="Name of Interviewer">
+          <v-text-field
+            v-model="interviewer"
+            :rules="requiredRule"
+            required
+            class="hiddenRequiredField"
+          />
           <v-radio-group v-model="interviewer" class="ma-0">
             <v-radio
               v-for="item in items"
@@ -76,10 +82,13 @@
             ref="timeEndPicker"
             v-model="timeEndPicker"
             :close-on-content-click="false"
-            :nudge-right="40"
+            :nudge-right="0"
             :return-value.sync="interviewEnd"
             transition="scale-transition"
             offset-y
+            max-width="290px"
+            min-width="290px"
+            class="my-0 py-0"
           >
             <template v-slot:activator="{ on, attrs }">
               <v-text-field
@@ -103,11 +112,11 @@
         </form-menu-container>
 
         <form-select-container>
-          <div class="" style="margin-top: 2rem !important">
             <v-select
               v-model="regionProvince"
               :items="regionProvinceItems"
               append-icon="mdi-city"
+              :rules="requiredRule"
               menu-props="auto"
               hide-details
               label="Region/Pronvince"
@@ -116,14 +125,13 @@
             <p v-if="!municipality" class="red--text caption mt-1">
               You must select Region/Province!
             </p>
-          </div>
         </form-select-container>
 
         <form-select-container>
-          <div style="margin-top: 2rem !important">
             <v-select
               v-model="municipality"
               :items="municipalityItems"
+              :rules="requiredRule"
               append-icon="mdi-city"
               label="City/Municipality"
               dense
@@ -131,7 +139,6 @@
             <p v-if="!municipality" class="red--text caption mt-1">
               You must select Municipality/City!
             </p>
-          </div>
         </form-select-container>
 
         <form-input-container>
@@ -145,14 +152,15 @@
         </form-input-container>
       </v-row>
     </v-container>
+    <v-btn @click="validate">Validate</v-btn>
   </v-form>
 </template>
 
 <script>
-import formInputContainer from '../../cards/formInputContainer.vue'
-import FormMenuContainer from '../../cards/formMenuContainer.vue'
-import FormRadioContainer from '../../cards/formRadioContainer.vue'
-import FormSelectContainer from '../../cards/formSelectContainer.vue'
+import formInputContainer from '../../form/formInputContainer.vue'
+import FormMenuContainer from '../../form/formMenuContainer.vue'
+import FormRadioContainer from '../../form/formRadioContainer.vue'
+import FormSelectContainer from '../../form/formSelectContainer.vue'
 export default {
   components: {
     formInputContainer,
@@ -229,17 +237,14 @@ export default {
     ],
     barangay: null,
     barangayRule: [(v) => !!v || 'Barangay is required'],
+    requiredRule: [(v) => !!v || 'This field is required']
   }),
 
   methods: {
     /* test if the form is valid, return boolean */
     validate() {
-      if (
-        this.$refs.form.validate() &&
-        this.municipality &&
-        this.regionProvince &&
-        this.interviewer
-      ) {
+      const valid = this.$refs.form.validate()
+      if (valid) {
         return true
       }
       return false
@@ -247,13 +252,13 @@ export default {
     /* return the data of this form as an object */
     getData() {
       return {
-        survey_no: this.suveryNumber,
-        validator_name: this.interviewer,
-        date_of_interview: this.date,
-        interview_start: this.interviewStart,
-        interview_end: this.interviewEnd,
-        region_province: this.regionProvince,
-        city_municipality: this.municipality,
+        dateOfInterview: this.date,
+        surveyNo: this.suveryNumber,
+        validatorName: this.interviewer,
+        interviewStart: this.interviewStart,
+        interviewEnd: this.interviewEnd,
+        regionProvince: this.regionProvince,
+        cityMunicipality: this.municipality,
         barangay: this.barangay,
       }
     },
