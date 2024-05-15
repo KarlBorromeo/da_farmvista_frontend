@@ -20,8 +20,8 @@
       </v-menu>
     </div>
     <v-divider />
-    <v-toolbar light elevation="0">
-      <template v-if="currentCommodity == 'Coffee Beans'">
+    <v-toolbar light elevation="0" v-if="currentCommodity == 'Coffee Beans'">
+      <template>
         <v-tabs fixed-tabs show-arrows center-active slider-color="red">
           <v-tab @click="selectTab('SurveyInformation')" class="caption">
             Survey Information
@@ -33,112 +33,202 @@
           >
             I. Farmer's Basic Information
           </v-tab>
-          <v-tab class="caption" @click="selectTab('GeneralInformation')">
+          <v-tab
+            class="caption"
+            @click="selectTab('GeneralInformation')"
+            :disabled="BasicInformationValidated"
+          >
             II. General Information
           </v-tab>
-          <v-tab class="caption" @click="selectTab('FamilyAffiliated')">
+          <v-tab
+            class="caption"
+            @click="selectTab('FamilyAffiliated')"
+            :disabled="GeneralFarmingInformationValidated"
+          >
             II. Family Affiliated
           </v-tab>
-          <v-tab class="caption" @click="selectTab('FamilyIncome')">
+          <v-tab
+            class="caption"
+            @click="selectTab('FamilyIncome')"
+            :disabled="FamilyAffiliatedValidated"
+          >
             III. Family Income
           </v-tab>
-          <v-tab class="caption" @click="selectTab('FarmIncome')">
+          <v-tab
+            class="caption"
+            @click="selectTab('FarmIncome')"
+            :disabled="FamilyIncomeValidated"
+          >
             III. Farm Income
           </v-tab>
-          <v-tab class="caption" @click="selectTab('HouseholdExpenses')">
+          <v-tab
+            class="caption"
+            @click="selectTab('HouseholdExpenses')"
+            :disabled="FarmIncomeValidated"
+          >
             IV. Household Expenses
           </v-tab>
-          <v-tab class="caption" @click="selectTab('AssetsFarmTools')">
+          <v-tab
+            class="caption"
+            @click="selectTab('AssetsFarmTools')"
+            :disabled="HouseholdExpensesValidated"
+          >
             V. Assets Farm Tools
           </v-tab>
-          <v-tab class="caption" @click="selectTab('AssetsFarmMachinery')">
+          <v-tab
+            class="caption"
+            @click="selectTab('AssetsFarmMachinery')"
+            :disabled="AssetsFarmToolsValidated"
+          >
             V. Assets Farm Machinery
           </v-tab>
           <v-tab
             class="caption"
             @click="selectTab('AssetsFarmPoultryLivestock')"
+            :disabled="AssetsFarmMachineryValidated"
           >
             V. Assets Farm Poultry Livestock
           </v-tab>
-          <v-tab class="caption" @click="selectTab('AssetsFarmStructure')">
+          <v-tab
+            class="caption"
+            @click="selectTab('AssetsFarmStructure')"
+            :disabled="AssetsFarmPoultryLivestockValidated"
+          >
             V. Assets Farm Structure
           </v-tab>
-          <v-tab class="caption" @click="selectTab('InformationDwellingPlace')">
+          <v-tab
+            class="caption"
+            @click="selectTab('InformationDwellingPlace')"
+            :disabled="AssetsFarmStructureValidated"
+          >
             VI. Information Dwelling Place
           </v-tab>
           <v-tab
             class="caption"
             @click="selectTab('GeneralFarmingInformation')"
+            :disabled="InformationDwellingPlaceValidated"
           >
             VII. General Farming Information
           </v-tab>
-          <v-tab class="caption" @click="selectTab('ParcelInformation')">
+          <v-tab
+            class="caption"
+            @click="selectTab('ParcelInformation')"
+            :disabled="GeneralFarmingInformationValidated"
+          >
             VII.IV Parcel Information
           </v-tab>
-          <v-tab class="caption" @click="selectTab('DetailsCoffeeArea')">
+          <v-tab
+            class="caption"
+            @click="selectTab('DetailsCoffeeArea')"
+            :disabled="ParcelInformationValidated"
+          >
             VII.V Details Coffee Area
           </v-tab>
           <v-tab
             class="caption"
             @click="selectTab('InfrastructureDistanceAccessibility')"
+            :disabled="DetailsCoffeeAreaValidated"
           >
             VII.VI Infrastructure Distance Accessibility
           </v-tab>
-          <v-tab class="caption" @click="selectTab('FarmActivities')">
+          <v-tab
+            class="caption"
+            @click="selectTab('FarmActivities')"
+            :disabled="InfrastructureDistanceAccessibilityValidated"
+          >
             VIII Farm Activities
           </v-tab>
-          <v-tab class="caption" @click="selectTab('FarmWasteManagement')">
+          <v-tab
+            class="caption"
+            @click="selectTab('FarmWasteManagement')"
+            :disabled="FarmActivitiesValidated"
+          >
             VIII.IV Farm Waste Management
           </v-tab>
-          <v-tab class="caption" @click="selectTab('CroppingPatternCalendar')">
+          <v-tab
+            class="caption"
+            @click="selectTab('CroppingPatternCalendar')"
+            :disabled="FarmWasteManagementValidated"
+          >
             VIII.V Cropping Pattern Calendar
           </v-tab>
-          <v-tab class="caption" @click="selectTab('DetailsCoffeeProduction')">
+          <v-tab
+            class="caption"
+            @click="selectTab('DetailsCoffeeProduction')"
+            :disabled="CroppingPatternCalendarValidated"
+          >
             IX Details Coffee Production
           </v-tab>
           <v-tab
             class="caption"
             @click="selectTab('LaborUtilizationOperations')"
+            :disabled="DetailsCoffeeProductionValidated"
           >
             IX.II Labor Utilization Operations
           </v-tab>
-          <v-tab class="caption" @click="selectTab('DetailWageOperation')">
+          <v-tab
+            class="caption"
+            @click="selectTab('DetailWageOperation')"
+            :disabled="LaborUtilizationOperationsValidated"
+          >
             IX.III Detail Wage Operation
           </v-tab>
-          <!-- TODO:  -->
-          <v-tab class="caption" @click="selectTab('CostInputsCoffee')">
+          <v-tab
+            class="caption"
+            @click="selectTab('CostInputsCoffee')"
+            :disabled="DetailWageOperationValidated"
+          >
             IX.IV Cost Inputs Coffee
           </v-tab>
-          <v-tab class="caption" @click="selectTab('PestDamageObserved')">
+          <v-tab
+            class="caption"
+            @click="selectTab('PestDamageObserved')"
+            :disabled="CostInputsCoffeeValidated"
+          >
             X Pest Damage Observed
           </v-tab>
-          <v-tab class="caption" @click="selectTab('PestManagementPractice')">
+          <v-tab
+            class="caption"
+            @click="selectTab('PestManagementPractice')"
+            :disabled="PestDamageObservedValidated"
+          >
             X.I Pest Management Practice
           </v-tab>
-          <v-tab class="caption" @click="selectTab('CoffeeHarvestMarketing')">
+          <v-tab
+            class="caption"
+            @click="selectTab('CoffeeHarvestMarketing')"
+            :disabled="PestManagementPracticeValidated"
+          >
             XI Coffee Harvest Marketing
           </v-tab>
-          <v-tab class="caption" @click="selectTab('TechAwareness')">
+          <v-tab
+            class="caption"
+            @click="selectTab('TechAwareness')"
+            :disabled="CoffeeHarvestMarketingValidated"
+          >
             XII Technology Awareness
           </v-tab>
           <v-tab
             class="caption"
             @click="selectTab('InformationKnowledgeSources')"
+            :disabled="TechAwarenessValidated"
           >
             XIII Information Knowledge Sources
           </v-tab>
-          <v-tab class="caption" @click="selectTab('OpenEndedQuestions')">
+          <v-tab
+            class="caption"
+            @click="selectTab('OpenEndedQuestions')"
+            :disabled="InformationKnowledgeSourcesValidated"
+          >
             XIV Open Ended Questions
           </v-tab>
-          <v-tab class="caption" @click="selectTab('OpenEndedQuestionRating')">
+          <v-tab
+            class="caption"
+            @click="selectTab('OpenEndedQuestionRating')"
+            :disabled="OpenEndedQuestionsValidated"
+          >
             XV Open EndedQuestion Rating
           </v-tab>
-        </v-tabs>
-      </template>
-      <template v-else>
-        <v-tabs fixed-tabs show-arrows center-active slider-color="red">
-          <v-tab>TAB 1</v-tab>
-          <v-tab>TAB 2</v-tab>
         </v-tabs>
       </template>
     </v-toolbar>
@@ -149,7 +239,7 @@
         </keep-alive>
       </v-card>
       <v-card v-else>
-        <keep-alive> EMPTY HERE </keep-alive>
+        <p class="text-center"> Please wait we are fetching the form, apply loading screen here </p>
       </v-card>
     </v-tabs-items>
   </v-card>
@@ -186,6 +276,7 @@ import TechAwareness from './questionnaire_forms/TechAwareness.vue'
 import InformationKnowledgeSources from './questionnaire_forms/InformationKnowledgeSources.vue'
 import OpenEndedQuestions from './questionnaire_forms/OpenEndedQuestions.vue'
 import OpenEndedQuestionRating from './questionnaire_forms/OpenEndedQuestionRating.vue'
+
 export default {
   components: {
     SurveyInformation,
@@ -221,8 +312,8 @@ export default {
   },
   data() {
     return {
-      current: 'InformationDwellingPlace',
-      currentCommodity: 'Coffee Beans',
+      current: 'SurveyInformation',
+      currentCommodity: '',
       commodity: ['Coffee Beans', 'Mango', 'Cacao'],
     }
   },
@@ -238,12 +329,126 @@ export default {
     SurveyInformationValidated() {
       return !this.$store.getters['questionnaire/SurveyInformationValidated']
     },
+    BasicInformationValidated() {
+      return !this.$store.getters['questionnaire/BasicInformationValidated']
+    },
+    GeneralInformationValidated() {
+      return !this.$store.getters['questionnaire/GeneralInformationValidated']
+    },
+    FamilyAffiliatedValidated() {
+      return !this.$store.getters['questionnaire/FamilyAffiliatedValidated']
+    },
+    FamilyIncomeValidated() {
+      return !this.$store.getters['questionnaire/FamilyIncomeValidated']
+    },
+    FarmIncomeValidated() {
+      return !this.$store.getters['questionnaire/FarmIncomeValidated']
+    },
+    HouseholdExpensesValidated() {
+      return !this.$store.getters['questionnaire/HouseholdExpensesValidated']
+    },
+    AssetsFarmToolsValidated() {
+      return !this.$store.getters['questionnaire/AssetsFarmToolsValidated']
+    },
+    AssetsFarmMachineryValidated() {
+      return !this.$store.getters['questionnaire/AssetsFarmMachineryValidated']
+    },
+    AssetsFarmPoultryLivestockValidated() {
+      return !this.$store.getters[
+        'questionnaire/AssetsFarmPoultryLivestockValidated'
+      ]
+    },
+    AssetsFarmStructureValidated() {
+      return !this.$store.getters['questionnaire/AssetsFarmStructureValidated']
+    },
+    InformationDwellingPlaceValidated() {
+      return !this.$store.getters[
+        'questionnaire/InformationDwellingPlaceValidated'
+      ]
+    },
+    GeneralFarmingInformationValidated() {
+      return !this.$store.getters[
+        'questionnaire/GeneralFarmingInformationValidated'
+      ]
+    },
+    ParcelInformationValidated() {
+      return !this.$store.getters['questionnaire/ParcelInformationValidated']
+    },
+    DetailsCoffeeAreaValidated() {
+      return !this.$store.getters['questionnaire/DetailsCoffeeAreaValidated']
+    },
+    InfrastructureDistanceAccessibilityValidated() {
+      return !this.$store.getters[
+        'questionnaire/InfrastructureDistanceAccessibilityValidated'
+      ]
+    },
+    FarmActivitiesValidated() {
+      return !this.$store.getters['questionnaire/FarmActivitiesValidated']
+    },
+    FarmWasteManagementValidated() {
+      return !this.$store.getters['questionnaire/FarmWasteManagementValidated']
+    },
+    CroppingPatternCalendarValidated() {
+      return !this.$store.getters[
+        'questionnaire/CroppingPatternCalendarValidated'
+      ]
+    },
+    DetailsCoffeeProductionValidated() {
+      return !this.$store.getters[
+        'questionnaire/DetailsCoffeeProductionValidated'
+      ]
+    },
+    LaborUtilizationOperationsValidated() {
+      return !this.$store.getters[
+        'questionnaire/LaborUtilizationOperationsValidated'
+      ]
+    },
+    DetailWageOperationValidated() {
+      return !this.$store.getters['questionnaire/DetailWageOperationValidated']
+    },
+    CostInputsCoffeeValidated() {
+      return !this.$store.getters['questionnaire/CostInputsCoffeeValidated']
+    },
+    PestDamageObservedValidated() {
+      return !this.$store.getters['questionnaire/PestDamageObservedValidated']
+    },
+    PestManagementPracticeValidated() {
+      return !this.$store.getters[
+        'questionnaire/PestManagementPracticeValidated'
+      ]
+    },
+    CoffeeHarvestMarketingValidated() {
+      return !this.$store.getters[
+        'questionnaire/CoffeeHarvestMarketingValidated'
+      ]
+    },
+    TechAwarenessValidated() {
+      return !this.$store.getters['questionnaire/TechAwarenessValidated']
+    },
+    InformationKnowledgeSourcesValidated() {
+      return !this.$store.getters[
+        'questionnaire/InformationKnowledgeSourcesValidated'
+      ]
+    },
+    OpenEndedQuestionsValidated() {
+      return !this.$store.getters['questionnaire/OpenEndedQuestionsValidated']
+    },
+    OpenEndedQuestionRatingValidated() {
+      return !this.$store.getters[
+        'questionnaire/OpenEndedQuestionRatingValidated'
+      ]
+    },
   },
   async beforeMount() {
-    await this.$store.dispatch(
-      'questionnaireCode/fetchAllCodes',
-      'coffee beans'
-    )
+    try{
+      await this.$store.dispatch(
+        'questionnaireCode/fetchAllCodes',
+        'coffee beans'
+      );
+      this.currentCommodity = 'Coffee Beans';      
+    }catch(error){
+      alert(error);
+    }
   },
 }
 </script>

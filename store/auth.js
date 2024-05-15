@@ -20,12 +20,12 @@ export const getters = {
 export const mutations = {
   /* save the user data to the local storage which will not be deleted after hard refresh*/
   saveUserDataToLocalStorage(_, userData) {
-    localStorage.setItem('token', userData.accessToken)
-    localStorage.setItem('type', userData.type)
+    localStorage.setItem('token', userData.accessToken);
+    localStorage.setItem('type', userData.type);
   },
   /* save the user data to the store which will be deleted if hard refresh */
   saveUserDataToStore(state, userData) {
-    state.currentUser.firstName = userData.firstName
+    state.currentUser.firstName = userData.firstName;
   },
   /* delete the local storage details when logged out */
   logout() {
@@ -46,12 +46,7 @@ export const mutations = {
 export const actions = {
   async login(context, credentials) {
     try {
-      // const userData = await api.login(credentials)
-      const userData = {
-        accessToken: 'fdsafdsa12312',
-        type: 'superadming',
-        firstName: 'ed wawa',
-      }
+      const userData = await api.login(credentials)
       context.commit('saveUserDataToLocalStorage', userData)
       context.commit('saveUserDataToStore', userData)
     } catch (error) {

@@ -1,17 +1,13 @@
-import axios from 'axios'
-const baseURL = process.env.baseUrlApi
+import Axios from '~/axios_config/Axios';
 
+/* fetch all the codes that were used in the questionnaire forms */
 export async function fetchAllCodes(commodity) {
-  console.log(commodity)
+  const accessToken = localStorage.getItem('token');
   const encodedType = encodeURIComponent(commodity)
   try {
-    console.log(commodity, baseURL + `survey/codes?type=${encodedType}`)
-    const response = await axios.get(
-      baseURL + `survey/codes?type=${commodity}`,
-      {}
-    )
-    console.log(response)
+    const response = await Axios.get(`survey/codes?type=${encodedType}`)
+    return response.data.data.codes;
   } catch (error) {
-    console.error(error)
+    throw error
   }
 }

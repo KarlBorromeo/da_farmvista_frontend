@@ -89,7 +89,7 @@ export default {
   layout: 'authentication',
   data: () => ({
     valid: false,
-    username: 'karlborromeo',
+    username: 'aubreymae',
     usernameRules: [
       (v) => !!v || 'Username is required',
       (v) => v.length >= 5 || 'Name must be less than 10 characters',

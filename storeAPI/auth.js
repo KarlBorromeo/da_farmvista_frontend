@@ -1,10 +1,8 @@
-import axios from 'axios'
-const baseURL = process.env.baseUrlApi
+import Axios from '~/axios_config/Axios'
 
 export async function login(credentials) {
   try {
-    const response = await axios.post(baseURL + 'auth/login', credentials)
-    console.log(response)
+    const response = await Axios.post('auth/login', credentials)
     return {
       accessToken: response.data.accessToken,
       type: response.data.type,
