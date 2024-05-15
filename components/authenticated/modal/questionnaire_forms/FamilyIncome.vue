@@ -130,6 +130,17 @@ export default {
         isInvolvedCoffeeFarm: this.involveCoffeefarm,
       }
     },
+    resetData() {
+      return {
+        fullName: this.name,
+        age: this.age,
+        sex: this.sex,
+        roleInFamily: this.roleFamily,
+        educationAttainment: this.educationsAttainment,
+        estimatedContribution: this.contributionAmount,
+        isInvolvedCoffeeFarm: this.involveCoffeefarm,
+      }
+    },
     // decrement the count of items
     decrement() {
       if (this.items > 1) {

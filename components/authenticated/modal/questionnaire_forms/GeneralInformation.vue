@@ -124,10 +124,6 @@
           title="Any household member affiliated to any farming organization/association?"
         >
           <v-radio-group :rules="requiredRule" v-model="isAnyHouseholdMemberOrg" class="py-0 my-0">
-            <p class="pa-0 ma-0">
-              * Any household member affiliated to any farming
-              organization/association?
-            </p>
             <v-radio
               v-for="item in isAnyHouseholdMemberOrgItems"
               :key="item.value"
@@ -213,7 +209,8 @@ export default {
     /* test if the form is valid, return boolean */
     validate() {
       const valid = this.$refs.form.validate()
-      console.log(valid)
+      alert(valid)
+      this.$store.commit('questionnaire/toggleNextTab',{tabName: 'GeneralInformationValidated',valid});
     },
     /* get the data and convert it into expected key/value formats in BackEnd */
     getData() {

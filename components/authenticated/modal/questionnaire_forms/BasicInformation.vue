@@ -90,10 +90,7 @@ export default {
     /* test if the form is valid, return boolean */
     validate() {
       const valid = this.$refs.form.validate()
-      if (valid) {
-        const data = this.getData()
-        console.log('basic information data: ', data)
-      }
+      this.$store.commit('questionnaire/toggleNextTab',{tabName: 'BasicInformationValidated',valid});
     },
     getData() {
       return {
@@ -103,7 +100,7 @@ export default {
         contactNumber: this.constactNumber,
         farmerCode: this.farmerCode,
       }
-    },
+    }
   },
 }
 </script>

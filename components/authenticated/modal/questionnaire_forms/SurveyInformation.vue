@@ -140,6 +140,7 @@
 </template>
 
 <script>
+import { generateObject } from '~/reusableFunctions/questionnaireValidation'
 import formInputContainer from '../../form/formInputContainer.vue'
 import FormMenuContainer from '../../form/formMenuContainer.vue'
 import FormRadioContainer from '../../form/formRadioContainer.vue'
@@ -227,16 +228,13 @@ export default {
     /* test if the form is valid, return boolean */
     validate() {
       const valid = this.$refs.form.validate()
-      if (valid) {
-        return true
-      }
-      return false
+      this.$store.commit('questionnaire/toggleNextTab',{tabName: 'SurveyInformationValidated',valid});
     },
     /* return the data of this form as an object */
     getData() {
       return {
         dateOfInterview: this.date,
-        surveyNo: this.suveryNumber,
+        surveyNo: this.surveyNumber,
         validatorName: this.interviewer,
         interviewStart: this.interviewStart,
         interviewEnd: this.interviewEnd,
@@ -245,35 +243,25 @@ export default {
         barangay: this.barangay,
       }
     },
-    /* validate the form, decide to enable next tab, save the data */
-    validation() {
-      const isValidated = this.validate()
-      console.log('validated: ', isValidated)
-      this.$store.commit('questionnaire/SurveyInformationValidate', isValidated)
-      if (isValidated) {
-        const data = this.getData()
-        this.$store.commit('questionnaire/SurveyInformation', data)
-      }
-    },
   },
   watch: {
     surveyNumber() {
-      this.validation()
+      this.validate()
     },
     interviewer() {
-      this.validation()
+      this.validate()
     },
     interviewStart() {
-      this.validation()
+      this.validate()
     },
     interviewEnd() {
-      this.validation()
+      this.validate()
     },
     municipality() {
-      this.validation()
+      this.validate()
     },
     barangay() {
-      this.validation()
+      this.validate()
     },
   },
 }
