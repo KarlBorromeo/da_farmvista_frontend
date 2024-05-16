@@ -151,9 +151,9 @@ export default {
     /* test if the form is valid, return boolean */
     validate() {
       const valid = this.$refs.form.validate()
-      if (valid) {
-        const data = this.getData()
-        console.log(data)
+      this.$store.commit('questionnaire/toggleNextTab',{tabName: 'HouseholdExpensesValidated',valid});
+      if(valid){
+        this.$store.commit('questionnaire/saveData',{keyName: 'householdExpense',data: this.getData()})
       }
     },
     /* get the data and convert it into expected key/value formats in BackEnd */
@@ -175,5 +175,46 @@ export default {
       }
     },
   },
+  watch: {
+    food(){
+      this.validate()
+    },
+    clothing(){
+      this.validate()
+    },
+    utilities(){
+      this.validate()
+    },
+    householdFacilities(){
+      this.validate()
+    },
+    nonFoodItems(){
+      this.validate()
+    },
+    healthExpenses(){
+      this.validate()
+    },
+    transportation(){
+      this.validate()
+    },
+    communication(){
+      this.validate()
+    },
+    recreation(){
+      this.validate()
+    },
+    education(){
+      this.validate()
+    },
+    specialOccasions(){
+      this.validate()
+    },
+    otherExpenses(){
+      this.validate()
+    },
+    otherExpensesSpecify(){
+      this.validate()
+    },
+  }
 }
 </script>

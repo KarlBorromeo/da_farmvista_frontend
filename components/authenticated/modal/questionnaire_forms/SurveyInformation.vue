@@ -12,16 +12,14 @@
           ></v-text-field>
         </form-input-container>
 
-        <form-radio-container title="Name of Interviewer">
-          <v-radio-group :rules="requiredRule" v-model="interviewer" class="ma-0">
-            <v-radio
-              v-for="item in items"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></v-radio>
-          </v-radio-group>
-        </form-radio-container>
+        <form-input-container>
+           <v-text-field
+            v-model="interviewer"
+            :rules="requiredRule"
+            label="* Name of Interviewer"
+            required
+          ></v-text-field>
+        </form-input-container>
 
         <form-input-container>
           <v-text-field
@@ -156,14 +154,8 @@ export default {
     valid: false,
     surveyNumber: '',
     surveyNumberRule: [(v) => !!v || 'survey number is required'],
-    interviewer: null,
-    items: [
-      { label: 'Jhon Warren S. Batondo', value: 'Jhon Warren S. Batondo' },
-      { label: 'Paul JOnes A. Ga-as', value: 'Paul JOnes A. Ga-as' },
-      { label: 'Donabel F. Gumata', value: 'Donabel F. Gumata' },
-      { label: 'Paul Christian A. Alason', value: 'Paul Christian A. Alason' },
-    ],
-    date: null,
+    interviewer: '',
+    date: '',
     dateRule: [(v) => !!v || 'date is required'],
     interviewStart: '',
     timeStartPicker: false,
@@ -179,7 +171,7 @@ export default {
       'SURIGAO DEL NORTE',
       'SURIGAO DEL SUR',
     ],
-    municipality: null,
+    municipality: '',
     municipalityItems: [
       'ALEGRIA',
       'BACUAG',
@@ -219,7 +211,7 @@ export default {
       'TUBAJON',
       'TUBAY',
     ],
-    barangay: null,
+    barangay: '',
     barangayRule: [(v) => !!v || 'Barangay is required'],
     requiredRule: [(v) => !!v || 'This field is required'],
   }),
@@ -229,6 +221,9 @@ export default {
     validate() {
       const valid = this.$refs.form.validate()
       this.$store.commit('questionnaire/toggleNextTab',{tabName: 'SurveyInformationValidated',valid});
+      if(valid){
+        this.$store.commit('questionnaire/saveData',{keyName: 'interview',data: this.getData()})
+      }
     },
     /* return the data of this form as an object */
     getData() {
@@ -245,22 +240,28 @@ export default {
     },
   },
   watch: {
-    surveyNumber() {
+    date(){
       this.validate()
     },
-    interviewer() {
+    surveyNumber(){
       this.validate()
     },
-    interviewStart() {
+    interviewer(){
       this.validate()
     },
-    interviewEnd() {
+    interviewStart(){
       this.validate()
     },
-    municipality() {
+    interviewEnd(){
       this.validate()
     },
-    barangay() {
+    regionProvince(){
+      this.validate()
+    },
+    municipality(){
+      this.validate()
+    },
+    barangay(){
       this.validate()
     },
   },

@@ -91,6 +91,9 @@ export default {
     validate() {
       const valid = this.$refs.form.validate()
       this.$store.commit('questionnaire/toggleNextTab',{tabName: 'BasicInformationValidated',valid});
+      if(valid){
+        this.$store.commit('questionnaire/saveData',{keyName: 'profile',data: this.getData()})
+      }
     },
     getData() {
       return {
@@ -102,5 +105,22 @@ export default {
       }
     }
   },
+  watch: {
+    surename(){
+      this.validate()
+    },
+    firstname(){
+      this.validate()
+    },
+    middleInitial(){
+      this.validate()
+    },
+    constactNumber(){
+      this.validate()
+    },
+    farmerCode(){
+      this.validate()
+    },
+  }
 }
 </script>

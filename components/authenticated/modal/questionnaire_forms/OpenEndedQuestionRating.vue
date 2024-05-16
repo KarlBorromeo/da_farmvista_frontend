@@ -306,10 +306,9 @@ export default {
     /* test if the form is valid, return boolean */
     validate() {
       const valid = this.$refs.form.validate()
-      if (valid) {
-        // alert('valid')
-        const data = this.getData()
-        console.log('data: ', data)
+      this.$store.commit('questionnaire/toggleNextTab',{tabName: 'OpenEndedQuestionRatingValidated',valid});
+      if(valid){
+        this.$store.commit('questionnaire/saveData',{keyName: 'openEndedQuestionRating',data: this.getData()})
       }
     },
     /* create key value pairs */
@@ -334,6 +333,14 @@ export default {
       }
     },
   },
+  watch: {
+    'formData': {
+      handler: function(){
+        this.validate()
+      },
+      deep: true
+    },
+  }
 }
 </script>
 

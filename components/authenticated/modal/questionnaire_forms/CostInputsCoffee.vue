@@ -257,10 +257,9 @@ export default {
     /* test if the form is valid, return boolean */
     validate() {
       const valid = this.$refs.form.validate()
-      if (valid) {
-        alert('valid')
-        const data = this.getData()
-        console.log(data)
+      this.$store.commit('questionnaire/toggleNextTab',{tabName: 'CostInputsCoffeeValidated',valid});
+      if(valid){
+        this.$store.commit('questionnaire/saveData',{keyName: 'costInputCoffee',data: this.getData()})
       }
     },
     /* get the data and convert it into expected key/value formats in BackEnd */
@@ -273,7 +272,14 @@ export default {
       return data
     },
   },
-  beforeMount() {},
+  watch: {
+    'formData': {
+      handler: function(){
+        this.validate()
+      },
+      deep: true
+    }
+  }
 }
 </script>
 

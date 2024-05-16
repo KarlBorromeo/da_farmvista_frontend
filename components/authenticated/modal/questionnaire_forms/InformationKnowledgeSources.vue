@@ -25,7 +25,6 @@
           :title="camelToSpace(item.key)"
         >
           <v-checkbox
-            :rules="listRule"
             v-for="item in printMaterialsReadItems"
             v-model="formData.printMaterialsRead"
             :key="item"
@@ -110,8 +109,24 @@ export default {
   methods: {
     /* test if the form is valid, return boolean */
     validate() {
-      const valid = this.$refs.form.validate()
-      console.log(valid, this.getData())
+      const textRadioValid = this.$refs.form.validate()
+      const checkboxValid = this.validateCheckbox();
+      let valid = false;
+      if(textRadioValid && checkboxValid){
+        valid = true
+      }
+      this.$store.commit('questionnaire/toggleNextTab',{tabName: 'InformationKnowledgeSourcesValidated',valid});
+      if(valid){
+        this.$store.commit('questionnaire/saveData',{keyName: 'infoKnowledgeSource',data: this.getData()})
+      }
+    },
+    /* validate if checkbox is empty or not */
+    validateCheckbox(){
+      if(this.formData.printMaterialsRead.length == 0){
+        return false
+      }else{
+        return true
+      }
     },
     /* check if 'other' checkbox is ticked */
     isOtherTicked(list) {
@@ -165,6 +180,12 @@ export default {
       this.$store.getters['questionnaireCode/PrintMaterials']
   },
   watch: {
+    'formData': {
+      handler: function(){
+        this.validate()
+      },
+      deep: true
+    },
     printMaterialsRead(value) {
       const otherTicked = value.forEach((element) => element == 'others')
       if (otherTicked) {

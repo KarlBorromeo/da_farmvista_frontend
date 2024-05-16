@@ -110,9 +110,9 @@ export default {
     /* test if the form is valid, return boolean */
     validate() {
       const valid = this.$refs.form.validate()
-      if (valid) {
-        const data = this.getData()
-        console.log(data)
+      this.$store.commit('questionnaire/toggleNextTab',{tabName: 'PestDamageObservedValidated',valid});
+      if(valid){
+        this.$store.commit('questionnaire/saveData',{keyName: 'pestDamageObserved',data: this.getData()})
       }
     },
     /* concatenate each indexes and return new array (ex: tenure, tenureOthers)*/
@@ -165,12 +165,25 @@ export default {
   },
   watch: {
     management(value) {
+      this.validate()
       value.forEach((element, index) => {
         if (element !== 'others') {
           this.managementOther[index] = ''
         }
       })
     },
+    pestDiseaseDamagesPlants(){
+      this.validate()
+    },
+stageOccurence(){
+  this.validate()
+},
+management(){
+  this.validate()
+},
+perceivedEffectiveness(){
+  this.validate()
+},
   },
 }
 </script>

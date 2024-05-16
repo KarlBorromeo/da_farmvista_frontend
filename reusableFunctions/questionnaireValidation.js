@@ -2,7 +2,7 @@
 
 /* concatenate the value of other into the index of list that has 'other' */
 export const concatOtherValueToList = (list, other) => {
-  let listCopy = list.splice()
+  let listCopy = [...list]
   if (!!other) {
     for (let i = 0; i < listCopy.length; i++) {
       if (listCopy[i] == 'others') {
@@ -38,19 +38,4 @@ export const concatinateEachIndexes = (
     arr.push(originalList[i] + other)
   }
   return arr
-}
-
-/* generate object either empty values if passed parameter is false else not */
-export const generateObject = (data,bool) => {
-  console.log(bool)
-  console.log(data);
-  const copyData = {...data};
-  const keys = Object.keys(copyData);
-  
-  // if(!bool){
-    // keys.forEach( key => {
-    //   console.log('type:',typeof(copyData[key]))
-    // })    
-  // }
-
 }

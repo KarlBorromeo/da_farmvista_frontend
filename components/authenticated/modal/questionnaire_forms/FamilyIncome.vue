@@ -115,22 +115,13 @@ export default {
     /* test if the form is valid, return boolean */
     validate() {
       const valid = this.$refs.form.validate()
-      console.log(valid)
-      console.log('data', this.getData())
+      this.$store.commit('questionnaire/toggleNextTab',{tabName: 'FamilyIncomeValidated',valid});
+      if(valid){
+        this.$store.commit('questionnaire/saveData',{keyName: 'familySourceIncome',data: this.getData()})
+      }
     },
     /* get the data and convert it into expected key/value formats in BackEnd */
     getData() {
-      return {
-        fullName: this.name,
-        age: this.age,
-        sex: this.sex,
-        roleInFamily: this.roleFamily,
-        educationAttainment: this.educationsAttainment,
-        estimatedContribution: this.contributionAmount,
-        isInvolvedCoffeeFarm: this.involveCoffeefarm,
-      }
-    },
-    resetData() {
       return {
         fullName: this.name,
         age: this.age,
@@ -158,5 +149,28 @@ export default {
       this.items++
     },
   },
+  watch: {
+    name(){
+      this.validate()
+    },
+    age(){
+      this.validate()
+    },
+    sex(){
+      this.validate()
+    },
+    roleFamily(){
+      this.validate()
+    },
+    educationsAttainment(){
+      this.validate()
+    },
+    contributionAmount(){
+      this.validate()
+    },
+    involveCoffeefarm(){
+      this.validate()
+    },
+  }
 }
 </script>

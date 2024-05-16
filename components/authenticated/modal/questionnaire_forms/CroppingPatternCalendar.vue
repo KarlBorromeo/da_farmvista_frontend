@@ -6,7 +6,6 @@
           <v-checkbox
             v-for="item in activityItems"
             v-model="january"
-            :rules="listRule"
             :key="item"
             :value="item"
             :label="item"
@@ -26,7 +25,6 @@
           <v-checkbox
             v-for="item in activityItems"
             v-model="february"
-            :rules="listRule"
             :key="item"
             :value="item"
             :label="item"
@@ -46,7 +44,6 @@
           <v-checkbox
             v-for="item in activityItems"
             v-model="march"
-            :rules="listRule"
             :key="item"
             :value="item"
             :label="item"
@@ -66,7 +63,6 @@
           <v-checkbox
             v-for="item in activityItems"
             v-model="april"
-            :rules="listRule"
             :key="item"
             :value="item"
             :label="item"
@@ -86,7 +82,6 @@
           <v-checkbox
             v-for="item in activityItems"
             v-model="may"
-            :rules="listRule"
             :key="item"
             :value="item"
             :label="item"
@@ -106,7 +101,6 @@
           <v-checkbox
             v-for="item in activityItems"
             v-model="june"
-            :rules="listRule"
             :key="item"
             :value="item"
             :label="item"
@@ -126,7 +120,6 @@
           <v-checkbox
             v-for="item in activityItems"
             v-model="july"
-            :rules="listRule"
             :key="item"
             :value="item"
             :label="item"
@@ -146,7 +139,6 @@
           <v-checkbox
             v-for="item in activityItems"
             v-model="august"
-            :rules="listRule"
             :key="item"
             :value="item"
             :label="item"
@@ -166,7 +158,6 @@
           <v-checkbox
             v-for="item in activityItems"
             v-model="september"
-            :rules="listRule"
             :key="item"
             :value="item"
             :label="item"
@@ -186,7 +177,6 @@
           <v-checkbox
             v-for="item in activityItems"
             v-model="october"
-            :rules="listRule"
             :key="item"
             :value="item"
             :label="item"
@@ -206,7 +196,6 @@
           <v-checkbox
             v-for="item in activityItems"
             v-model="november"
-            :rules="listRule"
             :key="item"
             :value="item"
             :label="item"
@@ -226,7 +215,6 @@
           <v-checkbox
             v-for="item in activityItems"
             v-model="december"
-            :rules="listRule"
             :key="item"
             :value="item"
             :label="item"
@@ -258,37 +246,70 @@ export default {
     valid: false,
     january: [],
     januaryOther: '',
-    february: [],
+    february: ['planting'],
     februaryOther: '',
-    march: [],
+    march: ['planting'],
     marchOther: '',
-    april: [],
+    april: ['planting'],
     aprilOther: '',
-    may: [],
+    may: ['planting'],
     mayOther: '',
-    june: [],
+    june: ['planting'],
     juneOther: '',
-    july: [],
+    july: ['planting'],
     julyOther: '',
-    august: [],
+    august: ['planting'],
     augustOther: '',
-    september: [],
+    september: ['planting'],
     septemberOther: '',
-    october: [],
+    october: ['planting'],
     octoberOther: '',
-    november: [],
+    november: ['planting'],
     novemberOther: '',
-    december: [],
+    december: ['planting'],
     decemberOther: '',
-    activityItems: [],
+    activityItems: ['planting'],
     requiredRule: [(v) => !!v || 'this field is required'],
-    listRule: [(v) => v.length > 0 || 'select at least one option'],
+    listRule: [(v) => {
+      if(v.length>0){
+        return true
+      }else{
+        return 'this field is required'
+      }
+    }]
   }),
   methods: {
-    /* test if the form is valid, return boolean */
+    /* 
+      test if the form is valid, return boolean,
+      this.$refs.form.validate() doesn't really check if the checkboxes are not empty or not 
+      that is why using  validateCheckbox manually
+    */
     validate() {
-      const valid = this.$refs.form.validate()
-      console.log(valid, this.getData())
+      const valid = this.validateCheckbox()
+      this.$store.commit('questionnaire/toggleNextTab',{tabName: 'CroppingPatternCalendarValidated',valid});
+      if(valid){
+        this.$store.commit('questionnaire/saveData',{keyName: 'cropCalendarCoffee',data: this.getData()})
+      }
+    },
+    /* test if checbkoxes are not empty */
+    validateCheckbox(){
+      if( this.january.length <=0 ||
+          this.february.length <=0 ||
+          this.march.length <=0 ||
+          this.april.length <=0 ||
+          this.may.length <=0 ||
+          this.june.length <=0 ||
+          this.july.length <=0 ||
+          this.august.length <=0 ||
+          this.september.length <=0 ||
+          this.october.length <=0 ||
+          this.november.length <=0 ||
+          this.december.length <=0 )
+        {
+          return false;
+        }else{
+          return true;
+        }
     },
     /* check if 'other' checkbox is ticked */
     isOtherTicked(list) {
@@ -322,77 +343,125 @@ export default {
   },
   watch: {
     january(value) {
+      this.validate()
       const otherTicked = value.findIndex((item) => item == 'others')
-      if (!otherTicked) {
+      if (otherTicked < 0) {
         this.januaryOther = ''
       }
     },
     february(value) {
+      this.validate()
       const otherTicked = value.findIndex((item) => item == 'others')
-      if (!otherTicked) {
+      if (otherTicked < 0) {
         this.februaryOther = ''
       }
     },
     march(value) {
+      this.validate()
       const otherTicked = value.findIndex((item) => item == 'others')
-      if (!otherTicked) {
+      if (otherTicked < 0) {
         this.marchOther = ''
       }
     },
     april(value) {
+      this.validate()
       const otherTicked = value.findIndex((item) => item == 'others')
-      if (!otherTicked) {
+      if (otherTicked < 0) {
         this.aprilOther = ''
       }
     },
     may(value) {
+      this.validate()
       const otherTicked = value.findIndex((item) => item == 'others')
-      if (!otherTicked) {
+      if (otherTicked < 0) {
         this.mayOther = ''
       }
     },
     june(value) {
+      this.validate()
       const otherTicked = value.findIndex((item) => item == 'others')
-      if (!otherTicked) {
+      if (otherTicked < 0) {
         this.juneOther = ''
       }
     },
     july(value) {
+      this.validate()
       const otherTicked = value.findIndex((item) => item == 'others')
-      if (!otherTicked) {
+      if (otherTicked < 0) {
         this.julyOther = ''
       }
     },
     august(value) {
+      this.validate()
       const otherTicked = value.findIndex((item) => item == 'others')
-      if (!otherTicked) {
+      if (otherTicked < 0) {
         this.augustOther = ''
       }
     },
     september(value) {
+      this.validate()
       const otherTicked = value.findIndex((item) => item == 'others')
-      if (!otherTicked) {
+      if (otherTicked < 0) {
         this.septemberOther = ''
       }
     },
     october(value) {
+      this.validate()
       const otherTicked = value.findIndex((item) => item == 'others')
-      if (!otherTicked) {
+      if (otherTicked < 0) {
         this.octoberOther = ''
       }
     },
     november(value) {
+      this.validate()
       const otherTicked = value.findIndex((item) => item == 'others')
-      if (!otherTicked) {
+      if (otherTicked < 0) {
         this.novemberOther = ''
       }
     },
     december(value) {
+      this.validate()
       const otherTicked = value.findIndex((item) => item == 'others')
-      if (!otherTicked) {
+      if (otherTicked < 0) {
         this.decemberOther = ''
       }
     },
+    januaryOther(){
+      this.validate()
+    },
+februaryOther(){
+  this.validate()
+},
+marchOther(){
+  this.validate()
+},
+aprilOther(){
+  this.validate()
+},
+mayOther(){
+  this.validate()
+},
+juneOther(){
+  this.validate()
+},
+julyOther(){
+  this.validate()
+},
+augustOther(){
+  this.validate()
+},
+septemberOther(){
+  this.validate()
+},
+octoberOther(){
+  this.validate()
+},
+novemberOther(){
+  this.validate()
+},
+decemberOther(){
+  this.validate()
+},
   },
 }
 </script>

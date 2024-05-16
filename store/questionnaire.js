@@ -1,37 +1,40 @@
 export const state = () => ({
-  form: {},
+  form: {
+    farmHouseholdAsset: {},
+  },
   tabs: [
-    {tabName: 'SurveyInformationValidated',validity: false},
-    {tabName: 'BasicInformationValidated',validity: false},
-    {tabName: 'GeneralInformationValidated',validity: false},
-    {tabName: 'FamilyAffiliatedValidated',validity: false},
-    {tabName: 'FamilyIncomeValidated',validity: false},
-    {tabName: 'FarmIncomeValidated',validity: false},
-    {tabName: 'HouseholdExpensesValidated',validity: false},
-    {tabName: 'AssetsFarmToolsValidated',validity: false},
-    {tabName: 'AssetsFarmMachineryValidated',validity: false},
-    {tabName: 'AssetsFarmPoultryLivestockValidated',validity: false},
-    {tabName: 'AssetsFarmStructureValidated',validity: false},
-    {tabName: 'InformationDwellingPlaceValidated',validity: false},
-    {tabName: 'GeneralFarmingInformationValidated',validity: false},
-    {tabName: 'ParcelInformationValidated',validity: false},
-    {tabName: 'DetailsCoffeeAreaValidated',validity: false},
-    {tabName: 'InfrastructureDistanceAccessibilityValidated',validity: false},
-    {tabName: 'FarmActivitiesValidated',validity: false},
-    {tabName: 'FarmWasteManagementValidated',validity: false},
-    {tabName: 'CroppingPatternCalendarValidated',validity: false},
-    {tabName: 'DetailsCoffeeProductionValidated',validity: false},
-    {tabName: 'LaborUtilizationOperationsValidated',validity: false},
-    {tabName: 'DetailWageOperationValidated',validity: false},
-    {tabName: 'CostInputsCoffeeValidated',validity: false},
-    {tabName: 'PestDamageObservedValidated',validity: false},
-    {tabName: 'PestManagementPracticeValidated',validity: false},
-    {tabName: 'CoffeeHarvestMarketingValidated',validity: false},
-    {tabName: 'TechAwarenessValidated',validity: false},
-    {tabName: 'InformationKnowledgeSourcesValidated',validity: false},
-    {tabName: 'OpenEndedQuestionsValidated',validity: false},
-    {tabName: 'OpenEndedQuestionRatingValidated',validity: false}
-  ]
+    {tabName: 'SurveyInformationValidated',validity: false, tempValidity: false},
+    {tabName: 'BasicInformationValidated',validity: false, tempValidity: false},
+    {tabName: 'GeneralInformationValidated',validity: false, tempValidity: false},
+    {tabName: 'FamilyAffiliatedValidated',validity: false, tempValidity: false},
+    {tabName: 'FamilyIncomeValidated',validity: false, tempValidity: false},
+    {tabName: 'FarmIncomeValidated',validity: false, tempValidity: false},
+    {tabName: 'HouseholdExpensesValidated',validity: false, tempValidity: false},
+    {tabName: 'AssetsFarmToolsValidated',validity: false, tempValidity: false},
+    {tabName: 'AssetsFarmMachineryValidated',validity: false, tempValidity: false},
+    {tabName: 'AssetsFarmPoultryLivestockValidated',validity: false, tempValidity: false},
+    {tabName: 'AssetsFarmStructureValidated',validity: false, tempValidity: false},
+    {tabName: 'InformationDwellingPlaceValidated',validity: false, tempValidity: false},
+    {tabName: 'GeneralFarmingInformationValidated',validity: false, tempValidity: false},
+    {tabName: 'ParcelInformationValidated',validity: false, tempValidity: false},
+    {tabName: 'DetailsCoffeeAreaValidated',validity: false, tempValidity: false},
+    {tabName: 'InfrastructureDistanceAccessibilityValidated',validity: true, tempValidity: false},
+    {tabName: 'FarmActivitiesValidated',validity: false, tempValidity: false},
+    {tabName: 'FarmWasteManagementValidated',validity: false, tempValidity: false},
+    {tabName: 'CroppingPatternCalendarValidated',validity: true, tempValidity: false},
+    {tabName: 'DetailsCoffeeProductionValidated',validity: false, tempValidity: false},
+    {tabName: 'LaborUtilizationOperationsValidated',validity: false, tempValidity: false},
+    {tabName: 'DetailWageOperationValidated',validity: false, tempValidity: false},
+    {tabName: 'CostInputsCoffeeValidated',validity: false, tempValidity: false},
+    {tabName: 'PestDamageObservedValidated',validity: false, tempValidity: false},
+    {tabName: 'PestManagementPracticeValidated',validity: false, tempValidity: false},
+    {tabName: 'CoffeeHarvestMarketingValidated',validity: false, tempValidity: false},
+    {tabName: 'TechAwarenessValidated',validity: false, tempValidity: false},
+    {tabName: 'InformationKnowledgeSourcesValidated',validity: false, tempValidity: false},
+    {tabName: 'OpenEndedQuestionsValidated',validity: false, tempValidity: false},
+    {tabName: 'OpenEndedQuestionRatingValidated',validity: false, tempValidity: false}
+  ],
+  isAllValid: true
 })
 
 export const getters = {
@@ -281,12 +284,16 @@ export const mutations = {
   toggleNextTab(state,obj){
     const tabs = state.tabs;
     const index = tabs.findIndex((el) => el.tabName == obj.tabName);
-    console.log('index: ',index)
-    console.log(state.tabs[index])
     if(index>=0){
       if(obj.valid){
         console.log('e set to true')
         state.tabs[index].validity = true;
+        state.tabs[index].tempValidity = true;
+        for(let i=index+1; i<tabs.length; i++){
+          if(state.tabs[i].tempValidity){
+            state.tabs[i].validity = true;
+          }
+        }
       }else{
         console.log('e set t f')
         for(let i=index; i<tabs.length; i++){
@@ -296,15 +303,42 @@ export const mutations = {
     }else{
       alert('oops something wrong')
     }
-    console.log('again: ',state.tabs[index])
   },
 
   /* save the all data of forms to a one object */
   saveData(state,obj){
     state.form[obj.keyName] = obj.data;
     console.log(state.form)
+  },
+
+  /* saving the data for teh assets forms */
+  saveAssetsData(state,obj){
+    state.form.farmHouseholdAsset[obj.keyName] = obj.data;
+    console.log(state.form)
+  },
+  
+  /* test if the all forms are valid before submission */
+  checkValidityAll(state){
+    state.tabs.forEach(el => {
+        if(!el.validity){
+          state.isAllValid = false;
+          return;
+        }
+    });
+    state.isAllValid = true;
   }
 
 }
 
-export const actions = {}
+export const actions = {
+  async submitAll(context){
+    context.commit('checkValidityAll');
+    alert(context.state.isAllValid)
+    if(context.state.isAllValid){
+      console.log('this is the form: ',state.from)
+      alert('oh yeahh')
+    }else{
+      alert('sad invalid')
+    }
+  }
+}

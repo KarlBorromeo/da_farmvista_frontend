@@ -54,9 +54,9 @@ export default {
     /* test if the form is valid, return boolean */
     validate() {
       const valid = this.$refs.form.validate()
-      if (valid) {
-        const data = this.getData()
-        console.log('data: ', data)
+      this.$store.commit('questionnaire/toggleNextTab',{tabName: 'DetailWageOperationValidated',valid});
+      if(valid){
+        this.$store.commit('questionnaire/saveData',{keyName: 'detailWageOperation',data: this.getData()})
       }
     },
     /* get the data and convert it into expected key/value formats in BackEnd */
@@ -69,5 +69,13 @@ export default {
       return data
     },
   },
+  watch: {
+    'formData': {
+      handler: function(){
+        this.validate()
+      },
+      deep: true
+    }
+  }
 }
 </script>

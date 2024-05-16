@@ -87,7 +87,10 @@ export default {
     /* test if the form is valid, return boolean */
     validate() {
       const valid = this.$refs.form.validate()
-      console.log(valid)
+      this.$store.commit('questionnaire/toggleNextTab',{tabName: 'FarmWasteManagementValidated',valid});
+      if(valid){
+        this.$store.commit('questionnaire/saveData',{keyName: 'farmWasteManagement',data: this.getData()})
+      }
     },
     /* get the data and convert it into expected key/value formats in BackEnd */
     getData() {
@@ -112,5 +115,19 @@ export default {
       this.items++
     },
   },
+  watch: {
+    cropsGrown(){
+      this.validate()
+    },
+kindsWasteProduced(){
+  this.validate()
+},
+volumeWaste(){
+  this.validate()
+},
+isUtilized(){
+  this.validate()
+},
+  }
 }
 </script>

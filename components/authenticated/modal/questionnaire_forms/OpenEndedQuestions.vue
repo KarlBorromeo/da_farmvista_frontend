@@ -36,12 +36,10 @@
 </template>
 
 <script>
-import FormCheckboxContainer from '../../form/formCheckboxContainer.vue'
 import FormInputContainer from '../../form/formInputContainer.vue'
 import FormRadioContainer from '../../form/formRadioContainer.vue'
 export default {
   components: {
-    FormCheckboxContainer,
     FormInputContainer,
     FormRadioContainer,
   },
@@ -58,9 +56,9 @@ export default {
     /* test if the form is valid, return boolean */
     validate() {
       const valid = this.$refs.form.validate()
-      if (valid) {
-        const data = this.getData()
-        console.log('data: ', data)
+      this.$store.commit('questionnaire/toggleNextTab',{tabName: 'OpenEndedQuestionsValidated',valid});
+      if(valid){
+        this.$store.commit('questionnaire/saveData',{keyName: 'openEndedQuestion',data: this.getData()})
       }
     },
     /* get the data and convert it into expected key/value formats in BackEnd */
@@ -73,5 +71,16 @@ export default {
       }
     },
   },
+  watch: {
+    goodAgriculturalPracticeUsedCoffee(){
+      this.validate()
+    },
+challengesEncounteredCoffee(){
+  this.validate()
+},
+proposedInterventionCoffee(){
+  this.validate()
+},
+  }
 }
 </script>

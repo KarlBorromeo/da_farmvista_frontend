@@ -96,7 +96,10 @@ export default {
     /* test if the form is valid, return boolean */
     validate() {
       const valid = this.$refs.form.validate()
-      console.log(valid)
+      this.$store.commit('questionnaire/toggleNextTab',{tabName: 'AssetsFarmPoultryLivestockValidated',valid});
+      if(valid){
+        this.$store.commit('questionnaire/saveAssetsData',{keyName: 'poultryLivestock',data: this.getData()})
+      }
     },
     /* get the data and convert it into expected key/value formats in BackEnd */
     getData() {
@@ -125,5 +128,19 @@ export default {
     this.poultryLivestockNameItems =
       this.$store.getters['questionnaireCode/Code5PoultryAndLivestock']
   },
+  watch: {
+    poultryLivestockName(){
+      this.validate()
+    },
+poultryLivestockQuantity(){
+  this.validate()
+},
+ispoultryLivestockAquiredGovtProg(){
+  this.validate()
+},
+poultryLivestockAge(){
+  this.validate()
+},
+  }
 }
 </script>

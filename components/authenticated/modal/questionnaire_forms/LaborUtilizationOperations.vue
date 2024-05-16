@@ -535,9 +535,9 @@ export default {
     /* test if the form is valid, return boolean */
     validate() {
       const valid = this.$refs.form.validate()
-      if (valid) {
-        const data = this.getData()
-        console.log(data)
+      this.$store.commit('questionnaire/toggleNextTab',{tabName: 'LaborUtilizationOperationsValidated',valid});
+      if(valid){
+        this.$store.commit('questionnaire/saveData',{keyName: 'laborOperationCoffee',data: this.getData()})
       }
     },
     titleGenerator(title, text) {
@@ -565,5 +565,13 @@ export default {
       return data
     },
   },
+  watch: {
+    'formData': {
+      handler: function(){
+        this.validate();
+      },
+      deep: true
+    },
+  }
 }
 </script>

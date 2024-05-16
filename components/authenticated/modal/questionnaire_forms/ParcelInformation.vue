@@ -219,7 +219,10 @@ export default {
     /* test if the form is valid, return boolean */
     validate() {
       const valid = this.$refs.form.validate()
-      console.log(valid, this.getData())
+      this.$store.commit('questionnaire/toggleNextTab',{tabName: 'ParcelInformationValidated',valid});
+      if(valid){
+        this.$store.commit('questionnaire/saveData',{keyName: 'parcelInfo',data: this.getData()})
+      }
     },
     /* get the data and convert it into expected key/value formats in BackEnd */
     getData() {
@@ -276,6 +279,7 @@ export default {
   },
   watch: {
     tenure(value) {
+      this.validate()
       value.forEach((element, index) => {
         if (element !== 'others') {
           this.tenureOther[index] = ''
@@ -283,6 +287,7 @@ export default {
       })
     },
     topography(value) {
+      this.validate()
       value.forEach((element, index) => {
         if (element !== 'others') {
           this.topographyOther[index] = ''
@@ -290,6 +295,7 @@ export default {
       })
     },
     croppingSystem(value) {
+      this.validate()
       value.forEach((element, index) => {
         if (element !== 'others') {
           this.croppingSystemOther[index] = ''
@@ -297,6 +303,7 @@ export default {
       })
     },
     sourceWater(value) {
+      this.validate()
       value.forEach((element, index) => {
         if (element !== 'others') {
           this.sourceWaterOther[index] = ''
@@ -309,6 +316,33 @@ export default {
           this.landUseStatusOther[index] = ''
         }
       })
+    },
+    parcelNumber(){
+      this.validate()
+    },
+    area(){
+      this.validate()
+    },
+    tenureOther(){
+      this.validate()
+    },
+    topographyOther(){
+      this.validate()
+    },
+    soilFertility(){
+      this.validate()
+    },
+    croppingSystemOther(){
+      this.validate()
+    },
+    sourceWaterOther(){
+      this.validate()
+    },
+    landUseStatusOther(){
+      this.validate()
+    },
+    cropsPlanted(){
+      this.validate()
     },
   },
 }

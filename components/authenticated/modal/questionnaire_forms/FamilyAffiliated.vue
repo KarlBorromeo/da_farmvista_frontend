@@ -135,17 +135,10 @@ export default {
     /* test if the form is valid, return boolean */
     validate() {
       const valid = this.$refs.form.validate()
-      this.$store.commit('questionnaire/FamilyAffiliatedValidate',valid);
-      let data;
-      if (valid) {
-        data = this.getData();
-      }else{
-        data = this.resetData();
+      this.$store.commit('questionnaire/toggleNextTab',{tabName: 'FamilyAffiliatedValidated',valid});
+      if(valid){
+        this.$store.commit('questionnaire/saveData',{keyName: 'familyAffiliatedFarmOrg',data: this.getData()})
       }
-      this.$store.commit('questionnaire/saveData',{
-        keyName: 'familyAffiliatedFarmOrg',
-        data
-      })
     },
     /* get the data and convert it into expected key/value formats in BackEnd */
     getData() {
@@ -165,17 +158,6 @@ export default {
         yearsAsMember: this.numberYearsMember,
         statusMembership: this.statusMembership,
         statusOrganization: this.statusOrganization,
-      }
-    },
-    resetData() {
-      return {
-        fullName: [],
-        position: [],
-        nameOrganization: [],
-        typeOrganization: [],
-        yearsAsMember: [],
-        statusMembership: [],
-        statusOrganization: [],
       }
     },
     /* decrement the count of items, pop the end index */
@@ -207,6 +189,7 @@ export default {
   },
   watch: {
     position(value) {
+      this.validate();
       value.forEach((element, index) => {
         if (element !== 'others') {
           this.positionOthers[index] = ''
@@ -214,11 +197,33 @@ export default {
       })
     },
     typeOrganization(value) {
+      this.validate()
       value.forEach((element, index) => {
         if (element !== 'others') {
           this.typeOrganizationOthers[index] = ''
         }
       })
+    },
+    nameFamilyMember(){
+      this.validate()
+    },
+    positionOthers(){
+      this.validate()
+    },
+    nameOrganization(){
+      this.validate()
+    },
+    typeOrganizationOthers(){
+      this.validate()
+    },
+    numberYearsMember(){
+      this.validate()
+    },
+    statusMembership(){
+      this.validate()
+    },
+    statusOrganization(){
+      this.validate()
     },
   },
 }

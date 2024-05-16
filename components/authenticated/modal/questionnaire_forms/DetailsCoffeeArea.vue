@@ -256,7 +256,10 @@ export default {
     /* test if the form is valid, return boolean */
     validate() {
       const valid = this.$refs.form.validate()
-      console.log(valid)
+      this.$store.commit('questionnaire/toggleNextTab',{tabName: 'DetailsCoffeeAreaValidated',valid});
+      if(valid){
+        this.$store.commit('questionnaire/saveData',{keyName: 'detailCoffeeArea',data: this.getData()})
+      }
     },
     /* concatenate two value holders for field that has others (ex: variable, variableOther)*/
     concatinateValues(original, other) {
@@ -318,24 +321,70 @@ export default {
   },
   watch: {
     plantingDistanceReasons(value) {
+      this.validate()
       if (value !== 'others') {
         this.plantingDistanceReasonsOther = ''
       }
     },
     intercropVarietyReasons(value) {
+      this.validate()
       if (value !== 'others') {
         this.intercropVarietyReasonsOther = ''
       }
     },
     seedSourceDetails(value) {
+      this.validate()
       if (value !== 'others') {
         this.seedSourceDetailsOther = ''
       }
     },
     seedSourceReasons(value) {
+      this.validate()
       if (value !== 'others') {
         this.seedSourceReasonsOther = ''
       }
+    },
+    classificationCropsDetails(){
+      this.validate()
+    },
+    classificationCropsReasons(){
+      this.validate()
+    },
+    yearPlantedDetails(){
+      this.validate()
+    },
+    yearPlantedReasons(){
+      this.validate()
+    },
+    plantingDistanceDetails(){
+      this.validate()
+    },
+    plantingDistanceReasonsOther(){
+      this.validate()
+    },
+    numberPlantsDetails(){
+      this.validate()
+    },
+    numberPlantsReasons(){
+      this.validate()
+    },
+    intercropVarietyDetails(){
+      this.validate()
+    },
+    intercropVarietyReasonsOther(){
+      this.validate()
+    },
+    totalAreaDetails(){
+      this.validate()
+    },
+    totalAreaReasons(){
+      this.validate()
+    },
+    seedSourceDetailsOther(){
+      this.validate()
+    },
+    seedSourceReasonsOther(){
+      this.validate()
     },
   },
 }

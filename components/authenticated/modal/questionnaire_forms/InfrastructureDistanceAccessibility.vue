@@ -493,7 +493,10 @@ export default {
     /* test if the form is valid, return boolean */
     validate() {
       const valid = this.$refs.form.validate()
-      console.log(valid, this.getData())
+      this.$store.commit('questionnaire/toggleNextTab',{tabName: 'InfrastructureDistanceAccessibilityValidated',valid});
+      if(valid){
+        this.$store.commit('questionnaire/saveData',{keyName: 'infraDistanceAccessibility',data: this.getData()})
+      }
     },
     /* concatenate two value holders for field that has others (ex: variable, variableOther)*/
     concatinateValues(original, other) {
@@ -587,6 +590,42 @@ export default {
     this.roadItems = this.$store.getters['questionnaireCode/Code19']
   },
   watch: {
+    'farmToNearestRoad': {
+      handler: function(){
+        this.validate()
+      },
+      deep: true
+    },
+    'farmToResidence': {
+      handler: function(){
+        this.validate()
+      },
+      deep: true
+    },
+    'farmToMarket': {
+      handler: function(){
+        this.validate()
+      },
+      deep: true
+    },
+    'residenceToMarket': {
+      handler: function(){
+        this.validate()
+      },
+      deep: true
+    },
+    'farmToInputSupply': {
+      handler: function(){
+        this.validate()
+      },
+      deep: true
+    },
+    'residenceToInputSupply': {
+      handler: function(){
+        this.validate()
+      },
+      deep: true
+    },
     'farmToNearestRoad.dominantTransportation': function (value) {
       if (value !== 'others') {
         this.farmToNearestRoad.dominantTransportationOther = ''

@@ -12,7 +12,6 @@
 
         <form-checkbox-container title="Source of planting material">
           <v-checkbox
-            :rules="listRule"
             v-for="item in sourcePlantingMaterialItems"
             v-model="sourcePlantingMaterial"
             :key="item"
@@ -32,7 +31,6 @@
 
         <form-checkbox-container title="Coffee variety used">
           <v-checkbox
-            :rules="listRule"
             v-for="item in coffeeVarietyItems"
             v-model="coffeeVariety"
             :key="item"
@@ -54,7 +52,6 @@
           <v-checkbox
             v-for="item in methodLandPreparationItems"
             v-model="methodLandPreparation"
-            :rules="listRule"
             :key="item"
             :value="item"
             :label="item"
@@ -74,7 +71,6 @@
           <v-checkbox
             v-for="item in rowOrientationItems"
             v-model="rowOrientation"
-            :rules="listRule"
             :key="item"
             :value="item"
             :label="item"
@@ -109,7 +105,6 @@
           <v-checkbox
             v-for="item in typeMethodItems"
             v-model="weedControl"
-            :rules="listRule"
             :key="item"
             :value="item"
             :label="item"
@@ -129,7 +124,6 @@
           <v-checkbox
             v-for="item in typeMethodItems"
             v-model="insectPestManagement"
-            :rules="listRule"
             :key="item"
             :value="item"
             :label="item"
@@ -149,7 +143,6 @@
           <v-checkbox
             v-for="item in typeMethodItems"
             v-model="diseaseManagement"
-            :rules="listRule"
             :key="item"
             :value="item"
             :label="item"
@@ -382,8 +375,30 @@ export default {
   methods: {
     /* test if the form is valid, return boolean */
     validate() {
-      const valid = this.$refs.form.validate()
-      console.log(valid, this.getData())
+      const textRadioValid = this.$refs.form.validate()
+      const checkboxValid = this.validateCheckbox();
+      let valid = false;
+      if(textRadioValid && checkboxValid){
+        valid = true;
+      }
+      this.$store.commit('questionnaire/toggleNextTab',{tabName: 'DetailsCoffeeProductionValidated',valid});
+      if(valid){
+        this.$store.commit('questionnaire/saveData',{keyName: 'detailCoffeeProduction',data: this.getData()})
+      }
+    },
+    /* validate checkboxes if empty or not */
+    validateCheckbox(){
+      if( this.sourcePlantingMaterial.length == 0 ||
+        this.coffeeVariety.length == 0 ||
+        this.methodLandPreparation.length == 0 ||
+        this.rowOrientation.length == 0 ||
+        this.weedControl.length == 0 ||
+        this.insectPestManagement.length == 0 ||
+        this.diseaseManagement.length == 0 ){
+          return false
+        }else{
+          return true;
+        }
     },
     /* get the data and convert it into expected key/value formats in BackEnd */
     getData() {
@@ -459,6 +474,7 @@ export default {
   },
   watch: {
     isUseInorganicFertilizer(value) {
+      this.validate()
       if (value == 'no') {
         this.kindInorganicFertilizer = ''
         this.methodInorganicApplication = ''
@@ -466,6 +482,7 @@ export default {
       }
     },
     isUseOrganicFertilizer(value) {
+      this.validate()
       if (value == 'no') {
         this.kindOgranicFertilizer = ''
         this.methodOrganicApplication = ''
@@ -473,47 +490,105 @@ export default {
       }
     },
     sourcePlantingMaterial(value) {
+      this.validate()
       const otherTicked = value.findIndex((item) => item == 'others')
       if (!otherTicked) {
         this.sourcePlantingMaterialOther = ''
       }
     },
     coffeeVariety(value) {
+      this.validate()
       const otherTicked = value.findIndex((item) => item == 'others')
       if (!otherTicked) {
         this.coffeeVarietyOther = ''
       }
     },
     methodLandPreparation(value) {
+      this.validate()
       const otherTicked = value.findIndex((item) => item == 'others')
       if (!otherTicked) {
         this.methodLandPreparationOther = ''
       }
     },
     rowOrientation(value) {
+      this.validate()
       const otherTicked = value.findIndex((item) => item == 'others')
       if (!otherTicked) {
         this.rowOrientationOther = ''
       }
     },
     weedControl(value) {
+      this.validate()
       const otherTicked = value.findIndex((item) => item == 'others')
       if (!otherTicked) {
         this.weedControlOther = ''
       }
     },
     insectPestManagement(value) {
+      this.validate()
       const otherTicked = value.findIndex((item) => item == 'others')
       if (!otherTicked) {
         this.insectPestManagementOther = ''
       }
     },
     diseaseManagement(value) {
+      this.validate()
       const otherTicked = value.findIndex((item) => item == 'others')
       if (!otherTicked) {
         this.diseaseManagementOther = ''
       }
     },
+    startPlanting(){
+      this.validate()
+    },
+sourcePlantingMaterialOther(){
+  this.validate()
+},
+coffeeVarietyOther(){
+  this.validate()
+},
+sourcePlantingMaterialOther(){
+  this.validate()
+},
+sourcePlantingMaterialOther(){
+  this.validate()
+},
+sourcePlantingMaterialOther(){
+  this.validate()
+},
+sourcePlantingMaterialOther(){
+  this.validate()
+},
+sourcePlantingMaterialOther(){
+  this.validate()
+},
+isUseInorganicFertilizer(){
+  this.validate()
+},
+kindInorganicFertilizer(){
+  this.validate()
+},
+methodInorganicApplicationOther(){
+  this.validate()
+},
+isUseOrganicFertilizer(){
+  this.validate()
+},
+kindOgranicFertilizer(){
+  this.validate()
+},
+methodInorganicApplicationOther(){
+  this.validate()
+},
+isPracticeGreenManuring(){
+  this.validate()
+},
+isReturnCropResidue(){
+  this.validate()
+},
+dateHarvesting(){
+  this.validate()
+},
   },
 }
 </script>

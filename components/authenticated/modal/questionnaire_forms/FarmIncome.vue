@@ -92,9 +92,9 @@ export default {
     /* test if the form is valid, return boolean */
     validate() {
       const valid = this.$refs.form.validate()
-      if (valid) {
-        const data = this.getData()
-        console.log('data: ', data)
+      this.$store.commit('questionnaire/toggleNextTab',{tabName: 'FarmIncomeValidated',valid});
+      if(valid){
+        this.$store.commit('questionnaire/saveData',{keyName: 'farmSourceIncome',data: this.getData()})
       }
     },
     /* get the data and convert it into expected key/value formats in BackEnd */
@@ -110,5 +110,28 @@ export default {
       }
     },
   },
+  watch: {
+    coffee(){
+      this.validate()
+    },
+    crops(){
+      this.validate()
+    },
+    livestock(){
+      this.validate()
+    },
+    agroforestry(){
+      this.validate()
+    },
+    otherLivelihood(){
+      this.validate()
+    },
+    nonFarmIncome(){
+      this.validate()
+    },
+    otherSources(){
+      this.validate()
+    },
+  }
 }
 </script>

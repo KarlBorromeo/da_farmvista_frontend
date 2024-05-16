@@ -104,7 +104,10 @@ export default {
     /* test if the form is valid, return boolean */
     validate() {
       const valid = this.$refs.form.validate()
-      console.log(valid)
+      this.$store.commit('questionnaire/toggleNextTab',{tabName: 'AssetsFarmStructureValidated',valid});
+      if(valid){
+        this.$store.commit('questionnaire/saveAssetsData',{keyName: 'structureBldgLand',data: this.getData()})
+      }
     },
     /* get the data and convert it into expected key/value formats in BackEnd */
     getData() {
@@ -143,6 +146,21 @@ export default {
           this.structureBldgNameOther[index] = ''
         }
       })
+    },
+    structureBldgName(){
+      this.validate()
+    },
+    structureBldgNameOther(){
+      this.validate()
+    },
+    structureBldgQuantity(){
+      this.validate()
+    },
+    isstructureBldgAquiredGovtProg(){
+      this.validate()
+    },
+    structureBldgAge(){
+      this.validate()
     },
   },
 }

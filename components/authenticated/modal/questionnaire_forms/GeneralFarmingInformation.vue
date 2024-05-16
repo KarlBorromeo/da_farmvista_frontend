@@ -106,7 +106,10 @@ export default {
     /* test if the form is valid, return boolean */
     validate() {
       const valid = this.$refs.form.validate()
-      console.log(valid)
+      this.$store.commit('questionnaire/toggleNextTab',{tabName: 'GeneralFarmingInformationValidated',valid});
+      if(valid){
+        this.$store.commit('questionnaire/saveData',{keyName: 'generalFarmingInfo',data: this.getData()})
+      }
     },
     /* get the data and convert it into expected key/value formats in BackEnd */
     getData() {
@@ -139,6 +142,21 @@ export default {
         this.yearResumed = ''
         this.reasonStopping = ''
       }
+    },
+    avgYearsGeneralFarming(){
+      this.validate()
+    },
+    avgYearsContourFarming(){
+      this.validate()
+    },
+    yearStopped(){
+      this.validate()
+    },
+    yearResumed(){
+      this.validate()
+    },
+    reasonStopping(){
+      this.validate()
     },
   },
 }
