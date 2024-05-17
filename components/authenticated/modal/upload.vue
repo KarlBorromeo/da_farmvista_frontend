@@ -52,10 +52,11 @@ export default {
       }
       try{
         this.disabledBtn = !this.disabledBtn;
-        const  res = await this.$store.dispatch('uploadFile/uploadSurveyFile',this.file)
+        const  res = await this.$store.dispatch('uploadFile/uploadSurveyFile',{file: this.file,type: this.commodity})
         this.$refs.snackbar.showBar(res, 'success')
         await new Promise(resolve => setTimeout(resolve, 4000))
         this.$emit('emitCloseModal');
+        this.file = '';
       }catch(error){
         this.$refs.snackbar.showBar(error, 'red')
       }

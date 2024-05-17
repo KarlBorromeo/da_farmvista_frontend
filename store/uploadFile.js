@@ -13,9 +13,9 @@ export const mutations = {
 }
 
 export const actions = {
-    async uploadSurveyFile(_,file){
+    async uploadSurveyFile(_,payload){
         try{
-            const res = await api.uploadSurveyFile(file)
+            const res = await api.uploadSurveyFile(payload)
             return res;
         }catch(error){
             throw error;

@@ -21,7 +21,7 @@
         <v-list>
           <v-list-item v-for="item in items" :key="item">
             <v-btn
-              color="white"
+              color="white text-capitalize"
               block
               elevation="0"
               v-bind="attrs"
@@ -45,7 +45,7 @@ export default {
   data() {
     return {
       dialog: false,
-      items: ['Coffee Beans', 'Mango', 'Corn'],
+      items: ['coffee beans', 'banana'],
       commodity: '',
     }
   },
