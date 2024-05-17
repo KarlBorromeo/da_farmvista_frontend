@@ -32,7 +32,7 @@
           </v-list-item>
         </v-list>
       </template>
-      <upload-vue :commodity="commodity" />
+      <upload-vue @emitCloseModal="emitCloseModal" :commodity="commodity" />
     </v-dialog>
   </v-menu>
 </template>
@@ -40,6 +40,7 @@
 <script>
 import uploadVue from '../modal/upload.vue'
 export default {
+  emits:['emitCloseModal'],
   components: { uploadVue },
   data() {
     return {
@@ -52,6 +53,9 @@ export default {
     openModal(item) {
       this.commodity = item
     },
+    emitCloseModal(){
+      this.dialog = false;
+    }
   },
 }
 </script>

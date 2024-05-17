@@ -23,7 +23,7 @@
         counter
       ></v-file-input>
     </div>
-    <v-btn @click="showFile" block color="success" small>Upload</v-btn>
+    <v-btn @click="showFile" block color="success" small :disabled="disabledBtn">Upload</v-btn>
     <snackbar ref="snackbar" />
   </v-card>
 </template>
@@ -36,14 +36,30 @@ export default {
   data() {
     return {
       file: '',
+      disabledBtn: false,
     }
   },
   methods: {
-    showFile() {
-      if (this.file) {
-        console.log('file: ', this.file)
+    async showFile() {
+      if(!this.file){
+        this.$refs.snackbar.showBar('no file upload', 'red')
+        return;
       }
-      this.$refs.snackbar.showBar('no file upload', 'red')
+      const byteSize = this.file.size;
+      const mbSize = (byteSize / (1024 * 1024)).toFixed(2)
+      if(mbSize > 10){
+        this.$refs.snackbar.showBar('minimum size is 10MB', 'red')
+      }
+      try{
+        this.disabledBtn = !this.disabledBtn;
+        const  res = await this.$store.dispatch('uploadFile/uploadSurveyFile',this.file)
+        this.$refs.snackbar.showBar(res, 'success')
+        await new Promise(resolve => setTimeout(resolve, 4000))
+        this.$emit('emitCloseModal');
+      }catch(error){
+        this.$refs.snackbar.showBar(error, 'red')
+      }
+      this.disabledBtn = !this.disabledBtn;
     },
   },
 }
