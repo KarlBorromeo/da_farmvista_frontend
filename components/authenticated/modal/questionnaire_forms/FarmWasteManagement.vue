@@ -69,10 +69,10 @@ export default {
   data: () => ({
     valid: false,
     items: 1,
-    cropsGrown: [],
-    kindsWasteProduced: [],
-    volumeWaste: [],
-    isUtilized: [],
+    cropsGrown: ['coffee','banana'],
+    kindsWasteProduced: ['branch','leaves'],
+    volumeWaste: [2],
+    isUtilized: ['yes'],
     isUtilizedItems: [
       { value: 'yes', label: 'Yes' },
       { value: 'no', label: 'No' },

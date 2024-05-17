@@ -46,9 +46,9 @@ export default {
   data() {
     return {
       valid: false,
-      goodAgriculturalPracticeUsedCoffee: '',
-      challengesEncounteredCoffee: '',
-      proposedInterventionCoffee: '',
+      goodAgriculturalPracticeUsedCoffee: ' sample open ended questions essay',
+      challengesEncounteredCoffee: ' sample open ended questions essay',
+      proposedInterventionCoffee: ' sample open ended questions essay',
       requiredRule: [(v) => !!v || 'This field is required'],
     }
   },

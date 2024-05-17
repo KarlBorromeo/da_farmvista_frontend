@@ -73,9 +73,9 @@ export default {
   components: { FormInputContainer, FormRadioContainer },
   data: () => ({
     valid: false,
-    avgYearsGeneralFarming: '',
-    avgYearsContourFarming: '',
-    isThereStoppedFarming: '',
+    avgYearsGeneralFarming: '1',
+    avgYearsContourFarming: '2',
+    isThereStoppedFarming: 'no',
     isThereStoppedFarmingItems: [
       { value: 'yes', label: 'Yes' },
       { value: 'no', label: 'No' },

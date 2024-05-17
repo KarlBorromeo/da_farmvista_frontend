@@ -76,15 +76,15 @@ export default {
   data: () => ({
     valid: false,
     items: 1,
-    machineName: [],
+    machineName: ['tractor'],
     machineNameItems: [],
-    machineQuantity: [],
-    ismachineAquiredGovtProg: [],
+    machineQuantity: [1],
+    ismachineAquiredGovtProg: ['yes'],
     ismachineAquiredGovtProgItems: [
       { value: 'yes', label: 'Yes' },
       { value: 'no', label: 'No' },
     ],
-    machineAge: [],
+    machineAge: [.6],
     numberRule: [
       (v) => !!v || 'This field is required',
       (v) => parseFloat(v) >= 0 || 'invalid value',

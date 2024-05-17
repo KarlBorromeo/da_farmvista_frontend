@@ -79,16 +79,16 @@ export default {
 	},
 	data: () => ({
 		valid: false,
-		items: 1,
-		toolName: [],
+		items: 2,
+		toolName: ['hand hoe','watering can'],
 		toolNameItems: [],
-		toolQuantity: [],
-		isToolAquiredGovtProg: [],
+		toolQuantity: [2,4],
+		isToolAquiredGovtProg: ['no','no'],
 		isToolAquiredGovtProgItems: [
 			{ value: 'yes', label: 'Yes' },
 			{ value: 'no', label: 'No' },
 		],
-		toolAge: [],
+		toolAge: [1,1],
 		numberRule: [
 			(v) => !!v || 'This field is required',
 			(v) => parseFloat(v) >= 0 || 'invalid value',

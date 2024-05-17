@@ -244,7 +244,7 @@ export default {
   },
   data: () => ({
     valid: false,
-    january: [],
+    january: ['planting'],
     januaryOther: '',
     february: ['planting'],
     februaryOther: '',
