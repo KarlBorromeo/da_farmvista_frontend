@@ -433,7 +433,7 @@ export default {
   data: () => ({
     valid: false,
     farmToNearestRoad: {
-      qty: '1',
+      qty: 1,
       unit: 'meter',
       dominantTransportation: 'walk',
       dominantTransportationOther: '',
@@ -441,7 +441,7 @@ export default {
       dominantRoadOther: '',
     },
     farmToResidence: {
-      qty: '1',
+      qty: 1,
       unit: 'meter',
       dominantTransportation: 'walk',
       dominantTransportationOther: '',
@@ -449,7 +449,7 @@ export default {
       dominantRoadOther: '',
     },
     farmToMarket: {
-      qty: '1',
+      qty: 1,
       unit: 'meter',
       dominantTransportation: 'walk',
       dominantTransportationOther: '',
@@ -457,7 +457,7 @@ export default {
       dominantRoadOther: '',
     },
     residenceToMarket: {
-      qty: '1',
+      qty: 1,
       unit: 'meter',
       dominantTransportation: 'walk',
       dominantTransportationOther: '',
@@ -465,7 +465,7 @@ export default {
       dominantRoadOther: '',
     },
     farmToInputSupply: {
-      qty: '1',
+      qty: 1,
       unit: 'meter',
       dominantTransportation: 'walk',
       dominantTransportationOther: '',
@@ -473,7 +473,7 @@ export default {
       dominantRoadOther: '',
     },
     residenceToInputSupply: {
-      qty: '1',
+      qty: 1,
       unit: 'meter',
       dominantTransportation: 'walk',
       dominantTransportationOther: '',

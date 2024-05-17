@@ -218,7 +218,7 @@ export default {
     classificationCropsReasons: 'sampleData',
     yearPlantedDetails: 1997,
     yearPlantedReasons: 'sampleData',
-    plantingDistanceDetails: 4,
+    plantingDistanceDetails: '4',
     plantingDistanceReasons: 'others',
     plantingDistanceReasonsOther: 'sampleData Other',
     numberPlantsDetails: 5,

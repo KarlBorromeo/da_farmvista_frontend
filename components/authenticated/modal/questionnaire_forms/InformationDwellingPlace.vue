@@ -226,7 +226,7 @@ export default {
 				valid,
 			})
 			if (valid) {
-				const obj = { numberYear: this.yearsResidence }
+				const obj = { numberYear: parseInt(this.yearsResidence) }
 				this.$store.commit('questionnaire/saveData', {
 					keyName: 'yearCurrentResidence',
 					data: obj,
@@ -244,7 +244,7 @@ export default {
 					this.houseOwernship,
 					this.houseOwernshipOther
 				),
-				numberOfRooms: this.numberRooms,
+				numberOfRooms: parseInt(this.numberRooms),
 				roofMaterialsMade: concatinateOtherValueToString(
 					this.typeRoofMade,
 					this.typeRoofMadeOther

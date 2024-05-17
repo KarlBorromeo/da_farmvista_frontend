@@ -219,7 +219,6 @@ export default {
   methods: {
     /* test if the form is valid, return boolean */
     validate() {
-      console.log(this.date);
       const valid = this.$refs.form.validate()
       this.$store.commit('questionnaire/toggleNextTab',{tabName: 'SurveyInformationValidated',valid});
       if(valid){
@@ -230,7 +229,7 @@ export default {
     getData() {
       return {
         dateOfInterview: this.date,
-        surveyNo: this.surveyNumber,
+        surveyNo: parseInt(this.surveyNumber),
         validatorName: this.interviewer,
         interviewStart: this.interviewStart,
         interviewEnd: this.interviewEnd,

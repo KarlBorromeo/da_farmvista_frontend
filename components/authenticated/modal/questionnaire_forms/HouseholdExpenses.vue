@@ -141,10 +141,13 @@ export default {
     education: 100,
     specialOccasions: 100,
     otherExpenses: 100,
-    otherExpensesSpecify: 100,
+    otherExpensesSpecify: 'sample other',
     numberRule: [
       (v) => !!v || 'This field is required',
       (v) => v >= 0 || 'invalid value',
+    ],
+    requiredRule: [
+      (v) => !!v || 'This field is required'
     ],
   }),
   methods: {

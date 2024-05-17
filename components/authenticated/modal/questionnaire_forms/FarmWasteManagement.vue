@@ -71,8 +71,8 @@ export default {
     items: 1,
     cropsGrown: ['coffee','banana'],
     kindsWasteProduced: ['branch','leaves'],
-    volumeWaste: [2],
-    isUtilized: ['yes'],
+    volumeWaste: [2,1],
+    isUtilized: ['yes','yes'],
     isUtilizedItems: [
       { value: 'yes', label: 'Yes' },
       { value: 'no', label: 'No' },

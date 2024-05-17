@@ -1,3 +1,4 @@
+import * as api from '../storeAPI/questionnaire';
 export const state = () => ({
   form: {
     farmHouseholdAsset: {},
@@ -32,17 +33,19 @@ export const state = () => ({
     {tabName: 'TechAwarenessValidated',validity: false, tempValidity: false},
     {tabName: 'InformationKnowledgeSourcesValidated',validity: false, tempValidity: false},
     {tabName: 'OpenEndedQuestionsValidated',validity: false, tempValidity: false},
-    {tabName: 'OpenEndedQuestionRatingValidated',validity: false, tempValidity: false}
+    {tabName: 'OpenEndedQuestionRatingValidated',validity: true, tempValidity: false}
   ],
-  isAllValid: true
+  isAllValid: false
 })
 
 export const getters = {
   SurveyInformationValidated(state) {
     const index = state.tabs.findIndex( el => el.tabName == 'SurveyInformationValidated');
-    console.log(state.tabs[index].validity,'index getter: ',index)
-    return state.tabs[index].validity;
-    
+    if(index>=0){
+      return state.tabs[index].validity;
+    }else{
+      console.error('tabname cannot find')
+    }  
   },
   BasicInformationValidated(state){
     const index = state.tabs.findIndex( el => el.tabName == 'BasicInformationValidated');
@@ -286,7 +289,6 @@ export const mutations = {
     const index = tabs.findIndex((el) => el.tabName == obj.tabName);
     if(index>=0){
       if(obj.valid){
-        console.log('e set to true')
         state.tabs[index].validity = true;
         state.tabs[index].tempValidity = true;
         for(let i=index+1; i<tabs.length; i++){
@@ -295,7 +297,6 @@ export const mutations = {
           }
         }
       }else{
-        console.log('e set t f')
         for(let i=index; i<tabs.length; i++){
           state.tabs[i].validity = false;
         }
@@ -308,37 +309,38 @@ export const mutations = {
   /* save the all data of forms to a one object */
   saveData(state,obj){
     state.form[obj.keyName] = obj.data;
-    console.log(state.form)
   },
 
   /* saving the data for teh assets forms */
   saveAssetsData(state,obj){
     state.form.farmHouseholdAsset[obj.keyName] = obj.data;
-    console.log(state.form)
   },
   
   /* test if the all forms are valid before submission */
   checkValidityAll(state){
-    state.tabs.forEach(el => {
-        if(!el.validity){
-          state.isAllValid = false;
-          return;
-        }
-    });
     state.isAllValid = true;
+    for(let i=0; i<state.tabs.length; i++){
+      if(state.tabs[i].validity == false){
+        state.isAllValid = false;
+        return;
+      }
+    }
   }
-
 }
 
 export const actions = {
   async submitAll(context){
-    context.commit('checkValidityAll');
-    alert(context.state.isAllValid)
-    if(context.state.isAllValid){
-      console.log('this is the form: ',state.from)
-      alert('oh yeahh')
+    console.log('this is the form: ',context.state.form)
+    console.log('this is the tab details: ',context.state.tabs)
+    context.commit('checkValidityAll')
+    if(context.state.isAllValid){    
+      try{
+        await api.submitQuestionnaire(context.state.form);
+      }catch(error){
+        throw error
+      }
     }else{
-      alert('sad invalid')
+      throw new Error('incomplete forms')
     }
   }
 }

@@ -54,6 +54,7 @@
 							label="* age of the item"
 							type="number"
 							min="0"
+							hint=".6 for 6 months, 1 for 1 year and so on"
 						></v-text-field>
 					</form-input-container>
 				</v-row>
@@ -105,7 +106,7 @@ export default {
 			})
 			if (valid) {
 				this.$store.commit('questionnaire/saveAssetsData', {
-					keyName: 'farmTools',
+					keyName: 'farmTool',
 					data: this.getData(),
 				})
 			}

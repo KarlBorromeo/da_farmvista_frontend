@@ -114,8 +114,8 @@ export default {
     /* get the data and convert it into expected key/value formats in BackEnd */
     getData() {
       return {
-        avgYrsGeneralFarming: this.avgYearsGeneralFarming,
-        avgYrsCtrFarming: this.avgYearsContourFarming,
+        avgYrsGeneralFarming: parseInt(this.avgYearsGeneralFarming),
+        avgYrsCtrFarming: parseInt(this.avgYearsContourFarming),
         isThereTimeStoppedFarming: this.isThereStoppedFarming,
         yearStoppedFarming: this.yearStopped,
         yearResumedFarming: this.yearResumed,

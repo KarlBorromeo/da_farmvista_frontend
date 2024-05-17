@@ -29,13 +29,11 @@ export const concatinateEachIndexes = (
   otherList,
   numberItems
 ) => {
-  const arr = []
+  const arr = [...originalList]
   for (let i = 0; i < numberItems; i++) {
-    let other = ''
     if (otherList[i]) {
-      other = ' ' + otherList[i]
+      arr[i] = arr[i] + ' ' + otherList[i]
     }
-    arr.push(originalList[i] + other)
   }
   return arr
 }
