@@ -24,12 +24,12 @@ export default {
   data: () => ({
     valid: false,
     formData: {
-      amntPaidLabor: '',
-      goodsProvidedLabor: '',
-      expectedWageOtherfarms: '',
-      amntPaidCattleWithOperator: '',
-      amntPaidCattleOnly: '',
-      amntPaidManMachine: '',
+      amntPaidLabor: '100',
+      goodsProvidedLabor: '100',
+      expectedWageOtherfarms: '100',
+      amntPaidCattleWithOperator: '100',
+      amntPaidCattleOnly: '100',
+      amntPaidManMachine: '100',
     },
     list: [
       { key: 'amntPaidLabor', label: 'paid for labor' },

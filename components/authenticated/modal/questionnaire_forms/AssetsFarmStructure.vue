@@ -84,16 +84,16 @@ export default {
   data: () => ({
     valid: false,
     items: 1,
-    structureBldgName: [],
+    structureBldgName: ['ownland'],
     structureBldgNameItems: [],
     structureBldgNameOther: [],
-    structureBldgQuantity: [],
-    isstructureBldgAquiredGovtProg: [],
+    structureBldgQuantity: [1],
+    isstructureBldgAquiredGovtProg: ['no'],
     isstructureBldgAquiredGovtProgItems: [
       { value: 'yes', label: 'Yes' },
       { value: 'no', label: 'No' },
     ],
-    structureBldgAge: [],
+    structureBldgAge: [5],
     numberRule: [
       (v) => !!v || 'This field is required',
       (v) => parseFloat(v) >= 0 || 'invalid value',

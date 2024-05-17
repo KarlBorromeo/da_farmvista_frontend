@@ -321,7 +321,7 @@ export default {
   },
   data() {
     return {
-      current: 'DetailsCoffeeProduction',
+      current: 'TechAwareness',
       currentCommodity: '',
       commodity: ['Coffee Beans', 'Mango', 'Cacao'],
     }

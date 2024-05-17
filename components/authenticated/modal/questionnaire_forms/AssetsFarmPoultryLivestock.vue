@@ -76,16 +76,16 @@ export default {
   },
   data: () => ({
     valid: false,
-    items: 1,
-    poultryLivestockName: [],
+    items: 2,
+    poultryLivestockName: ['carabao','cow'],
     poultryLivestockNameItems: [],
-    poultryLivestockQuantity: [],
-    ispoultryLivestockAquiredGovtProg: [],
+    poultryLivestockQuantity: [4,2],
+    ispoultryLivestockAquiredGovtProg: ['no','no'],
     ispoultryLivestockAquiredGovtProgItems: [
       { value: 'yes', label: 'Yes' },
       { value: 'no', label: 'No' },
     ],
-    poultryLivestockAge: [],
+    poultryLivestockAge: [3,2],
     numberRule: [
       (v) => !!v || 'This field is required',
       (v) => parseFloat(v) >= 0 || 'invalid value',

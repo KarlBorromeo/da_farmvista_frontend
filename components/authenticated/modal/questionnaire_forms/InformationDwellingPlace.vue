@@ -188,27 +188,27 @@ export default {
 	data: () => ({
 		valid: false,
 		items: 1,
-		yearsResidence: '',
-		houseOwernship: '',
+		yearsResidence: '35',
+		houseOwernship: 'own or owner-like possession of house and lot',
 		houseOwernshipItems: [],
 		houseOwernshipOther: '',
-		numberRooms: '',
-		typeRoofMade: '',
+		numberRooms: '2',
+		typeRoofMade: 'strong materials',
 		typeRoofMadeItems: [],
 		typeRoofMadeOther: '',
-		typeWallMade: '',
+		typeWallMade: 'light materials',
 		typeWallMadeItems: [],
 		typeWallMadeOther: '',
-		kindToilet: '',
+		kindToilet: 'none',
 		kindToiletItems: [],
 		kindToiletOther: '',
-		lightingFacility: '',
+		lightingFacility: 'kerosene lamp',
 		lightingFacilityItems: [],
 		lightingFacilityOther: '',
-		sourceCooking: '',
+		sourceCooking: 'collected firewood',
 		sourceCookingItems: [],
 		sourceCookingOther: '',
-		sourceWaterDrink: '',
+		sourceWaterDrink: 'spring',
 		sourceWaterDrinkItems: [],
 		sourceWaterDrinkOther: '',
 		numberRules: [
@@ -288,6 +288,7 @@ export default {
 			this.$store.getters['questionnaireCode/Code12']
 	},
 	watch: {
+		
 		houseOwernship(value) {
 			this.validate()
 			if (value !== 'others') {

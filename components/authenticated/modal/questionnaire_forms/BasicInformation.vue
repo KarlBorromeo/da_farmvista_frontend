@@ -56,10 +56,10 @@ export default {
   components: { formInputContainer },
   data: () => ({
     valid: false,
-    surename: '',
-    firstname: '',
+    surename: 'AKO',
+    firstname: 'IKAW',
     requiredRules: [(v) => !!v || 'This field is required'],
-    middleInitial: '',
+    middleInitial: 'B',
     middleInitialRules: [
       ,
       (v) => {
@@ -72,7 +72,7 @@ export default {
         return 'This field is required'
       },
     ],
-    constactNumber: '',
+    constactNumber: '09277494592',
     constactNumberRules: [
       (v) => {
         if (v) {
@@ -84,7 +84,7 @@ export default {
         return 'This field is required'
       },
     ],
-    farmerCode: '',
+    farmerCode: '00004ZuIp',
   }),
   methods: {
     /* test if the form is valid, return boolean */

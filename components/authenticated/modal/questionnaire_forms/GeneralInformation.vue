@@ -175,7 +175,7 @@ export default {
 	},
 	data: () => ({
 		valid: false,
-		age: null,
+		age: 35,
 		ageRule: [
 			(v) => {
 				if (v) {
@@ -187,12 +187,12 @@ export default {
 				return 'Age is required'
 			},
 		],
-		sex: '',
+		sex: 'male',
 		sexItems: [
 			{ value: 'male', label: 'Male' },
 			{ value: 'female', label: 'Female' },
 		],
-		civilStatus: '',
+		civilStatus: 'married',
 		civilStatusItems: [
 			{ value: 'single', label: 'Single' },
 			{ value: 'married', label: 'Married' },
@@ -203,14 +203,14 @@ export default {
 				label: 'Common Law Partnership',
 			},
 		],
-		religion: '',
-		highestEducationAttained: '',
-		isBelongMarginalizedSector: '',
+		religion: 'catholic',
+		highestEducationAttained: 'college grad',
+		isBelongMarginalizedSector: 'no',
 		isBelongMarginalizedSectorItems: [
 			{ value: 'yes', label: 'Yes' },
 			{ value: 'no', label: 'No' },
 		],
-		nonMarginalizedSector: [],
+		nonMarginalizedSector: ['indigenous people'],
 		nonMarginalizedSectorItems: [
 			{ value: 'senior citizen', label: 'Senior Citizen' },
 			{ value: 'indigenous people', label: 'Indigenous People' },
@@ -220,8 +220,8 @@ export default {
 			},
 			{ value: '4Ps beneficiary', label: '4Ps Beneficiary' },
 		],
-		dialectSpoken: '',
-		isMemberOrgranization: '',
+		dialectSpoken: 'Bisaya',
+		isMemberOrgranization: 'no',
 		isMemberOrgranizationItems: [
 			{ value: 'yes', label: 'Yes' },
 			{ value: 'no', label: 'No' },
@@ -232,7 +232,7 @@ export default {
 			{ value: 'Officer', label: 'Officer' },
 		],
 		organizationName: '',
-		isAnyHouseholdMemberOrg: '',
+		isAnyHouseholdMemberOrg: 'yes',
 		isAnyHouseholdMemberOrgItems: [
 			{ value: 'yes', label: 'Yes' },
 			{ value: 'no', label: 'No' },

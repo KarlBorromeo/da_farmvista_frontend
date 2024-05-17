@@ -275,36 +275,36 @@ export default {
   data() {
     return {
       valid: false,
-      didUsePesticide: '',
+      didUsePesticide: 'no',
       // yes
       typeOfPesticide: '',
-      whomIdeaApplyPesticide: '',
-      timesAppliedPesticide: '',
-      didSprayYourself: '',
+      whomIdeaApplyPesticide: 'secret daw',
+      timesAppliedPesticide: '2',
+      didSprayYourself: 'no',
       // no
-      payLaborSpraying: '',
-      haveSprayer: '',
+      payLaborSpraying: '100',
+      haveSprayer: 'yes',
       // yes
-      kindSprayerHave: [],
+      kindSprayerHave: ['hand sprayer','others'],
       kindSprayerHaveItems: [],
-      kindSprayerHaveOther: '',
+      kindSprayerHaveOther: 'bumba',
       // no
       howGetSprayer: '',
-      hearAboutPesticideUsed: '',
+      hearAboutPesticideUsed: 'group',
       hearAboutPesticideUsedItems: [],
       pesticideUsedMassMedia: '',
-      pesticideUsedGroup: '',
-      importantConsiderationDecidingPesticide: '',
+      pesticideUsedGroup: 'group sample',
+      importantConsiderationDecidingPesticide: 'price',
       importantConsiderationDecidingPesticideItems: [],
       importantConsiderationDecidingPesticideOther: '',
-      whomPestControlAdvice: [],
+      whomPestControlAdvice: ['neighbor','relatives','others'],
       whomPestControlAdviceItems: [],
       controlAdviceMassMedia: '',
-      controlAdviceOther: '',
+      controlAdviceOther: 'advice other sample',
       // whomePestControlAdvice.length > 1
-      whichAdviceCredible: '',
-      why: '',
-      attendedTrainingPestManagement: '',
+      whichAdviceCredible: 'relatives',
+      why: 'for da char',
+      attendedTrainingPestManagement: 'no',
       // yes
       trainingAbout: '',
       whoOrganizedTraining: '',
@@ -344,7 +344,7 @@ this.whomPestControlAdvice.length == 0){
     /* check if 'other' checkbox is ticked */
     isOtherTicked(list) {
       for (let i = 0; i < list.length; i++) {
-        if (list[i] == 'others') {
+        if (list[i] == 'others' || list[i] == 'other') {
           return true
         }
       }

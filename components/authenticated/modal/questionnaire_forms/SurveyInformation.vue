@@ -152,18 +152,18 @@ export default {
   },
   data: () => ({
     valid: false,
-    surveyNumber: '',
+    surveyNumber: '555',
     surveyNumberRule: [(v) => !!v || 'survey number is required'],
-    interviewer: '',
-    date: '',
+    interviewer: 'Karl Borromeo',
+    date: '2024-05-17',
     dateRule: [(v) => !!v || 'date is required'],
-    interviewStart: '',
+    interviewStart: '08:00',
     timeStartPicker: false,
     interviewStartRule: [(v) => !!v || 'time start is required'],
-    interviewEnd: '',
+    interviewEnd: '12:00',
     timeEndPicker: false,
     interviewEndRule: [(v) => !!v || 'time end is required'],
-    regionProvince: '',
+    regionProvince: 'AGUSAN DEL NORTE',
     regionProvinceItems: [
       'AGUSAN DEL NORTE',
       'AGUSAN DEL SUR',
@@ -171,7 +171,7 @@ export default {
       'SURIGAO DEL NORTE',
       'SURIGAO DEL SUR',
     ],
-    municipality: '',
+    municipality: 'ALEGRIA',
     municipalityItems: [
       'ALEGRIA',
       'BACUAG',
@@ -211,7 +211,7 @@ export default {
       'TUBAJON',
       'TUBAY',
     ],
-    barangay: '',
+    barangay: 'Brgy. Binutbut',
     barangayRule: [(v) => !!v || 'Barangay is required'],
     requiredRule: [(v) => !!v || 'This field is required'],
   }),
@@ -219,6 +219,7 @@ export default {
   methods: {
     /* test if the form is valid, return boolean */
     validate() {
+      console.log(this.date);
       const valid = this.$refs.form.validate()
       this.$store.commit('questionnaire/toggleNextTab',{tabName: 'SurveyInformationValidated',valid});
       if(valid){

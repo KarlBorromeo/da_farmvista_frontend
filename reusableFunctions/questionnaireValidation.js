@@ -5,7 +5,7 @@ export const concatOtherValueToList = (list, other) => {
   let listCopy = [...list]
   if (!!other) {
     for (let i = 0; i < listCopy.length; i++) {
-      if (listCopy[i] == 'others') {
+      if (listCopy[i] == 'others' || listCopy[i] == 'other') {
         listCopy[i] = other
         break
       }

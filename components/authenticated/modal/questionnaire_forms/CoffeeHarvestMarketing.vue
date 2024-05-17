@@ -66,56 +66,56 @@ export default {
     valid: false,
     formData: {
       costProductSortingClassification: {
-        variable: '',
-        remarks: '',
+        variable: '100',
+        remarks: 'sample remarks',
       },
       qtyCoffeeCherriesHarvested: {
-        variable: '',
-        remarks: '',
+        variable: '100',
+        remarks: 'sample remarks',
       },
       qtySoldDriedGreenCoffee: {
-        variable: '',
-        remarks: '',
+        variable: '100',
+        remarks: 'sample remarks',
       },
       qtyUnsoldDefect: {
-        variable: '',
-        remarks: '',
+        variable: '100',
+        remarks: 'sample remarks',
       },
       priceReceived: {
-        variable: '',
-        remarks: '',
+        variable: '100',
+        remarks: 'sample remarks',
       },
       totalSale: {
-        variable: '',
-        remarks: '',
+        variable: '100',
+        remarks: 'sample remarks',
       },
       qtyStoredHumanConsumption: {
-        variable: '',
-        remarks: '',
+        variable: '100',
+        remarks: 'sample remarks',
       },
       qtyGivenToOther: {
-        variable: '',
-        remarks: '',
+        variable: '100',
+        remarks: 'sample remarks',
       },
       marketingOutlet: {
-        variable: '',
-        remarks: '',
+        variable: '100',
+        remarks: 'sample remarks',
       },
       marketQualityPreference: {
-        variable: '',
-        remarks: '',
+        variable: '100',
+        remarks: 'sample remarks',
       },
       howBringToMarketingOutlet: {
-        variable: '',
-        remarks: '',
+        variable: 'own funds',
+        remarks: 'sample remarks',
       },
       costTransportQtySold: {
-        variable: '',
-        remarks: '',
+        variable: '100',
+        remarks: 'sample remarks',
       },
       totalReceiptsReceived: {
-        variable: '',
-        remarks: '',
+        variable: '100',
+        remarks: 'sample remarks',
       },
     },
     list: [
