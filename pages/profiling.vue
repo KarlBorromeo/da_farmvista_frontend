@@ -4,7 +4,7 @@
     title="Profiling"
     :description="description"
   >
-    <v-container class="mt-4">
+    <v-container class="pa-0 ma-0 mt-4">
       <p class="caption">Accepted File: .xlsx</p>
       <v-row>
         <v-col cols="12" sm="6" class="pt-0">
@@ -15,7 +15,7 @@
         </v-col>
       </v-row>
     </v-container>
-    <div style="height: 300px"></div>
+    <profiling-table />
   </tab-description>
 </template>
 
@@ -23,8 +23,9 @@
 import TabDescription from '~/components/authenticated/TabDescription.vue'
 import UploadButton from '~/components/authenticated/buttons/uploadButton.vue'
 import ManualSurveyButton from '~/components/authenticated/buttons/manualSurveyButton.vue'
+import ProfilingTable from '~/components/authenticated/profilingTable.vue'
 export default {
-  components: { TabDescription, UploadButton, ManualSurveyButton },
+  components: { TabDescription, UploadButton, ManualSurveyButton, ProfilingTable },
   data() {
     return {
       description:

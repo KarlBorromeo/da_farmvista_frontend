@@ -4,23 +4,10 @@
       <h2 class="pa-0 ma-0 headline font-weight-bold">
         Survey Questionaire {{ currentCommodity }}
       </h2>
-      <v-menu bottom left>
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn icon v-bind="attrs" v-on="on" color="primary">
-            <v-icon>mdi-dots-vertical</v-icon>
-          </v-btn>
-        </template>
-        <v-list elevation="15">
-          <v-list-item v-for="(item, i) in commodity" :key="i">
-            <v-list-item-title @click="switchCommodity(item)">{{
-              item
-            }}</v-list-item-title>
-          </v-list-item>
-        </v-list>
-      </v-menu>
+      <commodity-dropdown @switchCommodity="switchCommodity" />
     </div>
     <v-divider />
-    <v-toolbar light elevation="0" v-if="currentCommodity == 'Coffee Beans'">
+    <v-toolbar light elevation="0" v-if="currentCommodity == 'coffee'">
       <template>
         <v-tabs fixed-tabs show-arrows center-active slider-color="red">
            <v-tab @click="selectTab('SurveyInformation')" class="caption font-weight-black">
@@ -239,14 +226,17 @@
         </v-tabs>
       </template>
     </v-toolbar>
-    <v-tabs-items>
-      <v-card v-if="currentCommodity == 'Coffee Beans'">
+    <v-card v-if="loading" class="mt-3">
+      <p class="text-center"> Please wait we are fetching the form, apply loading screen here </p>
+    </v-card>
+    <v-tabs-items v-else>
+      <v-card v-if="currentCommodity == 'coffee'">
         <keep-alive>
           <component :is="current"></component>
         </keep-alive>
       </v-card>
       <v-card v-else>
-        <p class="text-center"> Please wait we are fetching the form, apply loading screen here </p>
+        EMPTY
       </v-card>
     </v-tabs-items>
   </v-card>
@@ -284,6 +274,7 @@ import InformationKnowledgeSources from './questionnaire_forms/InformationKnowle
 import OpenEndedQuestions from './questionnaire_forms/OpenEndedQuestions.vue'
 import OpenEndedQuestionRating from './questionnaire_forms/OpenEndedQuestionRating.vue'
 import SubmissionPage from './questionnaire_forms/SubmissionPage.vue'
+import CommodityDropdown from '../commodityDropdown.vue'
 
 export default {
   components: {
@@ -317,13 +308,14 @@ export default {
     InformationKnowledgeSources,
     OpenEndedQuestions,
     OpenEndedQuestionRating,
-    SubmissionPage
+    SubmissionPage,
+    CommodityDropdown
   },
   data() {
     return {
+      loading: false,
       current: 'SurveyInformation',
-      currentCommodity: '',
-      commodity: ['Coffee Beans', 'Mango', 'Cacao'],
+      currentCommodity: 'coffee',
     }
   },
   methods: {
@@ -450,15 +442,32 @@ export default {
   },
   async beforeMount() {
     try{
+      this.loading = true;
       await this.$store.dispatch(
         'questionnaireCode/fetchAllCodes',
-        'coffee beans'
+        'coffee'
       );
-      this.currentCommodity = 'Coffee Beans';      
+      this.currentCommodity = 'coffee';      
     }catch(error){
       alert(error);
     }
+    this.loading = false;
   },
+  watch: {
+    async currentCommodity(newVal,oldVal){
+      if(newVal != oldVal){
+        try{
+          this.loading = true;
+          const type = newVal.toLowerCase();
+          await this.$store.dispatch('questionnaireCode/fetchAllCodes',type);
+          this.currentCommodity = newVal
+        }catch(error){
+          console.error
+        }
+        this.loading = false;
+      }
+    }
+  }
 }
 </script>
 

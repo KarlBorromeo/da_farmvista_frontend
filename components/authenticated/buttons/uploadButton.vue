@@ -45,7 +45,7 @@ export default {
   data() {
     return {
       dialog: false,
-      items: ['coffee beans', 'banana'],
+      items: ['coffee', 'banana'],
       commodity: '',
     }
   },
