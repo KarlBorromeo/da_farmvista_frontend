@@ -23,7 +23,9 @@
         counter
       ></v-file-input>
     </div>
-    <v-btn @click="showFile" block color="success" small :disabled="disabledBtn">Upload</v-btn>
+    <v-btn @click="showFile" block color="success" small :disabled="disabledBtn"
+      >Upload</v-btn
+    >
     <snackbar ref="snackbar" />
   </v-card>
 </template>
@@ -41,26 +43,29 @@ export default {
   },
   methods: {
     async showFile() {
-      if(!this.file){
+      if (!this.file) {
         this.$refs.snackbar.showBar('no file upload', 'red')
-        return;
+        return
       }
-      const byteSize = this.file.size;
+      const byteSize = this.file.size
       const mbSize = (byteSize / (1024 * 1024)).toFixed(2)
-      if(mbSize > 10){
+      if (mbSize > 10) {
         this.$refs.snackbar.showBar('minimum size is 10MB', 'red')
       }
-      try{
-        this.disabledBtn = !this.disabledBtn;
-        const  res = await this.$store.dispatch('uploadFile/uploadSurveyFile',{file: this.file,type: this.commodity})
+      try {
+        this.disabledBtn = !this.disabledBtn
+        const res = await this.$store.dispatch('uploadFile/uploadSurveyFile', {
+          file: this.file,
+          type: this.commodity,
+        })
         this.$refs.snackbar.showBar(res, 'success')
-        await new Promise(resolve => setTimeout(resolve, 4000))
-        this.$emit('emitCloseModal');
-        this.file = '';
-      }catch(error){
+        await new Promise((resolve) => setTimeout(resolve, 4000))
+        this.$emit('emitCloseModal')
+        this.file = ''
+      } catch (error) {
         this.$refs.snackbar.showBar(error, 'red')
       }
-      this.disabledBtn = !this.disabledBtn;
+      this.disabledBtn = !this.disabledBtn
     },
   },
 }

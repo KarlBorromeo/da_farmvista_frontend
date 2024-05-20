@@ -285,7 +285,7 @@ export default {
       payLaborSpraying: '100',
       haveSprayer: 'yes',
       // yes
-      kindSprayerHave: ['hand sprayer','others'],
+      kindSprayerHave: ['hand sprayer', 'others'],
       kindSprayerHaveItems: [],
       kindSprayerHaveOther: 'bumba',
       // no
@@ -297,7 +297,7 @@ export default {
       importantConsiderationDecidingPesticide: 'price',
       importantConsiderationDecidingPesticideItems: [],
       importantConsiderationDecidingPesticideOther: '',
-      whomPestControlAdvice: ['neighbor','relatives','others'],
+      whomPestControlAdvice: ['neighbor', 'relatives', 'others'],
       whomPestControlAdviceItems: [],
       controlAdviceMassMedia: '',
       controlAdviceOther: 'advice other sample',
@@ -324,22 +324,30 @@ export default {
       const textRadioValid = this.$refs.form.validate()
       const validCheckbox = this.validateCheckbox()
       let valid = false
-      if(textRadioValid && validCheckbox){
+      if (textRadioValid && validCheckbox) {
         valid = true
       }
-      this.$store.commit('questionnaire/toggleNextTab',{tabName: 'PestManagementPracticeValidated',valid});
-      if(valid){
-        this.$store.commit('questionnaire/saveData',{keyName: 'pestManagementPractice',data: this.getData()})
+      this.$store.commit('questionnaire/toggleNextTab', {
+        tabName: 'PestManagementPracticeValidated',
+        valid,
+      })
+      if (valid) {
+        this.$store.commit('questionnaire/saveData', {
+          keyName: 'pestManagementPractice',
+          data: this.getData(),
+        })
       }
     },
     /* validate checkbox if empty or not */
-    validateCheckbox(){
-      if(this.kindSprayerHave.length == 0 ||
-this.whomPestControlAdvice.length == 0){
-  return false
-}else{
-  return true
-}
+    validateCheckbox() {
+      if (
+        this.kindSprayerHave.length == 0 ||
+        this.whomPestControlAdvice.length == 0
+      ) {
+        return false
+      } else {
+        return true
+      }
     },
     /* check if 'other' checkbox is ticked */
     isOtherTicked(list) {
@@ -402,7 +410,6 @@ this.whomPestControlAdvice.length == 0){
   },
   watch: {
     controlAdviceMassMedia(value) {
-      
       if (!!value) {
         for (let i = 0; i < this.whomPestControlAdvice.length; i++) {
           if (this.whomPestControlAdvice[i].includes('mass media')) {
@@ -412,7 +419,6 @@ this.whomPestControlAdvice.length == 0){
       }
     },
     controlAdviceOther(value) {
-      
       if (!!value) {
         for (let i = 0; i < this.whomPestControlAdvice.length; i++) {
           if (this.whomPestControlAdvice[i].includes('others')) {
@@ -422,19 +428,16 @@ this.whomPestControlAdvice.length == 0){
       }
     },
     didUsePesticide(value) {
-      
       if (value !== 'yes') {
         this.typeOfPesticide = ''
       }
     },
     didSprayYourself(value) {
-      
       if (value !== 'no') {
         this.payLaborSpraying = ''
       }
     },
     haveSprayer(value) {
-      
       if (value == 'no') {
         this.kindSprayerHave = []
         this.kindSprayerHaveOther = ''
@@ -443,63 +446,62 @@ this.whomPestControlAdvice.length == 0){
       }
     },
     attendedTrainingPestManagement(value) {
-      
       if (value !== 'yes') {
         this.trainingAbout = ''
         this.whoOrganizedTraining = ''
       }
     },
-typeOfPesticide(){
-  this.validate()
-},
-whomIdeaApplyPesticide(){
-  this.validate()
-},
-timesAppliedPesticide(){
-  this.validate()
-},
-payLaborSpraying(){
-  this.validate()
-},
-kindSprayerHave(){
-  this.validate()
-},
-kindSprayerHaveOther(){
-  this.validate()
-},
-howGetSprayer(){
-  this.validate()
-},
-hearAboutPesticideUsed(){
-  this.validate()
-},
-pesticideUsedMassMedia(){
-  this.validate()
-},
-pesticideUsedGroup(){
-  this.validate()
-},
-importantConsiderationDecidingPesticide(){
-  this.validate()
-},
-importantConsiderationDecidingPesticideOther(){
-  this.validate()
-},
-whomPestControlAdvice(){
-  this.validate()
-},
-whichAdviceCredible(){
-  this.validate()
-},
-why(){
-  this.validate()
-},
-trainingAbout(){
-  this.validate()
-},
-whoOrganizedTraining(){
-  this.validate()
-},
+    typeOfPesticide() {
+      this.validate()
+    },
+    whomIdeaApplyPesticide() {
+      this.validate()
+    },
+    timesAppliedPesticide() {
+      this.validate()
+    },
+    payLaborSpraying() {
+      this.validate()
+    },
+    kindSprayerHave() {
+      this.validate()
+    },
+    kindSprayerHaveOther() {
+      this.validate()
+    },
+    howGetSprayer() {
+      this.validate()
+    },
+    hearAboutPesticideUsed() {
+      this.validate()
+    },
+    pesticideUsedMassMedia() {
+      this.validate()
+    },
+    pesticideUsedGroup() {
+      this.validate()
+    },
+    importantConsiderationDecidingPesticide() {
+      this.validate()
+    },
+    importantConsiderationDecidingPesticideOther() {
+      this.validate()
+    },
+    whomPestControlAdvice() {
+      this.validate()
+    },
+    whichAdviceCredible() {
+      this.validate()
+    },
+    why() {
+      this.validate()
+    },
+    trainingAbout() {
+      this.validate()
+    },
+    whoOrganizedTraining() {
+      this.validate()
+    },
   },
   beforeMount() {
     this.kindSprayerHaveItems =

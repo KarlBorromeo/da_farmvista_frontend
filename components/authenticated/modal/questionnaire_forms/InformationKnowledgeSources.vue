@@ -77,7 +77,7 @@ export default {
         radioStationUsuallyTune: 'FRMN',
         timeListeningRadio: 'taga udto',
         radioProgramsListens: 'balita balita',
-        printMaterialsRead: ['newspaper','magazines'],
+        printMaterialsRead: ['newspaper', 'magazines'],
         printMaterialsReadOther: '',
         printMaterialsReadItems: [],
         haveTelevision: 'yes',
@@ -110,21 +110,27 @@ export default {
     /* test if the form is valid, return boolean */
     validate() {
       const textRadioValid = this.$refs.form.validate()
-      const checkboxValid = this.validateCheckbox();
-      let valid = false;
-      if(textRadioValid && checkboxValid){
+      const checkboxValid = this.validateCheckbox()
+      let valid = false
+      if (textRadioValid && checkboxValid) {
         valid = true
       }
-      this.$store.commit('questionnaire/toggleNextTab',{tabName: 'InformationKnowledgeSourcesValidated',valid});
-      if(valid){
-        this.$store.commit('questionnaire/saveData',{keyName: 'infoKnowledgeSource',data: this.getData()})
+      this.$store.commit('questionnaire/toggleNextTab', {
+        tabName: 'InformationKnowledgeSourcesValidated',
+        valid,
+      })
+      if (valid) {
+        this.$store.commit('questionnaire/saveData', {
+          keyName: 'infoKnowledgeSource',
+          data: this.getData(),
+        })
       }
     },
     /* validate if checkbox is empty or not */
-    validateCheckbox(){
-      if(this.formData.printMaterialsRead.length == 0){
+    validateCheckbox() {
+      if (this.formData.printMaterialsRead.length == 0) {
         return false
-      }else{
+      } else {
         return true
       }
     },
@@ -180,11 +186,11 @@ export default {
       this.$store.getters['questionnaireCode/PrintMaterials']
   },
   watch: {
-    'formData': {
-      handler: function(){
+    formData: {
+      handler: function () {
         this.validate()
       },
-      deep: true
+      deep: true,
     },
     printMaterialsRead(value) {
       const otherTicked = value.forEach((element) => element == 'others')

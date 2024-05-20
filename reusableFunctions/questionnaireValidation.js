@@ -1,5 +1,3 @@
-
-
 /* concatenate the value of other into the index of list that has 'other' */
 export const concatOtherValueToList = (list, other) => {
   let listCopy = [...list]

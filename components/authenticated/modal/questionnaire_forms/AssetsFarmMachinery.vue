@@ -86,7 +86,7 @@ export default {
       { value: 'yes', label: 'Yes' },
       { value: 'no', label: 'No' },
     ],
-    machineAge: [.6],
+    machineAge: [0.6],
     numberRule: [
       (v) => !!v || 'This field is required',
       (v) => parseFloat(v) >= 0 || 'invalid value',
@@ -97,9 +97,15 @@ export default {
     /* test if the form is valid, return boolean */
     validate() {
       const valid = this.$refs.form.validate()
-      this.$store.commit('questionnaire/toggleNextTab',{tabName: 'AssetsFarmMachineryValidated',valid});
-      if(valid){
-        this.$store.commit('questionnaire/saveAssetsData',{keyName: 'farmMachinery',data: this.getData()})
+      this.$store.commit('questionnaire/toggleNextTab', {
+        tabName: 'AssetsFarmMachineryValidated',
+        valid,
+      })
+      if (valid) {
+        this.$store.commit('questionnaire/saveAssetsData', {
+          keyName: 'farmMachinery',
+          data: this.getData(),
+        })
       }
     },
     /* get the data and convert it into expected key/value formats in BackEnd */
@@ -130,18 +136,18 @@ export default {
       this.$store.getters['questionnaireCode/Code5FarmMachinery']
   },
   watch: {
-    machineName(){
+    machineName() {
       this.validate()
     },
-    machineQuantity(){
+    machineQuantity() {
       this.validate()
     },
-    ismachineAquiredGovtProg(){
+    ismachineAquiredGovtProg() {
       this.validate()
     },
-    machineAge(){
+    machineAge() {
       this.validate()
     },
-  }
+  },
 }
 </script>

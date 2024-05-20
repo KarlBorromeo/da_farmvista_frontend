@@ -25,7 +25,12 @@ import UploadButton from '~/components/authenticated/buttons/uploadButton.vue'
 import ManualSurveyButton from '~/components/authenticated/buttons/manualSurveyButton.vue'
 import ProfilingTable from '~/components/authenticated/profilingTable.vue'
 export default {
-  components: { TabDescription, UploadButton, ManualSurveyButton, ProfilingTable },
+  components: {
+    TabDescription,
+    UploadButton,
+    ManualSurveyButton,
+    ProfilingTable,
+  },
   data() {
     return {
       description:

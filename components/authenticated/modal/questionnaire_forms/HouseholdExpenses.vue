@@ -146,17 +146,21 @@ export default {
       (v) => !!v || 'This field is required',
       (v) => v >= 0 || 'invalid value',
     ],
-    requiredRule: [
-      (v) => !!v || 'This field is required'
-    ],
+    requiredRule: [(v) => !!v || 'This field is required'],
   }),
   methods: {
     /* test if the form is valid, return boolean */
     validate() {
       const valid = this.$refs.form.validate()
-      this.$store.commit('questionnaire/toggleNextTab',{tabName: 'HouseholdExpensesValidated',valid});
-      if(valid){
-        this.$store.commit('questionnaire/saveData',{keyName: 'householdExpense',data: this.getData()})
+      this.$store.commit('questionnaire/toggleNextTab', {
+        tabName: 'HouseholdExpensesValidated',
+        valid,
+      })
+      if (valid) {
+        this.$store.commit('questionnaire/saveData', {
+          keyName: 'householdExpense',
+          data: this.getData(),
+        })
       }
     },
     /* get the data and convert it into expected key/value formats in BackEnd */
@@ -179,45 +183,45 @@ export default {
     },
   },
   watch: {
-    food(){
+    food() {
       this.validate()
     },
-    clothing(){
+    clothing() {
       this.validate()
     },
-    utilities(){
+    utilities() {
       this.validate()
     },
-    householdFacilities(){
+    householdFacilities() {
       this.validate()
     },
-    nonFoodItems(){
+    nonFoodItems() {
       this.validate()
     },
-    healthExpenses(){
+    healthExpenses() {
       this.validate()
     },
-    transportation(){
+    transportation() {
       this.validate()
     },
-    communication(){
+    communication() {
       this.validate()
     },
-    recreation(){
+    recreation() {
       this.validate()
     },
-    education(){
+    education() {
       this.validate()
     },
-    specialOccasions(){
+    specialOccasions() {
       this.validate()
     },
-    otherExpenses(){
+    otherExpenses() {
       this.validate()
     },
-    otherExpensesSpecify(){
+    otherExpensesSpecify() {
       this.validate()
     },
-  }
+  },
 }
 </script>

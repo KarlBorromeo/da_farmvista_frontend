@@ -607,11 +607,20 @@ export default {
     /* test if the form is valid, return boolean */
     validate() {
       const valid = this.$refs.form.validate()
-      this.$store.commit('questionnaire/toggleNextTab',{tabName: 'TechAwarenessValidated',valid});
-      if(valid){
-        const obj = {haveHeardCoffeeFarmTech : this.haveHeardCoffeeFarmTech};
-        this.$store.commit('questionnaire/saveData',{keyName: 'techAwareness',data: obj})
-        this.$store.commit('questionnaire/saveData',{keyName: 'techAwarenessAdoption',data: this.getData()})
+      this.$store.commit('questionnaire/toggleNextTab', {
+        tabName: 'TechAwarenessValidated',
+        valid,
+      })
+      if (valid) {
+        const obj = { haveHeardCoffeeFarmTech: this.haveHeardCoffeeFarmTech }
+        this.$store.commit('questionnaire/saveData', {
+          keyName: 'techAwareness',
+          data: obj,
+        })
+        this.$store.commit('questionnaire/saveData', {
+          keyName: 'techAwarenessAdoption',
+          data: this.getData(),
+        })
       }
     },
     /* convert camelCase Key into Camel Casing String with spaces */
@@ -652,14 +661,14 @@ export default {
     },
   },
   watch: {
-    haveHeardCoffeeFarmTech(){
+    haveHeardCoffeeFarmTech() {
       this.validate()
     },
-    'formData': {
-      handler: function(){
+    formData: {
+      handler: function () {
         this.validate()
       },
-      deep: true
+      deep: true,
     },
 
     'formData.methodsPropagationSeed.isHeard': function (value) {

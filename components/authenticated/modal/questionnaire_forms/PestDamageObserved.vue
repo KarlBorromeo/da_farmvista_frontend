@@ -110,9 +110,15 @@ export default {
     /* test if the form is valid, return boolean */
     validate() {
       const valid = this.$refs.form.validate()
-      this.$store.commit('questionnaire/toggleNextTab',{tabName: 'PestDamageObservedValidated',valid});
-      if(valid){
-        this.$store.commit('questionnaire/saveData',{keyName: 'pestDamageObserved',data: this.getData()})
+      this.$store.commit('questionnaire/toggleNextTab', {
+        tabName: 'PestDamageObservedValidated',
+        valid,
+      })
+      if (valid) {
+        this.$store.commit('questionnaire/saveData', {
+          keyName: 'pestDamageObserved',
+          data: this.getData(),
+        })
       }
     },
     /* concatenate each indexes and return new array (ex: tenure, tenureOthers)*/
@@ -172,18 +178,18 @@ export default {
         }
       })
     },
-    pestDiseaseDamagesPlants(){
+    pestDiseaseDamagesPlants() {
       this.validate()
     },
-stageOccurence(){
-  this.validate()
-},
-management(){
-  this.validate()
-},
-perceivedEffectiveness(){
-  this.validate()
-},
+    stageOccurence() {
+      this.validate()
+    },
+    management() {
+      this.validate()
+    },
+    perceivedEffectiveness() {
+      this.validate()
+    },
   },
 }
 </script>

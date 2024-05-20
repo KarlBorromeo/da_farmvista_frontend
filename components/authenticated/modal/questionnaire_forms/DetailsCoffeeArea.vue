@@ -256,9 +256,15 @@ export default {
     /* test if the form is valid, return boolean */
     validate() {
       const valid = this.$refs.form.validate()
-      this.$store.commit('questionnaire/toggleNextTab',{tabName: 'DetailsCoffeeAreaValidated',valid});
-      if(valid){
-        this.$store.commit('questionnaire/saveData',{keyName: 'detailCoffeeArea',data: this.getData()})
+      this.$store.commit('questionnaire/toggleNextTab', {
+        tabName: 'DetailsCoffeeAreaValidated',
+        valid,
+      })
+      if (valid) {
+        this.$store.commit('questionnaire/saveData', {
+          keyName: 'detailCoffeeArea',
+          data: this.getData(),
+        })
       }
     },
     /* concatenate two value holders for field that has others (ex: variable, variableOther)*/
@@ -344,46 +350,46 @@ export default {
         this.seedSourceReasonsOther = ''
       }
     },
-    classificationCropsDetails(){
+    classificationCropsDetails() {
       this.validate()
     },
-    classificationCropsReasons(){
+    classificationCropsReasons() {
       this.validate()
     },
-    yearPlantedDetails(){
+    yearPlantedDetails() {
       this.validate()
     },
-    yearPlantedReasons(){
+    yearPlantedReasons() {
       this.validate()
     },
-    plantingDistanceDetails(){
+    plantingDistanceDetails() {
       this.validate()
     },
-    plantingDistanceReasonsOther(){
+    plantingDistanceReasonsOther() {
       this.validate()
     },
-    numberPlantsDetails(){
+    numberPlantsDetails() {
       this.validate()
     },
-    numberPlantsReasons(){
+    numberPlantsReasons() {
       this.validate()
     },
-    intercropVarietyDetails(){
+    intercropVarietyDetails() {
       this.validate()
     },
-    intercropVarietyReasonsOther(){
+    intercropVarietyReasonsOther() {
       this.validate()
     },
-    totalAreaDetails(){
+    totalAreaDetails() {
       this.validate()
     },
-    totalAreaReasons(){
+    totalAreaReasons() {
       this.validate()
     },
-    seedSourceDetailsOther(){
+    seedSourceDetailsOther() {
       this.validate()
     },
-    seedSourceReasonsOther(){
+    seedSourceReasonsOther() {
       this.validate()
     },
   },

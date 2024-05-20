@@ -25,7 +25,11 @@
           </form-input-container>
 
           <form-radio-container title="Sex">
-            <v-radio-group :rules="requiredRule" v-model="sex[i - 1]" class="pa-0 ma-0">
+            <v-radio-group
+              :rules="requiredRule"
+              v-model="sex[i - 1]"
+              class="pa-0 ma-0"
+            >
               <v-radio
                 v-for="item in sexItems"
                 :key="item.value"
@@ -62,7 +66,11 @@
           </form-input-container>
 
           <form-radio-container title="Involved in coffee farm">
-            <v-radio-group :rules="requiredRule" v-model="involveCoffeefarm[i - 1]" class="pa-0 ma-0">
+            <v-radio-group
+              :rules="requiredRule"
+              v-model="involveCoffeefarm[i - 1]"
+              class="pa-0 ma-0"
+            >
               <v-radio
                 v-for="item in involveCoffeefarmItems"
                 :key="item.value"
@@ -115,9 +123,15 @@ export default {
     /* test if the form is valid, return boolean */
     validate() {
       const valid = this.$refs.form.validate()
-      this.$store.commit('questionnaire/toggleNextTab',{tabName: 'FamilyIncomeValidated',valid});
-      if(valid){
-        this.$store.commit('questionnaire/saveData',{keyName: 'familySourceIncome',data: this.getData()})
+      this.$store.commit('questionnaire/toggleNextTab', {
+        tabName: 'FamilyIncomeValidated',
+        valid,
+      })
+      if (valid) {
+        this.$store.commit('questionnaire/saveData', {
+          keyName: 'familySourceIncome',
+          data: this.getData(),
+        })
       }
     },
     /* get the data and convert it into expected key/value formats in BackEnd */
@@ -150,27 +164,27 @@ export default {
     },
   },
   watch: {
-    name(){
+    name() {
       this.validate()
     },
-    age(){
+    age() {
       this.validate()
     },
-    sex(){
+    sex() {
       this.validate()
     },
-    roleFamily(){
+    roleFamily() {
       this.validate()
     },
-    educationsAttainment(){
+    educationsAttainment() {
       this.validate()
     },
-    contributionAmount(){
+    contributionAmount() {
       this.validate()
     },
-    involveCoffeefarm(){
+    involveCoffeefarm() {
       this.validate()
     },
-  }
+  },
 }
 </script>

@@ -6,26 +6,26 @@
 </template>
 
 <script>
-import snackbar from '~/components/snackbar.vue';
+import snackbar from '~/components/snackbar.vue'
 export default {
-    components: {snackbar},
-    methods: {
-        async submitAll(){
-            try{
-                await this.$store.dispatch('questionnaire/submitAll');
-            }catch(error){
-                this.$refs.snackbar.showBar(error, 'red')
-            }
-        }
-    }
+  components: { snackbar },
+  methods: {
+    async submitAll() {
+      try {
+        await this.$store.dispatch('questionnaire/submitAll')
+      } catch (error) {
+        this.$refs.snackbar.showBar(error, 'red')
+      }
+    },
+  },
 }
 </script>
 
 <style scoped>
-#container{
-    height: 150px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+#container {
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>

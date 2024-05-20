@@ -69,10 +69,10 @@ export default {
   data: () => ({
     valid: false,
     items: 1,
-    cropsGrown: ['coffee','banana'],
-    kindsWasteProduced: ['branch','leaves'],
-    volumeWaste: [2,1],
-    isUtilized: ['yes','yes'],
+    cropsGrown: ['coffee', 'banana'],
+    kindsWasteProduced: ['branch', 'leaves'],
+    volumeWaste: [2, 1],
+    isUtilized: ['yes', 'yes'],
     isUtilizedItems: [
       { value: 'yes', label: 'Yes' },
       { value: 'no', label: 'No' },
@@ -87,9 +87,15 @@ export default {
     /* test if the form is valid, return boolean */
     validate() {
       const valid = this.$refs.form.validate()
-      this.$store.commit('questionnaire/toggleNextTab',{tabName: 'FarmWasteManagementValidated',valid});
-      if(valid){
-        this.$store.commit('questionnaire/saveData',{keyName: 'farmWasteManagement',data: this.getData()})
+      this.$store.commit('questionnaire/toggleNextTab', {
+        tabName: 'FarmWasteManagementValidated',
+        valid,
+      })
+      if (valid) {
+        this.$store.commit('questionnaire/saveData', {
+          keyName: 'farmWasteManagement',
+          data: this.getData(),
+        })
       }
     },
     /* get the data and convert it into expected key/value formats in BackEnd */
@@ -116,18 +122,18 @@ export default {
     },
   },
   watch: {
-    cropsGrown(){
+    cropsGrown() {
       this.validate()
     },
-kindsWasteProduced(){
-  this.validate()
-},
-volumeWaste(){
-  this.validate()
-},
-isUtilized(){
-  this.validate()
-},
-  }
+    kindsWasteProduced() {
+      this.validate()
+    },
+    volumeWaste() {
+      this.validate()
+    },
+    isUtilized() {
+      this.validate()
+    },
+  },
 }
 </script>

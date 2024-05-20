@@ -316,10 +316,10 @@ export default {
     valid: false,
     items: 1,
     startPlanting: '2000',
-    sourcePlantingMaterial: ['seeds','seedlings'],
+    sourcePlantingMaterial: ['seeds', 'seedlings'],
     sourcePlantingMaterialItems: [],
     sourcePlantingMaterialOther: '',
-    coffeeVariety: ['robusta','excelsa'],
+    coffeeVariety: ['robusta', 'excelsa'],
     coffeeVarietyItems: [],
     coffeeVarietyOther: '',
     methodLandPreparation: ['clearing'],
@@ -330,11 +330,11 @@ export default {
     rowOrientationOther: '',
     plantingDepth: '.5',
     soilType: '',
-    weedControl: ['physical','chemical'],
+    weedControl: ['physical', 'chemical'],
     weedControlOther: '',
-    insectPestManagement: ['physical','chemical'],
+    insectPestManagement: ['physical', 'chemical'],
     insectPestManagementOther: '',
-    diseaseManagement: ['physical','chemical'],
+    diseaseManagement: ['physical', 'chemical'],
     diseaseManagementOther: '',
     typeMethodItems: [], //items for weedControl, insectPestMngmnt, diseaseMngmnt
     isUseInorganicFertilizer: 'yes',
@@ -376,29 +376,37 @@ export default {
     /* test if the form is valid, return boolean */
     validate() {
       const textRadioValid = this.$refs.form.validate()
-      const checkboxValid = this.validateCheckbox();
-      let valid = false;
-      if(textRadioValid && checkboxValid){
-        valid = true;
+      const checkboxValid = this.validateCheckbox()
+      let valid = false
+      if (textRadioValid && checkboxValid) {
+        valid = true
       }
-      this.$store.commit('questionnaire/toggleNextTab',{tabName: 'DetailsCoffeeProductionValidated',valid});
-      if(valid){
-        this.$store.commit('questionnaire/saveData',{keyName: 'detailCoffeeProduction',data: this.getData()})
+      this.$store.commit('questionnaire/toggleNextTab', {
+        tabName: 'DetailsCoffeeProductionValidated',
+        valid,
+      })
+      if (valid) {
+        this.$store.commit('questionnaire/saveData', {
+          keyName: 'detailCoffeeProduction',
+          data: this.getData(),
+        })
       }
     },
     /* validate checkboxes if empty or not */
-    validateCheckbox(){
-      if( this.sourcePlantingMaterial.length == 0 ||
+    validateCheckbox() {
+      if (
+        this.sourcePlantingMaterial.length == 0 ||
         this.coffeeVariety.length == 0 ||
         this.methodLandPreparation.length == 0 ||
         this.rowOrientation.length == 0 ||
         this.weedControl.length == 0 ||
         this.insectPestManagement.length == 0 ||
-        this.diseaseManagement.length == 0 ){
-          return false
-        }else{
-          return true;
-        }
+        this.diseaseManagement.length == 0
+      ) {
+        return false
+      } else {
+        return true
+      }
     },
     /* get the data and convert it into expected key/value formats in BackEnd */
     getData() {
@@ -538,57 +546,57 @@ export default {
         this.diseaseManagementOther = ''
       }
     },
-    startPlanting(){
+    startPlanting() {
       this.validate()
     },
-sourcePlantingMaterialOther(){
-  this.validate()
-},
-coffeeVarietyOther(){
-  this.validate()
-},
-sourcePlantingMaterialOther(){
-  this.validate()
-},
-sourcePlantingMaterialOther(){
-  this.validate()
-},
-sourcePlantingMaterialOther(){
-  this.validate()
-},
-sourcePlantingMaterialOther(){
-  this.validate()
-},
-sourcePlantingMaterialOther(){
-  this.validate()
-},
-isUseInorganicFertilizer(){
-  this.validate()
-},
-kindInorganicFertilizer(){
-  this.validate()
-},
-methodInorganicApplicationOther(){
-  this.validate()
-},
-isUseOrganicFertilizer(){
-  this.validate()
-},
-kindOgranicFertilizer(){
-  this.validate()
-},
-methodInorganicApplicationOther(){
-  this.validate()
-},
-isPracticeGreenManuring(){
-  this.validate()
-},
-isReturnCropResidue(){
-  this.validate()
-},
-dateHarvesting(){
-  this.validate()
-},
+    sourcePlantingMaterialOther() {
+      this.validate()
+    },
+    coffeeVarietyOther() {
+      this.validate()
+    },
+    sourcePlantingMaterialOther() {
+      this.validate()
+    },
+    sourcePlantingMaterialOther() {
+      this.validate()
+    },
+    sourcePlantingMaterialOther() {
+      this.validate()
+    },
+    sourcePlantingMaterialOther() {
+      this.validate()
+    },
+    sourcePlantingMaterialOther() {
+      this.validate()
+    },
+    isUseInorganicFertilizer() {
+      this.validate()
+    },
+    kindInorganicFertilizer() {
+      this.validate()
+    },
+    methodInorganicApplicationOther() {
+      this.validate()
+    },
+    isUseOrganicFertilizer() {
+      this.validate()
+    },
+    kindOgranicFertilizer() {
+      this.validate()
+    },
+    methodInorganicApplicationOther() {
+      this.validate()
+    },
+    isPracticeGreenManuring() {
+      this.validate()
+    },
+    isReturnCropResidue() {
+      this.validate()
+    },
+    dateHarvesting() {
+      this.validate()
+    },
   },
 }
 </script>

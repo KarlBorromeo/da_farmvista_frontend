@@ -13,7 +13,7 @@
         </form-input-container>
 
         <form-input-container>
-           <v-text-field
+          <v-text-field
             v-model="interviewer"
             :rules="requiredRule"
             label="* Name of Interviewer"
@@ -220,9 +220,15 @@ export default {
     /* test if the form is valid, return boolean */
     validate() {
       const valid = this.$refs.form.validate()
-      this.$store.commit('questionnaire/toggleNextTab',{tabName: 'SurveyInformationValidated',valid});
-      if(valid){
-        this.$store.commit('questionnaire/saveData',{keyName: 'interview',data: this.getData()})
+      this.$store.commit('questionnaire/toggleNextTab', {
+        tabName: 'SurveyInformationValidated',
+        valid,
+      })
+      if (valid) {
+        this.$store.commit('questionnaire/saveData', {
+          keyName: 'interview',
+          data: this.getData(),
+        })
       }
     },
     /* return the data of this form as an object */
@@ -240,28 +246,28 @@ export default {
     },
   },
   watch: {
-    date(){
+    date() {
       this.validate()
     },
-    surveyNumber(){
+    surveyNumber() {
       this.validate()
     },
-    interviewer(){
+    interviewer() {
       this.validate()
     },
-    interviewStart(){
+    interviewStart() {
       this.validate()
     },
-    interviewEnd(){
+    interviewEnd() {
       this.validate()
     },
-    regionProvince(){
+    regionProvince() {
       this.validate()
     },
-    municipality(){
+    municipality() {
       this.validate()
     },
-    barangay(){
+    barangay() {
       this.validate()
     },
   },

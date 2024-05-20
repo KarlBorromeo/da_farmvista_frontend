@@ -189,9 +189,15 @@ export default {
     /* test if the form is valid, return boolean */
     validate() {
       const valid = this.$refs.form.validate()
-      this.$store.commit('questionnaire/toggleNextTab',{tabName: 'CoffeeHarvestMarketingValidated',valid});
-      if(valid){
-        this.$store.commit('questionnaire/saveData',{keyName: 'coffeeHarvestMarketing',data: this.getData()})
+      this.$store.commit('questionnaire/toggleNextTab', {
+        tabName: 'CoffeeHarvestMarketingValidated',
+        valid,
+      })
+      if (valid) {
+        this.$store.commit('questionnaire/saveData', {
+          keyName: 'coffeeHarvestMarketing',
+          data: this.getData(),
+        })
       }
     },
     /* concatenate two value holders for field that has others (ex: variable, variableOther)*/
@@ -219,13 +225,13 @@ export default {
     this.farmFinancingItems = this.$store.getters['questionnaireCode/Code27']
   },
   watch: {
-    'formData': {
-      handler: function(){
+    formData: {
+      handler: function () {
         this.validate()
       },
-      deep: true
-    }
-  }
+      deep: true,
+    },
+  },
 }
 </script>
 

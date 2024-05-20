@@ -111,7 +111,6 @@
               required
             ></v-text-field>
           </form-input-container>
-
         </v-row>
         <v-btn color="success" @click="createAccount">Create</v-btn>
       </v-container>
@@ -125,51 +124,43 @@ import Snackbar from '~/components/snackbar.vue'
 import formInputContainer from '../form/formInputContainer.vue'
 import FormRadioContainer from '../form/formRadioContainer.vue'
 export default {
-	components: { formInputContainer, FormRadioContainer, Snackbar },
-  data(){
-    return{
-      lastName : 'a',
-      firstName : 'a',
-      middleName : 'a',
-      type : 'Admin',
-      typeItems: [
-        'Super Admin',
-        'Admin',
-        'Enumerator'
-      ],
-      username : '',
-      email : 'aw@gmail.com',
-      mobileNumber : '09123456789',
-      dateOfBirth : '2024-05-11',
-      gender : 'name',
-      genderItems: [
-        'male','female','others'
-      ],
-      company : 'aw',
-      jobPosition : 'aw',
-      requiredRule: [
-        (v) => !!v || 'this field is required'
-      ]
+  components: { formInputContainer, FormRadioContainer, Snackbar },
+  data() {
+    return {
+      lastName: 'a',
+      firstName: 'a',
+      middleName: 'a',
+      type: 'Admin',
+      typeItems: ['Super Admin', 'Admin', 'Enumerator'],
+      username: '',
+      email: 'aw@gmail.com',
+      mobileNumber: '09123456789',
+      dateOfBirth: '2024-05-11',
+      gender: 'name',
+      genderItems: ['male', 'female', 'others'],
+      company: 'aw',
+      jobPosition: 'aw',
+      requiredRule: [(v) => !!v || 'this field is required'],
     }
   },
-  methods:{
-    validate(){
+  methods: {
+    validate() {
       console.log(this.$refs.form.validate())
-      return this.$refs.form.validate();
+      return this.$refs.form.validate()
     },
-    async createAccount(){
+    async createAccount() {
       const valid = this.validate()
-      if(valid){
-        try{
+      if (valid) {
+        try {
           const credentials = this.getData()
-          await this.$store.dispatch('users/createAccount',credentials)
-        }catch(error){
-          console.error(error);
-          this.$refs.snackbar.showBar(error,'red')
-        }        
+          await this.$store.dispatch('users/createAccount', credentials)
+        } catch (error) {
+          console.error(error)
+          this.$refs.snackbar.showBar(error, 'red')
+        }
       }
     },
-    getData(){
+    getData() {
       return {
         lastName: this.lastName,
         firstName: this.firstName,
@@ -180,10 +171,10 @@ export default {
         dateOfBirth: this.dateOfBirth,
         gender: this.gender,
         company: this.company,
-        jobPosition: this.jobPosition
+        jobPosition: this.jobPosition,
       }
-    }
-  }
+    },
+  },
 }
 </script>
 

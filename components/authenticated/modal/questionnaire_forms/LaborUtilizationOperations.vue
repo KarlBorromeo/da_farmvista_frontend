@@ -535,9 +535,15 @@ export default {
     /* test if the form is valid, return boolean */
     validate() {
       const valid = this.$refs.form.validate()
-      this.$store.commit('questionnaire/toggleNextTab',{tabName: 'LaborUtilizationOperationsValidated',valid});
-      if(valid){
-        this.$store.commit('questionnaire/saveData',{keyName: 'laborOperationCoffee',data: this.getData()})
+      this.$store.commit('questionnaire/toggleNextTab', {
+        tabName: 'LaborUtilizationOperationsValidated',
+        valid,
+      })
+      if (valid) {
+        this.$store.commit('questionnaire/saveData', {
+          keyName: 'laborOperationCoffee',
+          data: this.getData(),
+        })
       }
     },
     titleGenerator(title, text) {
@@ -566,12 +572,12 @@ export default {
     },
   },
   watch: {
-    'formData': {
-      handler: function(){
-        this.validate();
+    formData: {
+      handler: function () {
+        this.validate()
       },
-      deep: true
+      deep: true,
     },
-  }
+  },
 }
 </script>

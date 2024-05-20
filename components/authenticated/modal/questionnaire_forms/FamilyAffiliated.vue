@@ -16,7 +16,11 @@
           </form-input-container>
 
           <form-radio-container title="Position">
-            <v-radio-group :rules="requiredRule" v-model="position[i - 1]" class="py-0 my-0">
+            <v-radio-group
+              :rules="requiredRule"
+              v-model="position[i - 1]"
+              class="py-0 my-0"
+            >
               <v-radio
                 v-for="item in positionItems"
                 :key="item"
@@ -42,7 +46,11 @@
           </form-input-container>
 
           <form-radio-container title="Type of Institution/Organization">
-            <v-radio-group :rules="requiredRule" v-model="typeOrganization[i - 1]" class="py-0 my-0">
+            <v-radio-group
+              :rules="requiredRule"
+              v-model="typeOrganization[i - 1]"
+              class="py-0 my-0"
+            >
               <v-radio
                 v-for="item in typeOrganizationItems"
                 :key="item"
@@ -69,7 +77,11 @@
           </form-input-container>
 
           <form-radio-container title="Status of Membership">
-            <v-radio-group :rules="requiredRule" v-model="statusMembership[i - 1]" class="py-0 my-0">
+            <v-radio-group
+              :rules="requiredRule"
+              v-model="statusMembership[i - 1]"
+              class="py-0 my-0"
+            >
               <v-radio
                 v-for="item in statusMembershipItems"
                 :key="item"
@@ -81,7 +93,7 @@
 
           <form-radio-container title="Status of Organization">
             <v-radio-group
-            :rules="requiredRule"
+              :rules="requiredRule"
               v-model="statusOrganization[i - 1]"
               class="py-0 my-0"
             >
@@ -135,9 +147,15 @@ export default {
     /* test if the form is valid, return boolean */
     validate() {
       const valid = this.$refs.form.validate()
-      this.$store.commit('questionnaire/toggleNextTab',{tabName: 'FamilyAffiliatedValidated',valid});
-      if(valid){
-        this.$store.commit('questionnaire/saveData',{keyName: 'familyAffiliatedFarmOrg',data: this.getData()})
+      this.$store.commit('questionnaire/toggleNextTab', {
+        tabName: 'FamilyAffiliatedValidated',
+        valid,
+      })
+      if (valid) {
+        this.$store.commit('questionnaire/saveData', {
+          keyName: 'familyAffiliatedFarmOrg',
+          data: this.getData(),
+        })
       }
     },
     /* get the data and convert it into expected key/value formats in BackEnd */
@@ -189,7 +207,7 @@ export default {
   },
   watch: {
     position(value) {
-      this.validate();
+      this.validate()
       value.forEach((element, index) => {
         if (element !== 'others') {
           this.positionOthers[index] = ''
@@ -204,25 +222,25 @@ export default {
         }
       })
     },
-    nameFamilyMember(){
+    nameFamilyMember() {
       this.validate()
     },
-    positionOthers(){
+    positionOthers() {
       this.validate()
     },
-    nameOrganization(){
+    nameOrganization() {
       this.validate()
     },
-    typeOrganizationOthers(){
+    typeOrganizationOthers() {
       this.validate()
     },
-    numberYearsMember(){
+    numberYearsMember() {
       this.validate()
     },
-    statusMembership(){
+    statusMembership() {
       this.validate()
     },
-    statusOrganization(){
+    statusOrganization() {
       this.validate()
     },
   },

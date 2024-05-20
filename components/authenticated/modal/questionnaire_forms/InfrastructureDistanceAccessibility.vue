@@ -493,9 +493,15 @@ export default {
     /* test if the form is valid, return boolean */
     validate() {
       const valid = this.$refs.form.validate()
-      this.$store.commit('questionnaire/toggleNextTab',{tabName: 'InfrastructureDistanceAccessibilityValidated',valid});
-      if(valid){
-        this.$store.commit('questionnaire/saveData',{keyName: 'infraDistanceAccessibility',data: this.getData()})
+      this.$store.commit('questionnaire/toggleNextTab', {
+        tabName: 'InfrastructureDistanceAccessibilityValidated',
+        valid,
+      })
+      if (valid) {
+        this.$store.commit('questionnaire/saveData', {
+          keyName: 'infraDistanceAccessibility',
+          data: this.getData(),
+        })
       }
     },
     /* concatenate two value holders for field that has others (ex: variable, variableOther)*/
@@ -590,41 +596,41 @@ export default {
     this.roadItems = this.$store.getters['questionnaireCode/Code19']
   },
   watch: {
-    'farmToNearestRoad': {
-      handler: function(){
+    farmToNearestRoad: {
+      handler: function () {
         this.validate()
       },
-      deep: true
+      deep: true,
     },
-    'farmToResidence': {
-      handler: function(){
+    farmToResidence: {
+      handler: function () {
         this.validate()
       },
-      deep: true
+      deep: true,
     },
-    'farmToMarket': {
-      handler: function(){
+    farmToMarket: {
+      handler: function () {
         this.validate()
       },
-      deep: true
+      deep: true,
     },
-    'residenceToMarket': {
-      handler: function(){
+    residenceToMarket: {
+      handler: function () {
         this.validate()
       },
-      deep: true
+      deep: true,
     },
-    'farmToInputSupply': {
-      handler: function(){
+    farmToInputSupply: {
+      handler: function () {
         this.validate()
       },
-      deep: true
+      deep: true,
     },
-    'residenceToInputSupply': {
-      handler: function(){
+    residenceToInputSupply: {
+      handler: function () {
         this.validate()
       },
-      deep: true
+      deep: true,
     },
     'farmToNearestRoad.dominantTransportation': function (value) {
       if (value !== 'others') {

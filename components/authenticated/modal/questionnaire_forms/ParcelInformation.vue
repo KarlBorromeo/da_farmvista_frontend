@@ -219,9 +219,15 @@ export default {
     /* test if the form is valid, return boolean */
     validate() {
       const valid = this.$refs.form.validate()
-      this.$store.commit('questionnaire/toggleNextTab',{tabName: 'ParcelInformationValidated',valid});
-      if(valid){
-        this.$store.commit('questionnaire/saveData',{keyName: 'parcelInfo',data: this.getData()})
+      this.$store.commit('questionnaire/toggleNextTab', {
+        tabName: 'ParcelInformationValidated',
+        valid,
+      })
+      if (valid) {
+        this.$store.commit('questionnaire/saveData', {
+          keyName: 'parcelInfo',
+          data: this.getData(),
+        })
       }
     },
     /* get the data and convert it into expected key/value formats in BackEnd */
@@ -317,31 +323,31 @@ export default {
         }
       })
     },
-    parcelNumber(){
+    parcelNumber() {
       this.validate()
     },
-    area(){
+    area() {
       this.validate()
     },
-    tenureOther(){
+    tenureOther() {
       this.validate()
     },
-    topographyOther(){
+    topographyOther() {
       this.validate()
     },
-    soilFertility(){
+    soilFertility() {
       this.validate()
     },
-    croppingSystemOther(){
+    croppingSystemOther() {
       this.validate()
     },
-    sourceWaterOther(){
+    sourceWaterOther() {
       this.validate()
     },
-    landUseStatusOther(){
+    landUseStatusOther() {
       this.validate()
     },
-    cropsPlanted(){
+    cropsPlanted() {
       this.validate()
     },
   },

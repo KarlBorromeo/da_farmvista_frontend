@@ -57,7 +57,7 @@
               :rules="numberRule"
               label="* age of the item"
               type="number"
-              min=0
+              min="0"
               hint=".6 for 6 months, 1 for 1 year and so on"
             ></v-text-field>
           </form-input-container>
@@ -106,9 +106,15 @@ export default {
     /* test if the form is valid, return boolean */
     validate() {
       const valid = this.$refs.form.validate()
-      this.$store.commit('questionnaire/toggleNextTab',{tabName: 'AssetsFarmStructureValidated',valid});
-      if(valid){
-        this.$store.commit('questionnaire/saveAssetsData',{keyName: 'structureBldgLand',data: this.getData()})
+      this.$store.commit('questionnaire/toggleNextTab', {
+        tabName: 'AssetsFarmStructureValidated',
+        valid,
+      })
+      if (valid) {
+        this.$store.commit('questionnaire/saveAssetsData', {
+          keyName: 'structureBldgLand',
+          data: this.getData(),
+        })
       }
     },
     /* get the data and convert it into expected key/value formats in BackEnd */
@@ -149,19 +155,19 @@ export default {
         }
       })
     },
-    structureBldgName(){
+    structureBldgName() {
       this.validate()
     },
-    structureBldgNameOther(){
+    structureBldgNameOther() {
       this.validate()
     },
-    structureBldgQuantity(){
+    structureBldgQuantity() {
       this.validate()
     },
-    isstructureBldgAquiredGovtProg(){
+    isstructureBldgAquiredGovtProg() {
       this.validate()
     },
-    structureBldgAge(){
+    structureBldgAge() {
       this.validate()
     },
   },

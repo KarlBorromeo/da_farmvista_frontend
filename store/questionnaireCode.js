@@ -161,9 +161,9 @@ export const getters = {
 
 export const mutations = {
   /* save the fetched codes in the store */
-  saveCodes(state,codes){
-    state.codes = codes;
-  }
+  saveCodes(state, codes) {
+    state.codes = codes
+  },
 }
 
 export const actions = {
@@ -171,9 +171,9 @@ export const actions = {
   async fetchAllCodes(context, commodity) {
     try {
       const codes = await api.fetchAllCodes(commodity)
-      context.commit('saveCodes',codes)
+      context.commit('saveCodes', codes)
     } catch (error) {
-      throw error;
+      throw error
     }
   },
 }

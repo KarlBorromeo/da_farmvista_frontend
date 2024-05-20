@@ -40,7 +40,7 @@
 <script>
 import uploadVue from '../modal/upload.vue'
 export default {
-  emits:['emitCloseModal'],
+  emits: ['emitCloseModal'],
   components: { uploadVue },
   data() {
     return {
@@ -53,9 +53,9 @@ export default {
     openModal(item) {
       this.commodity = item
     },
-    emitCloseModal(){
-      this.dialog = false;
-    }
+    emitCloseModal() {
+      this.dialog = false
+    },
   },
 }
 </script>

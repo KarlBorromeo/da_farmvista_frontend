@@ -270,13 +270,15 @@ export default {
     decemberOther: '',
     activityItems: ['planting'],
     requiredRule: [(v) => !!v || 'this field is required'],
-    listRule: [(v) => {
-      if(v.length>0){
-        return true
-      }else{
-        return 'this field is required'
-      }
-    }]
+    listRule: [
+      (v) => {
+        if (v.length > 0) {
+          return true
+        } else {
+          return 'this field is required'
+        }
+      },
+    ],
   }),
   methods: {
     /* 
@@ -286,30 +288,37 @@ export default {
     */
     validate() {
       const valid = this.validateCheckbox()
-      this.$store.commit('questionnaire/toggleNextTab',{tabName: 'CroppingPatternCalendarValidated',valid});
-      if(valid){
-        this.$store.commit('questionnaire/saveData',{keyName: 'cropCalendarCoffee',data: this.getData()})
+      this.$store.commit('questionnaire/toggleNextTab', {
+        tabName: 'CroppingPatternCalendarValidated',
+        valid,
+      })
+      if (valid) {
+        this.$store.commit('questionnaire/saveData', {
+          keyName: 'cropCalendarCoffee',
+          data: this.getData(),
+        })
       }
     },
     /* test if checbkoxes are not empty */
-    validateCheckbox(){
-      if( this.january.length <=0 ||
-          this.february.length <=0 ||
-          this.march.length <=0 ||
-          this.april.length <=0 ||
-          this.may.length <=0 ||
-          this.june.length <=0 ||
-          this.july.length <=0 ||
-          this.august.length <=0 ||
-          this.september.length <=0 ||
-          this.october.length <=0 ||
-          this.november.length <=0 ||
-          this.december.length <=0 )
-        {
-          return false;
-        }else{
-          return true;
-        }
+    validateCheckbox() {
+      if (
+        this.january.length <= 0 ||
+        this.february.length <= 0 ||
+        this.march.length <= 0 ||
+        this.april.length <= 0 ||
+        this.may.length <= 0 ||
+        this.june.length <= 0 ||
+        this.july.length <= 0 ||
+        this.august.length <= 0 ||
+        this.september.length <= 0 ||
+        this.october.length <= 0 ||
+        this.november.length <= 0 ||
+        this.december.length <= 0
+      ) {
+        return false
+      } else {
+        return true
+      }
     },
     /* check if 'other' checkbox is ticked */
     isOtherTicked(list) {
@@ -426,42 +435,42 @@ export default {
         this.decemberOther = ''
       }
     },
-    januaryOther(){
+    januaryOther() {
       this.validate()
     },
-februaryOther(){
-  this.validate()
-},
-marchOther(){
-  this.validate()
-},
-aprilOther(){
-  this.validate()
-},
-mayOther(){
-  this.validate()
-},
-juneOther(){
-  this.validate()
-},
-julyOther(){
-  this.validate()
-},
-augustOther(){
-  this.validate()
-},
-septemberOther(){
-  this.validate()
-},
-octoberOther(){
-  this.validate()
-},
-novemberOther(){
-  this.validate()
-},
-decemberOther(){
-  this.validate()
-},
+    februaryOther() {
+      this.validate()
+    },
+    marchOther() {
+      this.validate()
+    },
+    aprilOther() {
+      this.validate()
+    },
+    mayOther() {
+      this.validate()
+    },
+    juneOther() {
+      this.validate()
+    },
+    julyOther() {
+      this.validate()
+    },
+    augustOther() {
+      this.validate()
+    },
+    septemberOther() {
+      this.validate()
+    },
+    octoberOther() {
+      this.validate()
+    },
+    novemberOther() {
+      this.validate()
+    },
+    decemberOther() {
+      this.validate()
+    },
   },
 }
 </script>

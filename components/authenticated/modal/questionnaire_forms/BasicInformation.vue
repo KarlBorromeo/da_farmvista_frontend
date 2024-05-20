@@ -90,9 +90,15 @@ export default {
     /* test if the form is valid, return boolean */
     validate() {
       const valid = this.$refs.form.validate()
-      this.$store.commit('questionnaire/toggleNextTab',{tabName: 'BasicInformationValidated',valid});
-      if(valid){
-        this.$store.commit('questionnaire/saveData',{keyName: 'profile',data: this.getData()})
+      this.$store.commit('questionnaire/toggleNextTab', {
+        tabName: 'BasicInformationValidated',
+        valid,
+      })
+      if (valid) {
+        this.$store.commit('questionnaire/saveData', {
+          keyName: 'profile',
+          data: this.getData(),
+        })
       }
     },
     getData() {
@@ -103,24 +109,24 @@ export default {
         contactNumber: this.constactNumber,
         farmerCode: this.farmerCode,
       }
-    }
+    },
   },
   watch: {
-    surename(){
+    surename() {
       this.validate()
     },
-    firstname(){
+    firstname() {
       this.validate()
     },
-    middleInitial(){
+    middleInitial() {
       this.validate()
     },
-    constactNumber(){
+    constactNumber() {
       this.validate()
     },
-    farmerCode(){
+    farmerCode() {
       this.validate()
     },
-  }
+  },
 }
 </script>

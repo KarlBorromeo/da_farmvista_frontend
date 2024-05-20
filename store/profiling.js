@@ -60,7 +60,7 @@ export const mutations = {
       state.itemsCurrentPage.push(object)
     })
   },
-    /* 
+  /* 
         calculate the total pages we have based on the length returned by the API and also the limit we assigned
         and set the pages the total of length / limit
     */

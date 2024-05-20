@@ -50,7 +50,7 @@
               :rules="numberRule"
               label="* age of the item"
               type="number"
-              min=0
+              min="0"
               hint=".6 for 6 months, 1 for 1 year and so on"
             ></v-text-field>
           </form-input-container>
@@ -79,15 +79,15 @@ export default {
   data: () => ({
     valid: false,
     items: 2,
-    poultryLivestockName: ['carabao','cow'],
+    poultryLivestockName: ['carabao', 'cow'],
     poultryLivestockNameItems: [],
-    poultryLivestockQuantity: [4,2],
-    ispoultryLivestockAquiredGovtProg: ['no','no'],
+    poultryLivestockQuantity: [4, 2],
+    ispoultryLivestockAquiredGovtProg: ['no', 'no'],
     ispoultryLivestockAquiredGovtProgItems: [
       { value: 'yes', label: 'Yes' },
       { value: 'no', label: 'No' },
     ],
-    poultryLivestockAge: [3,2],
+    poultryLivestockAge: [3, 2],
     numberRule: [
       (v) => !!v || 'This field is required',
       (v) => parseFloat(v) >= 0 || 'invalid value',
@@ -98,9 +98,15 @@ export default {
     /* test if the form is valid, return boolean */
     validate() {
       const valid = this.$refs.form.validate()
-      this.$store.commit('questionnaire/toggleNextTab',{tabName: 'AssetsFarmPoultryLivestockValidated',valid});
-      if(valid){
-        this.$store.commit('questionnaire/saveAssetsData',{keyName: 'poultryLivestock',data: this.getData()})
+      this.$store.commit('questionnaire/toggleNextTab', {
+        tabName: 'AssetsFarmPoultryLivestockValidated',
+        valid,
+      })
+      if (valid) {
+        this.$store.commit('questionnaire/saveAssetsData', {
+          keyName: 'poultryLivestock',
+          data: this.getData(),
+        })
       }
     },
     /* get the data and convert it into expected key/value formats in BackEnd */
@@ -131,18 +137,18 @@ export default {
       this.$store.getters['questionnaireCode/Code5PoultryAndLivestock']
   },
   watch: {
-    poultryLivestockName(){
+    poultryLivestockName() {
       this.validate()
     },
-poultryLivestockQuantity(){
-  this.validate()
-},
-ispoultryLivestockAquiredGovtProg(){
-  this.validate()
-},
-poultryLivestockAge(){
-  this.validate()
-},
-  }
+    poultryLivestockQuantity() {
+      this.validate()
+    },
+    ispoultryLivestockAquiredGovtProg() {
+      this.validate()
+    },
+    poultryLivestockAge() {
+      this.validate()
+    },
+  },
 }
 </script>

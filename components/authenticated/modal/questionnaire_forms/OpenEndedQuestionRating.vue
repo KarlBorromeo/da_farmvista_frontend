@@ -306,9 +306,15 @@ export default {
     /* test if the form is valid, return boolean */
     validate() {
       const valid = this.$refs.form.validate()
-      this.$store.commit('questionnaire/toggleNextTab',{tabName: 'OpenEndedQuestionRatingValidated',valid});
-      if(valid){
-        this.$store.commit('questionnaire/saveData',{keyName: 'openEndedQuestionRating',data: this.getData()})
+      this.$store.commit('questionnaire/toggleNextTab', {
+        tabName: 'OpenEndedQuestionRatingValidated',
+        valid,
+      })
+      if (valid) {
+        this.$store.commit('questionnaire/saveData', {
+          keyName: 'openEndedQuestionRating',
+          data: this.getData(),
+        })
       }
     },
     /* create key value pairs */
@@ -330,19 +336,19 @@ export default {
       return {
         awareness: this.createKevValuePair(this.awarenessList, 'awareness'),
         knowledge: this.createKevValuePair(this.knowledgeList, 'knowledge'),
-        attitude: this.createKevValuePair(this.attitudeList,'attitude'),
-        practices: this.createKevValuePair(this.practiceList,'practices')
+        attitude: this.createKevValuePair(this.attitudeList, 'attitude'),
+        practices: this.createKevValuePair(this.practiceList, 'practices'),
       }
     },
   },
   watch: {
-    'formData': {
-      handler: function(){
+    formData: {
+      handler: function () {
         this.validate()
       },
-      deep: true
+      deep: true,
     },
-  }
+  },
 }
 </script>
 
