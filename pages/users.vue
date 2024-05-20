@@ -19,14 +19,16 @@
         </v-col>
       </v-row>
     </v-container>
+    <users-table />
   </tab-description>
 </template>
 
 <script>
 import CreateUser from '~/components/authenticated/modal/createUser.vue'
 import TabDescription from '~/components/authenticated/TabDescription.vue'
+import UsersTable from '~/components/authenticated/usersTable.vue'
 export default {
-  components: { TabDescription, CreateUser },
+  components: { TabDescription, CreateUser, UsersTable },
   data() {
     return {
       dialog: false,

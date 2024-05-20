@@ -314,7 +314,7 @@ export default {
   data() {
     return {
       loading: false,
-      current: 'SurveyInformation',
+      current: 'InformationKnowledgeSources',
       currentCommodity: 'coffee',
     }
   },
