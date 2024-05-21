@@ -171,7 +171,6 @@ export const getters = {
     const index = state.tabs.findIndex(
       (el) => el.tabName == 'GeneralInformationValidated'
     )
-    console.log('general info getter: ', state.tabs[index].validity)
     if (index >= 0) {
       return state.tabs[index].validity
     } else {

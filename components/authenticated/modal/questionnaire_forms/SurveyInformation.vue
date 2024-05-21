@@ -132,13 +132,13 @@
           ></v-text-field>
         </form-input-container>
       </v-row>
+      <p class="hiddenRequiredField">{{ initializedData }}</p>
     </v-container>
     <v-btn @click="validate">Validate</v-btn>
   </v-form>
 </template>
 
 <script>
-import { generateObject } from '~/reusableFunctions/questionnaireValidation'
 import formInputContainer from '../../form/formInputContainer.vue'
 import FormMenuContainer from '../../form/formMenuContainer.vue'
 import FormRadioContainer from '../../form/formRadioContainer.vue'
@@ -165,51 +165,51 @@ export default {
     interviewEndRule: [(v) => !!v || 'time end is required'],
     regionProvince: 'AGUSAN DEL NORTE',
     regionProvinceItems: [
-      'AGUSAN DEL NORTE',
-      'AGUSAN DEL SUR',
-      'DINAGAT ISLAND',
-      'SURIGAO DEL NORTE',
-      'SURIGAO DEL SUR',
+      'agusan del norte',
+      'agusan del sur',
+      'dinagat island',
+      'surigao del norte',
+      'surigao del sur',
     ],
     municipality: 'ALEGRIA',
     municipalityItems: [
-      'ALEGRIA',
-      'BACUAG',
-      'BAROBO',
-      'BASILISA',
-      'BISLIG',
-      'BUENAVISTA',
-      'BUNAWAN',
-      'BUTUAN CITY',
-      'CABADBARAN CITY',
-      'CANTILAN',
-      'CARRASCAL',
-      'EZPERANZA',
-      'HINATUAN',
-      'JABONGA',
-      'KITCHARAO',
-      'LAS NIEVES',
-      'LIANGA',
-      'LINGIG',
-      'LORETO',
-      'NASIPIT',
-      'PROSPERIDAD',
-      'ROSARIO',
-      'SAN AGUSTIN',
-      'SAN FRANCISCO',
-      'SAN JOSE',
-      'SANTIAGO',
-      'SIBAGAT',
-      'STA. JOSEFA',
-      'SURIGAO CITY',
-      'TAGANAAN',
-      'TAGBINA',
-      'TAGO',
-      'TALACOGON',
-      'TANDAG',
-      'TRENTO',
-      'TUBAJON',
-      'TUBAY',
+      'alegria',
+      'bacuag',
+      'barobo',
+      'basilisa',
+      'bislig',
+      'buenavista',
+      'bunawan',
+      'butuan city',
+      'cabadbaran city',
+      'cantilan',
+      'carascal',
+      'ezperanza',
+      'hinatuan',
+      'jabonga',
+      'kitcharao',
+      'las nieves',
+      'lianga',
+      'lingig',
+      'loreto',
+      'nasipit',
+      'prosperidad',
+      'rosario',
+      'san agustin',
+      'san francisco',
+      'san jose',
+      'santiago',
+      'sibagat',
+      'sta. josefa',
+      'surigao city',
+      'taganaan',
+      'tagbina',
+      'tago',
+      'talacogon',
+      'tandag',
+      'trento',
+      'tubajon',
+      'tubay',
     ],
     barangay: 'Brgy. Binutbut',
     barangayRule: [(v) => !!v || 'Barangay is required'],
@@ -271,5 +271,21 @@ export default {
       this.validate()
     },
   },
+  computed: {
+    initializedData(){
+      const data =  this.$store.getters['profiling/selectedRecord']
+      if(Object.keys(data).length > 0){
+        this.date = data.interview.dateOfInterview
+        this.surveyNumber = data.interview.surveyNo
+        this.interviewer = data.interview.validatorName
+        this.interviewStart = data.interview.interviewStart
+        this.interviewEnd = data.interview.interviewEnd
+        this.regionProvince = data.interview.regionProvince
+        this.municipality = data.interview.cityMunicipality
+        this.barangay = data.interview.barangay
+      }
+      return data.interview
+    }
+  }
 }
 </script>

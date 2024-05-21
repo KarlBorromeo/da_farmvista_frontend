@@ -25,7 +25,7 @@
           :title="camelToSpace(item.key)"
         >
           <v-checkbox
-            v-for="item in printMaterialsReadItems"
+            v-for="item in formData.printMaterialsReadItems"
             v-model="formData.printMaterialsRead"
             :key="item"
             :value="item"
@@ -182,7 +182,7 @@ export default {
     },
   },
   beforeMount() {
-    this.printMaterialsReadItems =
+    this.formData.printMaterialsReadItems =
       this.$store.getters['questionnaireCode/PrintMaterials']
   },
   watch: {
@@ -192,10 +192,10 @@ export default {
       },
       deep: true,
     },
-    printMaterialsRead(value) {
+    'formData.printMaterialsRead': function(value) {
       const otherTicked = value.forEach((element) => element == 'others')
       if (otherTicked) {
-        this.printMaterialsReadOther = ''
+        this.formData.printMaterialsReadOther = ''
       }
     },
   },

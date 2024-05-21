@@ -3,6 +3,8 @@ import * as api from '../storeAPI/profiling'
 export const state = () => ({
   countPages: 0,
   itemsCurrentPage: [],
+  selectedRecord: {},
+  isEditingMode: false
 })
 
 export const getters = {
@@ -12,6 +14,12 @@ export const getters = {
   countPages(state) {
     return state.countPages
   },
+  selectedRecord(state){
+    return state.selectedRecord
+  },
+  isEditingMode(state){
+    return state.isEditingMode
+  }
 }
 
 /* function for capitalizing the first index of the word and also */
@@ -36,18 +44,18 @@ export const mutations = {
       let name = firstname + ' ' + middleInitial + ' ' + lastname
 
       // change the date format
-      const date = new Date(element.dateOfInterview)
+      const date = new Date(element.interview.dateOfInterview)
       const year = date.getFullYear()
       const month = String(date.getMonth() + 1).padStart(2, '0')
       const day = String(date.getDate()).padStart(2, '0')
       const formattedDate = `${year}/${month}/${day}`
 
       // convert to string the survey number
-      const surveyNumber = element.surveyNo
+      const surveyNumber = element.interview.surveyNo
       const convertedSurveyNumber = surveyNumber.toString()
 
       const object = {
-        id: element.id,
+        id: element.interview.id,
         surveyNo: convertedSurveyNumber,
         dateInterview: formattedDate,
         farmerName: name,
@@ -61,11 +69,10 @@ export const mutations = {
     })
   },
   /* 
-        calculate the total pages we have based on the length returned by the API and also the limit we assigned
-        and set the pages the total of length / limit
-    */
+    calculate the total pages we have based on the length returned by the API and also the limit we assigned
+    and set the pages the total of length / limit
+  */
   savePageLength(state, obj) {
-    console.log(obj)
     if (obj.limit >= obj.length) {
       state.countPages = 1
     } else {
@@ -75,20 +82,42 @@ export const mutations = {
       }
     }
   },
+  /* toggle the editing record boolean holder, this holds if the user is editing a record or creating a record, reset to empty the selected if creation mode */
+  toggleEditingMode(state, bool){
+    state.isEditingMode = bool
+    if(!bool){
+      state.selectedRecord = {}
+    }
+  },
+  /* save the single record to the store to able the form questionnaire to access the existing values of the selected record */
+  saveSelectedRecord(state,obj){
+    state.selectedRecord = obj;
+  },
 }
 
 export const actions = {
-  async fetchSurvey(context, payload) {
+  /* fetch all survey records*/
+  async fetchAllSurvey(context, payload) {
     try {
-      const response = await api.fetchRecords(payload)
+      const response = await api.fetchAllRecords(payload)
       context.commit('saveItems', response.data)
       context.commit('savePageLength', {
         length: response.count,
         limit: payload.limit,
       })
     } catch (error) {
-      console.error(error)
       throw error
     }
   },
+  /* fetch one survey record using id */
+  async fetchSingleSurvey(context,payload){
+    console.log('fetc;hing single record')
+    try{
+      const response = await api.fetchSingleSurvey(payload);
+      context.commit('saveSelectedRecord',response)
+      context.commit('toggleEditingMode', true) 
+    }catch(error){
+      throw error
+    }
+  }
 }

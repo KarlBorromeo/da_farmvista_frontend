@@ -128,6 +128,7 @@ export const getters = {
     return generateArray(state.codes.PrintMaterials)
   },
   PestControlAdvice(state) {
+    console.log('this is pest control advice', state.codes.PestControlAdvice)
     return generateArray(state.codes.PestControlAdvice)
   },
   PesticideConsideration(state) {

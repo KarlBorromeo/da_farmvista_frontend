@@ -4,7 +4,7 @@
       <h2 class="pa-0 ma-0 headline font-weight-bold">
         Survey Questionaire {{ currentCommodity }}
       </h2>
-      <commodity-dropdown @switchCommodity="switchCommodity" />
+      <commodity-dropdown v-if="!id" @switchCommodity="switchCommodity" />
     </div>
     <v-divider />
     <v-toolbar light elevation="0" v-if="currentCommodity == 'coffee'">
@@ -242,6 +242,7 @@
       </v-card>
       <v-card v-else> EMPTY </v-card>
     </v-tabs-items>
+    <snackbar ref="snackbar"/>
   </v-card>
 </template>
 
@@ -278,8 +279,10 @@ import OpenEndedQuestions from './questionnaire_forms/OpenEndedQuestions.vue'
 import OpenEndedQuestionRating from './questionnaire_forms/OpenEndedQuestionRating.vue'
 import SubmissionPage from './questionnaire_forms/SubmissionPage.vue'
 import CommodityDropdown from '../commodityDropdown.vue'
+import snackbar from '~/components/snackbar.vue'
 
 export default {
+  props: [ 'id', 'commodityProp'],
   components: {
     SurveyInformation,
     BasicInformation,
@@ -313,21 +316,50 @@ export default {
     OpenEndedQuestionRating,
     SubmissionPage,
     CommodityDropdown,
+    snackbar
   },
   data() {
     return {
       loading: false,
-      current: 'InformationKnowledgeSources',
+      current: 'BasicInformation',
       currentCommodity: 'coffee',
     }
   },
   methods: {
+    /* render the form based on the tab selected */
     selectTab(item) {
       this.current = item
     },
+    /* change the commodity type */
     switchCommodity(commodity) {
       this.currentCommodity = commodity
     },
+    /* fetching code request */
+    async fetchAllCodes(commodity){
+      try {
+        this.loading = true
+        await this.$store.dispatch('questionnaireCode/fetchAllCodes', commodity)
+        this.currentCommodity = commodity
+      } catch (error) {
+        this.$refs.snackbar.showBar(error,'red');
+      }
+      this.loading = false  
+    },
+    /* fetching one record existing using the id, needed an id first */
+    async fetchOneRecord(){
+      this.currentCommodity = this.commodityProp;
+      const payload = {
+        id: this.id,
+        type: this.currentCommodity
+      }
+      try{
+        this.loading = true
+        await this.$store.dispatch('profiling/fetchSingleSurvey',payload)
+      }catch(error){
+        this.$refs.snackbar.showBar(error,'red');
+      }
+      this.loading = false
+    }
   },
   computed: {
     SurveyInformationValidated() {
@@ -443,30 +475,29 @@ export default {
       ]
     },
   },
+  /* 
+    fetch a specific survey record once only if the prop "id" is not null or undefined,
+  */
   async beforeMount() {
-    try {
-      this.loading = true
-      await this.$store.dispatch('questionnaireCode/fetchAllCodes', 'coffee')
-      this.currentCommodity = 'coffee'
-    } catch (error) {
-      alert(error)
+    await this.fetchAllCodes(this.currentCommodity)
+    if(this.id){
+      await this.fetchOneRecord()
     }
-    this.loading = false
   },
   watch: {
+    /* fetch codes if the commodity changed, create mode only */
     async currentCommodity(newVal, oldVal) {
       if (newVal != oldVal) {
-        try {
-          this.loading = true
-          const type = newVal.toLowerCase()
-          await this.$store.dispatch('questionnaireCode/fetchAllCodes', type)
-          this.currentCommodity = newVal
-        } catch (error) {
-          console.error
-        }
-        this.loading = false
+        const type = newVal.toLowerCase()
+        await this.fetchAllCodes(type)
       }
     },
+    /* if id is not null, we fetch one record, edit mode only */
+    async id(val){
+      if(val){
+        await this.fetchOneRecord()
+      }
+    }
   },
 }
 </script>

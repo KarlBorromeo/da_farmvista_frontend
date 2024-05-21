@@ -38,6 +38,9 @@
         :circle="true"
       ></v-pagination>
     </div>
+    <v-dialog v-model="dialog" width="700">
+      <questionnaire-vue  :id="id" :commodityProp="commodity"/>
+    </v-dialog>
     <snackbar ref="snackbar" />
   </div>
 </template>
@@ -45,30 +48,34 @@
 <script>
 import snackbar from '../snackbar.vue'
 import CommodityDropdown from './commodityDropdown.vue'
+import questionnaireVue from './modal/questionnaire.vue'
 export default {
   emits: ['switchCommodity'],
-  components: { snackbar, CommodityDropdown },
+  components: { snackbar, CommodityDropdown, questionnaireVue },
   data() {
     return {
+      dialog: false,
       search: '',
       items: [],
-      itemPerPage: 20, // number of rows per page
+      itemPerPage: 5, // number of rows per page
       loading: false, // toggle the loading of the table
       page: 1, // current page number
       pageCount: 0, // number of how many pages
       commodity: 'coffee',
+      id: '', // this is used for specific fetch record
     }
   },
   computed: {
     headers() {
       return [
+        { text: 'ID.', align: 'start', value: 'id' },
         { text: 'Survey No.', align: 'start', value: 'surveyNo' },
         { text: `Date Interview (YYYY/MM/DD)`, value: 'dateInterview' },
-        { text: `Farmer's Name`, value: 'farmerName' },
-        { text: `Farmer's Code`, value: 'farmerCode' },
-        { text: 'Region/Province', value: 'regionProvince' },
-        { text: 'City/Municipality', value: 'cityMunicipality' },
-        { text: 'Barangay', value: 'barangay' },
+        // { text: `Farmer's Name`, value: 'farmerName' },
+        // { text: `Farmer's Code`, value: 'farmerCode' },
+        // { text: 'Region/Province', value: 'regionProvince' },
+        // { text: 'City/Municipality', value: 'cityMunicipality' },
+        // { text: 'Barangay', value: 'barangay' },
         { text: 'Organization/Institution', value: 'nameOrganization' },
         { text: 'Actions', value: 'actions', sortable: false },
       ]
@@ -92,9 +99,10 @@ export default {
       )
     },
 
-    /* when edit button is clicked, open the modal for the whole record of this specific id*/
+    /* when edit button is clicked, open the modal for the whole record of this specific id, and enable editing mode and disabling create mode*/
     editItem(id) {
-      alert('edit: ' + id)
+      this.dialog = true;
+      this.id = id;
     },
 
     /* when delete button is clicked, delete the specific record using its id */
@@ -103,12 +111,12 @@ export default {
     },
 
     /* fetch the survey records */
-    async fetchSurveyRecord() {
+    async fetchAllRecord() {
       console.log(this.page)
       try {
         this.loading = true
         this.items = []
-        await this.$store.dispatch('profiling/fetchSurvey', {
+        await this.$store.dispatch('profiling/fetchAllSurvey', {
           type: this.commodity,
           page: this.page,
           limit: this.itemPerPage,
@@ -123,22 +131,28 @@ export default {
     /* this method will be triggered when switching the commodity, via emits */
     async switchCommodity(commodity) {
       this.commodity = commodity
-      await this.fetchSurveyRecord()
+      await this.fetchAllRecord()
     },
   },
 
   /* before mounting the component first http request to fetch the records */
   async beforeMount() {
-    await this.fetchSurveyRecord()
+    await this.fetchAllRecord()
   },
 
   watch: {
     /* execute the fetching everytime navigating to other page numbers */
     async page(newVal, oldVal) {
       if (newVal !== oldVal) {
-        await this.fetchSurveyRecord()
+        await this.fetchAllRecord()
       }
     },
+    /* delete the selected id, if the modal is closed */
+    dialog(val){
+      if(!val){
+        this.id = ''
+      }
+    }
   },
 }
 </script>

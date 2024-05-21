@@ -31,8 +31,8 @@
 
         <form-input-container>
           <v-text-field
-            v-model="constactNumber"
-            :rules="constactNumberRules"
+            v-model="contactNumber"
+            :rules="contactNumberRules"
             label="* Farmer's Phone Number"
             required
           ></v-text-field>
@@ -46,6 +46,7 @@
         </form-input-container>
       </v-row>
     </v-container>
+    {{ initializedData }}
     <v-btn @click="validate">Validate</v-btn>
   </v-form>
 </template>
@@ -56,12 +57,11 @@ export default {
   components: { formInputContainer },
   data: () => ({
     valid: false,
-    surename: 'AKO',
-    firstname: 'IKAW',
+    surename: '',
+    firstname: '',
     requiredRules: [(v) => !!v || 'This field is required'],
-    middleInitial: 'B',
+    middleInitial: '',
     middleInitialRules: [
-      ,
       (v) => {
         if (v) {
           if (v.length == 1) {
@@ -72,16 +72,15 @@ export default {
         return 'This field is required'
       },
     ],
-    constactNumber: '09277494592',
-    constactNumberRules: [
+    contactNumber: '09277494592',
+    contactNumberRules: [
       (v) => {
-        if (v) {
-          if (v.length == 11 && v[0] == '0' && v[1] == '9') {
-            return true
-          }
-          return 'Invalid Phone Number'
+        if(v==0){
+          return true
+        }else if(v.length == 11 && v[0] == '0' && v[1] == '9') {
+          return true
         }
-        return 'This field is required'
+        return 'Invalid Phone Number'
       },
     ],
     farmerCode: '00004ZuIp',
@@ -106,7 +105,7 @@ export default {
         lastName: this.surename,
         firstName: this.firstname,
         middleInitial: this.middleInitial,
-        contactNumber: this.constactNumber,
+        contactNumber: this.contactNumber,
         farmerCode: this.farmerCode,
       }
     },
@@ -121,12 +120,26 @@ export default {
     middleInitial() {
       this.validate()
     },
-    constactNumber() {
+    contactNumber() {
       this.validate()
     },
     farmerCode() {
       this.validate()
     },
+  },
+  computed:{
+    initializedData(){
+      const data =  this.$store.getters['profiling/selectedRecord']
+      if(Object.keys(data).length > 0){
+        this.firstname = data.profile.firstName
+        this.surename = data.profile.lastName
+        this.middleInitial = data.profile.middleInitial
+        this.contactNumber = data.profile.contactNumber
+        this.farmerCode = data.profile.farmerCode
+        console.log(data.profile)
+      }
+      return data.profile
+    }
   },
 }
 </script>
