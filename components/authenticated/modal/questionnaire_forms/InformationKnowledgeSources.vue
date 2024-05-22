@@ -1,7 +1,7 @@
 <template>
   <v-form ref="form" v-model="valid" lazy-validation>
     <v-container>
-      <v-row v-for="item in list" :key="item.key">
+      <!-- <v-row v-for="item in list" :key="item.key">
         <form-radio-container
           v-if="item.type == 'radio'"
           :title="camelToSpace(item.key)"
@@ -51,12 +51,80 @@
             required
           />
         </form-input-container>
-      </v-row>
+      </v-row> -->
+
+      <form-radio-container
+          title="Do you have a functional radio set"
+        >
+          <v-radio-group
+            :rules="requiredRule"
+            v-model="formData.haveFunctionalRadio"
+            class="pa-0 ma-0"
+          >
+            <v-radio
+              v-for="item in isAgreeItems"
+              :key="item"
+              :label="item"
+              :value="item"
+            ></v-radio>
+          </v-radio-group>
+      </form-radio-container>
+
+      <form-input-container>
+          <v-text-field
+            v-model="formData.radioStationUsuallyTune"
+            :rules="requiredRule"
+            label="Radio station usually tune"
+            required
+          />
+      </form-input-container>
+
+      <form-menu-container>
+        <v-dialog
+          ref="radioStart"
+          v-model="timeDialogRadioStart"
+          :return-value.sync="startTimeListeningRadio"
+          persistent
+          width="290px"
+        >
+          <template v-slot:activator="{ on, attrs }">
+            <v-text-field
+              v-model="startTimeListeningRadio"
+              label="Time start listening radio"
+              append-icon="mdi-clock-time-four-outline"
+              readonly
+              v-bind="attrs"
+              v-on="on"
+            ></v-text-field>
+          </template>
+          <v-time-picker
+            v-if="timeDialogRadioStart"
+            v-model="startTimeListeningRadio"
+            full-width
+          >
+            <v-spacer></v-spacer>
+            <v-btn
+              text
+              color="primary"
+              @click="timeDialogRadioStart = false"
+            >
+              Cancel
+            </v-btn>
+            <v-btn
+              text
+              color="primary"
+              @click="$refs.radioStart.save(startTimeListeningRadio)"
+            >
+              OK
+            </v-btn>
+          </v-time-picker>
+        </v-dialog>
+      </form-menu-container>
 
       <form-menu-container>
           <v-dialog
-            ref="radioStart"
-            v-model="timeDialogRadioStart"
+            ref="radioEnd"
+            v-model="timeDialogRadioEnd"
             :return-value.sync="startTimeListeningRadio"
             persistent
             width="290px"
@@ -64,15 +132,15 @@
             <template v-slot:activator="{ on, attrs }">
               <v-text-field
                 v-model="startTimeListeningRadio"
-                label="Picker in dialog"
-                prepend-icon="mdi-clock-time-four-outline"
+                label="Time end listening radio"
+                append-icon="mdi-clock-time-four-outline"
                 readonly
                 v-bind="attrs"
                 v-on="on"
               ></v-text-field>
             </template>
             <v-time-picker
-              v-if="timeDialogRadioStart"
+              v-if="timeDialogRadioEnd"
               v-model="startTimeListeningRadio"
               full-width
             >
@@ -80,14 +148,14 @@
               <v-btn
                 text
                 color="primary"
-                @click="timeDialogRadioStart = false"
+                @click="timeDialogRadioEnd = false"
               >
                 Cancel
               </v-btn>
               <v-btn
                 text
                 color="primary"
-                @click="$refs.radioStart.save(startTimeListeningRadio)"
+                @click="$refs.radioEnd.save(startTimeListeningRadio)"
               >
                 OK
               </v-btn>
@@ -119,7 +187,7 @@ export default {
       time: null,
       // menu2: false,
       timeDialogRadioStart: false,
-      startTimeListeningRadio: '',
+      timeDialogRadioEnd: false,
       formData: {
         haveFunctionalRadio: 'yes',
         radioStationUsuallyTune: 'FRMN',
