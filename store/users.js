@@ -1,4 +1,4 @@
-import * as api from '../storeAPI/users'
+import * as api from '../api/users'
 
 export const state = () => ({})
 

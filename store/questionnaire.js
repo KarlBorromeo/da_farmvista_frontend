@@ -1,4 +1,4 @@
-import * as api from '../storeAPI/questionnaire'
+import * as api from '../api/questionnaire'
 export const state = () => ({
   form: {
     farmHouseholdAsset: {},

@@ -131,11 +131,11 @@
 </template>
 
 <script>
-import formCard from '../../form/formCard.vue'
-import laborOperationContainer from '../../form/laborOperationContainer.vue'
-import laborOperationColNumber from '../../form/laborOperationColNumber.vue'
-import laborOperationColText from '../../form/laborOperationColText.vue'
-import FormInputContainer from '../../form/formInputContainer.vue'
+import formCard from '~/components/authenticated/form/formCard.vue'
+import laborOperationContainer from '~/components/authenticated/form/laborOperationContainer.vue'
+import laborOperationColNumber from '~/components/authenticated/form/laborOperationColNumber.vue'
+import laborOperationColText from '~/components/authenticated/form/laborOperationColText.vue'
+import FormInputContainer from '~/components/authenticated/form/formInputContainer.vue'
 import { convertNumbers } from '~/reusableFunctions/questionnaireValidation'
 export default {
   components: {

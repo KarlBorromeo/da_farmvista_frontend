@@ -146,10 +146,10 @@
 </template>
 
 <script>
-import formInputContainer from '../../form/formInputContainer.vue'
-import FormMenuContainer from '../../form/formMenuContainer.vue'
-import FormRadioContainer from '../../form/formRadioContainer.vue'
-import FormSelectContainer from '../../form/formSelectContainer.vue'
+import formInputContainer from '~/components/authenticated/form/formInputContainer.vue'
+import FormMenuContainer from '~/components/authenticated/form/formMenuContainer.vue'
+import FormRadioContainer from '~/components/authenticated/form/formRadioContainer.vue'
+import FormSelectContainer from '~/components/authenticated/form/formSelectContainer.vue'
 export default {
   components: {
     formInputContainer,

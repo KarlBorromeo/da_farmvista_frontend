@@ -1,4 +1,4 @@
-import * as api from '../storeAPI/questionnaireCode.js'
+import * as api from '../api/questionnaireCode.js'
 
 export const state = () => ({
   codes: {

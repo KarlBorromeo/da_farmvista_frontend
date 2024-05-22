@@ -263,10 +263,10 @@
 
 <script>
 import { concatOtherValueToList } from '~/reusableFunctions/questionnaireValidation'
-import FormCheckboxContainer from '../../form/formCheckboxContainer.vue'
-import FormInputContainer from '../../form/formInputContainer.vue'
-import FormMenuContainer from '../../form/formMenuContainer.vue'
-import FormRadioContainer from '../../form/formRadioContainer.vue'
+import FormCheckboxContainer from '~/components/authenticated/form/formCheckboxContainer.vue'
+import FormInputContainer from '~/components/authenticated/form/formInputContainer.vue'
+import FormMenuContainer from '~/components/authenticated/form/formMenuContainer.vue'
+import FormRadioContainer from '~/components/authenticated/form/formRadioContainer.vue'
 
 export default {
   components: {

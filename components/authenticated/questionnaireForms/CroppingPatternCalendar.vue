@@ -237,7 +237,7 @@
 
 <script>
 import { concatOtherValueToList } from '~/reusableFunctions/questionnaireValidation'
-import FormCheckboxContainer from '../../form/formCheckboxContainer.vue'
+import FormCheckboxContainer from '~/components/authenticated/form/formCheckboxContainer.vue'
 export default {
   components: {
     FormCheckboxContainer,

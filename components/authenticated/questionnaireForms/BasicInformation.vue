@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import formInputContainer from '../../form/formInputContainer.vue'
+import formInputContainer from '~/components/authenticated/form/formInputContainer.vue'
 export default {
   components: { formInputContainer },
   data: () => ({

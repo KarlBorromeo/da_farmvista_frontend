@@ -28,8 +28,8 @@
 </template>
 
 <script>
-import FormCard from '../../form/formCard.vue'
-import FormRadioContainer from '../../form/formRadioContainer.vue'
+import FormCard from '~/components/authenticated/form/formCard.vue'
+import FormRadioContainer from '~/components/authenticated/form/formRadioContainer.vue'
 export default {
   components: {
     FormCard,

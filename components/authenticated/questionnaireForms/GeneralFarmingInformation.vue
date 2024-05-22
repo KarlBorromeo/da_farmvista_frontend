@@ -67,8 +67,8 @@
 </template>
 
 <script>
-import FormInputContainer from '../../form/formInputContainer.vue'
-import FormRadioContainer from '../../form/formRadioContainer.vue'
+import FormInputContainer from '~/components/authenticated/form/formInputContainer.vue'
+import FormRadioContainer from '~/components/authenticated/form/formRadioContainer.vue'
 export default {
   components: { FormInputContainer, FormRadioContainer },
   data: () => ({

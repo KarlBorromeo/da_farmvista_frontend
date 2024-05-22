@@ -9,18 +9,25 @@
           </v-col>
           <form-select-container>
             <v-select
-              v-model="toolName[i - 1]"
-              :items="toolNameItems"
+              v-model="structureBldgName[i - 1]"
+              :items="structureBldgNameItems"
               :rules="requiredRule"
-              append-icon="mdi-tools"
-              label="* Tool Items"
-              dense
+              append-icon="mdi-barn"
+              label="* Structure Items"
+              class="pb-0 mb-0"
             ></v-select>
+            <v-text-field
+              v-if="structureBldgName[i - 1] == 'others'"
+              v-model="structureBldgNameOther[i - 1]"
+              :rules="requiredRule"
+              label="* Others Please Specify"
+              class="my-0 py-0"
+            ></v-text-field>
           </form-select-container>
 
           <form-input-container>
             <v-text-field
-              v-model="toolQuantity[i - 1]"
+              v-model="structureBldgQuantity[i - 1]"
               :rules="numberRule"
               label="* How many currently own"
               type="number"
@@ -28,15 +35,15 @@
           </form-input-container>
 
           <form-radio-container
-            title="Did acquire through government or programs"
+            title="Did acquire through government or programs?"
           >
             <v-radio-group
               :rules="requiredRule"
-              v-model="isToolAquiredGovtProg[i - 1]"
+              v-model="isstructureBldgAquiredGovtProg[i - 1]"
               class="pa-0 ma-0"
             >
               <v-radio
-                v-for="item in isToolAquiredGovtProgItems"
+                v-for="item in isstructureBldgAquiredGovtProgItems"
                 :key="item.value"
                 :label="item.label"
                 :value="item.value"
@@ -46,7 +53,7 @@
 
           <form-input-container>
             <v-text-field
-              v-model="toolAge[i - 1]"
+              v-model="structureBldgAge[i - 1]"
               :rules="numberRule"
               label="* age of the item"
               type="number"
@@ -62,11 +69,12 @@
 </template>
 
 <script>
-import formCard from '../../form/formCard.vue'
-import formCardButton from '../../form/formCardButton.vue'
-import FormInputContainer from '../../form/formInputContainer.vue'
-import FormRadioContainer from '../../form/formRadioContainer.vue'
-import FormSelectContainer from '../../form/formSelectContainer.vue'
+import formCard from '~/components/authenticated/form/formCard.vue'
+import formCardButton from '~/components/authenticated/form/formCardButton.vue'
+import FormInputContainer from '~/components/authenticated/form/formInputContainer.vue'
+import FormRadioContainer from '~/components/authenticated/form/formRadioContainer.vue'
+import FormSelectContainer from '~/components/authenticated/form/formSelectContainer.vue'
+import { concatinateEachIndexes } from '~/reusableFunctions/questionnaireValidation'
 export default {
   components: {
     formCard,
@@ -77,16 +85,17 @@ export default {
   },
   data: () => ({
     valid: false,
-    items: 2,
-    toolName: ['hand hoe', 'watering can'],
-    toolNameItems: [],
-    toolQuantity: [2, 4],
-    isToolAquiredGovtProg: ['no', 'no'],
-    isToolAquiredGovtProgItems: [
+    items: 1,
+    structureBldgName: ['ownland'],
+    structureBldgNameItems: [],
+    structureBldgNameOther: [],
+    structureBldgQuantity: [1],
+    isstructureBldgAquiredGovtProg: ['no'],
+    isstructureBldgAquiredGovtProgItems: [
       { value: 'yes', label: 'Yes' },
       { value: 'no', label: 'No' },
     ],
-    toolAge: [1, 1],
+    structureBldgAge: [5],
     numberRule: [
       (v) => !!v || 'This field is required',
       (v) => parseFloat(v) >= 0 || 'invalid value',
@@ -98,12 +107,12 @@ export default {
     validate() {
       const valid = this.$refs.form.validate()
       this.$store.commit('questionnaire/toggleNextTab', {
-        tabName: 'AssetsFarmToolsValidated',
+        tabName: 'AssetsFarmStructureValidated',
         valid,
       })
       if (valid) {
         this.$store.commit('questionnaire/saveAssetsData', {
-          keyName: 'farmTool',
+          keyName: 'structureBldgLand',
           data: this.getData(),
         })
       }
@@ -111,20 +120,23 @@ export default {
     /* get the data and convert it into expected key/value formats in BackEnd */
     getData() {
       return {
-        farmtoolName: this.toolName,
-        farmtoolQuantity: this.toolQuantity,
-        isAcquiredGovtProgram: this.isToolAquiredGovtProg,
-        farmtoolAge: this.toolAge,
+        structureBldgLandName: concatinateEachIndexes(
+          this.structureBldgName,
+          this.structureBldgNameOther
+        ),
+        structureBldgLandQuantity: this.structureBldgQuantity,
+        isAcquiredGovtProgram: this.isstructureBldgAquiredGovtProg,
+        structureBldgLandAge: this.structureBldgAge,
       }
     },
     // decrement the count of items
     decrement() {
       if (this.items > 1) {
         this.items--
-        this.toolName.pop()
-        this.toolQuantity.pop()
-        this.isToolAquiredGovtProg.pop()
-        this.toolAge.pop()
+        this.structureBldgName.pop()
+        this.structureBldgQuantity.pop()
+        this.isstructureBldgAquiredGovtProg.pop()
+        this.structureBldgAge.pop()
       }
     },
     increment() {
@@ -132,20 +144,30 @@ export default {
     },
   },
   beforeMount() {
-    this.toolNameItems =
-      this.$store.getters['questionnaireCode/Code5FarmImplementsTools']
+    this.structureBldgNameItems =
+      this.$store.getters['questionnaireCode/Code5StructuresBuilding']
   },
   watch: {
-    toolName() {
+    structureBldgName(value) {
+      value.forEach((element, index) => {
+        if (element !== 'others') {
+          this.structureBldgNameOther[index] = ''
+        }
+      })
+    },
+    structureBldgName() {
       this.validate()
     },
-    toolQuantity() {
+    structureBldgNameOther() {
       this.validate()
     },
-    isToolAquiredGovtProg() {
+    structureBldgQuantity() {
       this.validate()
     },
-    toolAge() {
+    isstructureBldgAquiredGovtProg() {
+      this.validate()
+    },
+    structureBldgAge() {
       this.validate()
     },
   },

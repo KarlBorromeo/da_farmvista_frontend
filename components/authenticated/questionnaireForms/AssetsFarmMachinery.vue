@@ -62,11 +62,11 @@
 </template>
 
 <script>
-import formCard from '../../form/formCard.vue'
-import formCardButton from '../../form/formCardButton.vue'
-import FormInputContainer from '../../form/formInputContainer.vue'
-import FormRadioContainer from '../../form/formRadioContainer.vue'
-import FormSelectContainer from '../../form/formSelectContainer.vue'
+import formCard from '~/components/authenticated/form/formCard.vue'
+import formCardButton from '~/components/authenticated/form/formCardButton.vue'
+import FormInputContainer from '~/components/authenticated/form/formInputContainer.vue'
+import FormRadioContainer from '~/components/authenticated/form/formRadioContainer.vue'
+import FormSelectContainer from '~/components/authenticated/form/formSelectContainer.vue'
 export default {
   components: {
     formCard,

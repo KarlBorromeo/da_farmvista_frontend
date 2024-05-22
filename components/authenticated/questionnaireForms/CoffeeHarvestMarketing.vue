@@ -53,9 +53,9 @@
 </template>
 
 <script>
-import formCard from '../../form/formCard.vue'
-import FormInputContainer from '../../form/formInputContainer.vue'
-import FormRadioContainer from '../../form/formRadioContainer.vue'
+import formCard from '~/components/authenticated/form/formCard.vue'
+import FormInputContainer from '~/components/authenticated/form/formInputContainer.vue'
+import FormRadioContainer from '~/components/authenticated/form/formRadioContainer.vue'
 export default {
   components: {
     formCard,
