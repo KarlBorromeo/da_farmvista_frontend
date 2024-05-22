@@ -136,6 +136,7 @@ import laborOperationContainer from '../../form/laborOperationContainer.vue'
 import laborOperationColNumber from '../../form/laborOperationColNumber.vue'
 import laborOperationColText from '../../form/laborOperationColText.vue'
 import FormInputContainer from '../../form/formInputContainer.vue'
+import { convertNumbers } from '~/reusableFunctions/questionnaireValidation'
 export default {
   components: {
     formCard,
@@ -555,16 +556,16 @@ export default {
       for (let i = 0; i < this.list.length; i++) {
         const keyName = this.list[i].key
         data[keyName] = {
-          manDayFL: this.formData[keyName].manDay.fl,
-          manDayHL: this.formData[keyName].manDay.hl,
-          manDatBL: this.formData[keyName].manDay.bl,
-          manAnimalDayFL: this.formData[keyName].manAnimalDay.fl,
-          manAnimalDayHL: this.formData[keyName].manAnimalDay.hl,
-          manAnimalDayBL: this.formData[keyName].manAnimalDay.bl,
+          manDayFL: convertNumbers(this.formData[keyName].manDay.fl),
+          manDayHL: convertNumbers(this.formData[keyName].manDay.hl),
+          manDatBL: convertNumbers(this.formData[keyName].manDay.bl),
+          manAnimalDayFL: convertNumbers(this.formData[keyName].manAnimalDay.fl),
+          manAnimalDayHL: convertNumbers(this.formData[keyName].manAnimalDay.hl),
+          manAnimalDayBL: convertNumbers(this.formData[keyName].manAnimalDay.bl),
           animalRented: this.formData[keyName].animalDay.rented,
-          animalRentedAmnt: this.formData[keyName].animalDay.rentedAmount,
+          animalRentedAmnt: convertNumbers(this.formData[keyName].animalDay.rentedAmount),
           machineRented: this.formData[keyName].mechanical.rented,
-          machineRentedAmnt: this.formData[keyName].mechanical.rentedAmount,
+          machineRentedAmnt: convertNumbers(this.formData[keyName].mechanical.rentedAmount),
           remarks: this.formData[keyName].remarks,
         }
       }

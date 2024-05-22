@@ -40,7 +40,7 @@
             :rules="requiredRule"
             label="* please specify"
           ></v-text-field>
-        </form-checkbox-container>
+        </form-checkbox-container>        
 
         <form-input-container v-else>
           <v-text-field
@@ -52,6 +52,48 @@
           />
         </form-input-container>
       </v-row>
+
+      <form-menu-container>
+          <v-dialog
+            ref="radioStart"
+            v-model="timeDialogRadioStart"
+            :return-value.sync="startTimeListeningRadio"
+            persistent
+            width="290px"
+          >
+            <template v-slot:activator="{ on, attrs }">
+              <v-text-field
+                v-model="startTimeListeningRadio"
+                label="Picker in dialog"
+                prepend-icon="mdi-clock-time-four-outline"
+                readonly
+                v-bind="attrs"
+                v-on="on"
+              ></v-text-field>
+            </template>
+            <v-time-picker
+              v-if="timeDialogRadioStart"
+              v-model="startTimeListeningRadio"
+              full-width
+            >
+              <v-spacer></v-spacer>
+              <v-btn
+                text
+                color="primary"
+                @click="timeDialogRadioStart = false"
+              >
+                Cancel
+              </v-btn>
+              <v-btn
+                text
+                color="primary"
+                @click="$refs.radioStart.save(startTimeListeningRadio)"
+              >
+                OK
+              </v-btn>
+            </v-time-picker>
+          </v-dialog>
+        </form-menu-container>
     </v-container>
     <v-btn @click="validate">Validate</v-btn>
   </v-form>
@@ -61,6 +103,7 @@
 import { concatOtherValueToList } from '~/reusableFunctions/questionnaireValidation'
 import FormCheckboxContainer from '../../form/formCheckboxContainer.vue'
 import FormInputContainer from '../../form/formInputContainer.vue'
+import FormMenuContainer from '../../form/formMenuContainer.vue'
 import FormRadioContainer from '../../form/formRadioContainer.vue'
 
 export default {
@@ -68,35 +111,55 @@ export default {
     FormCheckboxContainer,
     FormInputContainer,
     FormRadioContainer,
+    FormMenuContainer
   },
   data() {
     return {
       valid: false,
+      time: null,
+      // menu2: false,
+      timeDialogRadioStart: false,
+      startTimeListeningRadio: '',
       formData: {
         haveFunctionalRadio: 'yes',
         radioStationUsuallyTune: 'FRMN',
-        timeListeningRadio: 'taga udto',
+        startTimeListeningRadio: '',
+        endTimeListeningRadio: '',
         radioProgramsListens: 'balita balita',
         printMaterialsRead: ['newspaper', 'magazines'],
         printMaterialsReadOther: '',
         printMaterialsReadItems: [],
         haveTelevision: 'yes',
         tvStationWatches: 'gma',
-        timeWatchingTv: 'gabie',
+        startTimeWatchingTv: '',
+        endTimeWatchingTv: '',
         haveSocmedAccount: 'yes',
         howOftenUsedSocmed: '3hrs',
       },
       list: [
         { key: 'haveFunctionalRadio', type: 'radio' },
         { key: 'radioStationUsuallyTune' },
-        { key: 'timeListeningRadio' },
+        // { 
+        //   key: 'startTimeListeningRadio', 
+        //   type: 'clock'  
+        // },
+        { 
+          key: 'endTimeListeningRadio', 
+          type: 'clock'  
+        },
         { key: 'radioProgramsListens' },
         { key: 'printMaterialsRead', type: 'checkbox' },
         { key: 'haveTelevision', type: 'radio' },
         { key: 'tvStationWatches' },
         {
-          key: 'timeWatchingTv',
+          key: 'startTimeWatchingTv',
           sampleValues: 'ex: 6:00 AM - 8: 00 PM or single value 6:00 AM',
+          // type: 'clock'
+        },
+        {
+          key: 'endTimeWatchingTv',
+          sampleValues: 'ex: 6:00 AM - 8: 00 PM or single value 6:00 AM',
+          // type: 'clock'
         },
         { key: 'haveSocmedAccount', type: 'radio' },
         { key: 'howOftenUsedSocmed' },
@@ -180,6 +243,9 @@ export default {
       }
       return text + ' ?'
     },
+    saveTime(time){
+      this.timeListeningRadio[0] = time
+    }
   },
   beforeMount() {
     this.formData.printMaterialsReadItems =

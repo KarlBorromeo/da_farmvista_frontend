@@ -542,7 +542,7 @@ export default {
       'biologicalControl',
       'chemicalControl',
       'singleStemPruning',
-      'mulitpleStemPruning',
+      'multipleStemPruning',
       'sidePruning',
       'fullStumping',
       'rehabilitation',
@@ -654,7 +654,7 @@ export default {
           sourceInfo: this.formData[keyName].sourceInfo,
           howDidLearnTechPractices:
             this.formData[keyName].howDidLearnTechPractices,
-          year: this.formData[keyName].year,
+          year: parseInt(this.formData[keyName].year),
         }
       }
       return data

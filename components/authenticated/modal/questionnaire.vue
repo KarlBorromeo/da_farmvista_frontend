@@ -321,7 +321,7 @@ export default {
   data() {
     return {
       loading: false,
-      current: 'BasicInformation',
+      current: 'InformationKnowledgeSources',
       currentCommodity: 'coffee',
     }
   },
@@ -339,6 +339,7 @@ export default {
       try {
         this.loading = true
         await this.$store.dispatch('questionnaireCode/fetchAllCodes', commodity)
+        this.$store.commit('questionnaire/updateCommodity',commodity)
         this.currentCommodity = commodity
       } catch (error) {
         this.$refs.snackbar.showBar(error,'red');

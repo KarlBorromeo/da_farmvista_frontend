@@ -100,27 +100,25 @@
           </v-menu>
         </form-menu-container>
 
-        <form-select-container>
-          <v-select
+        <form-input-container>
+          <v-text-field
             v-model="regionProvince"
-            :items="regionProvinceItems"
-            append-icon="mdi-city"
             :rules="requiredRule"
             label="Region/Pronvince"
-            dense
-          ></v-select>
-        </form-select-container>
+            required
+            class="mb-2"
+          ></v-text-field>
+        </form-input-container>
 
-        <form-select-container>
-          <v-select
+        <form-input-container>
+          <v-text-field
             v-model="municipality"
-            :items="municipalityItems"
             :rules="requiredRule"
-            append-icon="mdi-city"
             label="City/Municipality"
-            dense
-          ></v-select>
-        </form-select-container>
+            required
+            class="mb-2"
+          ></v-text-field>
+        </form-input-container>
 
         <form-input-container>
           <v-text-field
@@ -132,7 +130,7 @@
           ></v-text-field>
         </form-input-container>
       </v-row>
-      <p class="hiddenRequiredField">{{ initializedData }}</p>
+      <!-- <p class="hiddenRequiredField">{{ initializedData }}</p> -->
     </v-container>
     <v-btn @click="validate">Validate</v-btn>
   </v-form>
@@ -220,6 +218,7 @@ export default {
     /* test if the form is valid, return boolean */
     validate() {
       const valid = this.$refs.form.validate()
+      // console.log('validated',valid)
       this.$store.commit('questionnaire/toggleNextTab', {
         tabName: 'SurveyInformationValidated',
         valid,
@@ -270,22 +269,60 @@ export default {
     barangay() {
       this.validate()
     },
+    // selectedRecord: {
+    //   handler: function(newVal){
+    //     const data =  newVal
+    //     if(Object.keys(data).length > 0){
+    //       console.log(data.interview)
+    //         this.date = data.interview.dateOfInterview
+    //         this.surveyNumber = data.interview.surveyNo
+    //         this.interviewer = data.interview.validatorName
+    //         this.interviewStart = data.interview.interviewStart
+    //         this.interviewEnd = data.interview.interviewEnd
+    //         this.regionProvince = data.interview.regionProvince
+    //         this.municipality = data.interview.cityMunicipality
+    //         this.barangay = data.interview.barangay
+    //     }else{
+    //         this.date = ''
+    //         this.surveyNumber = ''
+    //         this.interviewer = ''
+    //         this.interviewStart = ''
+    //         this.interviewEnd = ''
+    //         this.regionProvince = ''
+    //         this.municipality = ''
+    //         this.barangay = ''
+    //     }
+    //   },
+    //   immediate: true // Trigger the handler immediately with the current value
+    // }
   },
   computed: {
-    initializedData(){
-      const data =  this.$store.getters['profiling/selectedRecord']
-      if(Object.keys(data).length > 0){
-        this.date = data.interview.dateOfInterview
-        this.surveyNumber = data.interview.surveyNo
-        this.interviewer = data.interview.validatorName
-        this.interviewStart = data.interview.interviewStart
-        this.interviewEnd = data.interview.interviewEnd
-        this.regionProvince = data.interview.regionProvince
-        this.municipality = data.interview.cityMunicipality
-        this.barangay = data.interview.barangay
-      }
-      return data.interview
+    selectedRecord() {
+      return this.$store.getters['profiling/selectedRecord'];
     }
+    // initializedData(){
+    //   const data =  this.$store.getters['profiling/selectedRecord']
+    //   if(Object.keys(data).length > 0){
+    //     this.date = data.interview.dateOfInterview
+    //     this.surveyNumber = data.interview.surveyNo
+    //     this.interviewer = data.interview.validatorName
+    //     this.interviewStart = data.interview.interviewStart
+    //     this.interviewEnd = data.interview.interviewEnd
+    //     this.regionProvince = data.interview.regionProvince
+    //     this.municipality = data.interview.cityMunicipality
+    //     this.barangay = data.interview.barangay
+    //   }else{
+    //     this.date = ''
+    //     this.surveyNumber = ''
+    //     this.interviewer = ''
+    //     this.interviewStart = ''
+    //     this.interviewEnd = ''
+    //     this.regionProvince = ''
+    //     this.municipality = ''
+    //     this.barangay = ''
+    //   }
+    //   return data.interview
+    // }
   }
 }
 </script>

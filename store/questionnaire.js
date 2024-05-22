@@ -144,6 +144,7 @@ export const state = () => ({
     },
   ],
   isAllValid: false,
+  commodity: '',
 })
 
 export const getters = {
@@ -493,6 +494,11 @@ export const mutations = {
       }
     }
   },
+
+  /* update the commodity type */
+  updateCommodity(state,commodity){
+    state.commodity = commodity
+  }
 }
 
 export const actions = {
@@ -500,9 +506,13 @@ export const actions = {
     console.log('this is the form: ', context.state.form)
     console.log('this is the tab details: ', context.state.tabs)
     context.commit('checkValidityAll')
+    const payload = {
+      type: context.state.commodity,
+      form: context.state.form
+    }
     if (context.state.isAllValid) {
       try {
-        await api.submitQuestionnaire(context.state.form)
+        await api.submitQuestionnaire(payload)
       } catch (error) {
         throw error
       }

@@ -23,9 +23,7 @@
         <form-input-container>
           <v-text-field
             v-model="middleInitial"
-            :rules="middleInitialRules"
-            label="* Farmer's Middle Initial"
-            required
+            label="Farmer's Middle Initial"
           ></v-text-field>
         </form-input-container>
 
@@ -33,8 +31,7 @@
           <v-text-field
             v-model="contactNumber"
             :rules="contactNumberRules"
-            label="* Farmer's Phone Number"
-            required
+            label="Farmer's Phone Number"
           ></v-text-field>
         </form-input-container>
 
@@ -46,7 +43,7 @@
         </form-input-container>
       </v-row>
     </v-container>
-    {{ initializedData }}
+    <!-- {{ initializedData }} -->
     <v-btn @click="validate">Validate</v-btn>
   </v-form>
 </template>
@@ -57,21 +54,10 @@ export default {
   components: { formInputContainer },
   data: () => ({
     valid: false,
-    surename: '',
-    firstname: '',
+    surename: 'a',
+    firstname: 'a',
     requiredRules: [(v) => !!v || 'This field is required'],
-    middleInitial: '',
-    middleInitialRules: [
-      (v) => {
-        if (v) {
-          if (v.length == 1) {
-            return true
-          }
-          return 'Must be 1 characters or fewer'
-        }
-        return 'This field is required'
-      },
-    ],
+    middleInitial: 'a',
     contactNumber: '09277494592',
     contactNumberRules: [
       (v) => {
@@ -127,19 +113,19 @@ export default {
       this.validate()
     },
   },
-  computed:{
-    initializedData(){
-      const data =  this.$store.getters['profiling/selectedRecord']
-      if(Object.keys(data).length > 0){
-        this.firstname = data.profile.firstName
-        this.surename = data.profile.lastName
-        this.middleInitial = data.profile.middleInitial
-        this.contactNumber = data.profile.contactNumber
-        this.farmerCode = data.profile.farmerCode
-        console.log(data.profile)
-      }
-      return data.profile
-    }
-  },
+  // computed:{
+  //   initializedData(){
+  //     const data =  this.$store.getters['profiling/selectedRecord']
+  //     if(Object.keys(data).length > 0){
+  //       this.firstname = data.profile.firstName
+  //       this.surename = data.profile.lastName
+  //       this.middleInitial = data.profile.middleInitial
+  //       this.contactNumber = data.profile.contactNumber
+  //       this.farmerCode = data.profile.farmerCode
+  //       console.log(data.profile)
+  //     }
+  //     return data.profile
+  //   }
+  // },
 }
 </script>

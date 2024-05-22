@@ -360,7 +360,6 @@ export default {
     },
     /* check if specific word checkbox is ticked */
     isSpecificCheckboxTicked(list, word) {
-      console.log(list, word)
       for (let i = 0; i < list.length; i++) {
         if (list[i].includes(word)) {
           return true
@@ -368,23 +367,15 @@ export default {
       }
       return false
     },
-    /* concatenate two value holders for field that has others (ex: variable, variableOther)*/
-    concatinateValues(original, other) {
-      let text = original
-      if (!!other) {
-        text += ' ' + other
-      }
-      return text
-    },
     /* get the data and convert it into expected key/value formats in BackEnd */
     getData() {
       return {
         didUsePesticide: this.didUsePesticide,
         typeOfPesticide: this.typeOfPesticide,
         whomIdeaApplyPesticide: this.whomIdeaApplyPesticide,
-        timesAppliedPesticide: this.timesAppliedPesticide,
+        timesAppliedPesticide: parseInt(this.timesAppliedPesticide),
         didSprayYourself: this.didSprayYourself,
-        payLaborSpraying: this.payLaborSpraying,
+        payLaborSpraying: parseFloat(this.payLaborSpraying),
         haveSprayer: this.haveSprayer,
         kindSprayerHave: concatOtherValueToList(
           this.kindSprayerHave,
@@ -410,6 +401,7 @@ export default {
   },
   watch: {
     controlAdviceMassMedia(value) {
+      this.validate()
       if (!!value) {
         for (let i = 0; i < this.whomPestControlAdvice.length; i++) {
           if (this.whomPestControlAdvice[i].includes('mass media')) {
@@ -419,6 +411,7 @@ export default {
       }
     },
     controlAdviceOther(value) {
+      this.validate()
       if (!!value) {
         for (let i = 0; i < this.whomPestControlAdvice.length; i++) {
           if (this.whomPestControlAdvice[i].includes('others')) {
@@ -428,16 +421,19 @@ export default {
       }
     },
     didUsePesticide(value) {
+      this.validate()
       if (value !== 'yes') {
         this.typeOfPesticide = ''
       }
     },
     didSprayYourself(value) {
+      this.validate()
       if (value !== 'no') {
         this.payLaborSpraying = ''
       }
     },
     haveSprayer(value) {
+      this.validate()
       if (value == 'no') {
         this.kindSprayerHave = []
         this.kindSprayerHaveOther = ''
@@ -446,6 +442,7 @@ export default {
       }
     },
     attendedTrainingPestManagement(value) {
+      this.validate()
       if (value !== 'yes') {
         this.trainingAbout = ''
         this.whoOrganizedTraining = ''

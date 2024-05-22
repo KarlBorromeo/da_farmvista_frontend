@@ -70,7 +70,7 @@
           <form-input-container>
             <v-text-field
               v-model="numberYearsMember[i - 1]"
-              :rules="requiredRule"
+              :rules="numberRule"
               label="* No. of years as a member"
               type="number"
             ></v-text-field>
@@ -109,6 +109,7 @@
       </form-card>
     </v-container>
     <v-btn @click="validate">Validate</v-btn>
+    <p class="hiddenRequiredField">{{ initializedData }}</p>
   </v-form>
 </template>
 
@@ -117,7 +118,7 @@ import formCard from '../../form/formCard.vue'
 import formCardButton from '../../form/formCardButton.vue'
 import FormInputContainer from '../../form/formInputContainer.vue'
 import FormRadioContainer from '../../form/formRadioContainer.vue'
-import { concatinateEachIndexes } from '~/reusableFunctions/questionnaireValidation'
+import { concatinateEachIndexes, extractUnmatchedValueRadio } from '~/reusableFunctions/questionnaireValidation'
 export default {
   components: {
     formCard,
@@ -142,6 +143,7 @@ export default {
     statusOrganization: ['active'],
     statusOrganizationItems: [],
     requiredRule: [(v) => !!v || 'This field is required'],
+    numberRule: [(v) => !!v || 'This field is required', (v) => parseInt(v)>0 || 'this number is invalid']
   }),
   methods: {
     /* test if the form is valid, return boolean */
@@ -196,6 +198,19 @@ export default {
     increment() {
       this.items++
     },
+    /* reset the data */
+    resetData(){
+        this.items = 1
+        this.nameFamilyMember = []
+        this.position = []
+        this.positionOthers = []
+        this.nameOrganization = []
+        this.typeOrganization = []
+        this.typeOrganizationOthers = []
+        this.numberYearsMember = []
+        this.statusMembership = []
+        this.statusOrganization = []
+    }
   },
   beforeMount() {
     this.positionItems = this.$store.getters['questionnaireCode/Code1']
@@ -244,5 +259,33 @@ export default {
       this.validate()
     },
   },
+  // computed: {
+  //   initializedData(){
+  //     const data =  this.$store.getters['profiling/selectedRecord']
+  //     if(Object.keys(data).length > 0){
+  //       const length = data.familyAffiliatedFarmOrg.length
+  //       this.items = length
+  //       if(length>0){
+  //         for(let i=0; i<length; i++){
+  //           console.log('name: ',data.familyAffiliatedFarmOrg[i].fullName)
+  //           this.nameFamilyMember[i] = data.familyAffiliatedFarmOrg[i].fullName
+  //           this.position[i] = data.familyAffiliatedFarmOrg[i].position
+  //           this.positionOthers[i] = extractUnmatchedValueRadio(data.familyAffiliatedFarmOrg[i].position,this.positionItems)
+  //           this.nameOrganization[i] = data.familyAffiliatedFarmOrg[i].nameOrganization
+  //           this.typeOrganization[i] = data.familyAffiliatedFarmOrg[i].typeOrganization
+  //           this.typeOrganizationOthers[i] = extractUnmatchedValueRadio(data.familyAffiliatedFarmOrg[i].typeOrganization,this.typeOrganizationItems)
+  //           this.numberYearsMember[i] = data.familyAffiliatedFarmOrg[i].yearsAsMember
+  //           this.statusMembership[i] = data.familyAffiliatedFarmOrg[i].statusMembership
+  //           this.statusOrganization[i] = data.familyAffiliatedFarmOrg[i].statusOrganization            
+  //         }          
+  //       }else{
+  //         this.resetData()
+  //       }
+  //     }else{
+  //       this.resetData()
+  //     }
+  //     return data.familyAffiliatedFarmOrg
+  //   }
+  // }
 }
 </script>

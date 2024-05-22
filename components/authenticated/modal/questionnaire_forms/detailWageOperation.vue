@@ -24,12 +24,12 @@ export default {
   data: () => ({
     valid: false,
     formData: {
-      amntPaidLabor: '100',
-      goodsProvidedLabor: '100',
-      expectedWageOtherfarms: '100',
-      amntPaidCattleWithOperator: '100',
-      amntPaidCattleOnly: '100',
-      amntPaidManMachine: '100',
+      amntPaidLabor: '0',
+      goodsProvidedLabor: '0',
+      expectedWageOtherfarms: '0',
+      amntPaidCattleWithOperator: '0',
+      amntPaidCattleOnly: '0',
+      amntPaidManMachine: '0',
     },
     list: [
       { key: 'amntPaidLabor', label: 'paid for labor' },
@@ -70,7 +70,7 @@ export default {
       const data = {}
       for (let i = 0; i < this.list.length; i++) {
         const keyName = this.list[i].key
-        data[keyName] = this.formData[keyName]
+        data[keyName] = parseInt(this.formData[keyName])
       }
       return data
     },

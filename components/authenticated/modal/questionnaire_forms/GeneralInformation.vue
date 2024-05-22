@@ -154,6 +154,7 @@
       </v-row>
     </v-container>
     <v-btn @click="validate">Validate</v-btn>
+     <!-- <p class="hiddenRequiredField">{{ initializedData }}</p> -->
   </v-form>
 </template>
 
@@ -212,7 +213,7 @@ export default {
         value: 'person with disability',
         label: 'Person with Disability',
       },
-      { value: '4Ps beneficiary', label: '4Ps Beneficiary' },
+      { value: '4ps beneficiary (including household members)', label: '4Ps Beneficiary' },
     ],
     dialectSpoken: 'Bisaya',
     isMemberOrgranization: 'no',
@@ -243,6 +244,7 @@ export default {
       if (textRadioValid && checkboxValid) {
         valid = true
       }
+      console.log('validated',valid)
       this.$store.commit('questionnaire/toggleNextTab', {
         tabName: 'GeneralInformationValidated',
         valid,
@@ -291,6 +293,10 @@ export default {
         return false
       }
     },
+    selectedRecord(){
+      const data =  this.$store.getters['profiling/selectedRecord']
+      return data
+    }
   },
   watch: {
     isBelongMarginalizedSector(value) {
@@ -337,6 +343,38 @@ export default {
     isAnyHouseholdMemberOrg() {
       this.validate()
     },
+    // selectedRecord: {
+    //   handler: function(newVal){
+    //     const data =  newVal
+    //     if(Object.keys(data).length > 0){
+    //       this.age = data.profileGeneralInfo.age
+    //       this.sex = data.profileGeneralInfo.sex
+    //       this.civilStatus = data.profileGeneralInfo.civilStatus
+    //       this.religion = data.profileGeneralInfo.religion
+    //       this.highestEducationAttained = data.profileGeneralInfo.highestEducationAttained
+    //       this.isBelongMarginalizedSector = data.profileGeneralInfo.isBelongMarginalizedSector
+    //       this.nonMarginalizedSector = data.profileGeneralInfo.ifNoMarginalizedSectorName
+    //       this.dialectSpoken = data.profileGeneralInfo.dialectSpoken
+    //       this.isMemberOrgranization = data.profileGeneralInfo.isMemberFarmerOrganization
+    //       this.typeMembership = data.profileGeneralInfo.organizationTypeMembership
+    //       this.organizationName = data.profileGeneralInfo.organizationName
+    //       this.isAnyHouseholdMemberOrg = data.profileGeneralInfo.isHouseMemberAffiliatedToOrg
+    //     }else{
+    //       this.age = ''
+    //       this.sex = ''
+    //       this.civilStatus = ''
+    //       this.religion = ''
+    //       this.isBelongMarginalizedSector = ''
+    //       this.nonMarginalizedSector = []
+    //       this.dialectSpoken = ''
+    //       this.isMemberOrgranization = ''
+    //       this.typeMembership = ''
+    //       this.organizationName = ''
+    //       this.isAnyHouseholdMemberOrg = ''
+    //     }
+    //   },
+    //   immediate: true
+    // }
   },
 }
 </script>

@@ -304,7 +304,7 @@ import FormInputContainer from '../../form/formInputContainer.vue'
 import FormRadioContainer from '../../form/formRadioContainer.vue'
 import {
   concatOtherValueToList,
-  concatinateOtherValueToString,
+  concatinateOtherValueToString
 } from '~/reusableFunctions/questionnaireValidation'
 export default {
   components: {
@@ -411,7 +411,7 @@ export default {
     /* get the data and convert it into expected key/value formats in BackEnd */
     getData() {
       return {
-        startPlanting: this.startPlanting,
+        startPlanting: parseInt(this.startPlanting),
         sourcePlantingMaterial: concatOtherValueToList(
           this.sourcePlantingMaterial,
           this.sourcePlantingMaterialOther
@@ -428,7 +428,7 @@ export default {
           this.rowOrientation,
           this.sourcePlantingMaterialOther
         ),
-        plantingDepth: this.plantingDepth,
+        plantingDepth: parseFloat(this.plantingDepth),
         soilType: this.soilType,
         weedControl: concatOtherValueToList(
           this.weedControl,

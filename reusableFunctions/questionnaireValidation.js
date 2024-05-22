@@ -1,3 +1,4 @@
+
 /* concatenate the value of other into the index of list that has 'other' */
 export const concatOtherValueToList = (list, other) => {
   let listCopy = [...list]
@@ -34,4 +35,56 @@ export const concatinateEachIndexes = (
     }
   }
   return arr
+}
+
+/* convert into number all indexes in the array to ensure number type */
+export const convertNumbers = (value) =>{
+  if (typeof variable === 'string') {
+    let arr = value.map(num => parseInt(num))
+    return arr
+  }else{
+    return parseInt(value)
+  }
+}
+
+// not used yet
+/* return the value that is not matched on the items, this is for checkboxes */
+export const extractUnmatchedValueCheck = (values,items) => {
+  if(values){
+    let unmatchedValue = [''];
+    values.forEach((value) => {
+        let countMatches = 0;
+        items.forEach((item) => {
+          if(value == item){
+            countMatches++
+          }
+        })
+        if(countMatches == 0){
+          unmatchedValue.push(value)
+        }
+    });
+    console.log(unmatchedValue)
+    return unmatchedValue[0]    
+  }else{
+    return ''
+  }
+}
+
+/* return the value that is not matched on the items, this is for radio */
+export const extractUnmatchedValueRadio = (value,items) => {
+  if(value){
+    let countMatches = 0;
+    items.forEach((item) => {
+      if(value == item){
+        countMatches++
+      }
+    })
+    if(countMatches == 0){
+      return value
+    }else{
+      return ''
+    }
+  }else{
+    return ''
+  }
 }

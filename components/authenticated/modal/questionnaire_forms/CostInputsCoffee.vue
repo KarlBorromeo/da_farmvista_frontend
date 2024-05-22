@@ -273,7 +273,18 @@ export default {
       const data = {}
       for (let i = 0; i < this.list.length; i++) {
         const keyName = this.list[i].key
-        data[keyName] = this.formData[keyName]
+        data[keyName] = {
+          price: parseInt(this.formData[keyName].price),
+          quantity: parseInt(this.formData[keyName].quantity),
+          totalTransportCost: parseInt(this.formData[keyName].totalTransportCost),
+          totalCost: parseFloat(this.formData[keyName].totalCost),
+          cashCredit: this.formData[keyName].cashCredit,
+          sourceInputPurchased: this.formData[keyName].sourceInputPurchased,
+        }
+        if(this.list[i].specify){
+          const obj = { name: this.formData[keyName].name}
+          data[keyName] = {...data[keyName], ...obj}
+        }
       }
       return data
     },
@@ -288,9 +299,3 @@ export default {
   },
 }
 </script>
-
-<style scoped>
-.requiredFieldHidden {
-  display: none !important;
-}
-</style>

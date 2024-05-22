@@ -213,9 +213,16 @@ export default {
       const data = {}
       for (let i = 0; i < this.list.length; i++) {
         const keyName = this.list[i].key
-        data[keyName] = {
-          variable: this.formData[keyName].variable,
-          remarks: this.formData[keyName].remarks,
+        if(keyName == 'marketQualityPreference' || keyName === 'marketingOutlet'){
+          data[keyName] = {
+            variable: this.formData[keyName].variable,
+            remarks: this.formData[keyName].remarks,
+          }
+        }else{
+          data[keyName] = {
+            variable: parseFloat(this.formData[keyName].variable),
+            remarks: this.formData[keyName].remarks,
+          }          
         }
       }
       return data

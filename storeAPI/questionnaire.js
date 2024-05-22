@@ -1,8 +1,14 @@
 import Axios from '~/axios_config/Axios'
 
-export async function submitQuestionnaire(data) {
+export async function submitQuestionnaire(payload) {
   try {
-    await Axios.post('survey', data)
+    const params = {
+      type: encodeURIComponent(payload.type),
+    }
+    console.log(payload.type)
+    await Axios.post('survey', payload.form,{
+      params: params
+    })
   } catch (error) {
     console.error(error)
     throw error
