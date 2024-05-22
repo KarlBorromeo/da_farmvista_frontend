@@ -348,18 +348,19 @@ export default {
     },
     /* fetching one record existing using the id, needed an id first */
     async fetchOneRecord(){
-      this.currentCommodity = this.commodityProp;
-      const payload = {
-        id: this.id,
-        type: this.currentCommodity
-      }
-      try{
-        this.loading = true
-        await this.$store.dispatch('profiling/fetchSingleSurvey',payload)
-      }catch(error){
-        this.$refs.snackbar.showBar(error,'red');
-      }
-      this.loading = false
+      console.log('fetched coded temp')
+      // this.currentCommodity = this.commodityProp;
+      // const payload = {
+      //   id: this.id,
+      //   type: this.currentCommodity
+      // }
+      // try{
+      //   this.loading = true
+      //   await this.$store.dispatch('profiling/fetchSingleSurvey',payload)
+      // }catch(error){
+      //   this.$refs.snackbar.showBar(error,'red');
+      // }
+      // this.loading = false
     }
   },
   computed: {

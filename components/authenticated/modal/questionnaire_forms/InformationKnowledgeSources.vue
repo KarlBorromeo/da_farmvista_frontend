@@ -83,15 +83,16 @@
         <v-dialog
           ref="radioStart"
           v-model="timeDialogRadioStart"
-          :return-value.sync="startTimeListeningRadio"
+          :return-value.sync="formData.startTimeListeningRadio"
           persistent
           width="290px"
         >
           <template v-slot:activator="{ on, attrs }">
             <v-text-field
-              v-model="startTimeListeningRadio"
+              v-model="formData.startTimeListeningRadio"
               label="Time start listening radio"
               append-icon="mdi-clock-time-four-outline"
+              :rules="requiredRule"
               readonly
               v-bind="attrs"
               v-on="on"
@@ -99,7 +100,7 @@
           </template>
           <v-time-picker
             v-if="timeDialogRadioStart"
-            v-model="startTimeListeningRadio"
+            v-model="formData.startTimeListeningRadio"
             full-width
           >
             <v-spacer></v-spacer>
@@ -113,7 +114,7 @@
             <v-btn
               text
               color="primary"
-              @click="$refs.radioStart.save(startTimeListeningRadio)"
+              @click="$refs.radioStart.save(formData.startTimeListeningRadio)"
             >
               OK
             </v-btn>
@@ -122,46 +123,214 @@
       </form-menu-container>
 
       <form-menu-container>
-          <v-dialog
-            ref="radioEnd"
-            v-model="timeDialogRadioEnd"
-            :return-value.sync="startTimeListeningRadio"
-            persistent
-            width="290px"
+        <v-dialog
+          ref="radioEnd"
+          v-model="timeDialogRadioEnd"
+          :return-value.sync="formData.endTimeListeningRadio"
+          persistent
+          width="290px"
+        >
+          <template v-slot:activator="{ on, attrs }">
+            <v-text-field
+              v-model="formData.endTimeListeningRadio"
+              label="Time end listening radio"
+              append-icon="mdi-clock-time-four-outline"
+              :rules="requiredRule"
+              readonly
+              v-bind="attrs"
+              v-on="on"
+            ></v-text-field>
+          </template>
+          <v-time-picker
+            v-if="timeDialogRadioEnd"
+            v-model="formData.endTimeListeningRadio"
+            full-width
           >
-            <template v-slot:activator="{ on, attrs }">
-              <v-text-field
-                v-model="startTimeListeningRadio"
-                label="Time end listening radio"
-                append-icon="mdi-clock-time-four-outline"
-                readonly
-                v-bind="attrs"
-                v-on="on"
-              ></v-text-field>
-            </template>
-            <v-time-picker
-              v-if="timeDialogRadioEnd"
-              v-model="startTimeListeningRadio"
-              full-width
+            <v-spacer></v-spacer>
+            <v-btn
+              text
+              color="primary"
+              @click="timeDialogRadioEnd = false"
             >
-              <v-spacer></v-spacer>
-              <v-btn
-                text
-                color="primary"
-                @click="timeDialogRadioEnd = false"
-              >
-                Cancel
-              </v-btn>
-              <v-btn
-                text
-                color="primary"
-                @click="$refs.radioEnd.save(startTimeListeningRadio)"
-              >
-                OK
-              </v-btn>
-            </v-time-picker>
-          </v-dialog>
-        </form-menu-container>
+              Cancel
+            </v-btn>
+            <v-btn
+              text
+              color="primary"
+              @click="$refs.radioEnd.save(formData.endTimeListeningRadio)"
+            >
+              OK
+            </v-btn>
+          </v-time-picker>
+        </v-dialog>
+      </form-menu-container>
+
+      <form-input-container>
+        <v-text-field
+          v-model="formData.radioProgramsListens"
+          :rules="requiredRule"
+          label="Types of radio programs listen to"
+          required
+        />
+      </form-input-container>
+
+        <form-checkbox-container
+          title="print materials read most"
+        >
+          <v-checkbox
+            v-for="item in formData.printMaterialsReadItems"
+            v-model="formData.printMaterialsRead"
+            :key="item"
+            :value="item"
+            :label="item"
+            dense
+            class="ma-0 pa-0 ml-5"
+            style="display: inline-block"
+          ></v-checkbox>
+          <v-text-field
+            v-if="isOtherTicked(formData.printMaterialsRead)"
+            v-model="formData.printMaterialsReadOther"
+            :rules="requiredRule"
+            label="* please specify"
+          ></v-text-field>
+        </form-checkbox-container>  
+
+        <form-radio-container
+          title="Do you have a television (TV) set?"
+        >
+          <v-radio-group
+            :rules="requiredRule"
+            v-model="formData.haveTelevision"
+            class="pa-0 ma-0"
+          >
+              <v-radio
+                v-for="item in isAgreeItems"
+                :key="item"
+                :label="item"
+                :value="item"
+            ></v-radio>
+          </v-radio-group>
+        </form-radio-container>
+
+      <form-input-container>
+        <v-text-field
+          v-model="formData.tvStationWatches"
+          :rules="requiredRule"
+          label="What TV stations do you watch?"
+          required
+        />
+      </form-input-container>
+
+      <form-menu-container>
+        <v-dialog
+          ref="tvStart"
+          v-model="timeDialogTVStart"
+          :return-value.sync="formData.startTimeWatchingTv"
+          persistent
+          width="290px"
+        >
+          <template v-slot:activator="{ on, attrs }">
+            <v-text-field
+              v-model="formData.startTimeWatchingTv"
+              label="Time start watching TV"
+              append-icon="mdi-clock-time-four-outline"
+              readonly
+              v-bind="attrs"
+              v-on="on"
+            ></v-text-field>
+          </template>
+          <v-time-picker
+            v-if="timeDialogTVStart"
+            v-model="formData.startTimeWatchingTv"
+            full-width
+          >
+            <v-spacer></v-spacer>
+            <v-btn
+              text
+              color="primary"
+              @click="timeDialogTVStart = false"
+            >
+              Cancel
+            </v-btn>
+            <v-btn
+              text
+              color="primary"
+              @click="$refs.tvStart.save(formData.startTimeWatchingTv)"
+            >
+              OK
+            </v-btn>
+          </v-time-picker>
+        </v-dialog>
+      </form-menu-container>
+
+      <form-menu-container>
+        <v-dialog
+          ref="tvEnd"
+          v-model="timeDialogTVEnd"
+          :return-value.sync="formData.endTimeWatchingTv"
+          persistent
+          width="290px"
+        >
+          <template v-slot:activator="{ on, attrs }">
+            <v-text-field
+              v-model="formData.endTimeWatchingTv"
+              label="Time end watching TV"
+              append-icon="mdi-clock-time-four-outline"
+              readonly
+              v-bind="attrs"
+              v-on="on"
+            ></v-text-field>
+          </template>
+          <v-time-picker
+            v-if="timeDialogTVEnd"
+            v-model="formData.endTimeWatchingTv"
+            full-width
+          >
+            <v-spacer></v-spacer>
+            <v-btn
+              text
+              color="primary"
+              @click="timeDialogTVEnd = false"
+            >
+              Cancel
+            </v-btn>
+            <v-btn
+              text
+              color="primary"
+              @click="$refs.tvEnd.save(formData.endTimeWatchingTv)"
+            >
+              OK
+            </v-btn>
+          </v-time-picker>
+        </v-dialog>
+      </form-menu-container>
+      
+
+      <form-radio-container
+          title="Do you have a social media account?"
+        >
+          <v-radio-group
+            :rules="requiredRule"
+            v-model="formData.haveSocmedAccount"
+            class="pa-0 ma-0"
+          >
+              <v-radio
+                v-for="item in isAgreeItems"
+                :key="item"
+                :label="item"
+                :value="item"
+            ></v-radio>
+          </v-radio-group>
+        </form-radio-container>
+
+        <form-input-container>
+          <v-text-field
+            v-model="formData.howOftenUsedSocmed"
+            :rules="requiredRule"
+            label="How do you often use social media?"
+            required
+          />
+        </form-input-container>
     </v-container>
     <v-btn @click="validate">Validate</v-btn>
   </v-form>
@@ -184,10 +353,11 @@ export default {
   data() {
     return {
       valid: false,
-      time: null,
       // menu2: false,
       timeDialogRadioStart: false,
       timeDialogRadioEnd: false,
+      timeDialogTVStart: false,
+      timeDialogTVEnd: false,
       formData: {
         haveFunctionalRadio: 'yes',
         radioStationUsuallyTune: 'FRMN',
@@ -204,37 +374,8 @@ export default {
         haveSocmedAccount: 'yes',
         howOftenUsedSocmed: '3hrs',
       },
-      list: [
-        { key: 'haveFunctionalRadio', type: 'radio' },
-        { key: 'radioStationUsuallyTune' },
-        // { 
-        //   key: 'startTimeListeningRadio', 
-        //   type: 'clock'  
-        // },
-        { 
-          key: 'endTimeListeningRadio', 
-          type: 'clock'  
-        },
-        { key: 'radioProgramsListens' },
-        { key: 'printMaterialsRead', type: 'checkbox' },
-        { key: 'haveTelevision', type: 'radio' },
-        { key: 'tvStationWatches' },
-        {
-          key: 'startTimeWatchingTv',
-          sampleValues: 'ex: 6:00 AM - 8: 00 PM or single value 6:00 AM',
-          // type: 'clock'
-        },
-        {
-          key: 'endTimeWatchingTv',
-          sampleValues: 'ex: 6:00 AM - 8: 00 PM or single value 6:00 AM',
-          // type: 'clock'
-        },
-        { key: 'haveSocmedAccount', type: 'radio' },
-        { key: 'howOftenUsedSocmed' },
-      ],
       isAgreeItems: ['yes', 'no'],
-      requiredRule: [(v) => !!v || 'This field is required'],
-      listRule: [(v) => v.length > 0 || 'this field is required'],
+      requiredRule: [(v) => !!v || 'This field is required']
     }
   },
   methods: {
@@ -256,6 +397,7 @@ export default {
           data: this.getData(),
         })
       }
+      console.log('data: ',this.getData(),valid)
     },
     /* validate if checkbox is empty or not */
     validateCheckbox() {
@@ -276,19 +418,18 @@ export default {
     },
     /* get the data and convert it into expected key/value formats in BackEnd */
     getData() {
-      const data = {}
-      for (let i = 0; i < this.list.length; i++) {
-        const keyName = this.list[i].key
-        if (keyName == 'printMaterialsRead') {
-          data[keyName] = concatOtherValueToList(
-            this.formData[keyName],
-            this.formData.printMaterialsReadOther
-          )
-        } else {
-          data[keyName] = this.formData[keyName]
-        }
+      return {
+        haveFunctionalRadio: this.formData.haveFunctionalRadio,
+        radioStationUsuallyTune: this.formData.radioStationUsuallyTune,
+        timeListeningRadio: [this.formData.startTimeListeningRadio, this.formData.endTimeListeningRadio], 
+        radioProgramsListens: this.formData.radioProgramsListens,
+        printMaterialsRead: concatOtherValueToList(this.formData.printMaterialsRead,this.formData.printMaterialsReadOther),
+        haveTelevision: this.formData.haveTelevision,
+        tvStationWatches: this.formData.tvStationWatches,
+        timeWatchingTv: [this.formData.startTimeWatchingTv, this.formData.endTimeWatchingTv],
+        haveSocmedAccount: this.formData.haveSocmedAccount,
+        howOftenUsedSocmed: this.formData.howOftenUsedSocmed
       }
-      return data
     },
     /* convert camelCase Key into Camel Casing String with spaces */
     camelToSpace(camelCased) {
