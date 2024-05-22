@@ -32,72 +32,81 @@
         </form-input-container>
 
         <form-menu-container>
-          <v-menu
+          <v-dialog
             ref="timeStartPicker"
             v-model="timeStartPicker"
-            :close-on-content-click="false"
-            :nudge-right="40"
             :return-value.sync="interviewStart"
-            transition="scale-transition"
-            offset-y
-            max-width="290px"
-            min-width="290px"
-            class="my-0 py-0"
+            persistent
+            width="290px"
           >
             <template v-slot:activator="{ on, attrs }">
               <v-text-field
                 v-model="interviewStart"
                 label="Interview Start (24 hrs format)"
-                :rules="interviewStartRule"
                 append-icon="mdi-clock-time-four-outline"
+                :rules="interviewStartRule"
                 readonly
                 v-bind="attrs"
                 v-on="on"
-                class="mb-3"
-              >
-              </v-text-field>
+              ></v-text-field>
             </template>
             <v-time-picker
               v-if="timeStartPicker"
               v-model="interviewStart"
               full-width
-              @click:minute="$refs.timeStartPicker.save(interviewStart)"
-            ></v-time-picker>
-          </v-menu>
+            >
+              <v-spacer></v-spacer>
+              <v-btn text color="primary" @click="timeStartPicker = false">
+                Cancel
+              </v-btn>
+              <v-btn
+                text
+                color="primary"
+                @click="$refs.timeStartPicker.save(interviewStart)"
+              >
+                OK
+              </v-btn>
+            </v-time-picker>
+          </v-dialog>
         </form-menu-container>
 
         <form-menu-container>
-          <v-menu
+          <v-dialog
             ref="timeEndPicker"
             v-model="timeEndPicker"
-            :close-on-content-click="false"
-            :nudge-right="0"
             :return-value.sync="interviewEnd"
-            transition="scale-transition"
-            offset-y
-            max-width="290px"
-            min-width="290px"
-            class="my-0 py-0"
+            persistent
+            width="290px"
           >
             <template v-slot:activator="{ on, attrs }">
               <v-text-field
                 v-model="interviewEnd"
                 label="Interview Start (24 hrs format)"
-                :rules="interviewEndRule"
                 append-icon="mdi-clock-time-four-outline"
+                :rules="interviewEndRule"
                 readonly
                 v-bind="attrs"
                 v-on="on"
-                class="mb-5"
               ></v-text-field>
             </template>
             <v-time-picker
               v-if="timeEndPicker"
               v-model="interviewEnd"
               full-width
-              @click:minute="$refs.timeEndPicker.save(interviewEnd)"
-            ></v-time-picker>
-          </v-menu>
+            >
+              <v-spacer></v-spacer>
+              <v-btn text color="primary" @click="timeEndPicker = false">
+                Cancel
+              </v-btn>
+              <v-btn
+                text
+                color="primary"
+                @click="$refs.timeEndPicker.save(interviewEnd)"
+              >
+                OK
+              </v-btn>
+            </v-time-picker>
+          </v-dialog>
         </form-menu-container>
 
         <form-input-container>
