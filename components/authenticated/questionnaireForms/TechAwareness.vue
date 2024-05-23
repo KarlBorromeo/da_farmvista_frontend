@@ -274,7 +274,7 @@ export default {
         howDidLearnTechPractices: 'sample learnt tech how',
         year: '2000',
       },
-      mulitpleStemPruning: {
+      multipleStemPruning: {
         isHeard: 'yes',
         sourceInfo: 'sample source info',
         howDidLearnTechPractices: 'sample learnt tech how',
@@ -896,11 +896,11 @@ export default {
         this.formData.singleStemPruning.year = ''
       }
     },
-    'formData.mulitpleStemPruning.isHeard': function (value) {
+    'formData.multipleStemPruning.isHeard': function (value) {
       if (value == 'no') {
-        this.formData.mulitpleStemPruning.sourceInfo = ''
-        this.formData.mulitpleStemPruning.howDidLearnTechPractices = ''
-        this.formData.mulitpleStemPruning.year = ''
+        this.formData.multipleStemPruning.sourceInfo = ''
+        this.formData.multipleStemPruning.howDidLearnTechPractices = ''
+        this.formData.multipleStemPruning.year = ''
       }
     },
     'formData.sidePruning.isHeard': function (value) {

@@ -4,9 +4,9 @@ export async function login(credentials) {
   try {
     const response = await Axios.post('auth/login', credentials)
     return {
-      accessToken: 'fdsa',
-      type: 'fdsaf',
-      firstName:  'fdsaf',
+      accessToken: response.data.accessToken,
+      type: response.data.type,
+      firstName: response.data.firstName,
     }
   } catch (error) {
     console.error(error)

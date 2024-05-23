@@ -73,7 +73,7 @@ export const state = () => ({
     },
     {
       tabName: 'InfrastructureDistanceAccessibilityValidated',
-      validity: true,
+      validity: false,
       tempValidity: false,
     },
     {
@@ -88,7 +88,7 @@ export const state = () => ({
     },
     {
       tabName: 'CroppingPatternCalendarValidated',
-      validity: true,
+      validity: false,
       tempValidity: false,
     },
     {
@@ -139,7 +139,7 @@ export const state = () => ({
     },
     {
       tabName: 'OpenEndedQuestionRatingValidated',
-      validity: true,
+      validity: false,
       tempValidity: false,
     },
   ],
@@ -419,6 +419,7 @@ export const getters = {
     }
   },
   InformationKnowledgeSourcesValidated(state) {
+    
     const index = state.tabs.findIndex(
       (el) => el.tabName == 'InformationKnowledgeSourcesValidated'
     )
@@ -512,7 +513,8 @@ export const actions = {
     }
     if (context.state.isAllValid) {
       try {
-        await api.submitQuestionnaire(payload)
+        const response = await api.submitQuestionnaire(payload)
+        return response
       } catch (error) {
         throw error
       }

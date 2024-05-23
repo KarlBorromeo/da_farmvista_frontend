@@ -308,7 +308,7 @@ export default {
   computed: {
     selectedRecord() {
       return this.$store.getters['profiling/selectedRecord'];
-    }
+    },
     // initializedData(){
     //   const data =  this.$store.getters['profiling/selectedRecord']
     //   if(Object.keys(data).length > 0){

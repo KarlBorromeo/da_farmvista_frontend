@@ -213,7 +213,7 @@ export default {
       const data = {}
       for (let i = 0; i < this.list.length; i++) {
         const keyName = this.list[i].key
-        if(keyName == 'marketQualityPreference' || keyName === 'marketingOutlet'){
+        if(keyName == 'marketQualityPreference' || keyName === 'marketingOutlet' || keyName === 'howBringToMarketingOutlet'){
           data[keyName] = {
             variable: this.formData[keyName].variable,
             remarks: this.formData[keyName].remarks,

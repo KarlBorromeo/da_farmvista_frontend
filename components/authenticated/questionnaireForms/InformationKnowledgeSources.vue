@@ -113,7 +113,7 @@
           />
         </form-input-container>
 
-        <form-checkbox-container title="print materials read most">
+        <!-- <form-checkbox-container title="print materials read most">
           <v-checkbox
             v-for="item in formData.printMaterialsReadItems"
             v-model="formData.printMaterialsRead"
@@ -129,8 +129,27 @@
             v-model="formData.printMaterialsReadOther"
             :rules="requiredRule"
             label="* please specify"
+          ></v-text-field> -->
+        <form-radio-container title="print materials read most">
+          <v-radio-group
+            :rules="requiredRule"
+            v-model="formData.printMaterialsRead"
+            class="pa-0 ma-0"
+          >
+            <v-radio
+              v-for="item in formData.printMaterialsReadItems"
+              :key="item"
+              :label="item"
+              :value="item"
+            ></v-radio>
+          </v-radio-group>
+          <v-text-field
+            v-if="formData.printMaterialsRead == 'others'"
+            v-model="formData.printMaterialsReadOther"
+            :rules="requiredRule"
+            label="* please specify"
           ></v-text-field>
-        </form-checkbox-container>
+        </form-radio-container>
 
         <form-radio-container title="Do you have a television (TV) set?">
           <v-radio-group
@@ -262,7 +281,7 @@
 </template>
 
 <script>
-import { concatOtherValueToList } from '~/reusableFunctions/questionnaireValidation'
+import { concatinateOtherValueToString } from '~/reusableFunctions/questionnaireValidation'
 import FormCheckboxContainer from '~/components/authenticated/form/formCheckboxContainer.vue'
 import FormInputContainer from '~/components/authenticated/form/formInputContainer.vue'
 import FormMenuContainer from '~/components/authenticated/form/formMenuContainer.vue'
@@ -275,8 +294,8 @@ export default {
     FormRadioContainer,
     FormMenuContainer,
   },
-  data() {
-    return {
+  data: () => ({
+    // return {
       valid: false,
       // menu2: false,
       timeDialogRadioStart: false,
@@ -286,32 +305,28 @@ export default {
       formData: {
         haveFunctionalRadio: 'yes',
         radioStationUsuallyTune: 'FRMN',
-        startTimeListeningRadio: '',
-        endTimeListeningRadio: '',
+        startTimeListeningRadio: '08:00',
+        endTimeListeningRadio: '11:00',
         radioProgramsListens: 'balita balita',
-        printMaterialsRead: ['newspaper', 'magazines'],
+        printMaterialsRead: 'newspaper',
         printMaterialsReadOther: '',
         printMaterialsReadItems: [],
         haveTelevision: 'yes',
-        tvStationWatches: 'gma',
-        startTimeWatchingTv: '',
-        endTimeWatchingTv: '',
+        tvStationWatches: 'fdas',
+        startTimeWatchingTv: '01:00',
+        endTimeWatchingTv: '03:00',
         haveSocmedAccount: 'yes',
         howOftenUsedSocmed: '3hrs',
       },
       isAgreeItems: ['yes', 'no'],
       requiredRule: [(v) => !!v || 'This field is required'],
-    }
-  },
+    // }
+  }),
   methods: {
     /* test if the form is valid, return boolean */
     validate() {
-      const textRadioValid = this.$refs.form.validate()
-      const checkboxValid = this.validateCheckbox()
-      let valid = false
-      if (textRadioValid && checkboxValid) {
-        valid = true
-      }
+      console.log('validation executed')
+      const valid = this.$refs.form.validate()
       this.$store.commit('questionnaire/toggleNextTab', {
         tabName: 'InformationKnowledgeSourcesValidated',
         valid,
@@ -323,14 +338,6 @@ export default {
         })
       }
       console.log('data: ', this.getData(), valid)
-    },
-    /* validate if checkbox is empty or not */
-    validateCheckbox() {
-      if (this.formData.printMaterialsRead.length == 0) {
-        return false
-      } else {
-        return true
-      }
     },
     /* check if 'other' checkbox is ticked */
     isOtherTicked(list) {
@@ -351,7 +358,7 @@ export default {
           this.formData.endTimeListeningRadio,
         ],
         radioProgramsListens: this.formData.radioProgramsListens,
-        printMaterialsRead: concatOtherValueToList(
+        printMaterialsRead: concatinateOtherValueToString(
           this.formData.printMaterialsRead,
           this.formData.printMaterialsReadOther
         ),
@@ -362,7 +369,7 @@ export default {
           this.formData.endTimeWatchingTv,
         ],
         haveSocmedAccount: this.formData.haveSocmedAccount,
-        howOftenUsedSocmed: this.formData.howOftenUsedSocmed,
+        howOftenUsedSocmed: parseInt(this.formData.howOftenUsedSocmed),
       }
     },
   },
@@ -378,8 +385,7 @@ export default {
       deep: true,
     },
     'formData.printMaterialsRead': function (value) {
-      const otherTicked = value.forEach((element) => element == 'others')
-      if (otherTicked) {
+      if(value !== 'others'){
         this.formData.printMaterialsReadOther = ''
       }
     },

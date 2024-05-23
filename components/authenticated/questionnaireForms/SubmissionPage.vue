@@ -1,6 +1,6 @@
 <template>
   <v-container id="container">
-    <v-btn large class="success" @click="submitAll">Submit All Forms</v-btn>
+    <v-btn large class="success" @click="submitAll" :disabled="loading">Submit All Forms</v-btn>
     <snackbar ref="snackbar" />
   </v-container>
 </template>
@@ -9,13 +9,21 @@
 import snackbar from '~/components/snackbar.vue'
 export default {
   components: { snackbar },
+  data(){
+    return{
+      loading: false
+    }
+  },
   methods: {
     async submitAll() {
       try {
-        await this.$store.dispatch('questionnaire/submitAll')
+        this.loading = true;
+        const response = await this.$store.dispatch('questionnaire/submitAll')
+        this.$refs.snackbar.showBar(response,'success')
       } catch (error) {
         this.$refs.snackbar.showBar(error, 'red')
       }
+      this.loading = false;
     },
   },
 }
