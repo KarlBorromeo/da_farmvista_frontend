@@ -154,7 +154,6 @@
       </v-row>
     </v-container>
     <v-btn @click="validate">Validate</v-btn>
-     <!-- <p class="hiddenRequiredField">{{ initializedData }}</p> -->
   </v-form>
 </template>
 
@@ -292,10 +291,6 @@ export default {
       } else {
         return false
       }
-    },
-    selectedRecord(){
-      const data =  this.$store.getters['profiling/selectedRecord']
-      return data
     }
   },
   watch: {
@@ -342,39 +337,36 @@ export default {
     },
     isAnyHouseholdMemberOrg() {
       this.validate()
-    },
-    // selectedRecord: {
-    //   handler: function(newVal){
-    //     const data =  newVal
-    //     if(Object.keys(data).length > 0){
-    //       this.age = data.profileGeneralInfo.age
-    //       this.sex = data.profileGeneralInfo.sex
-    //       this.civilStatus = data.profileGeneralInfo.civilStatus
-    //       this.religion = data.profileGeneralInfo.religion
-    //       this.highestEducationAttained = data.profileGeneralInfo.highestEducationAttained
-    //       this.isBelongMarginalizedSector = data.profileGeneralInfo.isBelongMarginalizedSector
-    //       this.nonMarginalizedSector = data.profileGeneralInfo.ifNoMarginalizedSectorName
-    //       this.dialectSpoken = data.profileGeneralInfo.dialectSpoken
-    //       this.isMemberOrgranization = data.profileGeneralInfo.isMemberFarmerOrganization
-    //       this.typeMembership = data.profileGeneralInfo.organizationTypeMembership
-    //       this.organizationName = data.profileGeneralInfo.organizationName
-    //       this.isAnyHouseholdMemberOrg = data.profileGeneralInfo.isHouseMemberAffiliatedToOrg
-    //     }else{
-    //       this.age = ''
-    //       this.sex = ''
-    //       this.civilStatus = ''
-    //       this.religion = ''
-    //       this.isBelongMarginalizedSector = ''
-    //       this.nonMarginalizedSector = []
-    //       this.dialectSpoken = ''
-    //       this.isMemberOrgranization = ''
-    //       this.typeMembership = ''
-    //       this.organizationName = ''
-    //       this.isAnyHouseholdMemberOrg = ''
-    //     }
-    //   },
-    //   immediate: true
-    // }
+    }
   },
+  beforeMount(){
+    const data =  this.$store.getters['profiling/selectedRecord']
+    if(Object.keys(data).length > 0){
+      this.age = data.profileGeneralInfo.age
+      this.sex = data.profileGeneralInfo.sex
+      this.civilStatus = data.profileGeneralInfo.civilStatus
+      this.religion = data.profileGeneralInfo.religion
+      this.highestEducationAttained = data.profileGeneralInfo.highestEducationAttained
+      this.isBelongMarginalizedSector = data.profileGeneralInfo.isBelongMarginalizedSector
+      this.nonMarginalizedSector = data.profileGeneralInfo.ifNoMarginalizedSectorName
+      this.dialectSpoken = data.profileGeneralInfo.dialectSpoken
+      this.isMemberOrgranization = data.profileGeneralInfo.isMemberFarmerOrganization
+      this.typeMembership = data.profileGeneralInfo.organizationTypeMembership
+      this.organizationName = data.profileGeneralInfo.organizationName
+      this.isAnyHouseholdMemberOrg = data.profileGeneralInfo.isHouseMemberAffiliatedToOrg
+    }else{
+      this.age = ''
+      this.sex = ''
+      this.civilStatus = ''
+      this.religion = ''
+      this.isBelongMarginalizedSector = ''
+      this.nonMarginalizedSector = []
+      this.dialectSpoken = ''
+      this.isMemberOrgranization = ''
+      this.typeMembership = ''
+      this.organizationName = ''
+      this.isAnyHouseholdMemberOrg = ''
+    }
+  }
 }
 </script>

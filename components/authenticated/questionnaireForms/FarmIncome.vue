@@ -85,12 +85,13 @@ export default {
     otherSources: 100,
     requiredRule: [
       (v) => !!v || 'This field is required',
-      (v) => parseInt(v) >= 0 || 'invalid value',
+      (v) => parseFloat(v) >= 0 || 'invalid value',
     ],
   }),
   methods: {
     /* test if the form is valid, return boolean */
     validate() {
+      console.log(this.getData())
       const valid = this.$refs.form.validate()
       this.$store.commit('questionnaire/toggleNextTab', {
         tabName: 'FarmIncomeValidated',
@@ -139,5 +140,25 @@ export default {
       this.validate()
     },
   },
+  beforeMount(){
+    const data =  this.$store.getters['profiling/selectedRecord']
+    if(Object.keys(data).length > 0){
+      this.coffee = data.farmSourceIncome.coffee
+      this.crops = data.farmSourceIncome.crops
+      this.livestock = data.farmSourceIncome.livestock
+      this.agroforestry = data.farmSourceIncome.agroforestry
+      this.otherLivelihood = data.farmSourceIncome.otherLivelihood
+      this.nonFarmIncome = data.farmSourceIncome.nonFarm
+      this.otherSources = data.farmSourceIncome.otherSource
+    }else{
+      this.coffee = 0
+      this.crops = 0
+      this.livestock = 0
+      this.agroforestry = 0
+      this.otherLivelihood = 0
+      this.nonFarmIncome = 0
+      this.otherSources = 0
+    }
+  }
 }
 </script>

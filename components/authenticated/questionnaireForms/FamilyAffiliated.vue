@@ -2,7 +2,7 @@
   <v-form ref="form" v-model="valid" lazy-validation>
     <v-container>
       <form-card-button @emitIncrement="increment" @emitDecrement="decrement" />
-      <form-card v-for="i in items" :key="i">
+      <form-card v-for="(i,index) in items" :key="index">
         <v-row>
           <v-col cols="12" class="mb-0 pb-0">
             <p class="ma-0 pa-0 font-weight-black">{{ i }}</p>
@@ -12,12 +12,14 @@
               v-model="nameFamilyMember[i - 1]"
               :rules="requiredRule"
               label="* Name of Family Member"
+              required
             ></v-text-field>
           </form-input-container>
 
           <form-radio-container title="Position">
             <v-radio-group
               :rules="requiredRule"
+              required
               v-model="position[i - 1]"
               class="py-0 my-0"
             >
@@ -31,6 +33,7 @@
                 v-if="position[i - 1] === 'others'"
                 v-model="positionOthers[i - 1]"
                 :rules="requiredRule"
+                required
                 label="Others:"
                 class="my-0 py-0 pt-1"
               ></v-text-field>
@@ -41,6 +44,7 @@
             <v-text-field
               v-model="nameOrganization[i - 1]"
               :rules="requiredRule"
+              required
               label="* Name of Institution/Organization"
             ></v-text-field>
           </form-input-container>
@@ -48,6 +52,7 @@
           <form-radio-container title="Type of Institution/Organization">
             <v-radio-group
               :rules="requiredRule"
+              required
               v-model="typeOrganization[i - 1]"
               class="py-0 my-0"
             >
@@ -61,6 +66,7 @@
                 v-if="typeOrganization[i - 1] === 'others'"
                 v-model="typeOrganizationOthers[i - 1]"
                 :rules="requiredRule"
+                required
                 label="Other:"
                 class="my-0 py-0 pt-1"
               ></v-text-field>
@@ -71,6 +77,7 @@
             <v-text-field
               v-model="numberYearsMember[i - 1]"
               :rules="numberRule"
+              required
               label="* No. of years as a member"
               type="number"
             ></v-text-field>
@@ -79,6 +86,7 @@
           <form-radio-container title="Status of Membership">
             <v-radio-group
               :rules="requiredRule"
+              required
               v-model="statusMembership[i - 1]"
               class="py-0 my-0"
             >
@@ -94,8 +102,10 @@
           <form-radio-container title="Status of Organization">
             <v-radio-group
               :rules="requiredRule"
+              required
               v-model="statusOrganization[i - 1]"
               class="py-0 my-0"
+              @change="validate"
             >
               <v-radio
                 v-for="item in statusOrganizationItems"
@@ -109,7 +119,6 @@
       </form-card>
     </v-container>
     <v-btn @click="validate">Validate</v-btn>
-    <p class="hiddenRequiredField">{{ initializedData }}</p>
   </v-form>
 </template>
 
@@ -118,7 +127,7 @@ import formCard from '~/components/authenticated/form/formCard.vue'
 import formCardButton from '~/components/authenticated/form/formCardButton.vue'
 import FormInputContainer from '~/components/authenticated/form/formInputContainer.vue'
 import FormRadioContainer from '~/components/authenticated/form/formRadioContainer.vue'
-import { concatinateEachIndexes, extractUnmatchedValueRadio } from '~/reusableFunctions/questionnaireValidation'
+import { concatinateEachIndexes, extractUnmatchedValueRadio, isOtherValueDefinedRadio } from '~/reusableFunctions/questionnaireValidation'
 export default {
   components: {
     formCard,
@@ -143,12 +152,21 @@ export default {
     statusOrganization: ['active'],
     statusOrganizationItems: [],
     requiredRule: [(v) => !!v || 'This field is required'],
-    numberRule: [(v) => !!v || 'This field is required', (v) => parseInt(v)>0 || 'this number is invalid']
+    numberRule: [(v) => parseInt(v)>=0 || 'this number is invalid']
   }),
   methods: {
     /* test if the form is valid, return boolean */
     validate() {
+      if(this.items == 0){
+        this.$store.commit('questionnaire/toggleNextTab', {
+          tabName: 'FamilyAffiliatedValidated',
+          valid: true,
+        })
+        return;
+      }
+
       const valid = this.$refs.form.validate()
+      console.log(this.getData(),valid)
       this.$store.commit('questionnaire/toggleNextTab', {
         tabName: 'FamilyAffiliatedValidated',
         valid,
@@ -182,7 +200,7 @@ export default {
     },
     /* decrement the count of items, pop the end index */
     decrement() {
-      if (this.items > 1) {
+      if (this.items > 0) {
         this.items--
         this.nameFamilyMember.pop()
         this.position.pop()
@@ -196,11 +214,11 @@ export default {
       }
     },
     increment() {
-      this.items++
+      this.items++;
     },
     /* reset the data */
     resetData(){
-        this.items = 1
+        this.items = 0
         this.nameFamilyMember = []
         this.position = []
         this.positionOthers = []
@@ -219,8 +237,35 @@ export default {
       this.$store.getters['questionnaireCode/Code3_4']
     this.statusOrganizationItems =
       this.$store.getters['questionnaireCode/Code3_4']
+    
+    const data =  this.$store.getters['profiling/selectedRecord']
+    if(Object.keys(data).length > 0){
+      const length = data.familyAffiliatedFarmOrg.length
+      this.items = length
+      if(length>0){
+        for(let i=0; i<length; i++){
+          console.log('data: ',data.familyAffiliatedFarmOrg, data.familyAffiliatedFarmOrg.length)
+          this.nameFamilyMember[i] = data.familyAffiliatedFarmOrg[i].fullName
+          this.position[i] = isOtherValueDefinedRadio(data.familyAffiliatedFarmOrg[i].position,this.positionItems)
+          this.positionOthers[i] = extractUnmatchedValueRadio(data.familyAffiliatedFarmOrg[i].position,this.positionItems)
+          this.nameOrganization[i] = data.familyAffiliatedFarmOrg[i].nameOrganization
+          this.typeOrganization[i] = data.familyAffiliatedFarmOrg[i].typeOrganization
+          this.typeOrganizationOthers[i] = extractUnmatchedValueRadio(data.familyAffiliatedFarmOrg[i].typeOrganization,this.typeOrganizationItems)
+          this.numberYearsMember[i] = data.familyAffiliatedFarmOrg[i].yearsAsMember
+          this.statusMembership[i] = data.familyAffiliatedFarmOrg[i].statusMembership
+          this.statusOrganization[i] = data.familyAffiliatedFarmOrg[i].statusOrganization   
+        }          
+      }else{
+        this.resetData()
+      }
+    }else{
+      this.resetData()
+    }
   },
   watch: {
+    items(){
+      this.validate()
+    },
     position(value) {
       this.validate()
       value.forEach((element, index) => {
@@ -231,11 +276,11 @@ export default {
     },
     typeOrganization(value) {
       this.validate()
-      value.forEach((element, index) => {
-        if (element !== 'others') {
-          this.typeOrganizationOthers[index] = ''
-        }
-      })
+      // value.forEach((element, index) => {
+      //   if (element !== 'others') {
+      //     this.typeOrganizationOthers[index] = ''
+      //   }
+      // })
     },
     nameFamilyMember() {
       this.validate()
@@ -257,35 +302,7 @@ export default {
     },
     statusOrganization() {
       this.validate()
-    },
-  },
-  // computed: {
-  //   initializedData(){
-  //     const data =  this.$store.getters['profiling/selectedRecord']
-  //     if(Object.keys(data).length > 0){
-  //       const length = data.familyAffiliatedFarmOrg.length
-  //       this.items = length
-  //       if(length>0){
-  //         for(let i=0; i<length; i++){
-  //           console.log('name: ',data.familyAffiliatedFarmOrg[i].fullName)
-  //           this.nameFamilyMember[i] = data.familyAffiliatedFarmOrg[i].fullName
-  //           this.position[i] = data.familyAffiliatedFarmOrg[i].position
-  //           this.positionOthers[i] = extractUnmatchedValueRadio(data.familyAffiliatedFarmOrg[i].position,this.positionItems)
-  //           this.nameOrganization[i] = data.familyAffiliatedFarmOrg[i].nameOrganization
-  //           this.typeOrganization[i] = data.familyAffiliatedFarmOrg[i].typeOrganization
-  //           this.typeOrganizationOthers[i] = extractUnmatchedValueRadio(data.familyAffiliatedFarmOrg[i].typeOrganization,this.typeOrganizationItems)
-  //           this.numberYearsMember[i] = data.familyAffiliatedFarmOrg[i].yearsAsMember
-  //           this.statusMembership[i] = data.familyAffiliatedFarmOrg[i].statusMembership
-  //           this.statusOrganization[i] = data.familyAffiliatedFarmOrg[i].statusOrganization            
-  //         }          
-  //       }else{
-  //         this.resetData()
-  //       }
-  //     }else{
-  //       this.resetData()
-  //     }
-  //     return data.familyAffiliatedFarmOrg
-  //   }
-  // }
+    }
+  }
 }
 </script>

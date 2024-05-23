@@ -92,10 +92,18 @@ export default {
       (v) => parseFloat(v) >= 0 || 'invalid value',
     ],
     requiredRule: [(v) => !!v || 'This field is required'],
+    tempValue: ''
   }),
   methods: {
     /* test if the form is valid, return boolean */
     validate() {
+      if(this.items == 0){
+         this.$store.commit('questionnaire/toggleNextTab', {
+            tabName: 'AssetsFarmToolsValidated',
+            valid: true
+          })
+          return;
+      }
       const valid = this.$refs.form.validate()
       this.$store.commit('questionnaire/toggleNextTab', {
         tabName: 'AssetsFarmToolsValidated',
@@ -119,7 +127,7 @@ export default {
     },
     // decrement the count of items
     decrement() {
-      if (this.items > 1) {
+      if (this.items > 0) {
         this.items--
         this.toolName.pop()
         this.toolQuantity.pop()
@@ -130,10 +138,13 @@ export default {
     increment() {
       this.items++
     },
-  },
-  beforeMount() {
-    this.toolNameItems =
-      this.$store.getters['questionnaireCode/Code5FarmImplementsTools']
+    resetData(){
+      this.items = 0
+      this.toolName = []
+      this.toolQuantity = []
+      this.isToolAquiredGovtProg = []
+      this.toolAge = []
+    }
   },
   watch: {
     toolName() {
@@ -148,6 +159,32 @@ export default {
     toolAge() {
       this.validate()
     },
+    tempValue(){
+      this.validate()
+    }
+  },
+  beforeMount() {
+    this.toolNameItems =
+      this.$store.getters['questionnaireCode/Code5FarmImplementsTools']
+
+    const data =  this.$store.getters['profiling/selectedRecord']
+    if(Object.keys(data).length > 0){
+      const length = data.farmHouseholdAsset.farmTool.length
+      if(length>0){
+        this.items = length
+        for(let i=0; i<length; i++){
+          this.toolName[i] = data.farmHouseholdAsset.farmTool[i].farmtoolName
+          this.toolQuantity[i] = data.farmHouseholdAsset.farmTool[i].farmtoolQuantity
+          this.isToolAquiredGovtProg[i] = data.farmHouseholdAsset.farmTool[i].isAcquiredGovtProgram
+          this.toolAge[i] = data.farmHouseholdAsset.farmTool[i].farmtoolAge
+        }          
+      }else{
+        this.resetData()
+      }
+    }else{
+      this.resetData()
+    }
+    this.tempValue = 'tempvalue'
   },
 }
 </script>

@@ -74,7 +74,7 @@ import formCardButton from '~/components/authenticated/form/formCardButton.vue'
 import FormInputContainer from '~/components/authenticated/form/formInputContainer.vue'
 import FormRadioContainer from '~/components/authenticated/form/formRadioContainer.vue'
 import FormSelectContainer from '~/components/authenticated/form/formSelectContainer.vue'
-import { concatinateEachIndexes } from '~/reusableFunctions/questionnaireValidation'
+import { concatinateEachIndexes, isOtherValueDefinedRadio, extractUnmatchedValueRadio } from '~/reusableFunctions/questionnaireValidation'
 export default {
   components: {
     formCard,
@@ -101,10 +101,17 @@ export default {
       (v) => parseFloat(v) >= 0 || 'invalid value',
     ],
     requiredRule: [(v) => !!v || 'This field is required'],
+    tempValue: ''
   }),
   methods: {
     /* test if the form is valid, return boolean */
     validate() {
+      if(this.items == 0){
+         this.$store.commit('questionnaire/toggleNextTab', {
+          tabName: 'AssetsFarmStructureValidated',
+          valid: true,
+        })
+      }
       const valid = this.$refs.form.validate()
       this.$store.commit('questionnaire/toggleNextTab', {
         tabName: 'AssetsFarmStructureValidated',
@@ -131,9 +138,10 @@ export default {
     },
     // decrement the count of items
     decrement() {
-      if (this.items > 1) {
+      if (this.items > 0) {
         this.items--
         this.structureBldgName.pop()
+        this.structureBldgNameOther.pop()
         this.structureBldgQuantity.pop()
         this.isstructureBldgAquiredGovtProg.pop()
         this.structureBldgAge.pop()
@@ -142,10 +150,14 @@ export default {
     increment() {
       this.items++
     },
-  },
-  beforeMount() {
-    this.structureBldgNameItems =
-      this.$store.getters['questionnaireCode/Code5StructuresBuilding']
+    resetData(){
+      this.items = 0
+      this.structureBldgName = []
+      this.structureBldgNameOther = []
+      this.structureBldgQuantity = []
+      this.isstructureBldgAquiredGovtProg = []
+      this.structureBldgAge = []
+    }
   },
   watch: {
     structureBldgName(value) {
@@ -170,6 +182,33 @@ export default {
     structureBldgAge() {
       this.validate()
     },
+    tempValue(){
+      this.validate()
+    }
+  },
+  beforeMount() {
+    this.structureBldgNameItems =
+      this.$store.getters['questionnaireCode/Code5StructuresBuilding']
+
+    const data =  this.$store.getters['profiling/selectedRecord']
+    if(Object.keys(data).length > 0){
+      const length = data.farmHouseholdAsset.structureBldgLand.length
+      if(length>0){
+        this.items = length
+        for(let i=0; i<length; i++){
+          this.structureBldgName[i] = isOtherValueDefinedRadio(data.farmHouseholdAsset.structureBldgLand[i].structureBldgLandName,this.structureBldgNameItems)
+          this.structureBldgNameOther[i] = extractUnmatchedValueRadio(data.farmHouseholdAsset.structureBldgLand[i].structureBldgLandName,this.structureBldgNameItems)
+          this.structureBldgQuantity[i] = data.farmHouseholdAsset.structureBldgLand[i].structureBldgLandQuantity
+          this.isstructureBldgAquiredGovtProg[i] = data.farmHouseholdAsset.structureBldgLand[i].isAcquiredGovtProgram
+          this.structureBldgAge[i] = data.farmHouseholdAsset.structureBldgLand[i].structureBldgLandAge
+        }          
+      }else{
+        this.resetData()
+      }
+    }else{
+      this.resetData()
+    }
+    this.tempValue = 'tempvalue'
   },
 }
 </script>

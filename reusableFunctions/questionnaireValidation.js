@@ -47,6 +47,42 @@ export const convertNumbers = (value) =>{
   }
 }
 
+/* check if the radio value is not matched on the one of the list, return 'others' if not match or else the matching value */
+export const isOtherValueDefinedRadio = (value,items) => {
+  let countMatchedTimes = 0;
+  let matchedValue = '';
+  for(let i=0; i<items.length; i++){
+    if(value === items[i]){
+      countMatchedTimes++;
+      matchedValue = items[i];
+    }
+  }
+  if(countMatchedTimes > 0){
+    return matchedValue;
+  }else{
+    return 'others'
+  }
+}
+
+/* return the value that is not matched on the items, and return it to the Other named property, this is for radio */
+export const extractUnmatchedValueRadio = (value,items) => {
+  if(value){
+    let countMatches = 0;
+    items.forEach((item) => {
+      if(value == item){
+        countMatches++
+      }
+    })
+    if(countMatches == 0){
+      return value
+    }else{
+      return ''
+    }
+  }else{
+    return ''
+  }
+}
+
 // not used yet
 /* return the value that is not matched on the items, this is for checkboxes */
 export const extractUnmatchedValueCheck = (values,items) => {
@@ -65,25 +101,6 @@ export const extractUnmatchedValueCheck = (values,items) => {
     });
     console.log(unmatchedValue)
     return unmatchedValue[0]    
-  }else{
-    return ''
-  }
-}
-
-/* return the value that is not matched on the items, this is for radio */
-export const extractUnmatchedValueRadio = (value,items) => {
-  if(value){
-    let countMatches = 0;
-    items.forEach((item) => {
-      if(value == item){
-        countMatches++
-      }
-    })
-    if(countMatches == 0){
-      return value
-    }else{
-      return ''
-    }
   }else{
     return ''
   }

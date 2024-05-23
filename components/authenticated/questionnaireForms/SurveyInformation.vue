@@ -139,7 +139,6 @@
           ></v-text-field>
         </form-input-container>
       </v-row>
-      <!-- <p class="hiddenRequiredField">{{ initializedData }}</p> -->
     </v-container>
     <v-btn @click="validate">Validate</v-btn>
   </v-form>
@@ -157,77 +156,79 @@ export default {
     FormMenuContainer,
     FormSelectContainer,
   },
-  data: () => ({
-    valid: false,
-    surveyNumber: '555',
-    surveyNumberRule: [(v) => !!v || 'survey number is required'],
-    interviewer: 'Karl Borromeo',
-    date: '2024-05-17',
-    dateRule: [(v) => !!v || 'date is required'],
-    interviewStart: '08:00',
-    timeStartPicker: false,
-    interviewStartRule: [(v) => !!v || 'time start is required'],
-    interviewEnd: '12:00',
-    timeEndPicker: false,
-    interviewEndRule: [(v) => !!v || 'time end is required'],
-    regionProvince: 'AGUSAN DEL NORTE',
-    regionProvinceItems: [
-      'agusan del norte',
-      'agusan del sur',
-      'dinagat island',
-      'surigao del norte',
-      'surigao del sur',
-    ],
-    municipality: 'ALEGRIA',
-    municipalityItems: [
-      'alegria',
-      'bacuag',
-      'barobo',
-      'basilisa',
-      'bislig',
-      'buenavista',
-      'bunawan',
-      'butuan city',
-      'cabadbaran city',
-      'cantilan',
-      'carascal',
-      'ezperanza',
-      'hinatuan',
-      'jabonga',
-      'kitcharao',
-      'las nieves',
-      'lianga',
-      'lingig',
-      'loreto',
-      'nasipit',
-      'prosperidad',
-      'rosario',
-      'san agustin',
-      'san francisco',
-      'san jose',
-      'santiago',
-      'sibagat',
-      'sta. josefa',
-      'surigao city',
-      'taganaan',
-      'tagbina',
-      'tago',
-      'talacogon',
-      'tandag',
-      'trento',
-      'tubajon',
-      'tubay',
-    ],
-    barangay: 'Brgy. Binutbut',
-    barangayRule: [(v) => !!v || 'Barangay is required'],
-    requiredRule: [(v) => !!v || 'This field is required'],
-  }),
+  data(){
+    return{
+      valid: false,
+      surveyNumber: '555',
+      surveyNumberRule: [(v) => !!v || 'survey number is required'],
+      interviewer: 'Karl Borromeo',
+      date: '2024-05-17',
+      dateRule: [(v) => !!v || 'date is required'],
+      interviewStart: '08:00',
+      timeStartPicker: false,
+      interviewStartRule: [(v) => !!v || 'time start is required'],
+      interviewEnd: '12:00',
+      timeEndPicker: false,
+      interviewEndRule: [(v) => !!v || 'time end is required'],
+      regionProvince: 'AGUSAN DEL NORTE',
+      regionProvinceItems: [
+        'agusan del norte',
+        'agusan del sur',
+        'dinagat island',
+        'surigao del norte',
+        'surigao del sur',
+      ],
+      municipality: 'ALEGRIA',
+      municipalityItems: [
+        'alegria',
+        'bacuag',
+        'barobo',
+        'basilisa',
+        'bislig',
+        'buenavista',
+        'bunawan',
+        'butuan city',
+        'cabadbaran city',
+        'cantilan',
+        'carascal',
+        'ezperanza',
+        'hinatuan',
+        'jabonga',
+        'kitcharao',
+        'las nieves',
+        'lianga',
+        'lingig',
+        'loreto',
+        'nasipit',
+        'prosperidad',
+        'rosario',
+        'san agustin',
+        'san francisco',
+        'san jose',
+        'santiago',
+        'sibagat',
+        'sta. josefa',
+        'surigao city',
+        'taganaan',
+        'tagbina',
+        'tago',
+        'talacogon',
+        'tandag',
+        'trento',
+        'tubajon',
+        'tubay',
+      ],
+      barangay: 'Brgy. Binutbut',
+      barangayRule: [(v) => !!v || 'Barangay is required'],
+      requiredRule: [(v) => !!v || 'This field is required'],
+    }
+  },
 
   methods: {
     /* test if the form is valid, return boolean */
     validate() {
       const valid = this.$refs.form.validate()
-      // console.log('validated',valid)
+      console.log('validated',valid)
       this.$store.commit('questionnaire/toggleNextTab', {
         tabName: 'SurveyInformationValidated',
         valid,
@@ -278,60 +279,28 @@ export default {
     barangay() {
       this.validate()
     },
-    // selectedRecord: {
-    //   handler: function(newVal){
-    //     const data =  newVal
-    //     if(Object.keys(data).length > 0){
-    //       console.log(data.interview)
-    //         this.date = data.interview.dateOfInterview
-    //         this.surveyNumber = data.interview.surveyNo
-    //         this.interviewer = data.interview.validatorName
-    //         this.interviewStart = data.interview.interviewStart
-    //         this.interviewEnd = data.interview.interviewEnd
-    //         this.regionProvince = data.interview.regionProvince
-    //         this.municipality = data.interview.cityMunicipality
-    //         this.barangay = data.interview.barangay
-    //     }else{
-    //         this.date = ''
-    //         this.surveyNumber = ''
-    //         this.interviewer = ''
-    //         this.interviewStart = ''
-    //         this.interviewEnd = ''
-    //         this.regionProvince = ''
-    //         this.municipality = ''
-    //         this.barangay = ''
-    //     }
-    //   },
-    //   immediate: true // Trigger the handler immediately with the current value
-    // }
   },
-  computed: {
-    selectedRecord() {
-      return this.$store.getters['profiling/selectedRecord'];
-    },
-    // initializedData(){
-    //   const data =  this.$store.getters['profiling/selectedRecord']
-    //   if(Object.keys(data).length > 0){
-    //     this.date = data.interview.dateOfInterview
-    //     this.surveyNumber = data.interview.surveyNo
-    //     this.interviewer = data.interview.validatorName
-    //     this.interviewStart = data.interview.interviewStart
-    //     this.interviewEnd = data.interview.interviewEnd
-    //     this.regionProvince = data.interview.regionProvince
-    //     this.municipality = data.interview.cityMunicipality
-    //     this.barangay = data.interview.barangay
-    //   }else{
-    //     this.date = ''
-    //     this.surveyNumber = ''
-    //     this.interviewer = ''
-    //     this.interviewStart = ''
-    //     this.interviewEnd = ''
-    //     this.regionProvince = ''
-    //     this.municipality = ''
-    //     this.barangay = ''
-    //   }
-    //   return data.interview
-    // }
+  beforeMount(){
+    const data =  this.$store.getters['profiling/selectedRecord']
+    if(Object.keys(data).length > 0){
+      this.date = data.interview.dateOfInterview
+      this.surveyNumber = data.interview.surveyNo
+      this.interviewer = data.interview.validatorName
+      this.interviewStart = data.interview.interviewStart
+      this.interviewEnd = data.interview.interviewEnd
+      this.regionProvince = data.interview.regionProvince
+      this.municipality = data.interview.cityMunicipality
+      this.barangay = data.interview.barangay
+    }else{
+      this.date = ''
+      this.surveyNumber = ''
+      this.interviewer = ''
+      this.interviewStart = ''
+      this.interviewEnd = ''
+      this.regionProvince = ''
+      this.municipality = ''
+      this.barangay = ''
+    }
   }
 }
 </script>

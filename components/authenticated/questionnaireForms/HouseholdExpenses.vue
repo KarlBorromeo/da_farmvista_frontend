@@ -223,5 +223,36 @@ export default {
       this.validate()
     },
   },
+   beforeMount(){
+    const data =  this.$store.getters['profiling/selectedRecord']
+    if(Object.keys(data).length > 0){
+      this.food = data.householdExpense.food
+      this.clothing = data.householdExpense.clothing
+      this.utilities = data.householdExpense.utilities
+      this.householdFacilities = data.householdExpense.household
+      this.nonFoodItems = data.householdExpense.nonFoodItems
+      this.healthExpenses = data.householdExpense.healthExpenses
+      this.transportation = data.householdExpense.transportation
+      this.communication = data.householdExpense.communication
+      this.recreation = data.householdExpense.recreation
+      this.education = data.householdExpense.education
+      this.specialOccasions = data.householdExpense.specialOccasions
+      this.otherExpenses = data.householdExpense.others
+      this.otherExpensesSpecify = data.householdExpense.otherSpecified
+    }else{
+      this.food = 0
+      this.clothing = 0
+      this.utilities = 0
+      this.householdFacilities = 0
+      this.nonFoodItems = 0
+      this.healthExpenses = 0
+      this.transportation = 0
+      this.communication = 0
+      this.recreation = 0
+      this.education = 0
+      this.specialOccasions = 0
+      this.otherExpenses = 0
+    }
+  }
 }
 </script>

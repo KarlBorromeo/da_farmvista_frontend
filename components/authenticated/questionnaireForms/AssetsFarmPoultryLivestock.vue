@@ -93,10 +93,18 @@ export default {
       (v) => parseFloat(v) >= 0 || 'invalid value',
     ],
     requiredRule: [(v) => !!v || 'This field is required'],
+    tempValue: ''
   }),
   methods: {
     /* test if the form is valid, return boolean */
     validate() {
+      if(this.items == 0){
+        this.$store.commit('questionnaire/toggleNextTab', {
+          tabName: 'AssetsFarmPoultryLivestockValidated',
+          valid: true,
+        })
+        return;
+      }
       const valid = this.$refs.form.validate()
       this.$store.commit('questionnaire/toggleNextTab', {
         tabName: 'AssetsFarmPoultryLivestockValidated',
@@ -120,7 +128,7 @@ export default {
     },
     // decrement the count of items
     decrement() {
-      if (this.items > 1) {
+      if (this.items > 0) {
         this.items--
         this.poultryLivestockName.pop()
         this.poultryLivestockQuantity.pop()
@@ -131,10 +139,13 @@ export default {
     increment() {
       this.items++
     },
-  },
-  beforeMount() {
-    this.poultryLivestockNameItems =
-      this.$store.getters['questionnaireCode/Code5PoultryAndLivestock']
+    resetData(){
+      this.items = 0
+      this.poultryLivestockName = []
+      this.poultryLivestockQuantity = []
+      this.ispoultryLivestockAquiredGovtProg = []
+      this.poultryLivestockAge = []     
+    }
   },
   watch: {
     poultryLivestockName() {
@@ -149,6 +160,32 @@ export default {
     poultryLivestockAge() {
       this.validate()
     },
+    tempValue(){
+      this.validate()
+    }
+  },
+  beforeMount() {
+    this.poultryLivestockNameItems =
+      this.$store.getters['questionnaireCode/Code5PoultryAndLivestock']
+
+    const data =  this.$store.getters['profiling/selectedRecord']
+    if(Object.keys(data).length > 0){
+      const length = data.farmHouseholdAsset.poultryLivestock.length
+      if(length>0){
+        this.items = length
+        for(let i=0; i<length; i++){
+          this.poultryLivestockName[i] = data.farmHouseholdAsset.poultryLivestock[i].poultryLivestockName
+          this.poultryLivestockQuantity[i] = data.farmHouseholdAsset.poultryLivestock[i].poultryLivestockQuantity
+          this.ispoultryLivestockAquiredGovtProg[i] = data.farmHouseholdAsset.poultryLivestock[i].isAcquiredGovtProgram
+          this.poultryLivestockAge[i] = data.farmHouseholdAsset.poultryLivestock[i].poultryLivestockAge
+        }          
+      }else{
+        this.resetData()
+      }
+    }else{
+      this.resetData()
+    }
+    this.tempValue = 'tempvalue'
   },
 }
 </script>

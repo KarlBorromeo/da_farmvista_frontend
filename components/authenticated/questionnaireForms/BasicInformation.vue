@@ -30,7 +30,6 @@
         <form-input-container>
           <v-text-field
             v-model="contactNumber"
-            :rules="contactNumberRules"
             label="Farmer's Phone Number"
           ></v-text-field>
         </form-input-container>
@@ -43,7 +42,6 @@
         </form-input-container>
       </v-row>
     </v-container>
-    <!-- {{ initializedData }} -->
     <v-btn @click="validate">Validate</v-btn>
   </v-form>
 </template>
@@ -59,22 +57,13 @@ export default {
     requiredRules: [(v) => !!v || 'This field is required'],
     middleInitial: 'a',
     contactNumber: '09277494592',
-    contactNumberRules: [
-      (v) => {
-        if(v==0){
-          return true
-        }else if(v.length == 11 && v[0] == '0' && v[1] == '9') {
-          return true
-        }
-        return 'Invalid Phone Number'
-      },
-    ],
     farmerCode: '00004ZuIp',
   }),
   methods: {
     /* test if the form is valid, return boolean */
-    validate() {
+    async validate() {
       const valid = this.$refs.form.validate()
+      console.log('validated',valid)
       this.$store.commit('questionnaire/toggleNextTab', {
         tabName: 'BasicInformationValidated',
         valid,
@@ -113,19 +102,22 @@ export default {
       this.validate()
     },
   },
-  // computed:{
-  //   initializedData(){
-  //     const data =  this.$store.getters['profiling/selectedRecord']
-  //     if(Object.keys(data).length > 0){
-  //       this.firstname = data.profile.firstName
-  //       this.surename = data.profile.lastName
-  //       this.middleInitial = data.profile.middleInitial
-  //       this.contactNumber = data.profile.contactNumber
-  //       this.farmerCode = data.profile.farmerCode
-  //       console.log(data.profile)
-  //     }
-  //     return data.profile
-  //   }
-  // },
+  beforeMount(){
+    const data =  this.$store.getters['profiling/selectedRecord']
+    if(Object.keys(data).length > 0){
+      this.firstname = data.profile.firstName
+      this.surename = data.profile.lastName
+      this.middleInitial = data.profile.middleInitial
+      this.contactNumber = data.profile.contactNumber
+      this.farmerCode = data.profile.farmerCode
+      console.log(data.profile)
+    }else{
+      this.firstname = ''
+      this.surename = ''
+      this.middleInitial = ''
+      this.contactNumber = ''
+      this.farmerCode = ''
+    }
+  }
 }
 </script>
