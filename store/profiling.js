@@ -1,9 +1,11 @@
-import * as api from '../storeAPI/profiling'
+import * as api from '../api/profiling'
 
 export const state = () => ({
   countPages: 0,
   itemsCurrentPage: [],
-  selectedRecord: {},
+  selectedRecord: {
+    /* define here the keys and empty values each forms */
+  },
   isEditingMode: false
 })
 
@@ -82,11 +84,30 @@ export const mutations = {
       }
     }
   },
-  /* toggle the editing record boolean holder, this holds if the user is editing a record or creating a record, reset to empty the selected if creation mode */
+  /*
+    reset as empty values each key/value
+  */
+  resetSelectedRecord(state){
+    const obj = state.selectedRecord;
+    const rootKeys = Object.keys(obj);
+    for(let i=0; i<rootKeys.length; i++){
+        let subKeys = Object.keys(obj[rootKeys[i]]);
+        for(let j=0; j<subKeys.length; j++){
+            if(typeof(obj[rootKeys[i]][subKeys[j]]) == 'number' || typeof(obj[rootKeys[i]][subKeys[j]]) == 'string'){
+                obj[rootKeys[i]][subKeys[j]] = ''
+            }else{
+                obj[rootKeys[i]][subKeys[j]] = []
+            }
+        }
+    }
+  },
+  /* 
+    toggle the editing record boolean holder, this holds if the user is editing a record or creating a record, reset to empty the selected if creation mode 
+  */
   toggleEditingMode(state, bool){
     state.isEditingMode = bool
     if(!bool){
-      state.selectedRecord = {}
+      this.commit('resetSelectedRecord')
     }
   },
   /* save the single record to the store to able the form questionnaire to access the existing values of the selected record */

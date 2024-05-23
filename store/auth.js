@@ -1,4 +1,4 @@
-import * as api from '../storeAPI/auth.js'
+import * as api from '../api/auth.js'
 export const state = () => ({
   currentUserLoggedin: false,
   currentUser: {

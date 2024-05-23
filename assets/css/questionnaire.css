@@ -1,12 +1,3 @@
 .hiddenRequiredField {
   /* display: none !important; */
 }
-
-/* 
-    <v-text-field
-        v-model=""
-        :rules="requiredRule"
-        required
-        class="hiddenRequiredField"
-    /> 
-*/

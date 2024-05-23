@@ -1,4 +1,4 @@
-import * as api from '../storeAPI/uploadFile'
+import * as api from '../api/uploadFile'
 
 export const state = () => ({})
 
