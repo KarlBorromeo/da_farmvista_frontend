@@ -78,7 +78,7 @@ export const mutations = {
     if (obj.limit >= obj.length) {
       state.countPages = 1
     } else {
-      state.countPages = Math.floor(obj.length / obj.limit) - 1
+      state.countPages = Math.floor(obj.length / obj.limit)
       if (obj.length % obj.limit != 0) {
         state.countPages++
       }

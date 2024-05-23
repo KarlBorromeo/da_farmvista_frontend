@@ -2,9 +2,10 @@ import Axios from '~/axios_config/Axios'
 
 export async function fetchAllRecords(payload) {
   try {
+    console.log(payload)
     const params = {
       type: encodeURIComponent(payload.type),
-      page: encodeURIComponent(payload.page),
+      page: encodeURIComponent(payload.page-1),
       limit: encodeURIComponent(payload.limit),
     }
     const response = await Axios.get('survey', {
