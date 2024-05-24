@@ -236,7 +236,7 @@
 </template>
 
 <script>
-import { concatOtherValueToList } from '~/reusableFunctions/questionnaireValidation'
+import { concatOtherValueToList, isOtherValueTickedCheckbox, extractUnmatchedValueCheck } from '~/reusableFunctions/questionnaireValidation'
 import FormCheckboxContainer from '~/components/authenticated/form/formCheckboxContainer.vue'
 export default {
   components: {
@@ -268,7 +268,7 @@ export default {
     novemberOther: '',
     december: ['planting'],
     decemberOther: '',
-    activityItems: ['planting'],
+    activityItems: [],
     requiredRule: [(v) => !!v || 'this field is required'],
     listRule: [
       (v) => {
@@ -279,6 +279,7 @@ export default {
         }
       },
     ],
+    tempValue: ''
   }),
   methods: {
     /* 
@@ -349,6 +350,60 @@ export default {
   },
   beforeMount() {
     this.activityItems = this.$store.getters['questionnaireCode/Code20']
+    
+    const data =  this.$store.getters['profiling/selectedRecord']
+    if(Object.keys(data).length > 0){
+      this.january = isOtherValueTickedCheckbox(data.cropCalendarCoffee.january, this.activityItems)
+      this.januaryOther = extractUnmatchedValueCheck(data.cropCalendarCoffee.january, this.activityItems)
+      this.february = isOtherValueTickedCheckbox(data.cropCalendarCoffee.february, this.activityItems)
+      this.februaryOther = extractUnmatchedValueCheck(data.cropCalendarCoffee.february, this.activityItems)
+      this.march = isOtherValueTickedCheckbox(data.cropCalendarCoffee.march, this.activityItems)
+      this.marchOther = extractUnmatchedValueCheck(data.cropCalendarCoffee.march, this.activityItems)
+      this.april = isOtherValueTickedCheckbox(data.cropCalendarCoffee.april, this.activityItems)
+      this.aprilOther = extractUnmatchedValueCheck(data.cropCalendarCoffee.april, this.activityItems)
+      this.may = isOtherValueTickedCheckbox(data.cropCalendarCoffee.may, this.activityItems)
+      this.mayOther = extractUnmatchedValueCheck(data.cropCalendarCoffee.may, this.activityItems)
+      this.june = isOtherValueTickedCheckbox(data.cropCalendarCoffee.june, this.activityItems)
+      this.juneOther = extractUnmatchedValueCheck(data.cropCalendarCoffee.june, this.activityItems)
+      this.july = isOtherValueTickedCheckbox(data.cropCalendarCoffee.july, this.activityItems)
+      this.julyOther = extractUnmatchedValueCheck(data.cropCalendarCoffee.july, this.activityItems)
+      this.august = isOtherValueTickedCheckbox(data.cropCalendarCoffee.august, this.activityItems)
+      this.augustOther = extractUnmatchedValueCheck(data.cropCalendarCoffee.august, this.activityItems)
+      this.september = isOtherValueTickedCheckbox(data.cropCalendarCoffee.september, this.activityItems)
+      this.septemberOther = extractUnmatchedValueCheck(data.cropCalendarCoffee.september, this.activityItems)
+      this.october = isOtherValueTickedCheckbox(data.cropCalendarCoffee.october, this.activityItems)
+      this.octoberOther = extractUnmatchedValueCheck(data.cropCalendarCoffee.october, this.activityItems)
+      this.november = isOtherValueTickedCheckbox(data.cropCalendarCoffee.november, this.activityItems)
+      this.novemberOther = extractUnmatchedValueCheck(data.cropCalendarCoffee.november, this.activityItems)
+      this.december = isOtherValueTickedCheckbox(data.cropCalendarCoffee.december, this.activityItems)
+      this.decemberOther = extractUnmatchedValueCheck(data.cropCalendarCoffee.december, this.activityItems)
+    }else{
+      this.january =  [],
+      this.januaryOther = ''
+      this.february =  [],
+      this.februaryOther = ''
+      this.march =  [],
+      this.marchOther = ''
+      this.april =  [],
+      this.aprilOther = ''
+      this.may =  [],
+      this.mayOther = ''
+      this.june =  [],
+      this.juneOther = ''
+      this.july =  [],
+      this.julyOther = ''
+      this.august =  [],
+      this.augustOther = ''
+      this.september =  [],
+      this.septemberOther = ''
+      this.october =  [],
+      this.octoberOther = ''
+      this.november =  [],
+      this.novemberOther = ''
+      this.december =  [],
+      this.decemberOther = ''
+    }
+    this.tempValue = "tempValue"
   },
   watch: {
     january(value) {
@@ -471,6 +526,9 @@ export default {
     decemberOther() {
       this.validate()
     },
+    tempValue(){
+      this.validate()
+    }
   },
 }
 </script>

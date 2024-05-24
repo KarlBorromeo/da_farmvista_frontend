@@ -171,7 +171,7 @@
 </template>
 
 <script>
-import { concatinateEachIndexes } from '~/reusableFunctions/questionnaireValidation'
+import { concatinateEachIndexes, isOtherValueDefinedRadio, extractUnmatchedValueRadio } from '~/reusableFunctions/questionnaireValidation'
 import formCard from '~/components/authenticated/form/formCard.vue'
 import formCardButton from '~/components/authenticated/form/formCardButton.vue'
 import FormInputContainer from '~/components/authenticated/form/formInputContainer.vue'
@@ -214,10 +214,18 @@ export default {
       (v) => parseFloat(v) > 0 || 'invalid value',
     ],
     requiredRule: [(v) => !!v || 'This field is required'],
+    tempValue: ''
   }),
   methods: {
     /* test if the form is valid, return boolean */
     validate() {
+      if(this.items == 0){
+         this.$store.commit('questionnaire/toggleNextTab', {
+          tabName: 'ParcelInformationValidated',
+          valid: true,
+        })
+        return;
+      }
       const valid = this.$refs.form.validate()
       this.$store.commit('questionnaire/toggleNextTab', {
         tabName: 'ParcelInformationValidated',
@@ -272,6 +280,23 @@ export default {
     increment() {
       this.items++
     },
+    resetData(){
+      this.items = 0
+      this.parcelNumber = [],
+      this.area = [],
+      this.tenure = []
+      this.topography = []
+      this.soilFertility = []
+      this.croppingSystem = []
+      this.sourceWater = []
+      this.landUseStatus = []
+      this.cropsPlanted = []
+      this.tenureOther = [],
+      this.topographyOther = [],
+      this.croppingSystemOther = [],
+      this.sourceWaterOther = []
+      this.landUseStatusOther = []
+    }
   },
   beforeMount() {
     this.tenureItems = this.$store.getters['questionnaireCode/Code13']
@@ -282,6 +307,35 @@ export default {
       this.$store.getters['questionnaireCode/CroppingSystem']
     this.sourceWaterItems = this.$store.getters['questionnaireCode/Code14']
     this.landUseStatusItems = this.$store.getters['questionnaireCode/Code15']
+
+    const data =  this.$store.getters['profiling/selectedRecord']
+    if(Object.keys(data).length > 0){
+      const length = data.parcelInfo.length
+      if(length>0){
+        this.items = length
+        for(let i=0; i<length; i++){
+          this.parcelNumber[i] = data.parcelInfo[i].parcelNumber,
+          this.area[i] = data.parcelInfo[i].area,
+          this.tenure[i] = isOtherValueDefinedRadio(data.parcelInfo[i].tenure,this.tenureItems)
+          this.tenureOther[i] = extractUnmatchedValueRadio(data.parcelInfo[i].tenure,this.tenureItems)
+          this.topography[i] = isOtherValueDefinedRadio(data.parcelInfo[i].topography,this.topographyItems)
+          this.topographyOther[i] = extractUnmatchedValueRadio(data.parcelInfo[i].topography,this.topographyItems)
+          this.soilFertility[i] = data.parcelInfo[i].soilFertility
+          this.croppingSystem[i] = isOtherValueDefinedRadio(data.parcelInfo[i].croppingSystem,this.croppingSystemItems)
+          this.croppingSystemOther[i] = extractUnmatchedValueRadio(data.parcelInfo[i].croppingSystem,this.croppingSystemItems)
+          this.sourceWater[i] = isOtherValueDefinedRadio(data.parcelInfo[i].sourceOfWater,this.sourceWaterItems)
+          this.sourceWaterOther[i] = extractUnmatchedValueRadio(data.parcelInfo[i].sourceOfWater,this.sourceWaterItems)
+          this.landUseStatus[i] = isOtherValueDefinedRadio(data.parcelInfo[i].landUseStatus,this.landUseStatusItems)
+          this.landUseStatusOther[i] = extractUnmatchedValueRadio(data.parcelInfo[i].landUseStatus,this.landUseStatusItems)
+          this.cropsPlanted[i] = data.parcelInfo[i].cropsPlanted 
+        }          
+      }else{
+        this.resetData()
+      }
+    }else{
+      this.resetData()
+    }
+    this.tempValue = 'tempvalue'
   },
   watch: {
     tenure(value) {
@@ -350,6 +404,9 @@ export default {
     cropsPlanted() {
       this.validate()
     },
+    tempValue(){
+      this.validate()
+    }
   },
 }
 </script>

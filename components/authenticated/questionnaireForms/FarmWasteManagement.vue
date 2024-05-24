@@ -11,7 +11,7 @@
           <form-input-container>
             <v-text-field
               v-model="cropsGrown[i - 1]"
-              :rules="requiredRule"
+              :rules="specialCharactersRule"
               label="* Crops grown in the area"
             ></v-text-field>
           </form-input-container>
@@ -82,10 +82,28 @@ export default {
       (v) => !!v || 'This field is required',
       (v) => parseFloat(v) >= 0 || 'invalid value',
     ],
+    specialCharactersRule: [
+      (v) => !!v || 'This field is required',
+      (v) => {
+          const regex = /^[a-zA-Z0-9,\/]*$/;
+          if (regex.test(v)) {
+              return true;
+          }
+          return 'Special characters are not allowed except comma and slash';
+      }
+    ],
+    tempValue: ''
   }),
   methods: {
     /* test if the form is valid, return boolean */
     validate() {
+      if(this.items == 0){
+        this.$store.commit('questionnaire/toggleNextTab', {
+          tabName: 'FarmWasteManagementValidated',
+          valid: true,
+        })
+        return;
+      }
       const valid = this.$refs.form.validate()
       this.$store.commit('questionnaire/toggleNextTab', {
         tabName: 'FarmWasteManagementValidated',
@@ -109,7 +127,7 @@ export default {
     },
     // decrement the count of items
     decrement() {
-      if (this.items > 1) {
+      if (this.items > 0) {
         this.items--
         this.cropsGrown.pop()
         this.kindsWasteProduced.pop()
@@ -120,6 +138,13 @@ export default {
     increment() {
       this.items++
     },
+    resetData() {
+      this.items = 0
+      this.cropsGrown = []
+      this.kindsWasteProduced = []
+      this.volumeWaste = []
+      this.isUtilized = []
+    }
   },
   watch: {
     cropsGrown() {
@@ -134,6 +159,32 @@ export default {
     isUtilized() {
       this.validate()
     },
+    tempValue(){
+      this.validate()
+    }
   },
+  beforeMount() {
+    this.machineNameItems =
+      this.$store.getters['questionnaireCode/Code5FarmMachinery']
+
+    const data =  this.$store.getters['profiling/selectedRecord']
+    if(Object.keys(data).length > 0){
+      const length = data.farmWasteManagement.length
+      if(length>0){
+        this.items = length
+        for(let i=0; i<length; i++){
+          this.cropsGrown[i] = data.farmWasteManagement[i].cropsGrown
+          this.kindsWasteProduced[i] = data.farmWasteManagement[i].kindWasteProduced
+          this.volumeWaste[i] = data.farmWasteManagement[i].volumeWasteKg
+          this.isUtilized[i] = data.farmWasteManagement[i].isUtilized
+        }          
+      }else{
+        this.resetData()
+      }
+    }else{
+      this.resetData()
+    }
+    this.tempValue = 'tempvalue'
+  }
 }
 </script>

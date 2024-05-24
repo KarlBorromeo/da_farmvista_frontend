@@ -80,7 +80,7 @@
 </template>
 
 <script>
-import { concatinateEachIndexes } from '~/reusableFunctions/questionnaireValidation'
+import { concatinateEachIndexes, isOtherValueDefinedRadio, extractUnmatchedValueRadio } from '~/reusableFunctions/questionnaireValidation'
 import formCard from '~/components/authenticated/form/formCard.vue'
 import formCardButton from '~/components/authenticated/form/formCardButton.vue'
 import FormInputContainer from '~/components/authenticated/form/formInputContainer.vue'
@@ -105,10 +105,18 @@ export default {
     perceivedEffectiveness: ['highly effective'],
     perceivedEffectivenessItems: [],
     requiredRule: [(v) => !!v || 'This field is required'],
+    tempValue: ''
   }),
   methods: {
     /* test if the form is valid, return boolean */
     validate() {
+      if(this.items == 0){
+        this.$store.commit('questionnaire/toggleNextTab', {
+          tabName: 'PestDamageObservedValidated',
+          valid: true,
+          })
+        return;
+      }
       const valid = this.$refs.form.validate()
       this.$store.commit('questionnaire/toggleNextTab', {
         tabName: 'PestDamageObservedValidated',
@@ -148,7 +156,7 @@ export default {
     },
     // decrement the count of items
     decrement() {
-      if (this.items > 1) {
+      if (this.items > 0) {
         this.items--
         this.pestDiseaseDamagesPlants.pop()
         this.stageOccurence.pop()
@@ -160,6 +168,14 @@ export default {
     increment() {
       this.items++
     },
+    resetData(){
+      this.items = 0
+      this.pestDiseaseDamagesPlants = []
+      this.stageOccurence = []
+      this.management = []
+      this.managementOther = []
+      this.perceivedEffectiveness = []
+    }
   },
   beforeMount() {
     this.pestDiseaseDamagesPlantsItems =
@@ -168,6 +184,26 @@ export default {
     this.managementItems = this.$store.getters['questionnaireCode/Code25']
     this.perceivedEffectivenessItems =
       this.$store.getters['questionnaireCode/Code26']
+
+    const data =  this.$store.getters['profiling/selectedRecord']
+    if(Object.keys(data).length > 0){
+      const length = data.pestDamageObserved.length
+      if(length>0){
+        this.items = length
+        for(let i=0; i<length; i++){
+          this.pestDiseaseDamagesPlants[i] = data.pestDamageObserved[i].pestsDiseasesPlants
+          this.stageOccurence[i] = data.pestDamageObserved[i].stageOccurrence
+          this.management[i] = isOtherValueDefinedRadio(data.pestDamageObserved[i].management,this.managementItems)
+          this.managementOther[i] = extractUnmatchedValueRadio(data.pestDamageObserved[i].management,this.managementItems)
+          this.perceivedEffectiveness[i] = data.pestDamageObserved[i].perceivedEffectiveness
+        }          
+      }else{
+        this.resetData()
+      }
+    }else{
+      this.resetData()
+    }
+    this.tempValue = 'tempvalue'
   },
   watch: {
     management(value) {
@@ -187,9 +223,15 @@ export default {
     management() {
       this.validate()
     },
+    managementOther(){
+      this.validate()
+    },
     perceivedEffectiveness() {
       this.validate()
     },
+    tempValue(){
+      this.validate()
+    }
   },
 }
 </script>

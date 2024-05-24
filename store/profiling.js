@@ -107,7 +107,8 @@ export const mutations = {
   toggleEditingMode(state, bool){
     state.isEditingMode = bool
     if(!bool){
-      this.commit('resetSelectedRecord')
+      state.selectedRecord = {};
+      // this.commit('resetSelectedRecord')
     }
   },
   /* save the single record to the store to able the form questionnaire to access the existing values of the selected record */

@@ -297,5 +297,35 @@ export default {
       deep: true,
     },
   },
+  beforeMount() {
+    const data =  this.$store.getters['profiling/selectedRecord']
+    if(Object.keys(data).length > 0){
+      for (let i = 0; i < this.list.length; i++) {
+        const keyName = this.list[i].key
+        this.formData[keyName].price = data.costInputCoffee[keyName].price
+        this.formData[keyName].quantity = data.costInputCoffee[keyName].quantity
+        this.formData[keyName].totalTransportCost = data.costInputCoffee[keyName].totalTransportCost
+        this.formData[keyName].totalCost = data.costInputCoffee[keyName].totalCost
+        this.formData[keyName].cashCredit = data.costInputCoffee[keyName].cashCredit
+        this.formData[keyName].sourceInputPurchased = data.costInputCoffee[keyName].sourceInputPurchased
+        if(this.list[i].specify){
+          this.formData[keyName].name = data.costInputCoffee[keyName].name
+        }
+      }
+    }else{
+      for (let i = 0; i < this.list.length; i++) {
+        const keyName = this.list[i].key
+        this.formData[keyName].price = ''
+        this.formData[keyName].quantity = ''
+        this.formData[keyName].totalTransportCost =  ''
+        this.formData[keyName].totalCost = ''
+        this.formData[keyName].cashCredit = ''
+        this.formData[keyName].sourceInputPurchased = ''
+        if(this.list[i].specify){
+          this.formData[keyName].name = ''
+        }
+      }
+    }
+  }
 }
 </script>

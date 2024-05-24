@@ -304,7 +304,11 @@ import FormInputContainer from '~/components/authenticated/form/formInputContain
 import FormRadioContainer from '~/components/authenticated/form/formRadioContainer.vue'
 import {
   concatOtherValueToList,
-  concatinateOtherValueToString
+  concatinateOtherValueToString,
+  extractUnmatchedValueCheck,
+  isOtherValueTickedCheckbox,
+  isOtherValueDefinedRadio,
+  extractUnmatchedValueRadio
 } from '~/reusableFunctions/questionnaireValidation'
 export default {
   components: {
@@ -314,7 +318,6 @@ export default {
   },
   data: () => ({
     valid: false,
-    items: 1,
     startPlanting: '2000',
     sourcePlantingMaterial: ['seeds', 'seedlings'],
     sourcePlantingMaterialItems: [],
@@ -479,6 +482,68 @@ export default {
     this.typeMethodItems = this.$store.getters['questionnaireCode/Code21E']
     this.methodApplicationItems =
       this.$store.getters['questionnaireCode/Code21F']
+
+    const data =  this.$store.getters['profiling/selectedRecord']
+    if(Object.keys(data).length > 0){
+      this.startPlanting = data.detailCoffeeProduction.startPlanting
+      this.sourcePlantingMaterial = isOtherValueTickedCheckbox(data.detailCoffeeProduction.sourcePlantingMaterial, this.sourcePlantingMaterialItems)
+      this.sourcePlantingMaterialOther = extractUnmatchedValueCheck(data.detailCoffeeProduction.sourcePlantingMaterial, this.sourcePlantingMaterialItems)
+      this.coffeeVariety = isOtherValueTickedCheckbox(data.detailCoffeeProduction.coffeeVarietyUsed,this.coffeeVarietyItems)
+      this.coffeeVarietyOther = extractUnmatchedValueCheck(data.detailCoffeeProduction.coffeeVarietyUsed,this.coffeeVarietyItems)
+      this.methodLandPreparation = isOtherValueTickedCheckbox(data.detailCoffeeProduction.methodLandPreparation,this.methodLandPreparationItems)
+      this.methodLandPreparationOther = extractUnmatchedValueCheck(data.detailCoffeeProduction.methodLandPreparation,this.methodLandPreparationItems)
+      this.rowOrientation = isOtherValueTickedCheckbox(data.detailCoffeeProduction.rowOrientation,this.rowOrientationItems)
+      this.rowOrientationOther = extractUnmatchedValueCheck(data.detailCoffeeProduction.rowOrientation,this.rowOrientationItems)
+      this.plantingDepth = data.detailCoffeeProduction.plantingDepth
+      this.soilType = data.detailCoffeeProduction.soilType
+      this.weedControl = isOtherValueTickedCheckbox(data.detailCoffeeProduction.weedControl,this.typeMethodItems)
+      this.weedControlOther = extractUnmatchedValueCheck(data.detailCoffeeProduction.weedControl,this.typeMethodItems)
+      this.insectPestManagement = isOtherValueTickedCheckbox(data.detailCoffeeProduction.insectPestManagement,this.typeMethodItems)
+      this.insectPestManagementOther = extractUnmatchedValueCheck(data.detailCoffeeProduction.insectPestManagement,this.typeMethodItems)
+      this.diseaseManagement = isOtherValueTickedCheckbox(data.detailCoffeeProduction.diseaseManagement,this.typeMethodItems)
+      this.diseaseManagementOther = extractUnmatchedValueCheck(data.detailCoffeeProduction.diseaseManagement,this.typeMethodItems)
+      this.isUseInorganicFertilizer = data.detailCoffeeProduction.isUseInorganicFertilizer
+      this.kindInorganicFertilizer = extractUnmatchedValueCheck(data.detailCoffeeProduction.specifyInorganicFertilizer,[])
+      this.methodInorganicApplication = isOtherValueDefinedRadio(data.detailCoffeeProduction.methodInorganicApplication,this.methodApplicationItems)
+      this.methodInorganicApplicationOther = extractUnmatchedValueRadio(data.detailCoffeeProduction.methodInorganicApplication,this.methodApplicationItems)
+      this.isUseOrganicFertilizer = data.detailCoffeeProduction.isUseOrganicFertilizer
+      this.kindOgranicFertilizer = extractUnmatchedValueCheck(data.detailCoffeeProduction.specifyOrganicFertilizer,[])
+      this.methodOrganicApplication = isOtherValueDefinedRadio(data.detailCoffeeProduction.methodOrganicApplication,this.methodApplicationItems)
+      this.methodOrganicApplicationOther = extractUnmatchedValueRadio(data.detailCoffeeProduction.methodOrganicApplication,this.methodApplicationItems)
+      this.isPracticeGreenManuring = data.detailCoffeeProduction.isPracticeGreenManuring
+      this.isReturnCropResidue = data.detailCoffeeProduction.isReturnCropResidue
+      this.dateHarvesting = extractUnmatchedValueCheck(data.detailCoffeeProduction.dateHarvesting,[])
+    }else{
+      this.startPlanting = ''
+      this.sourcePlantingMaterial = []
+      this.sourcePlantingMaterialOther = ''
+      this.coffeeVariety = []
+      this.coffeeVarietyOther = ''
+      this.methodLandPreparation = []
+      this.methodLandPreparationOther = ''
+      this.rowOrientation = []
+      this.rowOrientationOther = ''
+      this.plantingDepth = ''
+      this.soilType = ''
+      this.weedControl = []
+      this.weedControlOther = ''
+      this.insectPestManagement = []
+      this.insectPestManagementOther = ''
+      this.diseaseManagement = []
+      this.diseaseManagementOther = ''
+      this.isUseInorganicFertilizer = ''
+      this.kindInorganicFertilizer = ''
+      this.methodInorganicApplication = ''
+      this.methodInorganicApplicationOther = ''
+      this.isUseOrganicFertilizer = ''
+      this.kindOgranicFertilizer = ''
+      this.methodOrganicApplication = ''
+      this.methodOrganicApplicationOther = ''
+      this.isPracticeGreenManuring = ''
+      this.isReturnCropResidue = ''
+      this.dateHarvesting = ''  
+    }
+    this.tempValue = "tempValue"
   },
   watch: {
     isUseInorganicFertilizer(value) {

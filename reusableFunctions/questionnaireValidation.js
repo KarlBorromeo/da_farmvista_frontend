@@ -1,5 +1,4 @@
-
-/* concatenate the value of other into the index of list that has 'other' */
+/* concatenate the value of other into the index of list that has 'other(s)' */
 export const concatOtherValueToList = (list, other) => {
   let listCopy = [...list]
   if (!!other) {
@@ -37,7 +36,8 @@ export const concatinateEachIndexes = (
   return arr
 }
 
-/* convert into number all indexes in the array to ensure number type */
+//TODO: INVESTIGATE IF IT IS WORKING WELL
+/* convert into number all indexes in the array or string to ensure number type */
 export const convertNumbers = (value) =>{
   if (typeof variable === 'string') {
     let arr = value.map(num => parseInt(num))
@@ -47,7 +47,8 @@ export const convertNumbers = (value) =>{
   }
 }
 
-/* check if the radio value is not matched on the one of the list, return 'others' if not match or else the matching value */
+// FOR RADIO AND SELECT
+/* check if the radio value is not matched on the one of the list, return 'others' if not match else return the matched value, this is for radio or select*/
 export const isOtherValueDefinedRadio = (value,items) => {
   let countMatchedTimes = 0;
   let matchedValue = '';
@@ -63,8 +64,7 @@ export const isOtherValueDefinedRadio = (value,items) => {
     return 'others'
   }
 }
-
-/* return the value that is not matched on the items, and return it to the Other named property, this is for radio */
+/* return the value that is not matched on the items or else return '', this is for radio or select*/
 export const extractUnmatchedValueRadio = (value,items) => {
   if(value){
     let countMatches = 0;
@@ -83,25 +83,47 @@ export const extractUnmatchedValueRadio = (value,items) => {
   }
 }
 
-// not used yet
-/* return the value that is not matched on the items, this is for checkboxes */
-export const extractUnmatchedValueCheck = (values,items) => {
-  if(values){
-    let unmatchedValue = [''];
-    values.forEach((value) => {
+// FOR CHECKBOXES
+/* if Array => finds the index that is not one of the items. if no matches return the index value else return '' */
+/* if !Array test if the value matches one of the items, if no matches return the value else return '' */
+/* this is for checkboxes other property */
+export const extractUnmatchedValueCheck = (value,items) => {
+  let extracted = '';
+  if(Array.isArray(value)){
+    value.forEach( val => {
         let countMatches = 0;
-        items.forEach((item) => {
-          if(value == item){
+        items.forEach( item => {
+         
+          if(val == item){
             countMatches++
           }
         })
         if(countMatches == 0){
-          unmatchedValue.push(value)
+          extracted += val + ', '
         }
-    });
-    console.log(unmatchedValue)
-    return unmatchedValue[0]    
+    })
   }else{
-    return ''
+    console.error('this is for checkbox function, expecting (array,array)')
+    return
   }
+  if (extracted.endsWith(', ')) {
+    extracted = extracted.slice(0, -2);
+  }
+  return extracted
+}
+/* look for the specific index that is not matched on the item. return a list, for checkboxes property */
+export const isOtherValueTickedCheckbox = (values,items) => {
+  let arr = [...values];
+  arr.forEach( (val, i) => {
+    let countMatches = 0;
+    items.forEach( item => {
+      if(val == item){
+        countMatches++;
+      }
+    })
+    if(countMatches == 0){
+      arr[i] = 'others'
+    }
+  })
+  return arr;
 }

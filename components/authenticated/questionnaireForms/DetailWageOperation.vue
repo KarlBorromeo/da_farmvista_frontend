@@ -46,9 +46,9 @@ export default {
       { key: 'amntPaidManMachine', label: 'paid for Man-Machine' },
     ],
     numberRule: [
-      (v) => !!v || 'This field is required',
-      (v) => parseInt(v) >= 0 || 'invalid value',
+      (v) => parseFloat(v) >= 0 || 'invalid value',
     ],
+    tempValue: ''
   }),
   methods: {
     /* test if the form is valid, return boolean */
@@ -82,6 +82,28 @@ export default {
       },
       deep: true,
     },
+    tempValue(){
+      this.validate()
+    }
+  },
+  beforeMount() {
+    const data =  this.$store.getters['profiling/selectedRecord']
+    if(Object.keys(data).length > 0){
+      this.formData.amntPaidLabor = data.detailWageOperation.amntPaidLabor
+      this.formData.goodsProvidedLabor = data.detailWageOperation.goodsProvidedLabor
+      this.formData.expectedWageOtherfarms = data.detailWageOperation.expectedWageOtherfarms
+      this.formData.amntPaidCattleWithOperator = data.detailWageOperation.amntPaidCattleWithOperator
+      this.formData.amntPaidCattleOnly = data.detailWageOperation.amntPaidCattleOnly
+      this.formData.amntPaidManMachine = data.detailWageOperation.amntPaidManMachine
+    }else{
+      this.formData.amntPaidLabor = ''
+      this.formData.goodsProvidedLabor = ''
+      this.formData.expectedWageOtherfarms = ''
+      this.formData.amntPaidCattleWithOperator = ''
+      this.formData.amntPaidCattleOnly = ''
+      this.formData.amntPaidManMachine = ''
+    }
+    this.tempValue = "tempValue"
   },
 }
 </script>

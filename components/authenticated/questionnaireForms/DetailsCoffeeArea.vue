@@ -206,6 +206,7 @@
 import formCard from '~/components/authenticated/form/formCard.vue'
 import FormInputContainer from '~/components/authenticated/form/formInputContainer.vue'
 import FormRadioContainer from '~/components/authenticated/form/formRadioContainer.vue'
+import { isOtherValueDefinedRadio, extractUnmatchedValueRadio } from '~/reusableFunctions/questionnaireValidation'
 export default {
   components: {
     formCard,
@@ -251,6 +252,7 @@ export default {
         return 'invalid year value'
       },
     ],
+    tempValue: ''
   }),
   methods: {
     /* test if the form is valid, return boolean */
@@ -324,6 +326,48 @@ export default {
   beforeMount() {
     this.reasonUsingItems = this.$store.getters['questionnaireCode/Code16B']
     this.seedSourceItems = this.$store.getters['questionnaireCode/Code16A']
+
+    const data =  this.$store.getters['profiling/selectedRecord']
+    if(Object.keys(data).length > 0){
+      this.classificationCropsDetails = data.detailCoffeeArea.classificationCrops.details
+      this.classificationCropsReasons = data.detailCoffeeArea.classificationCrops.reasonUsing
+      this.yearPlantedDetails = data.detailCoffeeArea.yearPlanted.details
+      this.yearPlantedReasons = data.detailCoffeeArea.yearPlanted.reasonUsing
+      this.plantingDistanceDetails = data.detailCoffeeArea.plantingDistance.details
+      this.plantingDistanceReasons = isOtherValueDefinedRadio(data.detailCoffeeArea.plantingDistance.reasonUsing,this.reasonUsingItems)
+      this.plantingDistanceReasonsOther = extractUnmatchedValueRadio(data.detailCoffeeArea.plantingDistance.reasonUsing,this.reasonUsingItems)
+      this.numberPlantsDetails = data.detailCoffeeArea.numberPlantsStands.details
+      this.numberPlantsReasons = data.detailCoffeeArea.numberPlantsStands.reasonUsing
+      this.intercropVarietyDetails = data.detailCoffeeArea.intercropVariety.details
+      this.intercropVarietyReasons = isOtherValueDefinedRadio(data.detailCoffeeArea.intercropVariety.reasonUsing,this.reasonUsingItems)
+      this.intercropVarietyReasonsOther = extractUnmatchedValueRadio(data.detailCoffeeArea.intercropVariety.reasonUsing,this.reasonUsingItems)
+      this.totalAreaDetails = data.detailCoffeeArea.totalArea.details
+      this.totalAreaReasons = data.detailCoffeeArea.totalArea.reasonUsing
+      this.seedSourceDetails =isOtherValueDefinedRadio(data.detailCoffeeArea.seedSource.details,this.seedSourceItems)
+      this.seedSourceDetailsOther = extractUnmatchedValueRadio(data.detailCoffeeArea.seedSource.details,this.seedSourceItems)
+      this.seedSourceReasons = isOtherValueDefinedRadio(data.detailCoffeeArea.seedSource.reasonUsing,this.reasonUsingItems)
+      this.seedSourceReasonsOther = extractUnmatchedValueRadio(data.detailCoffeeArea.seedSource.reasonUsing,this.reasonUsingItems)
+    }else{
+      this.classificationCropsDetails = ''
+      this.classificationCropsReasons = ''
+      this.yearPlantedDetails = ''
+      this.yearPlantedReasons = ''
+      this.plantingDistanceDetails = ''
+      this.plantingDistanceReasons = ''
+      this.plantingDistanceReasonsOther = ''
+      this.numberPlantsDetails = ''
+      this.numberPlantsReasons = ''
+      this.intercropVarietyDetails = ''
+      this.intercropVarietyReasons = ''
+      this.intercropVarietyReasonsOther = ''
+      this.totalAreaDetails = ''
+      this.totalAreaReasons = ''
+      this.seedSourceDetails = ''
+      this.seedSourceDetailsOther = ''
+      this.seedSourceReasons = ''
+      this.seedSourceReasonsOther = ''
+    }
+    this.tempValue = "tempValue"
   },
   watch: {
     plantingDistanceReasons(value) {
@@ -392,6 +436,9 @@ export default {
     seedSourceReasonsOther() {
       this.validate()
     },
+    tempValue(){
+      this.validate()
+    }
   },
 }
 </script>

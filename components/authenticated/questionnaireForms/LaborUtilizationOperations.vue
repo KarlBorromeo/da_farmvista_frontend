@@ -527,10 +527,10 @@ export default {
       { key: 'otherManagement', title: 'other Management' },
     ],
     numberRule: [
-      (v) => !!v || 'required',
-      (v) => parseInt(v) >= 0 || 'invalid',
+      (v) => parseInt(v) >= 0 || 'invalid value',
     ],
     requiredRule: [(v) => !!v || 'This field is required'],
+    tempValue: ''
   }),
   methods: {
     /* test if the form is valid, return boolean */
@@ -579,6 +579,53 @@ export default {
       },
       deep: true,
     },
+    tempValue(){
+      this.validate()
+    }
+  },
+  beforeMount() {
+    this.sourcePlantingMaterialItems =
+      this.$store.getters['questionnaireCode/Code21A']
+    this.coffeeVarietyItems = this.$store.getters['questionnaireCode/Code21B']
+    this.methodLandPreparationItems =
+      this.$store.getters['questionnaireCode/Code21C']
+    this.rowOrientationItems = this.$store.getters['questionnaireCode/Code21D']
+    this.typeMethodItems = this.$store.getters['questionnaireCode/Code21E']
+    this.methodApplicationItems =
+      this.$store.getters['questionnaireCode/Code21F']
+
+    const data =  this.$store.getters['profiling/selectedRecord']
+    const list = this.list;
+    if(Object.keys(data).length > 0){
+      list.forEach((item) => {
+        this.formData[item.key].manDay.fl = data.laborOperationCoffee[item.key].manDayFL
+        this.formData[item.key].manDay.hl = data.laborOperationCoffee[item.key].manDayHL
+        this.formData[item.key].manDay.bl = data.laborOperationCoffee[item.key].manDatBL
+        this.formData[item.key].manAnimalDay.fl = data.laborOperationCoffee[item.key].manAnimalDayFL
+        this.formData[item.key].manAnimalDay.hl = data.laborOperationCoffee[item.key].manAnimalDayHL
+        this.formData[item.key].manAnimalDay.bl = data.laborOperationCoffee[item.key].manAnimalDayBL
+        this.formData[item.key].animalDay.rented = data.laborOperationCoffee[item.key].animalRented
+        this.formData[item.key].animalDay.rentedAmount = data.laborOperationCoffee[item.key].animalRentedAmnt
+        this.formData[item.key].mechanical.rented = data.laborOperationCoffee[item.key].machineRented
+        this.formData[item.key].mechanical.rentedAmount = data.laborOperationCoffee[item.key].machineRentedAmnt
+        this.formData[item.key].remarks = data.laborOperationCoffee[item.key].remarks
+      })
+    }else{
+      list.forEach((item) => {
+        this.formData[item.key].manDay.fl = ''
+        this.formData[item.key].manDay.hl = ''
+        this.formData[item.key].manDay.bl = ''
+        this.formData[item.key].manAnimalDay.fl = ''
+        this.formData[item.key].manAnimalDay.hl = ''
+        this.formData[item.key].manAnimalDay.bl = ''
+        this.formData[item.key].animalDay.rented = ''
+        this.formData[item.key].animalDay.rentedAmount = ''
+        this.formData[item.key].mechanical.rented = ''
+        this.formData[item.key].mechanical.rentedAmount = ''
+        this.formData[item.key].remarks = ''
+      })
+    }
+    this.tempValue = "tempValue"
   },
 }
 </script>

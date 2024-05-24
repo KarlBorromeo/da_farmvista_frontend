@@ -144,7 +144,7 @@
         <v-row>
           <form-input-container>
             <v-text-field
-              v-model="farmToMarket.qty"
+              v-model="farmToOutputMarket.qty"
               :rules="numberRule"
               label="* Details"
             ></v-text-field>
@@ -152,7 +152,7 @@
           <form-radio-container title="Distance in (b) Unit">
             <v-radio-group
               :rules="requiredRule"
-              v-model="farmToMarket.unit"
+              v-model="farmToOutputMarket.unit"
               class="pa-0 ma-0"
             >
               <v-radio
@@ -166,7 +166,7 @@
           <form-radio-container title="Dominant Mode of Transportation">
             <v-radio-group
               :rules="requiredRule"
-              v-model="farmToMarket.dominantTransportation"
+              v-model="farmToOutputMarket.dominantTransportation"
               class="pa-0 ma-0"
             >
               <v-radio
@@ -176,8 +176,8 @@
                 :value="item"
               ></v-radio>
               <v-text-field
-                v-if="farmToMarket.dominantTransportation == 'others'"
-                v-model="farmToMarket.dominantTransportationOther"
+                v-if="farmToOutputMarket.dominantTransportation == 'others'"
+                v-model="farmToOutputMarket.dominantTransportationOther"
                 :rules="requiredRule"
                 label="* Please Specify"
                 class="my-0 py-0 pt-1"
@@ -187,7 +187,7 @@
           <form-radio-container title="Dominant Type of Road">
             <v-radio-group
               :rules="requiredRule"
-              v-model="farmToMarket.dominantRoad"
+              v-model="farmToOutputMarket.dominantRoad"
               class="pa-0 ma-0"
             >
               <v-radio
@@ -197,8 +197,8 @@
                 :value="item"
               ></v-radio>
               <v-text-field
-                v-if="farmToMarket.dominantRoad == 'others'"
-                v-model="farmToMarket.dominantRoadOther"
+                v-if="farmToOutputMarket.dominantRoad == 'others'"
+                v-model="farmToOutputMarket.dominantRoadOther"
                 :rules="requiredRule"
                 label="* Please Specify"
                 class="my-0 py-0 pt-1"
@@ -213,7 +213,7 @@
         <v-row>
           <form-input-container>
             <v-text-field
-              v-model="residenceToMarket.qty"
+              v-model="residenceToOutputMarket.qty"
               :rules="numberRule"
               label="* Details"
             ></v-text-field>
@@ -221,7 +221,7 @@
           <form-radio-container title="Distance in (b) Unit">
             <v-radio-group
               :rules="requiredRule"
-              v-model="residenceToMarket.unit"
+              v-model="residenceToOutputMarket.unit"
               class="pa-0 ma-0"
             >
               <v-radio
@@ -235,7 +235,7 @@
           <form-radio-container title="Dominant Mode of Transportation">
             <v-radio-group
               :rules="requiredRule"
-              v-model="residenceToMarket.dominantTransportation"
+              v-model="residenceToOutputMarket.dominantTransportation"
               class="pa-0 ma-0"
             >
               <v-radio
@@ -245,8 +245,8 @@
                 :value="item"
               ></v-radio>
               <v-text-field
-                v-if="residenceToMarket.dominantTransportation == 'others'"
-                v-model="residenceToMarket.dominantTransportationOther"
+                v-if="residenceToOutputMarket.dominantTransportation == 'others'"
+                v-model="residenceToOutputMarket.dominantTransportationOther"
                 :rules="requiredRule"
                 label="* Please Specify"
                 class="my-0 py-0 pt-1"
@@ -256,7 +256,7 @@
           <form-radio-container title="Dominant Type of Road">
             <v-radio-group
               :rules="requiredRule"
-              v-model="residenceToMarket.dominantRoad"
+              v-model="residenceToOutputMarket.dominantRoad"
               class="pa-0 ma-0"
             >
               <v-radio
@@ -266,8 +266,8 @@
                 :value="item"
               ></v-radio>
               <v-text-field
-                v-if="residenceToMarket.dominantRoad == 'others'"
-                v-model="residenceToMarket.dominantRoadOther"
+                v-if="residenceToOutputMarket.dominantRoad == 'others'"
+                v-model="residenceToOutputMarket.dominantRoadOther"
                 :rules="requiredRule"
                 label="* Please Specify"
                 class="my-0 py-0 pt-1"
@@ -282,7 +282,7 @@
         <v-row>
           <form-input-container>
             <v-text-field
-              v-model="farmToInputSupply.qty"
+              v-model="farmToInputsSupply.qty"
               :rules="numberRule"
               label="* Details"
             ></v-text-field>
@@ -290,7 +290,7 @@
           <form-radio-container title="Distance in (b) Unit">
             <v-radio-group
               :rules="requiredRule"
-              v-model="farmToInputSupply.unit"
+              v-model="farmToInputsSupply.unit"
               class="pa-0 ma-0"
             >
               <v-radio
@@ -304,7 +304,7 @@
           <form-radio-container title="Dominant Mode of Transportation">
             <v-radio-group
               :rules="requiredRule"
-              v-model="farmToInputSupply.dominantTransportation"
+              v-model="farmToInputsSupply.dominantTransportation"
               class="pa-0 ma-0"
             >
               <v-radio
@@ -314,8 +314,8 @@
                 :value="item"
               ></v-radio>
               <v-text-field
-                v-if="farmToInputSupply.dominantTransportation == 'others'"
-                v-model="farmToInputSupply.dominantTransportationOther"
+                v-if="farmToInputsSupply.dominantTransportation == 'others'"
+                v-model="farmToInputsSupply.dominantTransportationOther"
                 :rules="requiredRule"
                 label="* Please Specify"
                 class="my-0 py-0 pt-1"
@@ -325,7 +325,7 @@
           <form-radio-container title="Dominant Type of Road">
             <v-radio-group
               :rules="requiredRule"
-              v-model="farmToInputSupply.dominantRoad"
+              v-model="farmToInputsSupply.dominantRoad"
               class="pa-0 ma-0"
             >
               <v-radio
@@ -335,8 +335,8 @@
                 :value="item"
               ></v-radio>
               <v-text-field
-                v-if="farmToInputSupply.dominantRoad == 'others'"
-                v-model="farmToInputSupply.dominantRoadOther"
+                v-if="farmToInputsSupply.dominantRoad == 'others'"
+                v-model="farmToInputsSupply.dominantRoadOther"
                 :rules="requiredRule"
                 label="* Please Specify"
                 class="my-0 py-0 pt-1"
@@ -351,7 +351,7 @@
         <v-row>
           <form-input-container>
             <v-text-field
-              v-model="residenceToInputSupply.qty"
+              v-model="residenceToInputsSupply.qty"
               :rules="numberRule"
               label="* Details"
             ></v-text-field>
@@ -359,7 +359,7 @@
           <form-radio-container title="Distance in (b) Unit">
             <v-radio-group
               :rules="requiredRule"
-              v-model="residenceToInputSupply.unit"
+              v-model="residenceToInputsSupply.unit"
               class="pa-0 ma-0"
             >
               <v-radio
@@ -373,7 +373,7 @@
           <form-radio-container title="Dominant Mode of Transportation">
             <v-radio-group
               :rules="requiredRule"
-              v-model="residenceToInputSupply.dominantTransportation"
+              v-model="residenceToInputsSupply.dominantTransportation"
               class="pa-0 ma-0"
             >
               <v-radio
@@ -383,8 +383,8 @@
                 :value="item"
               ></v-radio>
               <v-text-field
-                v-if="residenceToInputSupply.dominantTransportation == 'others'"
-                v-model="residenceToInputSupply.dominantTransportationOther"
+                v-if="residenceToInputsSupply.dominantTransportation == 'others'"
+                v-model="residenceToInputsSupply.dominantTransportationOther"
                 :rules="requiredRule"
                 label="* Please Specify"
                 class="my-0 py-0 pt-1"
@@ -394,7 +394,7 @@
           <form-radio-container title="Dominant Type of Road">
             <v-radio-group
               :rules="requiredRule"
-              v-model="residenceToInputSupply.dominantRoad"
+              v-model="residenceToInputsSupply.dominantRoad"
               class="pa-0 ma-0"
             >
               <v-radio
@@ -404,8 +404,8 @@
                 :value="item"
               ></v-radio>
               <v-text-field
-                v-if="residenceToInputSupply.dominantRoad == 'others'"
-                v-model="residenceToInputSupply.dominantRoadOther"
+                v-if="residenceToInputsSupply.dominantRoad == 'others'"
+                v-model="residenceToInputsSupply.dominantRoadOther"
                 :rules="requiredRule"
                 label="* Please Specify"
                 class="my-0 py-0 pt-1"
@@ -423,7 +423,7 @@
 import formCard from '~/components/authenticated/form/formCard.vue'
 import FormInputContainer from '~/components/authenticated/form/formInputContainer.vue'
 import FormRadioContainer from '~/components/authenticated/form/formRadioContainer.vue'
-import { concatinateOtherValueToString } from '~/reusableFunctions/questionnaireValidation'
+import { concatinateOtherValueToString, isOtherValueDefinedRadio, extractUnmatchedValueRadio } from '~/reusableFunctions/questionnaireValidation'
 export default {
   components: {
     formCard,
@@ -448,7 +448,7 @@ export default {
       dominantRoad: 'dirt road',
       dominantRoadOther: '',
     },
-    farmToMarket: {
+    farmToOutputMarket: {
       qty: 1,
       unit: 'meter',
       dominantTransportation: 'walk',
@@ -456,7 +456,7 @@ export default {
       dominantRoad: 'dirt road',
       dominantRoadOther: '',
     },
-    residenceToMarket: {
+    residenceToOutputMarket: {
       qty: 1,
       unit: 'meter',
       dominantTransportation: 'walk',
@@ -464,7 +464,7 @@ export default {
       dominantRoad: 'dirt road',
       dominantRoadOther: '',
     },
-    farmToInputSupply: {
+    farmToInputsSupply: {
       qty: 1,
       unit: 'meter',
       dominantTransportation: 'walk',
@@ -472,7 +472,7 @@ export default {
       dominantRoad: 'dirt road',
       dominantRoadOther: '',
     },
-    residenceToInputSupply: {
+    residenceToInputsSupply: {
       qty: 1,
       unit: 'meter',
       dominantTransportation: 'walk',
@@ -488,6 +488,7 @@ export default {
       (v) => !!v || 'This field is required',
       (v) => parseFloat(v) >= 0 || 'invalid value',
     ],
+    tempValue: ''
   }),
   methods: {
     /* test if the form is valid, return boolean */
@@ -540,51 +541,51 @@ export default {
           ),
         },
         farmToOutputMarket: {
-          distanceQty: this.farmToMarket.qty,
-          distanceUnit: this.farmToMarket.unit,
+          distanceQty: this.farmToOutputMarket.qty,
+          distanceUnit: this.farmToOutputMarket.unit,
           dominantTransportation: concatinateOtherValueToString(
-            this.farmToMarket.dominantTransportation,
-            this.farmToMarket.dominantTransportationOther
+            this.farmToOutputMarket.dominantTransportation,
+            this.farmToOutputMarket.dominantTransportationOther
           ),
           dominantTypeRoad: concatinateOtherValueToString(
-            this.farmToMarket.dominantRoad,
-            this.farmToMarket.dominantRoadOther
+            this.farmToOutputMarket.dominantRoad,
+            this.farmToOutputMarket.dominantRoadOther
           ),
         },
         residenceToOutputMarket: {
-          distanceQty: this.residenceToMarket.qty,
-          distanceUnit: this.residenceToMarket.unit,
+          distanceQty: this.residenceToOutputMarket.qty,
+          distanceUnit: this.residenceToOutputMarket.unit,
           dominantTransportation: concatinateOtherValueToString(
-            this.residenceToMarket.dominantTransportation,
-            this.residenceToMarket.dominantTransportationOther
+            this.residenceToOutputMarket.dominantTransportation,
+            this.residenceToOutputMarket.dominantTransportationOther
           ),
           dominantTypeRoad: concatinateOtherValueToString(
-            this.residenceToMarket.dominantRoad,
-            this.residenceToMarket.dominantRoadOther
+            this.residenceToOutputMarket.dominantRoad,
+            this.residenceToOutputMarket.dominantRoadOther
           ),
         },
         farmToInputsSupply: {
-          distanceQty: this.farmToInputSupply.qty,
-          distanceUnit: this.farmToInputSupply.unit,
+          distanceQty: this.farmToInputsSupply.qty,
+          distanceUnit: this.farmToInputsSupply.unit,
           dominantTransportation: concatinateOtherValueToString(
-            this.farmToInputSupply.dominantTransportation,
-            this.farmToInputSupply.dominantTransportationOther
+            this.farmToInputsSupply.dominantTransportation,
+            this.farmToInputsSupply.dominantTransportationOther
           ),
           dominantTypeRoad: concatinateOtherValueToString(
-            this.farmToInputSupply.dominantRoad,
-            this.farmToInputSupply.dominantRoadOther
+            this.farmToInputsSupply.dominantRoad,
+            this.farmToInputsSupply.dominantRoadOther
           ),
         },
         residenceToInputsSupply: {
-          distanceQty: this.residenceToInputSupply.qty,
-          distanceUnit: this.residenceToInputSupply.unit,
+          distanceQty: this.residenceToInputsSupply.qty,
+          distanceUnit: this.residenceToInputsSupply.unit,
           dominantTransportation: concatinateOtherValueToString(
-            this.residenceToInputSupply.dominantTransportation,
-            this.residenceToInputSupply.dominantTransportationOther
+            this.residenceToInputsSupply.dominantTransportation,
+            this.residenceToInputsSupply.dominantTransportationOther
           ),
           dominantTypeRoad: concatinateOtherValueToString(
-            this.residenceToInputSupply.dominantRoad,
-            this.residenceToInputSupply.dominantRoadOther
+            this.residenceToInputsSupply.dominantRoad,
+            this.residenceToInputsSupply.dominantRoadOther
           ),
         },
       }
@@ -594,6 +595,52 @@ export default {
     this.unitItems = this.$store.getters['questionnaireCode/Code17']
     this.transportationItems = this.$store.getters['questionnaireCode/Code18']
     this.roadItems = this.$store.getters['questionnaireCode/Code19']
+
+    const rootKeyNames = ['farmToNearestRoad',
+                      'farmToResidence',
+                      'farmToOutputMarket',
+                      'residenceToOutputMarket',
+                      'farmToInputsSupply',
+                      'residenceToInputsSupply']       
+    const localNestedKeyNames = ['qty',
+                    'unit',
+                    'dominantTransportation',
+                    'dominantTransportationOther',
+                    'dominantRoad',
+                    'dominantRoadOther']    
+    const data =  this.$store.getters['profiling/selectedRecord']
+    if(Object.keys(data).length > 0){
+      const reponseNestedKeyNames = [
+                      'distanceQty',
+                      'distanceUnit',
+                      'dominantTransportation',
+                      'dominantTransportation',
+                      'dominantTypeRoad',
+                      'dominantTypeRoad']
+      rootKeyNames.forEach( rootKey => {
+        localNestedKeyNames.forEach( (nestedKey, i ) => {
+            const responseNestedKey = reponseNestedKeyNames[i]
+            if(nestedKey == 'dominantTransportation'){
+              this[rootKey][nestedKey] = isOtherValueDefinedRadio(data.infraDistanceAccessibility[rootKey][responseNestedKey],this.transportationItems)
+            }else if(nestedKey == 'dominantTransportationOther'){
+              this[rootKey][nestedKey] = extractUnmatchedValueRadio(data.infraDistanceAccessibility[rootKey][responseNestedKey],this.transportationItems)
+            }else if(nestedKey == 'dominantRoad'){
+              this[rootKey][nestedKey] = isOtherValueDefinedRadio(data.infraDistanceAccessibility[rootKey][responseNestedKey],this.roadItems)
+            }else if(nestedKey == 'dominantRoadOther'){
+              this[rootKey][nestedKey] = extractUnmatchedValueRadio(data.infraDistanceAccessibility[rootKey][responseNestedKey],this.roadItems)
+            }else{
+              this[rootKey][nestedKey] = data.infraDistanceAccessibility[rootKey][responseNestedKey]
+            } 
+        })
+      })
+    }else{
+      rootKeyNames.forEach( rootKey => {
+        localNestedKeyNames.forEach( (nestedKey, i ) => {
+          this[rootKey][nestedKey] = ''
+        })
+      })
+    }
+    this.tempValue = "tempValue"
   },
   watch: {
     farmToNearestRoad: {
@@ -608,25 +655,25 @@ export default {
       },
       deep: true,
     },
-    farmToMarket: {
+    farmToOutputMarket: {
       handler: function () {
         this.validate()
       },
       deep: true,
     },
-    residenceToMarket: {
+    residenceToOutputMarket: {
       handler: function () {
         this.validate()
       },
       deep: true,
     },
-    farmToInputSupply: {
+    farmToInputsSupply: {
       handler: function () {
         this.validate()
       },
       deep: true,
     },
-    residenceToInputSupply: {
+    residenceToInputsSupply: {
       handler: function () {
         this.validate()
       },
@@ -652,46 +699,49 @@ export default {
         this.farmToResidence.dominantRoadOther = ''
       }
     },
-    'farmToMarket.dominantTransportation': function (value) {
+    'farmToOutputMarket.dominantTransportation': function (value) {
       if (value !== 'others') {
-        this.farmToMarket.dominantTransportationOther = ''
+        this.farmToOutputMarket.dominantTransportationOther = ''
       }
     },
-    'farmToMarket.dominantRoad': function (value) {
+    'farmToOutputMarket.dominantRoad': function (value) {
       if (value !== 'others') {
-        this.farmToMarket.dominantRoadOther = ''
+        this.farmToOutputMarket.dominantRoadOther = ''
       }
     },
-    'residenceToMarket.dominantTransportation': function (value) {
+    'residenceToOutputMarket.dominantTransportation': function (value) {
       if (value !== 'others') {
-        this.residenceToMarket.dominantTransportationOther = ''
+        this.residenceToOutputMarket.dominantTransportationOther = ''
       }
     },
-    'residenceToMarket.dominantRoad': function (value) {
+    'residenceToOutputMarket.dominantRoad': function (value) {
       if (value !== 'others') {
-        this.residenceToMarket.dominantRoadOther = ''
+        this.residenceToOutputMarket.dominantRoadOther = ''
       }
     },
-    'farmToInputSupply.dominantTransportation': function (value) {
+    'farmToInputsSupply.dominantTransportation': function (value) {
       if (value !== 'others') {
-        this.farmToInputSupply.dominantTransportationOther = ''
+        this.farmToInputsSupply.dominantTransportationOther = ''
       }
     },
-    'farmToInputSupply.dominantRoad': function (value) {
+    'farmToInputsSupply.dominantRoad': function (value) {
       if (value !== 'others') {
-        this.residenceToInputSupply.dominantTransportationOther = ''
+        this.residenceToInputsSupply.dominantTransportationOther = ''
       }
     },
-    'residenceToInputSupply.dominantRoad': function (value) {
+    'residenceToInputsSupply.dominantRoad': function (value) {
       if (value !== 'others') {
-        this.residenceToInputSupply.dominantRoadOther = ''
+        this.residenceToInputsSupply.dominantRoadOther = ''
       }
     },
-    'residenceToInputSupply.dominantTransportation': function (value) {
+    'residenceToInputsSupply.dominantTransportation': function (value) {
       if (value !== 'others') {
-        this.residenceToInputSupplyOther = ''
+        this.residenceToInputsSupplyOther = ''
       }
     },
+    tempValue(){
+      this.validate()
+    }
   },
 }
 </script>
