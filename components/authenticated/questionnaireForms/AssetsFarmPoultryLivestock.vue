@@ -103,6 +103,10 @@ export default {
           tabName: 'AssetsFarmPoultryLivestockValidated',
           valid: true,
         })
+        this.$store.commit('questionnaire/saveAssetsData', {
+          keyName: 'poultryLivestock',
+          data: this.getEmptyData(),
+        })
         return;
       }
       const valid = this.$refs.form.validate()
@@ -115,6 +119,15 @@ export default {
           keyName: 'poultryLivestock',
           data: this.getData(),
         })
+      }
+    },
+     /* create an object that is an empty values */
+     getEmptyData(){
+      return {
+        poultryLivestockName: [],
+        poultryLivestockQuantity: [],
+        isAcquiredGovtProgram: [],
+        poultryLivestockAge: [],
       }
     },
     /* get the data and convert it into expected key/value formats in BackEnd */

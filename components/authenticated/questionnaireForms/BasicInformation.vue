@@ -110,7 +110,6 @@ export default {
       this.middleInitial = data.profile.middleInitial
       this.contactNumber = data.profile.contactNumber
       this.farmerCode = data.profile.farmerCode
-      console.log(data.profile)
     }else{
       this.firstname = ''
       this.surename = ''

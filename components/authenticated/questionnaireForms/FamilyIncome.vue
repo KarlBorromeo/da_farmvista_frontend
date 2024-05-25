@@ -128,6 +128,10 @@ export default {
           tabName: 'FamilyIncomeValidated',
           valid: true,
         })
+        this.$store.commit('questionnaire/saveData', {
+          keyName: 'familySourceIncome',
+          data: this.getEmptyData(),
+        })
         return;
       }
       const valid = this.$refs.form.validate()
@@ -142,6 +146,18 @@ export default {
         })
       }
       console.log(this.getData(),valid)
+    },
+    /* create an object that is an empty values */
+    getEmptyData(){
+      return {
+        fullName: [],
+        age: [],
+        sex: [],
+        roleInFamily: [],
+        educationAttainment: [],
+        estimatedContribution: [],
+        isInvolvedCoffeeFarm: []
+      }
     },
     /* get the data and convert it into expected key/value formats in BackEnd */
     getData() {

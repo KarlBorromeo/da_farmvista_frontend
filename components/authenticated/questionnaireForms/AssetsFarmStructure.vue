@@ -111,6 +111,11 @@ export default {
           tabName: 'AssetsFarmStructureValidated',
           valid: true,
         })
+        this.$store.commit('questionnaire/saveAssetsData', {
+          keyName: 'structureBldgLand',
+          data: this.getEmptyData(),
+        })
+        return;
       }
       const valid = this.$refs.form.validate()
       this.$store.commit('questionnaire/toggleNextTab', {
@@ -122,6 +127,15 @@ export default {
           keyName: 'structureBldgLand',
           data: this.getData(),
         })
+      }
+    },
+    /* create an object that is an empty values */
+    getEmptyData(){
+      return {
+        structureBldgLandName: [],
+        structureBldgLandQuantity: [],
+        isAcquiredGovtProgram: [],
+        structureBldgLandAge: [],
       }
     },
     /* get the data and convert it into expected key/value formats in BackEnd */

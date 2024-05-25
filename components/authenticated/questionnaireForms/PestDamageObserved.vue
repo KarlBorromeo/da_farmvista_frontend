@@ -115,6 +115,10 @@ export default {
           tabName: 'PestDamageObservedValidated',
           valid: true,
           })
+          this.$store.commit('questionnaire/saveData', {
+          keyName: 'pestDamageObserved',
+          data: this.getEmptyData(),
+        })
         return;
       }
       const valid = this.$refs.form.validate()
@@ -140,6 +144,15 @@ export default {
         arr.push(originalList[i] + other)
       }
       return arr
+    },
+     /* get the data and convert it into expected key/value formats in BackEnd */
+    getEmptyData() {
+      return {
+        pestsDiseasesPlants: [],
+        stageOccurrence:[],
+        management: [],
+        perceivedEffectiveness: []
+      }
     },
     /* get the data and convert it into expected key/value formats in BackEnd */
     getData() {

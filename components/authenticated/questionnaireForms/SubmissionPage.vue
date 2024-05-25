@@ -1,6 +1,6 @@
 <template>
   <v-container id="container">
-    <v-btn large class="success" @click="submitAll" :disabled="loading">Submit All Forms</v-btn>
+    <v-btn large class="success" @click="submitAll" :disabled="loading">{{ buttonText }} All Forms</v-btn>
     <snackbar ref="snackbar" />
   </v-container>
 </template>
@@ -26,6 +26,16 @@ export default {
       this.loading = false;
     },
   },
+  computed: {
+    buttonText(){
+      const isEditing = this.$store.getters['profiling/isEditingMode'];
+      if(isEditing){
+        return 'Update'
+      }else{
+        return 'Submit'
+      }
+    }
+  }
 }
 </script>
 

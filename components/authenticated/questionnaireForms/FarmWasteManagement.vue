@@ -103,6 +103,10 @@ export default {
           tabName: 'FarmWasteManagementValidated',
           valid: true,
         })
+        this.$store.commit('questionnaire/saveData', {
+          keyName: 'farmWasteManagement',
+          data: this.getEmptyData(),
+        })
         return;
       }
       const valid = this.$refs.form.validate()
@@ -115,6 +119,15 @@ export default {
           keyName: 'farmWasteManagement',
           data: this.getData(),
         })
+      }
+    },
+    /* create an object that is an empty values */
+    getEmptyData(){
+      return {
+        cropsGrown:  [],
+        kindWasteProduced:  [],
+        volumeWasteKg:  [],
+        isUtilized: []
       }
     },
     /* get the data and convert it into expected key/value formats in BackEnd */

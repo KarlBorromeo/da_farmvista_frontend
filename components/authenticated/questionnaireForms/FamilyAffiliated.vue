@@ -162,11 +162,13 @@ export default {
           tabName: 'FamilyAffiliatedValidated',
           valid: true,
         })
+        this.$store.commit('questionnaire/saveData', {
+          keyName: 'familyAffiliatedFarmOrg',
+          data: this.getEmptyData(),
+        })
         return;
       }
-
       const valid = this.$refs.form.validate()
-      console.log(this.getData(),valid)
       this.$store.commit('questionnaire/toggleNextTab', {
         tabName: 'FamilyAffiliatedValidated',
         valid,
@@ -176,6 +178,18 @@ export default {
           keyName: 'familyAffiliatedFarmOrg',
           data: this.getData(),
         })
+      }
+    },
+    /* create an object that is an empty values */
+    getEmptyData(){
+      return {
+        fullName: [],
+        position: [],
+        nameOrganization: [],
+        typeOrganization: [],
+        yearsAsMember: [],
+        statusMembership: [],
+        statusOrganization: []
       }
     },
     /* get the data and convert it into expected key/value formats in BackEnd */
@@ -276,11 +290,11 @@ export default {
     },
     typeOrganization(value) {
       this.validate()
-      // value.forEach((element, index) => {
-      //   if (element !== 'others') {
-      //     this.typeOrganizationOthers[index] = ''
-      //   }
-      // })
+      value.forEach((element, index) => {
+        if (element !== 'others') {
+          this.typeOrganizationOthers[index] = ''
+        }
+      })
     },
     nameFamilyMember() {
       this.validate()
