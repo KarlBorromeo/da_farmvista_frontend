@@ -88,5 +88,17 @@ export default {
       this.validate()
     },
   },
+  beforeMount(){
+    const data = this.$store.getters['profiling/selectedRecord']
+    if (Object.keys(data).length > 0) {
+      this.goodAgriculturalPracticeUsedCoffee = data.openEndedQuestion.goodAgriculturalPracticeUsedCoffee
+      this.proposedInterventionCoffee = data.openEndedQuestion.proposedInterventionCoffee
+      this.challengesEncounteredCoffee = data.openEndedQuestion.challengesEncounteredCoffee
+    } else {
+      this.goodAgriculturalPracticeUsedCoffee = ''
+      this.proposedInterventionCoffee = ''
+      this.challengesEncounteredCoffee = ''
+    }
+  }
 }
 </script>

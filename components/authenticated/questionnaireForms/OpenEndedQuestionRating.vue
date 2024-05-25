@@ -348,6 +348,32 @@ export default {
       deep: true,
     },
   },
+  beforeMount(){
+    const data = this.$store.getters['profiling/selectedRecord']
+    if (Object.keys(data).length > 0) {
+        for(let i=0; i<this.topicsList.length; i++){
+          let topic = this.topicsList[i].topic
+          if(this.formData[topic]){
+            let keyArrays = Object.keys(this.formData[topic])
+            keyArrays.forEach( key => {
+              this.formData[topic][key] = data.openEndedQuestionRating[topic][key]
+            })
+          }
+          
+        }
+    } else {
+      for(let i=0; i<this.topicsList.length; i++){
+          let topic = this.topicsList[i].topic
+          if(this.formData[topic]){
+            let keyArrays = Object.keys(this.formData[topic])
+            keyArrays.forEach( key => {
+              this.formData[topic][key] = ''
+            })
+          }
+          
+        }
+    }
+  }
 }
 </script>
 

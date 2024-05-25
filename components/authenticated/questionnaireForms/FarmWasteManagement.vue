@@ -59,6 +59,7 @@ import formCard from '~/components/authenticated/form/formCard.vue'
 import formCardButton from '~/components/authenticated/form/formCardButton.vue'
 import FormInputContainer from '~/components/authenticated/form/formInputContainer.vue'
 import FormRadioContainer from '~/components/authenticated/form/formRadioContainer.vue'
+import { extractUnmatchedValueCheck } from '~/reusableFunctions/questionnaireValidation'
 export default {
   components: {
     formCard,
@@ -173,8 +174,8 @@ export default {
       if(length>0){
         this.items = length
         for(let i=0; i<length; i++){
-          this.cropsGrown[i] = data.farmWasteManagement[i].cropsGrown
-          this.kindsWasteProduced[i] = data.farmWasteManagement[i].kindWasteProduced
+          this.cropsGrown[i] = extractUnmatchedValueCheck(data.farmWasteManagement[i].cropsGrown,[])
+          this.kindsWasteProduced[i] = extractUnmatchedValueCheck(data.farmWasteManagement[i].kindWasteProduced,[])
           this.volumeWaste[i] = data.farmWasteManagement[i].volumeWasteKg
           this.isUtilized[i] = data.farmWasteManagement[i].isUtilized
         }          

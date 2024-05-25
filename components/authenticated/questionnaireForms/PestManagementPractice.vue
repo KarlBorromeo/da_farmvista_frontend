@@ -262,6 +262,10 @@
 import {
   concatOtherValueToList,
   concatinateOtherValueToString,
+  extractUnmatchedValueCheck,
+  isOtherValueTickedCheckbox,
+  isOtherValueDefinedRadio,
+  extractUnmatchedValueRadio,
 } from '~/reusableFunctions/questionnaireValidation'
 import FormCheckboxContainer from '~/components/authenticated/form/formCheckboxContainer.vue'
 import FormInputContainer from '~/components/authenticated/form/formInputContainer.vue'
@@ -310,10 +314,7 @@ export default {
       whoOrganizedTraining: '',
 
       isAgreeItems: ['yes', 'no'], // didusePesticie, didsprayYourself, haveSprayer, attendedTrainingPestManagement
-      numberRule: [
-        (v) => !!v || 'This field is required',
-        (v) => parseInt(v) >= 0 || 'invalid value',
-      ],
+      numberRule: [(v) => parseInt(v) >= 0 || 'invalid value'],
       requiredRule: [(v) => !!v || 'This field is required'],
       listRule: [(v) => v.length > 0 || 'this field is required'],
     }
@@ -509,7 +510,86 @@ export default {
       this.$store.getters['questionnaireCode/PesticideConsideration']
     this.whomPestControlAdviceItems =
       this.$store.getters['questionnaireCode/PestControlAdvice']
-  },
+
+    const data = this.$store.getters['profiling/selectedRecord']
+    if (Object.keys(data).length > 0) {
+      this.didUsePesticide = data.pestManagementPractice.didUsePesticide
+      this.typeOfPesticide = data.pestManagementPractice.typeOfPesticide
+      this.whomIdeaApplyPesticide =
+        data.pestManagementPractice.whomIdeaApplyPesticide
+      this.timesAppliedPesticide =
+        data.pestManagementPractice.timesAppliedPesticide
+      this.didSprayYourself = data.pestManagementPractice.didSprayYourself
+      this.payLaborSpraying = data.pestManagementPractice.payLaborSpraying
+      this.haveSprayer = data.pestManagementPractice.haveSprayer
+      this.kindSprayerHave = isOtherValueTickedCheckbox(
+        data.pestManagementPractice.kindSprayerHave,
+        this.kindSprayerHaveItems
+      )
+      this.kindSprayerHaveOther = extractUnmatchedValueCheck(
+        data.pestManagementPractice.kindSprayerHave,
+        this.kindSprayerHaveItems
+      )
+      this.howGetSprayer = data.pestManagementPractice.howGetSprayer
+      this.hearAboutPesticideUsed =
+        data.pestManagementPractice.hearAboutPesticideUsed
+      this.pesticideUsedMassMedia =
+        data.pestManagementPractice.pesticideUsedMassMedia
+      this.pesticideUsedGroup = data.pestManagementPractice.pesticideUsedGroup
+      this.importantConsiderationDecidingPesticide = isOtherValueDefinedRadio(
+        data.pestManagementPractice.importantConsiderationDecidingPesticide,
+        this.importantConsiderationDecidingPesticideItems
+      )
+      this.importantConsiderationDecidingPesticideOther =
+        extractUnmatchedValueRadio(
+          data.pestManagementPractice.importantConsiderationDecidingPesticide,
+          this.importantConsiderationDecidingPesticideItems
+        )
+      this.whomPestControlAdvice = isOtherValueTickedCheckbox(
+        data.pestManagementPractice.whomPestControlAdvice,
+        this.whomPestControlAdviceItems
+      )
+      this.controlAdviceMassMedia = extractUnmatchedValueCheck(
+        data.pestManagementPractice.controlAdviceMassMedia,
+        this.whomPestControlAdviceItems
+      )
+      this.controlAdviceOther = extractUnmatchedValueCheck(
+        data.pestManagementPractice.whomPestControlAdvice,
+        this.whomPestControlAdviceItems
+      )
+      this.whichAdviceCredible = data.pestManagementPractice.whichAdviceCredible
+      this.why = data.pestManagementPractice.why
+      this.attendedTrainingPestManagement =
+        data.pestManagementPractice.attendedTrainingPestManagement
+      this.trainingAbout = data.pestManagementPractice.trainingAbout
+      this.whoOrganizedTraining =
+        data.pestManagementPractice.whoOrganizedTraining
+    } else {
+      this.didUsePesticide = ''
+      this.typeOfPesticide = ''
+      this.whomIdeaApplyPesticide = ''
+      this.timesAppliedPesticide = ''
+      this.didSprayYourself = ''
+      this.payLaborSpraying = ''
+      this.haveSprayer = ''
+      this.kindSprayerHave = []
+      this.kindSprayerHaveOther = ''
+      this.howGetSprayer = ''
+      this.hearAboutPesticideUsed = ''
+      this.pesticideUsedMassMedia = ''
+      this.pesticideUsedGroup = ''
+      this.importantConsiderationDecidingPesticide = ''
+      this.importantConsiderationDecidingPesticideOther = ''
+      this.whomPestControlAdvice = []
+      this.controlAdviceMassMedia = ''
+      this.controlAdviceOther = ''
+      this.whichAdviceCredible = ''
+      this.why = ''
+      this.attendedTrainingPestManagement = ''
+      this.trainingAbout = ''
+      this.whoOrganizedTraining = ''
+    }
+  }
 }
 </script>
 

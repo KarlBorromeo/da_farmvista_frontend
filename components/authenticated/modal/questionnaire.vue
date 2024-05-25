@@ -322,7 +322,7 @@ export default {
   data() {
     return {
       loading: false,
-      current: 'PestManagementPractice',
+      current: 'SurveyInformation',
       currentCommodity: 'coffee',
     }
   },

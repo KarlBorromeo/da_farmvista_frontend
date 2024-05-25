@@ -9,7 +9,7 @@
           <form-input-container v-if="!item.radio">
             <v-text-field
               v-model="formData[item.key].variable"
-              :rules="requiredRule"
+              :rules="numberRule"
               label="* Details"
               :type="item.type"
             ></v-text-field>
@@ -181,13 +181,13 @@ export default {
     farmFinancingItems: [],
     requiredRule: [(v) => !!v || 'This field is required, n/a if none'],
     numberRule: [
-      (v) => !!v || 'This field is required',
       (v) => parseInt(v) >= 0 || 'invalid value',
     ],
   }),
   methods: {
     /* test if the form is valid, return boolean */
     validate() {
+      console.log('validating')
       const valid = this.$refs.form.validate()
       this.$store.commit('questionnaire/toggleNextTab', {
         tabName: 'CoffeeHarvestMarketingValidated',
@@ -230,6 +230,21 @@ export default {
   },
   beforeMount() {
     this.farmFinancingItems = this.$store.getters['questionnaireCode/Code27']
+
+    const data = this.$store.getters['profiling/selectedRecord']
+    if (Object.keys(data).length > 0) {
+      for (let i = 0; i < this.list.length; i++) {
+        const keyName = this.list[i].key
+        this.formData[keyName].variable = data.coffeeHarvestMarketing[keyName].variable
+        this.formData[keyName].remarks = data.coffeeHarvestMarketing[keyName].remarks
+      }
+    } else {
+      for (let i = 0; i < this.list.length; i++) {
+        const keyName = this.list[i].key
+        this.formData[keyName].variable = ''
+        this.formData[keyName].remarks = ''
+      }
+    }
   },
   watch: {
     formData: {

@@ -1170,6 +1170,30 @@ export default {
       }
     },
   },
+  beforeMount() {
+    this.farmFinancingItems = this.$store.getters['questionnaireCode/Code27']
+
+    const data = this.$store.getters['profiling/selectedRecord']
+    if (Object.keys(data).length > 0) {
+      this.haveHeardCoffeeFarmTech = data.techAwareness.haveHeardCoffeeFarmTech;
+      for (let i = 0; i < this.list.length; i++) {
+        const keyName = this.list[i]
+        this.formData[keyName].isHeard = data.techAwarenessAdoption[keyName].isHeard
+        this.formData[keyName].sourceInfo = data.techAwarenessAdoption[keyName].sourceInfo
+        this.formData[keyName].howDidLearnTechPractices = data.techAwarenessAdoption[keyName].howDidLearnTechPractices
+        this.formData[keyName].year = data.techAwarenessAdoption[keyName].year
+      }
+    } else {
+      this.haveHeardCoffeeFarmTech = ''
+      for (let i = 0; i < this.list.length; i++) {
+        const keyName = this.list[i]
+        this.formData[keyName].isHeard = ''
+        this.formData[keyName].sourceInfo = ''
+        this.formData[keyName].howDidLearnTechPractices = ''
+        this.formData[keyName].year = ''
+      }
+    }
+  },
 }
 </script>
 <style scoped>

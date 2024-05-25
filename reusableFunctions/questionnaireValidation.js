@@ -50,6 +50,7 @@ export const convertNumbers = (value) =>{
 // FOR RADIO AND SELECT
 /* check if the radio value is not matched on the one of the list, return 'others' if not match else return the matched value, this is for radio or select*/
 export const isOtherValueDefinedRadio = (value,items) => {
+  console.log(value,items)
   let countMatchedTimes = 0;
   let matchedValue = '';
   for(let i=0; i<items.length; i++){
@@ -103,8 +104,8 @@ export const extractUnmatchedValueCheck = (value,items) => {
         }
     })
   }else{
-    console.error('this is for checkbox function, expecting (array,array)')
-    return
+    /* this is incase we are passing not array value */
+    return extractUnmatchedValueRadio(value,items)
   }
   if (extracted.endsWith(', ')) {
     extracted = extracted.slice(0, -2);

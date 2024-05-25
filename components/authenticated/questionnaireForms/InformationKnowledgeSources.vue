@@ -269,7 +269,7 @@
         <form-input-container>
           <v-text-field
             v-model="formData.howOftenUsedSocmed"
-            :rules="requiredRule"
+            :rules="numberRule"
             label="How do you often use social media?"
             required
           />
@@ -281,7 +281,7 @@
 </template>
 
 <script>
-import { concatinateOtherValueToString } from '~/reusableFunctions/questionnaireValidation'
+import { concatinateOtherValueToString, isOtherValueDefinedRadio, extractUnmatchedValueRadio} from '~/reusableFunctions/questionnaireValidation'
 import FormCheckboxContainer from '~/components/authenticated/form/formCheckboxContainer.vue'
 import FormInputContainer from '~/components/authenticated/form/formInputContainer.vue'
 import FormMenuContainer from '~/components/authenticated/form/formMenuContainer.vue'
@@ -316,10 +316,11 @@ export default {
         startTimeWatchingTv: '01:00',
         endTimeWatchingTv: '03:00',
         haveSocmedAccount: 'yes',
-        howOftenUsedSocmed: '3hrs',
+        howOftenUsedSocmed: '3',
       },
       isAgreeItems: ['yes', 'no'],
       requiredRule: [(v) => !!v || 'This field is required'],
+      numberRule: [(v) => parseInt(v)>=0 || 'invalid number']
     // }
   }),
   methods: {
@@ -376,6 +377,37 @@ export default {
   beforeMount() {
     this.formData.printMaterialsReadItems =
       this.$store.getters['questionnaireCode/PrintMaterials']
+
+    const data = this.$store.getters['profiling/selectedRecord']
+    if (Object.keys(data).length > 0) {
+        this.formData.haveFunctionalRadio = data.infoKnowledgeSource.haveFunctionalRadio
+        this.formData.radioStationUsuallyTune = data.infoKnowledgeSource.radioStationUsuallyTune
+        this.formData.startTimeListeningRadio = data.infoKnowledgeSource.timeListeningRadio[0]
+        this.formData.endTimeListeningRadio = data.infoKnowledgeSource.timeListeningRadio?.[1] ?? ''
+        this.formData.radioProgramsListens = data.infoKnowledgeSource.radioProgramsListens
+        this.formData.printMaterialsRead = isOtherValueDefinedRadio(data.infoKnowledgeSource.printMaterialsRead, this.formData.printMaterialsReadItems)
+        this.formData.printMaterialsReadOther = extractUnmatchedValueRadio(data.infoKnowledgeSource.printMaterialsRead, this.formData.printMaterialsReadItems)
+        this.formData.haveTelevision = data.infoKnowledgeSource.haveTelevision
+        this.formData.tvStationWatches = data.infoKnowledgeSource.tvStationWatches
+        this.formData.startTimeWatchingTv = data.infoKnowledgeSource.timeWatchingTv[0]
+        this.formData.endTimeWatchingTv = data.infoKnowledgeSource.timeWatchingTv?.[1] ?? ''
+        this.formData.haveSocmedAccount = data.infoKnowledgeSource.haveSocmedAccount
+        this.formData.howOftenUsedSocmed = data.infoKnowledgeSource.howOftenUsedSocmed
+    } else {
+      this.formData.haveFunctionalRadio = ''
+        this.formData.radioStationUsuallyTune = ''
+        this.formData.startTimeListeningRadio = ''
+        this.formData.endTimeListeningRadio = ''
+        this.formData.radioProgramsListens = ''
+        this.formData.printMaterialsRead = ''
+        this.formData.printMaterialsReadOther = ''
+        this.formData.haveTelevision = ''
+        this.formData.tvStationWatches = ''
+        this.formData.startTimeWatchingTv = ''
+        this.formData.endTimeWatchingTv = ''
+        this.formData.haveSocmedAccount = ''
+        this.formData.howOftenUsedSocmed = ''
+    }
   },
   watch: {
     formData: {

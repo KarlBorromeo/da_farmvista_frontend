@@ -283,22 +283,23 @@ export default {
 
     const data =  this.$store.getters['profiling/selectedRecord']
     if(Object.keys(data).length > 0){
+      console.log('data: ',data.detailDwellingPlace)
       this.yearsResidence = data.yearCurrentResidence.numberYear
-      this.houseOwernship = isOtherValueDefinedRadio(data.detailDwellingPlace.houseOwnership,this.houseOwernshipItems)
-      this.houseOwernshipOther = extractUnmatchedValueRadio(data.detailDwellingPlace.houseOwnership,this.houseOwernshipItems)
-      this.numberRooms = data.detailDwellingPlace.numberOfRooms
-      this.typeRoofMade = isOtherValueDefinedRadio(data.detailDwellingPlace.roofMaterialsMade,this.typeRoofMadeItems)
-      this.typeRoofMadeOther = extractUnmatchedValueRadio(data.detailDwellingPlace.roofMaterialsMade,this.typeRoofMadeItems)
-      this.typeWallMade = isOtherValueDefinedRadio(data.detailDwellingPlace.wallsMaterialsMade,this.typeWallMadeItems)
-      this.typeWallMadeOther = extractUnmatchedValueRadio(data.detailDwellingPlace.wallsMaterialsMade,this.typeWallMadeItems)
-      this.kindToilet = isOtherValueDefinedRadio(data.detailDwellingPlace.kindToiletFacility,this.kindToiletItems)
-      this.kindToiletOther = extractUnmatchedValueRadio(data.detailDwellingPlace.kindToiletFacility,this.kindToiletItems)
-      this.lightingFacility = isOtherValueDefinedRadio(data.detailDwellingPlace.kindLightingFacility,this.lightingFacilityItems)
-      this.lightingFacilityOther = extractUnmatchedValueRadio(data.detailDwellingPlace.kindLightingFacility,this.lightingFacilityItems)
-      this.sourceCooking = isOtherValueDefinedRadio(data.detailDwellingPlace.sourceCookingFuel,this.sourceCookingItems)
-      this.sourceCookingOther = extractUnmatchedValueRadio(data.detailDwellingPlace.sourceCookingFuel,this.sourceCookingItems)
-      this.sourceWaterDrink = isOtherValueDefinedRadio(data.detailDwellingPlace.sourceDrinkingSupply,this.sourceWaterDrinkItems)
-      this.sourceWaterDrinkOther = extractUnmatchedValueRadio(data.detailDwellingPlace.sourceDrinkingSupply,this.sourceWaterDrinkItems)
+      this.houseOwernship = isOtherValueDefinedRadio(data.detailDwellingPlace[0].houseOwnership,this.houseOwernshipItems)
+      this.houseOwernshipOther = extractUnmatchedValueRadio(data.detailDwellingPlace[0].houseOwnership,this.houseOwernshipItems)
+      this.numberRooms = data.detailDwellingPlace[0].numberOfRooms
+      this.typeRoofMade = isOtherValueDefinedRadio(data.detailDwellingPlace[0].roofMaterialsMade,this.typeRoofMadeItems)
+      this.typeRoofMadeOther = extractUnmatchedValueRadio(data.detailDwellingPlace[0].roofMaterialsMade,this.typeRoofMadeItems)
+      this.typeWallMade = isOtherValueDefinedRadio(data.detailDwellingPlace[0].wallsMaterialsMade,this.typeWallMadeItems)
+      this.typeWallMadeOther = extractUnmatchedValueRadio(data.detailDwellingPlace[0].wallsMaterialsMade,this.typeWallMadeItems)
+      this.kindToilet = isOtherValueDefinedRadio(data.detailDwellingPlace[0].kindToiletFacility,this.kindToiletItems)
+      this.kindToiletOther = extractUnmatchedValueRadio(data.detailDwellingPlace[0].kindToiletFacility,this.kindToiletItems)
+      this.lightingFacility = isOtherValueDefinedRadio(data.detailDwellingPlace[0].kindLightingFacility,this.lightingFacilityItems)
+      this.lightingFacilityOther = extractUnmatchedValueRadio(data.detailDwellingPlace[0].kindLightingFacility,this.lightingFacilityItems)
+      this.sourceCooking = isOtherValueDefinedRadio(data.detailDwellingPlace[0].sourceCookingFuel,this.sourceCookingItems)
+      this.sourceCookingOther = extractUnmatchedValueRadio(data.detailDwellingPlace[0].sourceCookingFuel,this.sourceCookingItems)
+      this.sourceWaterDrink = isOtherValueDefinedRadio(data.detailDwellingPlace[0].sourceDrinkingSupply,this.sourceWaterDrinkItems)
+      this.sourceWaterDrinkOther = extractUnmatchedValueRadio(data.detailDwellingPlace[0].sourceDrinkingSupply,this.sourceWaterDrinkItems)
     }else{
       this.yearsResidence = 0
       this.houseOwernship = ''
