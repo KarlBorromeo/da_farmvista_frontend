@@ -39,7 +39,7 @@
       ></v-pagination>
     </div>
     <v-dialog v-if="dialog" v-model="dialog" width="700">
-      <questionnaire-vue  :id="id" :commodityProp="commodity"/>
+      <questionnaire-vue :id="id" :commodityProp="commodity" />
     </v-dialog>
     <snackbar ref="snackbar" />
   </div>
@@ -101,21 +101,20 @@ export default {
 
     /* when edit button is clicked, open the modal for the whole record of this specific id, and enable editing mode and disabling create mode*/
     editItem(id) {
-      this.dialog = true;
-      this.id = id;
+      this.dialog = true
+      this.id = id
     },
 
     /* when delete button is clicked, delete the specific record using its id */
     async deleteItem(id) {
       const confirmed = confirm('Are you sure to delete this record?')
-      if(confirmed){
-        try{
-          const res = await this.$store.dispatch('profiling/deleteSurvey',id)
+      if (confirmed) {
+        try {
+          const res = await this.$store.dispatch('profiling/deleteSurvey', id)
           this.$refs.snackbar.showBar(res, 'success')
-        }catch(error){
+        } catch (error) {
           this.$refs.snackbar.showBar(error, 'red')
         }
-        
       }
     },
 
@@ -157,13 +156,16 @@ export default {
       }
     },
     /* delete the selected id, if the modal is closed */
-    dialog(val){
-      if(!val){
+    dialog(val) {
+      if (!val) {
         this.id = ''
         this.$store.commit('questionnaire/resetTabsValidity')
-        this.$store.commit('questionnaire/displayCurrentTab','SurveyInformation')
+        this.$store.commit(
+          'questionnaire/displayCurrentTab',
+          'SurveyInformation'
+        )
       }
-    }
+    },
   },
 }
 </script>

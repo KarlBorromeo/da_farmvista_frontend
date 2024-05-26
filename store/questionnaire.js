@@ -145,12 +145,12 @@ export const state = () => ({
   ],
   currentTab: 'SurveyInformation',
   isAllValid: false,
-  commodity: ''
+  commodity: '',
 })
 
 export const getters = {
   /* return the updated tab selected */
-  currentTab(state){
+  currentTab(state) {
     return state.currentTab
   },
   SurveyInformationValidated(state) {
@@ -424,7 +424,6 @@ export const getters = {
     }
   },
   InformationKnowledgeSourcesValidated(state) {
-    
     const index = state.tabs.findIndex(
       (el) => el.tabName == 'InformationKnowledgeSourcesValidated'
     )
@@ -481,15 +480,15 @@ export const mutations = {
   },
 
   /* reset the validity of all tabs into false */
-  resetTabsValidity(state){
-    state.tabs.forEach( tab => {
+  resetTabsValidity(state) {
+    state.tabs.forEach((tab) => {
       tab.validity = false
       tab.tempValidity = false
-    });
+    })
   },
 
   /* display the next tab contents */
-  displayCurrentTab(state,tabName){
+  displayCurrentTab(state, tabName) {
     state.currentTab = tabName
   },
 
@@ -515,9 +514,9 @@ export const mutations = {
   },
 
   /* update the commodity type */
-  updateCommodity(state,commodity){
+  updateCommodity(state, commodity) {
     state.commodity = commodity
-  }
+  },
 }
 
 export const actions = {
@@ -528,7 +527,7 @@ export const actions = {
     context.commit('checkValidityAll')
     const payload = {
       type: context.state.commodity,
-      form: context.state.form
+      form: context.state.form,
     }
     if (context.state.isAllValid) {
       try {
@@ -542,8 +541,8 @@ export const actions = {
     }
   },
   /* change the commodity and reset the tabs validity*/
-  updateCommodity(context,commodity){
-    context.commit('updateCommodity',commodity)
+  updateCommodity(context, commodity) {
+    context.commit('updateCommodity', commodity)
     context.commit('resetTabsValidity')
-  }
+  },
 }

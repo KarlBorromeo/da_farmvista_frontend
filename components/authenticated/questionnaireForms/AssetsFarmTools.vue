@@ -92,21 +92,21 @@ export default {
       (v) => parseFloat(v) >= 0 || 'invalid value',
     ],
     requiredRule: [(v) => !!v || 'This field is required'],
-    tempValue: ''
+    tempValue: '',
   }),
   methods: {
     /* test if the form is valid, return boolean */
     validate() {
-      if(this.items == 0){
-         this.$store.commit('questionnaire/toggleNextTab', {
-            tabName: 'AssetsFarmToolsValidated',
-            valid: true
-          })
-          this.$store.commit('questionnaire/saveAssetsData', {
+      if (this.items == 0) {
+        this.$store.commit('questionnaire/toggleNextTab', {
+          tabName: 'AssetsFarmToolsValidated',
+          valid: true,
+        })
+        this.$store.commit('questionnaire/saveAssetsData', {
           keyName: 'farmTool',
           data: this.getEmptyData(),
         })
-          return;
+        return
       }
       const valid = this.$refs.form.validate()
       this.$store.commit('questionnaire/toggleNextTab', {
@@ -121,12 +121,12 @@ export default {
       }
     },
     /* create an object that is an empty values */
-    getEmptyData(){
+    getEmptyData() {
       return {
         farmtoolName: [],
         farmtoolQuantity: [],
         isAcquiredGovtProgram: [],
-        farmtoolAge: []
+        farmtoolAge: [],
       }
     },
     /* get the data and convert it into expected key/value formats in BackEnd */
@@ -151,13 +151,13 @@ export default {
     increment() {
       this.items++
     },
-    resetData(){
+    resetData() {
       this.items = 0
       this.toolName = []
       this.toolQuantity = []
       this.isToolAquiredGovtProg = []
       this.toolAge = []
-    }
+    },
   },
   watch: {
     toolName() {
@@ -172,29 +172,31 @@ export default {
     toolAge() {
       this.validate()
     },
-    tempValue(){
+    tempValue() {
       this.validate()
-    }
+    },
   },
   beforeMount() {
     this.toolNameItems =
       this.$store.getters['questionnaireCode/Code5FarmImplementsTools']
 
-    const data =  this.$store.getters['profiling/selectedRecord']
-    if(Object.keys(data).length > 0){
+    const data = this.$store.getters['profiling/selectedRecord']
+    if (Object.keys(data).length > 0) {
       const length = data.farmHouseholdAsset.farmTool.length
-      if(length>0){
+      if (length > 0) {
         this.items = length
-        for(let i=0; i<length; i++){
+        for (let i = 0; i < length; i++) {
           this.toolName[i] = data.farmHouseholdAsset.farmTool[i].farmtoolName
-          this.toolQuantity[i] = data.farmHouseholdAsset.farmTool[i].farmtoolQuantity
-          this.isToolAquiredGovtProg[i] = data.farmHouseholdAsset.farmTool[i].isAcquiredGovtProgram
+          this.toolQuantity[i] =
+            data.farmHouseholdAsset.farmTool[i].farmtoolQuantity
+          this.isToolAquiredGovtProg[i] =
+            data.farmHouseholdAsset.farmTool[i].isAcquiredGovtProgram
           this.toolAge[i] = data.farmHouseholdAsset.farmTool[i].farmtoolAge
-        }          
-      }else{
+        }
+      } else {
         this.resetData()
       }
-    }else{
+    } else {
       this.resetData()
     }
     this.tempValue = 'tempvalue'

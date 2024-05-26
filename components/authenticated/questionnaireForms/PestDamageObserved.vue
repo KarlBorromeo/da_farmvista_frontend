@@ -80,7 +80,11 @@
 </template>
 
 <script>
-import { concatinateEachIndexes, isOtherValueDefinedRadio, extractUnmatchedValueRadio } from '~/reusableFunctions/questionnaireValidation'
+import {
+  concatinateEachIndexes,
+  isOtherValueDefinedRadio,
+  extractUnmatchedValueRadio,
+} from '~/reusableFunctions/questionnaireValidation'
 import formCard from '~/components/authenticated/form/formCard.vue'
 import formCardButton from '~/components/authenticated/form/formCardButton.vue'
 import FormInputContainer from '~/components/authenticated/form/formInputContainer.vue'
@@ -105,21 +109,21 @@ export default {
     perceivedEffectiveness: ['highly effective'],
     perceivedEffectivenessItems: [],
     requiredRule: [(v) => !!v || 'This field is required'],
-    tempValue: ''
+    tempValue: '',
   }),
   methods: {
     /* test if the form is valid, return boolean */
     validate() {
-      if(this.items == 0){
+      if (this.items == 0) {
         this.$store.commit('questionnaire/toggleNextTab', {
           tabName: 'PestDamageObservedValidated',
           valid: true,
-          })
-          this.$store.commit('questionnaire/saveData', {
+        })
+        this.$store.commit('questionnaire/saveData', {
           keyName: 'pestDamageObserved',
           data: this.getEmptyData(),
         })
-        return;
+        return
       }
       const valid = this.$refs.form.validate()
       this.$store.commit('questionnaire/toggleNextTab', {
@@ -145,13 +149,13 @@ export default {
       }
       return arr
     },
-     /* get the data and convert it into expected key/value formats in BackEnd */
+    /* get the data and convert it into expected key/value formats in BackEnd */
     getEmptyData() {
       return {
         pestsDiseasesPlants: [],
-        stageOccurrence:[],
+        stageOccurrence: [],
         management: [],
-        perceivedEffectiveness: []
+        perceivedEffectiveness: [],
       }
     },
     /* get the data and convert it into expected key/value formats in BackEnd */
@@ -181,14 +185,14 @@ export default {
     increment() {
       this.items++
     },
-    resetData(){
+    resetData() {
       this.items = 0
       this.pestDiseaseDamagesPlants = []
       this.stageOccurence = []
       this.management = []
       this.managementOther = []
       this.perceivedEffectiveness = []
-    }
+    },
   },
   beforeMount() {
     this.pestDiseaseDamagesPlantsItems =
@@ -198,22 +202,30 @@ export default {
     this.perceivedEffectivenessItems =
       this.$store.getters['questionnaireCode/Code26']
 
-    const data =  this.$store.getters['profiling/selectedRecord']
-    if(Object.keys(data).length > 0){
+    const data = this.$store.getters['profiling/selectedRecord']
+    if (Object.keys(data).length > 0) {
       const length = data.pestDamageObserved.length
-      if(length>0){
+      if (length > 0) {
         this.items = length
-        for(let i=0; i<length; i++){
-          this.pestDiseaseDamagesPlants[i] = data.pestDamageObserved[i].pestsDiseasesPlants
+        for (let i = 0; i < length; i++) {
+          this.pestDiseaseDamagesPlants[i] =
+            data.pestDamageObserved[i].pestsDiseasesPlants
           this.stageOccurence[i] = data.pestDamageObserved[i].stageOccurrence
-          this.management[i] = isOtherValueDefinedRadio(data.pestDamageObserved[i].management,this.managementItems)
-          this.managementOther[i] = extractUnmatchedValueRadio(data.pestDamageObserved[i].management,this.managementItems)
-          this.perceivedEffectiveness[i] = data.pestDamageObserved[i].perceivedEffectiveness
-        }          
-      }else{
+          this.management[i] = isOtherValueDefinedRadio(
+            data.pestDamageObserved[i].management,
+            this.managementItems
+          )
+          this.managementOther[i] = extractUnmatchedValueRadio(
+            data.pestDamageObserved[i].management,
+            this.managementItems
+          )
+          this.perceivedEffectiveness[i] =
+            data.pestDamageObserved[i].perceivedEffectiveness
+        }
+      } else {
         this.resetData()
       }
-    }else{
+    } else {
       this.resetData()
     }
     this.tempValue = 'tempvalue'
@@ -236,15 +248,15 @@ export default {
     management() {
       this.validate()
     },
-    managementOther(){
+    managementOther() {
       this.validate()
     },
     perceivedEffectiveness() {
       this.validate()
     },
-    tempValue(){
+    tempValue() {
       this.validate()
-    }
+    },
   },
 }
 </script>

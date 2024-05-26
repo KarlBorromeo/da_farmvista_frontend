@@ -1,4 +1,3 @@
-
 import * as api from '../api/profiling'
 
 export const state = () => ({
@@ -7,7 +6,7 @@ export const state = () => ({
   selectedRecord: {
     /* define here the keys and empty values each forms */
   },
-  isEditingMode: false
+  isEditingMode: false,
 })
 
 export const getters = {
@@ -17,12 +16,12 @@ export const getters = {
   countPages(state) {
     return state.countPages
   },
-  selectedRecord(state){
+  selectedRecord(state) {
     return state.selectedRecord
   },
-  isEditingMode(state){
+  isEditingMode(state) {
     return state.isEditingMode
-  }
+  },
 }
 
 /* function for capitalizing the first index of the word and also */
@@ -89,29 +88,29 @@ export const mutations = {
   /* 
     toggle the editing record boolean holder, this holds if the user is editing a record or creating a record, reset to empty the selected if creation mode 
   */
-  toggleEditingMode(state, bool){
+  toggleEditingMode(state, bool) {
     state.isEditingMode = bool
-    if(!bool){
-      state.selectedRecord = {};
+    if (!bool) {
+      state.selectedRecord = {}
     }
   },
 
   /* save the single record to the store to able the form questionnaire to access the existing values of the selected record */
-  saveSelectedRecord(state,obj){
-    state.selectedRecord = obj;
+  saveSelectedRecord(state, obj) {
+    state.selectedRecord = obj
   },
 
   /* delete specific record locally */
-  deleteSurvey(state,id){
-    if(state.itemsCurrentPage.length>0){
-      const index = state.itemsCurrentPage.findIndex( item => item.id === id)
-      if(index >=0){
-        state.itemsCurrentPage.splice(index,1);
-      }else{
+  deleteSurvey(state, id) {
+    if (state.itemsCurrentPage.length > 0) {
+      const index = state.itemsCurrentPage.findIndex((item) => item.id === id)
+      if (index >= 0) {
+        state.itemsCurrentPage.splice(index, 1)
+      } else {
         throw new Error('cannot find the record in store')
       }
     }
-  }
+  },
 }
 
 export const actions = {
@@ -128,27 +127,27 @@ export const actions = {
       throw error
     }
   },
-  
+
   /* fetch one survey record using id */
-  async fetchSingleSurvey(context,payload){
+  async fetchSingleSurvey(context, payload) {
     console.log('fetc;hing single record')
-    try{
-      const response = await api.fetchSingleSurvey(payload);
-      context.commit('saveSelectedRecord',response)
-      context.commit('toggleEditingMode', true) 
-    }catch(error){
+    try {
+      const response = await api.fetchSingleSurvey(payload)
+      context.commit('saveSelectedRecord', response)
+      context.commit('toggleEditingMode', true)
+    } catch (error) {
       throw error
     }
   },
 
   /* delete specific survey */
-  async deleteSurvey(context,id){
-    try{
-      const res = await api.deleteSurvey(id);
-      context.commit('deleteSurvey',id);
+  async deleteSurvey(context, id) {
+    try {
+      const res = await api.deleteSurvey(id)
+      context.commit('deleteSurvey', id)
       return res
-    }catch(error){
+    } catch (error) {
       throw error
     }
-  }
+  },
 }

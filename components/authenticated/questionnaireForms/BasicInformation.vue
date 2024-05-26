@@ -63,7 +63,7 @@ export default {
     /* test if the form is valid, return boolean */
     async validate() {
       const valid = this.$refs.form.validate()
-      console.log('validated',valid)
+      console.log('validated', valid)
       this.$store.commit('questionnaire/toggleNextTab', {
         tabName: 'BasicInformationValidated',
         valid,
@@ -102,21 +102,21 @@ export default {
       this.validate()
     },
   },
-  beforeMount(){
-    const data =  this.$store.getters['profiling/selectedRecord']
-    if(Object.keys(data).length > 0){
+  beforeMount() {
+    const data = this.$store.getters['profiling/selectedRecord']
+    if (Object.keys(data).length > 0) {
       this.firstname = data.profile.firstName
       this.surename = data.profile.lastName
       this.middleInitial = data.profile.middleInitial
       this.contactNumber = data.profile.contactNumber
       this.farmerCode = data.profile.farmerCode
-    }else{
+    } else {
       this.firstname = ''
       this.surename = ''
       this.middleInitial = ''
       this.contactNumber = ''
       this.farmerCode = ''
     }
-  }
+  },
 }
 </script>

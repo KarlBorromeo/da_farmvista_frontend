@@ -84,7 +84,11 @@
 import FormCheckboxContainer from '~/components/authenticated/form/formCheckboxContainer.vue'
 import FormInputContainer from '~/components/authenticated/form/formInputContainer.vue'
 import FormRadioContainer from '~/components/authenticated/form/formRadioContainer.vue'
-import { concatOtherValueToList, extractUnmatchedValueCheck, isOtherValueTickedCheckbox } from '~/reusableFunctions/questionnaireValidation'
+import {
+  concatOtherValueToList,
+  extractUnmatchedValueCheck,
+  isOtherValueTickedCheckbox,
+} from '~/reusableFunctions/questionnaireValidation'
 export default {
   components: {
     FormInputContainer,
@@ -107,7 +111,7 @@ export default {
     whereHearAboutReutilizationOther: '',
     requiredRule: [(v) => !!v || 'This field is required'],
     listRule: [(v) => v.length > 0 || 'Must select at least one one'],
-    tempValue: ''
+    tempValue: '',
   }),
   methods: {
     /* test if the form is valid, return boolean */
@@ -183,16 +187,35 @@ export default {
         'questionnaireCode/AgriWasteReutilizationInformationSource'
       ]
 
-    const data =  this.$store.getters['profiling/selectedRecord']
-    if(Object.keys(data).length > 0){
-      this.agriculturalSystem = isOtherValueTickedCheckbox(data.farmActivity.agriculturalSystem, this.agriculturalSystemItems)
-      this.agriculturalSystemOther = extractUnmatchedValueCheck(data.farmActivity.agriculturalSystem, this.agriculturalSystemItems)
-      this.didKnowProperReutilization = data.farmActivity.knowProperReutilizationAgriwaste
-      this.whereDisposedUnutilizedAgriwaste = isOtherValueTickedCheckbox(data.farmActivity.whereDisposedUnutilizedAgriwaste, this.whereDisposedUnutilizedAgriwasteItems)
-      this.whereDisposedUnutilizedAgriwasteOther = extractUnmatchedValueCheck(data.farmActivity.whereDisposedUnutilizedAgriwaste, this.whereDisposedUnutilizedAgriwasteItems)
-      this.whereHearAboutReutilization = isOtherValueTickedCheckbox(data.farmActivity.whereHearAboutReutilization,this.whereHearAboutReutilizationItems)
-      this.whereHearAboutReutilizationOther = extractUnmatchedValueCheck(data.farmActivity.whereHearAboutReutilization,this.whereHearAboutReutilizationItems)
-    }else{
+    const data = this.$store.getters['profiling/selectedRecord']
+    if (Object.keys(data).length > 0) {
+      this.agriculturalSystem = isOtherValueTickedCheckbox(
+        data.farmActivity.agriculturalSystem,
+        this.agriculturalSystemItems
+      )
+      this.agriculturalSystemOther = extractUnmatchedValueCheck(
+        data.farmActivity.agriculturalSystem,
+        this.agriculturalSystemItems
+      )
+      this.didKnowProperReutilization =
+        data.farmActivity.knowProperReutilizationAgriwaste
+      this.whereDisposedUnutilizedAgriwaste = isOtherValueTickedCheckbox(
+        data.farmActivity.whereDisposedUnutilizedAgriwaste,
+        this.whereDisposedUnutilizedAgriwasteItems
+      )
+      this.whereDisposedUnutilizedAgriwasteOther = extractUnmatchedValueCheck(
+        data.farmActivity.whereDisposedUnutilizedAgriwaste,
+        this.whereDisposedUnutilizedAgriwasteItems
+      )
+      this.whereHearAboutReutilization = isOtherValueTickedCheckbox(
+        data.farmActivity.whereHearAboutReutilization,
+        this.whereHearAboutReutilizationItems
+      )
+      this.whereHearAboutReutilizationOther = extractUnmatchedValueCheck(
+        data.farmActivity.whereHearAboutReutilization,
+        this.whereHearAboutReutilizationItems
+      )
+    } else {
       this.agriculturalSystem = []
       this.agriculturalSystemOther = ''
       this.didKnowProperReutilization = ''
@@ -201,7 +224,7 @@ export default {
       this.whereHearAboutReutilization = []
       this.whereHearAboutReutilizationOther = ''
     }
-    this.tempValue = "tempValue"
+    this.tempValue = 'tempValue'
   },
   watch: {
     agriculturalSystem(value) {
@@ -237,9 +260,9 @@ export default {
     whereHearAboutReutilizationOther() {
       this.validate()
     },
-    tempValue(){
+    tempValue() {
       this.validate()
-    }
+    },
   },
 }
 </script>

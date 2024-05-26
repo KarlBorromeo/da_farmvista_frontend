@@ -245,7 +245,9 @@
                 :value="item"
               ></v-radio>
               <v-text-field
-                v-if="residenceToOutputMarket.dominantTransportation == 'others'"
+                v-if="
+                  residenceToOutputMarket.dominantTransportation == 'others'
+                "
                 v-model="residenceToOutputMarket.dominantTransportationOther"
                 :rules="requiredRule"
                 label="* Please Specify"
@@ -383,7 +385,9 @@
                 :value="item"
               ></v-radio>
               <v-text-field
-                v-if="residenceToInputsSupply.dominantTransportation == 'others'"
+                v-if="
+                  residenceToInputsSupply.dominantTransportation == 'others'
+                "
                 v-model="residenceToInputsSupply.dominantTransportationOther"
                 :rules="requiredRule"
                 label="* Please Specify"
@@ -423,7 +427,11 @@
 import formCard from '~/components/authenticated/form/formCard.vue'
 import FormInputContainer from '~/components/authenticated/form/formInputContainer.vue'
 import FormRadioContainer from '~/components/authenticated/form/formRadioContainer.vue'
-import { concatinateOtherValueToString, isOtherValueDefinedRadio, extractUnmatchedValueRadio } from '~/reusableFunctions/questionnaireValidation'
+import {
+  concatinateOtherValueToString,
+  isOtherValueDefinedRadio,
+  extractUnmatchedValueRadio,
+} from '~/reusableFunctions/questionnaireValidation'
 export default {
   components: {
     formCard,
@@ -488,7 +496,7 @@ export default {
       (v) => !!v || 'This field is required',
       (v) => parseFloat(v) >= 0 || 'invalid value',
     ],
-    tempValue: ''
+    tempValue: '',
   }),
   methods: {
     /* test if the form is valid, return boolean */
@@ -596,51 +604,69 @@ export default {
     this.transportationItems = this.$store.getters['questionnaireCode/Code18']
     this.roadItems = this.$store.getters['questionnaireCode/Code19']
 
-    const rootKeyNames = ['farmToNearestRoad',
-                      'farmToResidence',
-                      'farmToOutputMarket',
-                      'residenceToOutputMarket',
-                      'farmToInputsSupply',
-                      'residenceToInputsSupply']       
-    const localNestedKeyNames = ['qty',
-                    'unit',
-                    'dominantTransportation',
-                    'dominantTransportationOther',
-                    'dominantRoad',
-                    'dominantRoadOther']    
-    const data =  this.$store.getters['profiling/selectedRecord']
-    if(Object.keys(data).length > 0){
+    const rootKeyNames = [
+      'farmToNearestRoad',
+      'farmToResidence',
+      'farmToOutputMarket',
+      'residenceToOutputMarket',
+      'farmToInputsSupply',
+      'residenceToInputsSupply',
+    ]
+    const localNestedKeyNames = [
+      'qty',
+      'unit',
+      'dominantTransportation',
+      'dominantTransportationOther',
+      'dominantRoad',
+      'dominantRoadOther',
+    ]
+    const data = this.$store.getters['profiling/selectedRecord']
+    if (Object.keys(data).length > 0) {
       const reponseNestedKeyNames = [
-                      'distanceQty',
-                      'distanceUnit',
-                      'dominantTransportation',
-                      'dominantTransportation',
-                      'dominantTypeRoad',
-                      'dominantTypeRoad']
-      rootKeyNames.forEach( rootKey => {
-        localNestedKeyNames.forEach( (nestedKey, i ) => {
-            const responseNestedKey = reponseNestedKeyNames[i]
-            if(nestedKey == 'dominantTransportation'){
-              this[rootKey][nestedKey] = isOtherValueDefinedRadio(data.infraDistanceAccessibility[rootKey][responseNestedKey],this.transportationItems)
-            }else if(nestedKey == 'dominantTransportationOther'){
-              this[rootKey][nestedKey] = extractUnmatchedValueRadio(data.infraDistanceAccessibility[rootKey][responseNestedKey],this.transportationItems)
-            }else if(nestedKey == 'dominantRoad'){
-              this[rootKey][nestedKey] = isOtherValueDefinedRadio(data.infraDistanceAccessibility[rootKey][responseNestedKey],this.roadItems)
-            }else if(nestedKey == 'dominantRoadOther'){
-              this[rootKey][nestedKey] = extractUnmatchedValueRadio(data.infraDistanceAccessibility[rootKey][responseNestedKey],this.roadItems)
-            }else{
-              this[rootKey][nestedKey] = data.infraDistanceAccessibility[rootKey][responseNestedKey]
-            } 
+        'distanceQty',
+        'distanceUnit',
+        'dominantTransportation',
+        'dominantTransportation',
+        'dominantTypeRoad',
+        'dominantTypeRoad',
+      ]
+      rootKeyNames.forEach((rootKey) => {
+        localNestedKeyNames.forEach((nestedKey, i) => {
+          const responseNestedKey = reponseNestedKeyNames[i]
+          if (nestedKey == 'dominantTransportation') {
+            this[rootKey][nestedKey] = isOtherValueDefinedRadio(
+              data.infraDistanceAccessibility[rootKey][responseNestedKey],
+              this.transportationItems
+            )
+          } else if (nestedKey == 'dominantTransportationOther') {
+            this[rootKey][nestedKey] = extractUnmatchedValueRadio(
+              data.infraDistanceAccessibility[rootKey][responseNestedKey],
+              this.transportationItems
+            )
+          } else if (nestedKey == 'dominantRoad') {
+            this[rootKey][nestedKey] = isOtherValueDefinedRadio(
+              data.infraDistanceAccessibility[rootKey][responseNestedKey],
+              this.roadItems
+            )
+          } else if (nestedKey == 'dominantRoadOther') {
+            this[rootKey][nestedKey] = extractUnmatchedValueRadio(
+              data.infraDistanceAccessibility[rootKey][responseNestedKey],
+              this.roadItems
+            )
+          } else {
+            this[rootKey][nestedKey] =
+              data.infraDistanceAccessibility[rootKey][responseNestedKey]
+          }
         })
       })
-    }else{
-      rootKeyNames.forEach( rootKey => {
-        localNestedKeyNames.forEach( (nestedKey, i ) => {
+    } else {
+      rootKeyNames.forEach((rootKey) => {
+        localNestedKeyNames.forEach((nestedKey, i) => {
           this[rootKey][nestedKey] = ''
         })
       })
     }
-    this.tempValue = "tempValue"
+    this.tempValue = 'tempValue'
   },
   watch: {
     farmToNearestRoad: {
@@ -739,9 +765,9 @@ export default {
         this.residenceToInputsSupplyOther = ''
       }
     },
-    tempValue(){
+    tempValue() {
       this.validate()
-    }
+    },
   },
 }
 </script>

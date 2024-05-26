@@ -182,7 +182,11 @@
 <script>
 import FormInputContainer from '~/components/authenticated/form/formInputContainer.vue'
 import FormRadioContainer from '~/components/authenticated/form/formRadioContainer.vue'
-import { concatinateOtherValueToString, isOtherValueDefinedRadio, extractUnmatchedValueRadio } from '~/reusableFunctions/questionnaireValidation'
+import {
+  concatinateOtherValueToString,
+  isOtherValueDefinedRadio,
+  extractUnmatchedValueRadio,
+} from '~/reusableFunctions/questionnaireValidation'
 export default {
   components: { FormInputContainer, FormRadioContainer },
   data: () => ({
@@ -211,11 +215,9 @@ export default {
     sourceWaterDrink: 'spring',
     sourceWaterDrinkItems: [],
     sourceWaterDrinkOther: '',
-    numberRules: [
-      (v) => parseInt(v) >= 0 || 'invalid value'
-    ],
+    numberRules: [(v) => parseInt(v) >= 0 || 'invalid value'],
     requiredRule: [(v) => !!v || 'This field is required'],
-    tempValue: ''
+    tempValue: '',
   }),
   methods: {
     /* test if the form is valid, return boolean */
@@ -281,29 +283,71 @@ export default {
     this.sourceCookingItems = this.$store.getters['questionnaireCode/Code11']
     this.sourceWaterDrinkItems = this.$store.getters['questionnaireCode/Code12']
 
-    const data =  this.$store.getters['profiling/selectedRecord']
-    if(Object.keys(data).length > 0){
-      console.log('data: ',data.detailDwellingPlace)
+    const data = this.$store.getters['profiling/selectedRecord']
+    if (Object.keys(data).length > 0) {
+      console.log('data: ', data.detailDwellingPlace)
       this.yearsResidence = data.yearCurrentResidence.numberYear
-      this.houseOwernship = isOtherValueDefinedRadio(data.detailDwellingPlace[0].houseOwnership,this.houseOwernshipItems)
-      this.houseOwernshipOther = extractUnmatchedValueRadio(data.detailDwellingPlace[0].houseOwnership,this.houseOwernshipItems)
+      this.houseOwernship = isOtherValueDefinedRadio(
+        data.detailDwellingPlace[0].houseOwnership,
+        this.houseOwernshipItems
+      )
+      this.houseOwernshipOther = extractUnmatchedValueRadio(
+        data.detailDwellingPlace[0].houseOwnership,
+        this.houseOwernshipItems
+      )
       this.numberRooms = data.detailDwellingPlace[0].numberOfRooms
-      this.typeRoofMade = isOtherValueDefinedRadio(data.detailDwellingPlace[0].roofMaterialsMade,this.typeRoofMadeItems)
-      this.typeRoofMadeOther = extractUnmatchedValueRadio(data.detailDwellingPlace[0].roofMaterialsMade,this.typeRoofMadeItems)
-      this.typeWallMade = isOtherValueDefinedRadio(data.detailDwellingPlace[0].wallsMaterialsMade,this.typeWallMadeItems)
-      this.typeWallMadeOther = extractUnmatchedValueRadio(data.detailDwellingPlace[0].wallsMaterialsMade,this.typeWallMadeItems)
-      this.kindToilet = isOtherValueDefinedRadio(data.detailDwellingPlace[0].kindToiletFacility,this.kindToiletItems)
-      this.kindToiletOther = extractUnmatchedValueRadio(data.detailDwellingPlace[0].kindToiletFacility,this.kindToiletItems)
-      this.lightingFacility = isOtherValueDefinedRadio(data.detailDwellingPlace[0].kindLightingFacility,this.lightingFacilityItems)
-      this.lightingFacilityOther = extractUnmatchedValueRadio(data.detailDwellingPlace[0].kindLightingFacility,this.lightingFacilityItems)
-      this.sourceCooking = isOtherValueDefinedRadio(data.detailDwellingPlace[0].sourceCookingFuel,this.sourceCookingItems)
-      this.sourceCookingOther = extractUnmatchedValueRadio(data.detailDwellingPlace[0].sourceCookingFuel,this.sourceCookingItems)
-      this.sourceWaterDrink = isOtherValueDefinedRadio(data.detailDwellingPlace[0].sourceDrinkingSupply,this.sourceWaterDrinkItems)
-      this.sourceWaterDrinkOther = extractUnmatchedValueRadio(data.detailDwellingPlace[0].sourceDrinkingSupply,this.sourceWaterDrinkItems)
-    }else{
+      this.typeRoofMade = isOtherValueDefinedRadio(
+        data.detailDwellingPlace[0].roofMaterialsMade,
+        this.typeRoofMadeItems
+      )
+      this.typeRoofMadeOther = extractUnmatchedValueRadio(
+        data.detailDwellingPlace[0].roofMaterialsMade,
+        this.typeRoofMadeItems
+      )
+      this.typeWallMade = isOtherValueDefinedRadio(
+        data.detailDwellingPlace[0].wallsMaterialsMade,
+        this.typeWallMadeItems
+      )
+      this.typeWallMadeOther = extractUnmatchedValueRadio(
+        data.detailDwellingPlace[0].wallsMaterialsMade,
+        this.typeWallMadeItems
+      )
+      this.kindToilet = isOtherValueDefinedRadio(
+        data.detailDwellingPlace[0].kindToiletFacility,
+        this.kindToiletItems
+      )
+      this.kindToiletOther = extractUnmatchedValueRadio(
+        data.detailDwellingPlace[0].kindToiletFacility,
+        this.kindToiletItems
+      )
+      this.lightingFacility = isOtherValueDefinedRadio(
+        data.detailDwellingPlace[0].kindLightingFacility,
+        this.lightingFacilityItems
+      )
+      this.lightingFacilityOther = extractUnmatchedValueRadio(
+        data.detailDwellingPlace[0].kindLightingFacility,
+        this.lightingFacilityItems
+      )
+      this.sourceCooking = isOtherValueDefinedRadio(
+        data.detailDwellingPlace[0].sourceCookingFuel,
+        this.sourceCookingItems
+      )
+      this.sourceCookingOther = extractUnmatchedValueRadio(
+        data.detailDwellingPlace[0].sourceCookingFuel,
+        this.sourceCookingItems
+      )
+      this.sourceWaterDrink = isOtherValueDefinedRadio(
+        data.detailDwellingPlace[0].sourceDrinkingSupply,
+        this.sourceWaterDrinkItems
+      )
+      this.sourceWaterDrinkOther = extractUnmatchedValueRadio(
+        data.detailDwellingPlace[0].sourceDrinkingSupply,
+        this.sourceWaterDrinkItems
+      )
+    } else {
       this.yearsResidence = 0
       this.houseOwernship = ''
-      this.houseOwernshipOther= ''
+      this.houseOwernshipOther = ''
       this.numberRooms = ''
       this.typeRoofMade = ''
       this.typeRoofMadeOther = ''
@@ -318,7 +362,7 @@ export default {
       this.sourceWaterDrink = ''
       this.sourceWaterDrinkOther = ''
     }
-    this.tempValue = "tempValue"
+    this.tempValue = 'tempValue'
   },
   watch: {
     houseOwernship(value) {
@@ -388,9 +432,9 @@ export default {
     sourceWaterDrinkOther() {
       this.validate()
     },
-    tempValue(){
+    tempValue() {
       this.validate()
-    }
+    },
   },
 }
 </script>

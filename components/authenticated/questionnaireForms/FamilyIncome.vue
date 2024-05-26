@@ -118,12 +118,12 @@ export default {
       { value: 'no', label: 'No' },
     ],
     requiredRule: [(v) => !!v || 'This field is required'],
-    tempValue: ''
+    tempValue: '',
   }),
   methods: {
     /* test if the form is valid, return boolean */
     validate() {
-      if(this.items == 0){
+      if (this.items == 0) {
         this.$store.commit('questionnaire/toggleNextTab', {
           tabName: 'FamilyIncomeValidated',
           valid: true,
@@ -132,7 +132,7 @@ export default {
           keyName: 'familySourceIncome',
           data: this.getEmptyData(),
         })
-        return;
+        return
       }
       const valid = this.$refs.form.validate()
       this.$store.commit('questionnaire/toggleNextTab', {
@@ -145,10 +145,10 @@ export default {
           data: this.getData(),
         })
       }
-      console.log(this.getData(),valid)
+      console.log(this.getData(), valid)
     },
     /* create an object that is an empty values */
-    getEmptyData(){
+    getEmptyData() {
       return {
         fullName: [],
         age: [],
@@ -156,7 +156,7 @@ export default {
         roleInFamily: [],
         educationAttainment: [],
         estimatedContribution: [],
-        isInvolvedCoffeeFarm: []
+        isInvolvedCoffeeFarm: [],
       }
     },
     /* get the data and convert it into expected key/value formats in BackEnd */
@@ -187,7 +187,7 @@ export default {
     increment() {
       this.items++
     },
-    resetData(){
+    resetData() {
       this.items = 0
       this.name = []
       this.age = []
@@ -196,7 +196,7 @@ export default {
       this.educationsAttainment = []
       this.contributionAmount = []
       this.involveCoffeefarm = []
-    }
+    },
   },
   watch: {
     name() {
@@ -221,32 +221,35 @@ export default {
     involveCoffeefarm() {
       this.validate()
     },
-    tempValue(){
+    tempValue() {
       this.validate()
-    }
+    },
   },
-  beforeMount(){
-    const data =  this.$store.getters['profiling/selectedRecord']
-    if(Object.keys(data).length > 0){
+  beforeMount() {
+    const data = this.$store.getters['profiling/selectedRecord']
+    if (Object.keys(data).length > 0) {
       const length = data.familySourceIncome.length
-      if(length>0){
+      if (length > 0) {
         this.items = length
-        for(let i=0; i<length; i++){
+        for (let i = 0; i < length; i++) {
           this.name[i] = data.familySourceIncome[i].fullName
           this.age[i] = data.familySourceIncome[i].age
           this.sex[i] = data.familySourceIncome[i].sex
           this.roleFamily[i] = data.familySourceIncome[i].roleInFamily
-          this.educationsAttainment[i] = data.familySourceIncome[i].educationAttainment
-          this.contributionAmount[i] = data.familySourceIncome[i].estimatedContribution
-          this.involveCoffeefarm[i] = data.familySourceIncome[i].isInvolvedCoffeeFarm
-            }          
-      }else{
+          this.educationsAttainment[i] =
+            data.familySourceIncome[i].educationAttainment
+          this.contributionAmount[i] =
+            data.familySourceIncome[i].estimatedContribution
+          this.involveCoffeefarm[i] =
+            data.familySourceIncome[i].isInvolvedCoffeeFarm
+        }
+      } else {
         this.resetData()
       }
-    }else{
+    } else {
       this.resetData()
     }
     this.tempValue = 'tempValue'
-  }
+  },
 }
 </script>

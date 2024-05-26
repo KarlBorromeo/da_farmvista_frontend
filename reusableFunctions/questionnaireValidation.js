@@ -38,48 +38,48 @@ export const concatinateEachIndexes = (
 
 //TODO: INVESTIGATE IF IT IS WORKING WELL
 /* convert into number all indexes in the array or string to ensure number type */
-export const convertNumbers = (value) =>{
+export const convertNumbers = (value) => {
   if (typeof variable === 'string') {
-    let arr = value.map(num => parseInt(num))
+    let arr = value.map((num) => parseInt(num))
     return arr
-  }else{
+  } else {
     return parseInt(value)
   }
 }
 
 // FOR RADIO AND SELECT
 /* check if the radio value is not matched on the one of the list, return 'others' if not match else return the matched value, this is for radio or select*/
-export const isOtherValueDefinedRadio = (value,items) => {
-  console.log(value,items)
-  let countMatchedTimes = 0;
-  let matchedValue = '';
-  for(let i=0; i<items.length; i++){
-    if(value === items[i]){
-      countMatchedTimes++;
-      matchedValue = items[i];
+export const isOtherValueDefinedRadio = (value, items) => {
+  console.log(value, items)
+  let countMatchedTimes = 0
+  let matchedValue = ''
+  for (let i = 0; i < items.length; i++) {
+    if (value === items[i]) {
+      countMatchedTimes++
+      matchedValue = items[i]
     }
   }
-  if(countMatchedTimes > 0){
-    return matchedValue;
-  }else{
+  if (countMatchedTimes > 0) {
+    return matchedValue
+  } else {
     return 'others'
   }
 }
 /* return the value that is not matched on the items or else return '', this is for radio or select*/
-export const extractUnmatchedValueRadio = (value,items) => {
-  if(value){
-    let countMatches = 0;
+export const extractUnmatchedValueRadio = (value, items) => {
+  if (value) {
+    let countMatches = 0
     items.forEach((item) => {
-      if(value == item){
+      if (value == item) {
         countMatches++
       }
     })
-    if(countMatches == 0){
+    if (countMatches == 0) {
       return value
-    }else{
+    } else {
       return ''
     }
-  }else{
+  } else {
     return ''
   }
 }
@@ -88,43 +88,42 @@ export const extractUnmatchedValueRadio = (value,items) => {
 /* if Array => finds the index that is not one of the items. if no matches return the index value else return '' */
 /* if !Array test if the value matches one of the items, if no matches return the value else return '' */
 /* this is for checkboxes other property */
-export const extractUnmatchedValueCheck = (value,items) => {
-  let extracted = '';
-  if(Array.isArray(value)){
-    value.forEach( val => {
-        let countMatches = 0;
-        items.forEach( item => {
-         
-          if(val == item){
-            countMatches++
-          }
-        })
-        if(countMatches == 0){
-          extracted += val + ', '
+export const extractUnmatchedValueCheck = (value, items) => {
+  let extracted = ''
+  if (Array.isArray(value)) {
+    value.forEach((val) => {
+      let countMatches = 0
+      items.forEach((item) => {
+        if (val == item) {
+          countMatches++
         }
+      })
+      if (countMatches == 0) {
+        extracted += val + ', '
+      }
     })
-  }else{
+  } else {
     /* this is incase we are passing not array value */
-    return extractUnmatchedValueRadio(value,items)
+    return extractUnmatchedValueRadio(value, items)
   }
   if (extracted.endsWith(', ')) {
-    extracted = extracted.slice(0, -2);
+    extracted = extracted.slice(0, -2)
   }
   return extracted
 }
 /* look for the specific index that is not matched on the item. return a list, for checkboxes property */
-export const isOtherValueTickedCheckbox = (values,items) => {
-  let arr = [...values];
-  arr.forEach( (val, i) => {
-    let countMatches = 0;
-    items.forEach( item => {
-      if(val == item){
-        countMatches++;
+export const isOtherValueTickedCheckbox = (values, items) => {
+  let arr = [...values]
+  arr.forEach((val, i) => {
+    let countMatches = 0
+    items.forEach((item) => {
+      if (val == item) {
+        countMatches++
       }
     })
-    if(countMatches == 0){
+    if (countMatches == 0) {
       arr[i] = 'others'
     }
   })
-  return arr;
+  return arr
 }

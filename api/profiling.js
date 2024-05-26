@@ -1,4 +1,3 @@
-
 import Axios from '~/axios_config/Axios'
 
 export async function fetchAllRecords(payload) {
@@ -6,7 +5,7 @@ export async function fetchAllRecords(payload) {
     console.log(payload)
     const params = {
       type: encodeURIComponent(payload.type),
-      page: encodeURIComponent(payload.page-1),
+      page: encodeURIComponent(payload.page - 1),
       limit: encodeURIComponent(payload.limit),
     }
     const response = await Axios.get('survey', {
@@ -18,7 +17,7 @@ export async function fetchAllRecords(payload) {
   }
 }
 
-export async function fetchSingleSurvey(payload){
+export async function fetchSingleSurvey(payload) {
   try {
     const params = {
       type: encodeURIComponent(payload.type),
@@ -34,12 +33,12 @@ export async function fetchSingleSurvey(payload){
   }
 }
 
-export async function deleteSurvey(id){
-  try{
-    await new Promise(resolve => setTimeout(resolve,5000))
+export async function deleteSurvey(id) {
+  try {
+    await new Promise((resolve) => setTimeout(resolve, 5000))
     // return 'Deleted succesfully'
     throw new Error('unaothorized')
-  }catch(error){
+  } catch (error) {
     throw error
   }
 }

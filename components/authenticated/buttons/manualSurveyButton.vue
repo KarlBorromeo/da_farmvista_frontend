@@ -1,7 +1,14 @@
 <template>
   <v-dialog v-model="dialog" width="700">
     <template v-slot:activator="{ on, attrs }">
-      <v-btn block color="success" large v-bind="attrs" v-on="on" @click="toggleOffEditing">
+      <v-btn
+        block
+        color="success"
+        large
+        v-bind="attrs"
+        v-on="on"
+        @click="toggleOffEditing"
+      >
         <v-icon class="mr-2">mdi-text-box-edit-outline</v-icon>
         MANUAL SURVEY
       </v-btn>
@@ -21,17 +28,17 @@ export default {
   },
   methods: {
     /* disabling edit mode, enabling create mode */
-    toggleOffEditing(){
+    toggleOffEditing() {
       this.$store.commit('profiling/toggleEditingMode', false)
-    }
+    },
   },
-  watch:{
-    dialog(val){
-      if(!val){
-        this.$store.commit('questionnaire/resetTabsValidity')     
+  watch: {
+    dialog(val) {
+      if (!val) {
+        this.$store.commit('questionnaire/resetTabsValidity')
       }
-    }
-  }
+    },
+  },
 }
 </script>
 

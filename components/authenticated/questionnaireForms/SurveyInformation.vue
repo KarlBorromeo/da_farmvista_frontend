@@ -156,8 +156,8 @@ export default {
     FormMenuContainer,
     FormSelectContainer,
   },
-  data(){
-    return{
+  data() {
+    return {
       valid: false,
       surveyNumber: '555',
       surveyNumberRule: [(v) => !!v || 'survey number is required'],
@@ -228,7 +228,7 @@ export default {
     /* test if the form is valid, return boolean */
     validate() {
       const valid = this.$refs.form.validate()
-      console.log('validated',valid)
+      console.log('validated', valid)
       this.$store.commit('questionnaire/toggleNextTab', {
         tabName: 'SurveyInformationValidated',
         valid,
@@ -280,9 +280,9 @@ export default {
       this.validate()
     },
   },
-  beforeMount(){
-    const data =  this.$store.getters['profiling/selectedRecord']
-    if(Object.keys(data).length > 0){
+  beforeMount() {
+    const data = this.$store.getters['profiling/selectedRecord']
+    if (Object.keys(data).length > 0) {
       this.date = data.interview.dateOfInterview
       this.surveyNumber = data.interview.surveyNo
       this.interviewer = data.interview.validatorName
@@ -291,7 +291,7 @@ export default {
       this.regionProvince = data.interview.regionProvince
       this.municipality = data.interview.cityMunicipality
       this.barangay = data.interview.barangay
-    }else{
+    } else {
       this.date = ''
       this.surveyNumber = ''
       this.interviewer = ''
@@ -301,6 +301,6 @@ export default {
       this.municipality = ''
       this.barangay = ''
     }
-  }
+  },
 }
 </script>

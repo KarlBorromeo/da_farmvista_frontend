@@ -74,7 +74,11 @@ import formCardButton from '~/components/authenticated/form/formCardButton.vue'
 import FormInputContainer from '~/components/authenticated/form/formInputContainer.vue'
 import FormRadioContainer from '~/components/authenticated/form/formRadioContainer.vue'
 import FormSelectContainer from '~/components/authenticated/form/formSelectContainer.vue'
-import { concatinateEachIndexes, isOtherValueDefinedRadio, extractUnmatchedValueRadio } from '~/reusableFunctions/questionnaireValidation'
+import {
+  concatinateEachIndexes,
+  isOtherValueDefinedRadio,
+  extractUnmatchedValueRadio,
+} from '~/reusableFunctions/questionnaireValidation'
 export default {
   components: {
     formCard,
@@ -101,13 +105,13 @@ export default {
       (v) => parseFloat(v) >= 0 || 'invalid value',
     ],
     requiredRule: [(v) => !!v || 'This field is required'],
-    tempValue: ''
+    tempValue: '',
   }),
   methods: {
     /* test if the form is valid, return boolean */
     validate() {
-      if(this.items == 0){
-         this.$store.commit('questionnaire/toggleNextTab', {
+      if (this.items == 0) {
+        this.$store.commit('questionnaire/toggleNextTab', {
           tabName: 'AssetsFarmStructureValidated',
           valid: true,
         })
@@ -115,7 +119,7 @@ export default {
           keyName: 'structureBldgLand',
           data: this.getEmptyData(),
         })
-        return;
+        return
       }
       const valid = this.$refs.form.validate()
       this.$store.commit('questionnaire/toggleNextTab', {
@@ -130,7 +134,7 @@ export default {
       }
     },
     /* create an object that is an empty values */
-    getEmptyData(){
+    getEmptyData() {
       return {
         structureBldgLandName: [],
         structureBldgLandQuantity: [],
@@ -164,14 +168,14 @@ export default {
     increment() {
       this.items++
     },
-    resetData(){
+    resetData() {
       this.items = 0
       this.structureBldgName = []
       this.structureBldgNameOther = []
       this.structureBldgQuantity = []
       this.isstructureBldgAquiredGovtProg = []
       this.structureBldgAge = []
-    }
+    },
   },
   watch: {
     structureBldgName(value) {
@@ -196,30 +200,41 @@ export default {
     structureBldgAge() {
       this.validate()
     },
-    tempValue(){
+    tempValue() {
       this.validate()
-    }
+    },
   },
   beforeMount() {
     this.structureBldgNameItems =
       this.$store.getters['questionnaireCode/Code5StructuresBuilding']
 
-    const data =  this.$store.getters['profiling/selectedRecord']
-    if(Object.keys(data).length > 0){
+    const data = this.$store.getters['profiling/selectedRecord']
+    if (Object.keys(data).length > 0) {
       const length = data.farmHouseholdAsset.structureBldgLand.length
-      if(length>0){
+      if (length > 0) {
         this.items = length
-        for(let i=0; i<length; i++){
-          this.structureBldgName[i] = isOtherValueDefinedRadio(data.farmHouseholdAsset.structureBldgLand[i].structureBldgLandName,this.structureBldgNameItems)
-          this.structureBldgNameOther[i] = extractUnmatchedValueRadio(data.farmHouseholdAsset.structureBldgLand[i].structureBldgLandName,this.structureBldgNameItems)
-          this.structureBldgQuantity[i] = data.farmHouseholdAsset.structureBldgLand[i].structureBldgLandQuantity
-          this.isstructureBldgAquiredGovtProg[i] = data.farmHouseholdAsset.structureBldgLand[i].isAcquiredGovtProgram
-          this.structureBldgAge[i] = data.farmHouseholdAsset.structureBldgLand[i].structureBldgLandAge
-        }          
-      }else{
+        for (let i = 0; i < length; i++) {
+          this.structureBldgName[i] = isOtherValueDefinedRadio(
+            data.farmHouseholdAsset.structureBldgLand[i].structureBldgLandName,
+            this.structureBldgNameItems
+          )
+          this.structureBldgNameOther[i] = extractUnmatchedValueRadio(
+            data.farmHouseholdAsset.structureBldgLand[i].structureBldgLandName,
+            this.structureBldgNameItems
+          )
+          this.structureBldgQuantity[i] =
+            data.farmHouseholdAsset.structureBldgLand[
+              i
+            ].structureBldgLandQuantity
+          this.isstructureBldgAquiredGovtProg[i] =
+            data.farmHouseholdAsset.structureBldgLand[i].isAcquiredGovtProgram
+          this.structureBldgAge[i] =
+            data.farmHouseholdAsset.structureBldgLand[i].structureBldgLandAge
+        }
+      } else {
         this.resetData()
       }
-    }else{
+    } else {
       this.resetData()
     }
     this.tempValue = 'tempvalue'

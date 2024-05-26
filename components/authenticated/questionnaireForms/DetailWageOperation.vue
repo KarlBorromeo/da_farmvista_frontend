@@ -45,10 +45,8 @@ export default {
       { key: 'amntPaidCattleOnly', label: 'paid for cattle only' },
       { key: 'amntPaidManMachine', label: 'paid for Man-Machine' },
     ],
-    numberRule: [
-      (v) => parseFloat(v) >= 0 || 'invalid value',
-    ],
-    tempValue: ''
+    numberRule: [(v) => parseFloat(v) >= 0 || 'invalid value'],
+    tempValue: '',
   }),
   methods: {
     /* test if the form is valid, return boolean */
@@ -82,20 +80,25 @@ export default {
       },
       deep: true,
     },
-    tempValue(){
+    tempValue() {
       this.validate()
-    }
+    },
   },
   beforeMount() {
-    const data =  this.$store.getters['profiling/selectedRecord']
-    if(Object.keys(data).length > 0){
+    const data = this.$store.getters['profiling/selectedRecord']
+    if (Object.keys(data).length > 0) {
       this.formData.amntPaidLabor = data.detailWageOperation.amntPaidLabor
-      this.formData.goodsProvidedLabor = data.detailWageOperation.goodsProvidedLabor
-      this.formData.expectedWageOtherfarms = data.detailWageOperation.expectedWageOtherfarms
-      this.formData.amntPaidCattleWithOperator = data.detailWageOperation.amntPaidCattleWithOperator
-      this.formData.amntPaidCattleOnly = data.detailWageOperation.amntPaidCattleOnly
-      this.formData.amntPaidManMachine = data.detailWageOperation.amntPaidManMachine
-    }else{
+      this.formData.goodsProvidedLabor =
+        data.detailWageOperation.goodsProvidedLabor
+      this.formData.expectedWageOtherfarms =
+        data.detailWageOperation.expectedWageOtherfarms
+      this.formData.amntPaidCattleWithOperator =
+        data.detailWageOperation.amntPaidCattleWithOperator
+      this.formData.amntPaidCattleOnly =
+        data.detailWageOperation.amntPaidCattleOnly
+      this.formData.amntPaidManMachine =
+        data.detailWageOperation.amntPaidManMachine
+    } else {
       this.formData.amntPaidLabor = ''
       this.formData.goodsProvidedLabor = ''
       this.formData.expectedWageOtherfarms = ''
@@ -103,7 +106,7 @@ export default {
       this.formData.amntPaidCattleOnly = ''
       this.formData.amntPaidManMachine = ''
     }
-    this.tempValue = "tempValue"
+    this.tempValue = 'tempValue'
   },
 }
 </script>

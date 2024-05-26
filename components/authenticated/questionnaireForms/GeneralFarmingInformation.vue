@@ -97,10 +97,8 @@ export default {
     ],
     reasonStopping: '',
     requiredRule: [(v) => !!v || 'this field is required'],
-    numberRule: [
-      (v) => parseFloat(v) >= 0 || 'invalid value'
-    ],
-    tempValue: ''
+    numberRule: [(v) => parseFloat(v) >= 0 || 'invalid value'],
+    tempValue: '',
   }),
   methods: {
     /* test if the form is valid, return boolean */
@@ -143,7 +141,6 @@ export default {
   watch: {
     /* reset other fields to empty if chose 'no' */
     isThereStoppedFarming(value) {
-      
       if (value == 'no') {
         this.yearStopped = ''
         this.yearResumed = ''
@@ -166,20 +163,21 @@ export default {
     reasonStopping() {
       this.validate()
     },
-    tempValue(){
+    tempValue() {
       this.validate()
-    }
+    },
   },
   beforeMount() {
-    const data =  this.$store.getters['profiling/selectedRecord']
-    if(Object.keys(data).length > 0){
+    const data = this.$store.getters['profiling/selectedRecord']
+    if (Object.keys(data).length > 0) {
       this.avgYearsGeneralFarming = data.generalFarmingInfo.avgYrsGeneralFarming
       this.avgYearsContourFarming = data.generalFarmingInfo.avgYrsCtrFarming
-      this.isThereStoppedFarming = data.generalFarmingInfo.isThereTimeStoppedFarming
+      this.isThereStoppedFarming =
+        data.generalFarmingInfo.isThereTimeStoppedFarming
       this.yearStopped = data.generalFarmingInfo.yearStoppedFarming
       this.yearResumed = data.generalFarmingInfo.yearResumedFarming
       this.reasonStopping = data.generalFarmingInfo.reasonStopping
-    }else{
+    } else {
       this.avgYearsGeneralFarming = 0
       this.avgYearsContourFarming = 0
       this.isThereStoppedFarming = ''
@@ -187,7 +185,7 @@ export default {
       this.yearResumed = ''
       this.reasonStopping = ''
     }
-    this.tempValue = "tempValue"
+    this.tempValue = 'tempValue'
   },
 }
 </script>

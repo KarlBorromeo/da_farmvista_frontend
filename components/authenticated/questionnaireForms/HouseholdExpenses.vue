@@ -223,9 +223,9 @@ export default {
       this.validate()
     },
   },
-   beforeMount(){
-    const data =  this.$store.getters['profiling/selectedRecord']
-    if(Object.keys(data).length > 0){
+  beforeMount() {
+    const data = this.$store.getters['profiling/selectedRecord']
+    if (Object.keys(data).length > 0) {
       this.food = data.householdExpense.food
       this.clothing = data.householdExpense.clothing
       this.utilities = data.householdExpense.utilities
@@ -239,7 +239,7 @@ export default {
       this.specialOccasions = data.householdExpense.specialOccasions
       this.otherExpenses = data.householdExpense.others
       this.otherExpensesSpecify = data.householdExpense.otherSpecified
-    }else{
+    } else {
       this.food = 0
       this.clothing = 0
       this.utilities = 0
@@ -253,6 +253,6 @@ export default {
       this.specialOccasions = 0
       this.otherExpenses = 0
     }
-  }
+  },
 }
 </script>

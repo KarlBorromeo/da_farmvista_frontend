@@ -9,7 +9,13 @@
     <v-divider />
     <v-toolbar light elevation="0" v-if="currentCommodity == 'coffee'">
       <template>
-        <v-tabs fixed-tabs show-arrows center-active slider-color="primary" v-model="initialTab">
+        <v-tabs
+          fixed-tabs
+          show-arrows
+          center-active
+          slider-color="primary"
+          v-model="initialTab"
+        >
           <v-tab
             @click="selectTab('SurveyInformation')"
             class="caption font-weight-black"
@@ -210,7 +216,7 @@
             @click="selectTab('OpenEndedQuestions')"
             :disabled="InformationKnowledgeSourcesValidated"
           >
-          {{InformationKnowledgeSourcesValidated}}
+            {{ InformationKnowledgeSourcesValidated }}
             XIV Open Ended Questions
           </v-tab>
           <v-tab
@@ -243,7 +249,7 @@
       </v-card>
       <v-card v-else> EMPTY </v-card>
     </v-tabs-items>
-    <snackbar ref="snackbar"/>
+    <snackbar ref="snackbar" />
   </v-card>
 </template>
 
@@ -283,7 +289,7 @@ import CommodityDropdown from '../commodityDropdown.vue'
 import snackbar from '~/components/snackbar.vue'
 
 export default {
-  props: [ 'id', 'commodityProp'],
+  props: ['id', 'commodityProp'],
   components: {
     SurveyInformation,
     BasicInformation,
@@ -317,53 +323,59 @@ export default {
     OpenEndedQuestionRating,
     SubmissionPage,
     CommodityDropdown,
-    snackbar
+    snackbar,
   },
   data() {
     return {
       loading: false,
       currentCommodity: 'coffee',
-      initialTab: 0
+      initialTab: 0,
     }
   },
   methods: {
     /* render the form based on the tab selected */
     selectTab(item) {
-      this.$store.commit('questionnaire/displayCurrentTab',item)
+      this.$store.commit('questionnaire/displayCurrentTab', item)
     },
     /* change/update the commodity type */
     switchCommodity(commodity) {
       this.currentCommodity = commodity.toLowerCase()
     },
     /* fetching code requestS, and set the form type commodity in store for the submission stage */
-    async fetchAllCodes(){
+    async fetchAllCodes() {
       try {
         this.loading = true
-        this.$store.dispatch('questionnaire/updateCommodity',this.currentCommodity)
-        await this.$store.dispatch('questionnaireCode/fetchAllCodes', this.currentCommodity)   
+        this.$store.dispatch(
+          'questionnaire/updateCommodity',
+          this.currentCommodity
+        )
+        await this.$store.dispatch(
+          'questionnaireCode/fetchAllCodes',
+          this.currentCommodity
+        )
       } catch (error) {
-        this.$refs.snackbar.showBar(error,'red');
+        this.$refs.snackbar.showBar(error, 'red')
       }
-      this.loading = false  
+      this.loading = false
     },
 
     /* fetching one record existing using the id, needed an id first */
-    async fetchOneRecord(){
+    async fetchOneRecord() {
       this.switchCommodity(this.commodityProp)
-      try{
+      try {
         this.loading = true
-        await this.$store.dispatch('profiling/fetchSingleSurvey',{
+        await this.$store.dispatch('profiling/fetchSingleSurvey', {
           id: this.id,
-          type: this.currentCommodity
+          type: this.currentCommodity,
         })
-      }catch(error){
-        this.$refs.snackbar.showBar(error,'red');
+      } catch (error) {
+        this.$refs.snackbar.showBar(error, 'red')
       }
       this.loading = false
-    }
+    },
   },
   computed: {
-    currentTab(){
+    currentTab() {
       return this.$store.getters['questionnaire/currentTab']
     },
     SurveyInformationValidated() {
@@ -484,7 +496,7 @@ export default {
   */
   async beforeMount() {
     await this.fetchAllCodes()
-    if(this.id){
+    if (this.id) {
       await this.fetchOneRecord()
     }
   },
@@ -497,12 +509,12 @@ export default {
       }
     },
     /* if id prop is changed and not null, we fetch one record, edit mode only */
-    async id(val){
-      if(val){
+    async id(val) {
+      if (val) {
         this.initialTab = 0
         await this.fetchOneRecord()
       }
-    }
+    },
   },
 }
 </script>

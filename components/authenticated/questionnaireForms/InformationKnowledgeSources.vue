@@ -281,7 +281,11 @@
 </template>
 
 <script>
-import { concatinateOtherValueToString, isOtherValueDefinedRadio, extractUnmatchedValueRadio} from '~/reusableFunctions/questionnaireValidation'
+import {
+  concatinateOtherValueToString,
+  isOtherValueDefinedRadio,
+  extractUnmatchedValueRadio,
+} from '~/reusableFunctions/questionnaireValidation'
 import FormCheckboxContainer from '~/components/authenticated/form/formCheckboxContainer.vue'
 import FormInputContainer from '~/components/authenticated/form/formInputContainer.vue'
 import FormMenuContainer from '~/components/authenticated/form/formMenuContainer.vue'
@@ -296,37 +300,37 @@ export default {
   },
   data: () => ({
     // return {
-      valid: false,
-      // menu2: false,
-      timeDialogRadioStart: false,
-      timeDialogRadioEnd: false,
-      timeDialogTVStart: false,
-      timeDialogTVEnd: false,
-      formData: {
-        haveFunctionalRadio: 'yes',
-        radioStationUsuallyTune: 'FRMN',
-        startTimeListeningRadio: '08:00',
-        endTimeListeningRadio: '11:00',
-        radioProgramsListens: 'balita balita',
-        printMaterialsRead: 'newspaper',
-        printMaterialsReadOther: '',
-        printMaterialsReadItems: [],
-        haveTelevision: 'yes',
-        tvStationWatches: 'fdas',
-        startTimeWatchingTv: '01:00',
-        endTimeWatchingTv: '03:00',
-        haveSocmedAccount: 'yes',
-        howOftenUsedSocmed: '3',
-      },
-      isAgreeItems: ['yes', 'no'],
-      requiredRule: [(v) => !!v || 'This field is required'],
-      numberRule: [(v) => parseInt(v)>=0 || 'invalid number']
+    valid: false,
+    // menu2: false,
+    timeDialogRadioStart: false,
+    timeDialogRadioEnd: false,
+    timeDialogTVStart: false,
+    timeDialogTVEnd: false,
+    formData: {
+      haveFunctionalRadio: 'yes',
+      radioStationUsuallyTune: 'FRMN',
+      startTimeListeningRadio: '08:00',
+      endTimeListeningRadio: '11:00',
+      radioProgramsListens: 'balita balita',
+      printMaterialsRead: 'newspaper',
+      printMaterialsReadOther: '',
+      printMaterialsReadItems: [],
+      haveTelevision: 'yes',
+      tvStationWatches: 'fdas',
+      startTimeWatchingTv: '01:00',
+      endTimeWatchingTv: '03:00',
+      haveSocmedAccount: 'yes',
+      howOftenUsedSocmed: '3',
+    },
+    isAgreeItems: ['yes', 'no'],
+    requiredRule: [(v) => !!v || 'This field is required'],
+    numberRule: [(v) => parseInt(v) >= 0 || 'invalid number'],
     // }
   }),
   methods: {
     /* test if the form is valid, return boolean */
     validate() {
-      console.log('validation executed',this.getData())
+      console.log('validation executed', this.getData())
       const valid = this.$refs.form.validate()
       this.$store.commit('questionnaire/toggleNextTab', {
         tabName: 'InformationKnowledgeSourcesValidated',
@@ -380,33 +384,48 @@ export default {
 
     const data = this.$store.getters['profiling/selectedRecord']
     if (Object.keys(data).length > 0) {
-        this.formData.haveFunctionalRadio = data.infoKnowledgeSource.haveFunctionalRadio
-        this.formData.radioStationUsuallyTune = data.infoKnowledgeSource.radioStationUsuallyTune
-        this.formData.startTimeListeningRadio = data.infoKnowledgeSource.timeListeningRadio[0]
-        this.formData.endTimeListeningRadio = data.infoKnowledgeSource.timeListeningRadio?.[1] ?? ''
-        this.formData.radioProgramsListens = data.infoKnowledgeSource.radioProgramsListens
-        this.formData.printMaterialsRead = isOtherValueDefinedRadio(data.infoKnowledgeSource.printMaterialsRead, this.formData.printMaterialsReadItems)
-        this.formData.printMaterialsReadOther = extractUnmatchedValueRadio(data.infoKnowledgeSource.printMaterialsRead, this.formData.printMaterialsReadItems)
-        this.formData.haveTelevision = data.infoKnowledgeSource.haveTelevision
-        this.formData.tvStationWatches = data.infoKnowledgeSource.tvStationWatches
-        this.formData.startTimeWatchingTv = data.infoKnowledgeSource.timeWatchingTv[0]
-        this.formData.endTimeWatchingTv = data.infoKnowledgeSource.timeWatchingTv?.[1] ?? ''
-        this.formData.haveSocmedAccount = data.infoKnowledgeSource.haveSocmedAccount
-        this.formData.howOftenUsedSocmed = data.infoKnowledgeSource.howOftenUsedSocmed
+      this.formData.haveFunctionalRadio =
+        data.infoKnowledgeSource.haveFunctionalRadio
+      this.formData.radioStationUsuallyTune =
+        data.infoKnowledgeSource.radioStationUsuallyTune
+      this.formData.startTimeListeningRadio =
+        data.infoKnowledgeSource.timeListeningRadio[0]
+      this.formData.endTimeListeningRadio =
+        data.infoKnowledgeSource.timeListeningRadio?.[1] ?? ''
+      this.formData.radioProgramsListens =
+        data.infoKnowledgeSource.radioProgramsListens
+      this.formData.printMaterialsRead = isOtherValueDefinedRadio(
+        data.infoKnowledgeSource.printMaterialsRead,
+        this.formData.printMaterialsReadItems
+      )
+      this.formData.printMaterialsReadOther = extractUnmatchedValueRadio(
+        data.infoKnowledgeSource.printMaterialsRead,
+        this.formData.printMaterialsReadItems
+      )
+      this.formData.haveTelevision = data.infoKnowledgeSource.haveTelevision
+      this.formData.tvStationWatches = data.infoKnowledgeSource.tvStationWatches
+      this.formData.startTimeWatchingTv =
+        data.infoKnowledgeSource.timeWatchingTv[0]
+      this.formData.endTimeWatchingTv =
+        data.infoKnowledgeSource.timeWatchingTv?.[1] ?? ''
+      this.formData.haveSocmedAccount =
+        data.infoKnowledgeSource.haveSocmedAccount
+      this.formData.howOftenUsedSocmed =
+        data.infoKnowledgeSource.howOftenUsedSocmed
     } else {
       this.formData.haveFunctionalRadio = ''
-        this.formData.radioStationUsuallyTune = ''
-        this.formData.startTimeListeningRadio = ''
-        this.formData.endTimeListeningRadio = ''
-        this.formData.radioProgramsListens = ''
-        this.formData.printMaterialsRead = ''
-        this.formData.printMaterialsReadOther = ''
-        this.formData.haveTelevision = ''
-        this.formData.tvStationWatches = ''
-        this.formData.startTimeWatchingTv = ''
-        this.formData.endTimeWatchingTv = ''
-        this.formData.haveSocmedAccount = ''
-        this.formData.howOftenUsedSocmed = ''
+      this.formData.radioStationUsuallyTune = ''
+      this.formData.startTimeListeningRadio = ''
+      this.formData.endTimeListeningRadio = ''
+      this.formData.radioProgramsListens = ''
+      this.formData.printMaterialsRead = ''
+      this.formData.printMaterialsReadOther = ''
+      this.formData.haveTelevision = ''
+      this.formData.tvStationWatches = ''
+      this.formData.startTimeWatchingTv = ''
+      this.formData.endTimeWatchingTv = ''
+      this.formData.haveSocmedAccount = ''
+      this.formData.howOftenUsedSocmed = ''
     }
   },
   watch: {
@@ -417,7 +436,7 @@ export default {
       deep: true,
     },
     'formData.printMaterialsRead': function (value) {
-      if(value !== 'others'){
+      if (value !== 'others') {
         this.formData.printMaterialsReadOther = ''
       }
     },

@@ -296,9 +296,7 @@ export default {
             'I believe that farmers who engage in participatory approaches, involving stakeholders in decision-making processes related to GAPs, foster greater trust and cooperation',
         },
       ],
-      rateRule: [
-        (v) => !!v || 'required'
-      ],
+      rateRule: [(v) => !!v || 'required'],
     }
   },
   methods: {
@@ -348,32 +346,30 @@ export default {
       deep: true,
     },
   },
-  beforeMount(){
+  beforeMount() {
     const data = this.$store.getters['profiling/selectedRecord']
     if (Object.keys(data).length > 0) {
-        for(let i=0; i<this.topicsList.length; i++){
-          let topic = this.topicsList[i].topic
-          if(this.formData[topic]){
-            let keyArrays = Object.keys(this.formData[topic])
-            keyArrays.forEach( key => {
-              this.formData[topic][key] = data.openEndedQuestionRating[topic][key]
-            })
-          }
-          
+      for (let i = 0; i < this.topicsList.length; i++) {
+        let topic = this.topicsList[i].topic
+        if (this.formData[topic]) {
+          let keyArrays = Object.keys(this.formData[topic])
+          keyArrays.forEach((key) => {
+            this.formData[topic][key] = data.openEndedQuestionRating[topic][key]
+          })
         }
+      }
     } else {
-      for(let i=0; i<this.topicsList.length; i++){
-          let topic = this.topicsList[i].topic
-          if(this.formData[topic]){
-            let keyArrays = Object.keys(this.formData[topic])
-            keyArrays.forEach( key => {
-              this.formData[topic][key] = ''
-            })
-          }
-          
+      for (let i = 0; i < this.topicsList.length; i++) {
+        let topic = this.topicsList[i].topic
+        if (this.formData[topic]) {
+          let keyArrays = Object.keys(this.formData[topic])
+          keyArrays.forEach((key) => {
+            this.formData[topic][key] = ''
+          })
         }
+      }
     }
-  }
+  },
 }
 </script>
 

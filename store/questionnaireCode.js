@@ -1,8 +1,7 @@
 import * as api from '../api/questionnaireCode.js'
 
 export const state = () => ({
-  codes: {
-  },
+  codes: {},
 })
 
 /* this function gets the values of 

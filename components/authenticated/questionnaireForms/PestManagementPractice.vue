@@ -589,7 +589,7 @@ export default {
       this.trainingAbout = ''
       this.whoOrganizedTraining = ''
     }
-  }
+  },
 }
 </script>
 

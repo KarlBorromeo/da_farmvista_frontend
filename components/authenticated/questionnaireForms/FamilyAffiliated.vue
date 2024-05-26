@@ -2,7 +2,7 @@
   <v-form ref="form" v-model="valid" lazy-validation>
     <v-container>
       <form-card-button @emitIncrement="increment" @emitDecrement="decrement" />
-      <form-card v-for="(i,index) in items" :key="index">
+      <form-card v-for="(i, index) in items" :key="index">
         <v-row>
           <v-col cols="12" class="mb-0 pb-0">
             <p class="ma-0 pa-0 font-weight-black">{{ i }}</p>
@@ -127,7 +127,11 @@ import formCard from '~/components/authenticated/form/formCard.vue'
 import formCardButton from '~/components/authenticated/form/formCardButton.vue'
 import FormInputContainer from '~/components/authenticated/form/formInputContainer.vue'
 import FormRadioContainer from '~/components/authenticated/form/formRadioContainer.vue'
-import { concatinateEachIndexes, extractUnmatchedValueRadio, isOtherValueDefinedRadio } from '~/reusableFunctions/questionnaireValidation'
+import {
+  concatinateEachIndexes,
+  extractUnmatchedValueRadio,
+  isOtherValueDefinedRadio,
+} from '~/reusableFunctions/questionnaireValidation'
 export default {
   components: {
     formCard,
@@ -152,12 +156,12 @@ export default {
     statusOrganization: ['active'],
     statusOrganizationItems: [],
     requiredRule: [(v) => !!v || 'This field is required'],
-    numberRule: [(v) => parseInt(v)>=0 || 'this number is invalid']
+    numberRule: [(v) => parseInt(v) >= 0 || 'this number is invalid'],
   }),
   methods: {
     /* test if the form is valid, return boolean */
     validate() {
-      if(this.items == 0){
+      if (this.items == 0) {
         this.$store.commit('questionnaire/toggleNextTab', {
           tabName: 'FamilyAffiliatedValidated',
           valid: true,
@@ -166,7 +170,7 @@ export default {
           keyName: 'familyAffiliatedFarmOrg',
           data: this.getEmptyData(),
         })
-        return;
+        return
       }
       const valid = this.$refs.form.validate()
       this.$store.commit('questionnaire/toggleNextTab', {
@@ -181,7 +185,7 @@ export default {
       }
     },
     /* create an object that is an empty values */
-    getEmptyData(){
+    getEmptyData() {
       return {
         fullName: [],
         position: [],
@@ -189,7 +193,7 @@ export default {
         typeOrganization: [],
         yearsAsMember: [],
         statusMembership: [],
-        statusOrganization: []
+        statusOrganization: [],
       }
     },
     /* get the data and convert it into expected key/value formats in BackEnd */
@@ -228,21 +232,21 @@ export default {
       }
     },
     increment() {
-      this.items++;
+      this.items++
     },
     /* reset the data */
-    resetData(){
-        this.items = 0
-        this.nameFamilyMember = []
-        this.position = []
-        this.positionOthers = []
-        this.nameOrganization = []
-        this.typeOrganization = []
-        this.typeOrganizationOthers = []
-        this.numberYearsMember = []
-        this.statusMembership = []
-        this.statusOrganization = []
-    }
+    resetData() {
+      this.items = 0
+      this.nameFamilyMember = []
+      this.position = []
+      this.positionOthers = []
+      this.nameOrganization = []
+      this.typeOrganization = []
+      this.typeOrganizationOthers = []
+      this.numberYearsMember = []
+      this.statusMembership = []
+      this.statusOrganization = []
+    },
   },
   beforeMount() {
     this.positionItems = this.$store.getters['questionnaireCode/Code1']
@@ -251,33 +255,51 @@ export default {
       this.$store.getters['questionnaireCode/Code3_4']
     this.statusOrganizationItems =
       this.$store.getters['questionnaireCode/Code3_4']
-    
-    const data =  this.$store.getters['profiling/selectedRecord']
-    if(Object.keys(data).length > 0){
+
+    const data = this.$store.getters['profiling/selectedRecord']
+    if (Object.keys(data).length > 0) {
       const length = data.familyAffiliatedFarmOrg.length
       this.items = length
-      if(length>0){
-        for(let i=0; i<length; i++){
-          console.log('data: ',data.familyAffiliatedFarmOrg, data.familyAffiliatedFarmOrg.length)
+      if (length > 0) {
+        for (let i = 0; i < length; i++) {
+          console.log(
+            'data: ',
+            data.familyAffiliatedFarmOrg,
+            data.familyAffiliatedFarmOrg.length
+          )
           this.nameFamilyMember[i] = data.familyAffiliatedFarmOrg[i].fullName
-          this.position[i] = isOtherValueDefinedRadio(data.familyAffiliatedFarmOrg[i].position,this.positionItems)
-          this.positionOthers[i] = extractUnmatchedValueRadio(data.familyAffiliatedFarmOrg[i].position,this.positionItems)
-          this.nameOrganization[i] = data.familyAffiliatedFarmOrg[i].nameOrganization
-          this.typeOrganization[i] = data.familyAffiliatedFarmOrg[i].typeOrganization
-          this.typeOrganizationOthers[i] = extractUnmatchedValueRadio(data.familyAffiliatedFarmOrg[i].typeOrganization,this.typeOrganizationItems)
-          this.numberYearsMember[i] = data.familyAffiliatedFarmOrg[i].yearsAsMember
-          this.statusMembership[i] = data.familyAffiliatedFarmOrg[i].statusMembership
-          this.statusOrganization[i] = data.familyAffiliatedFarmOrg[i].statusOrganization   
-        }          
-      }else{
+          this.position[i] = isOtherValueDefinedRadio(
+            data.familyAffiliatedFarmOrg[i].position,
+            this.positionItems
+          )
+          this.positionOthers[i] = extractUnmatchedValueRadio(
+            data.familyAffiliatedFarmOrg[i].position,
+            this.positionItems
+          )
+          this.nameOrganization[i] =
+            data.familyAffiliatedFarmOrg[i].nameOrganization
+          this.typeOrganization[i] =
+            data.familyAffiliatedFarmOrg[i].typeOrganization
+          this.typeOrganizationOthers[i] = extractUnmatchedValueRadio(
+            data.familyAffiliatedFarmOrg[i].typeOrganization,
+            this.typeOrganizationItems
+          )
+          this.numberYearsMember[i] =
+            data.familyAffiliatedFarmOrg[i].yearsAsMember
+          this.statusMembership[i] =
+            data.familyAffiliatedFarmOrg[i].statusMembership
+          this.statusOrganization[i] =
+            data.familyAffiliatedFarmOrg[i].statusOrganization
+        }
+      } else {
         this.resetData()
       }
-    }else{
+    } else {
       this.resetData()
     }
   },
   watch: {
-    items(){
+    items() {
       this.validate()
     },
     position(value) {
@@ -316,7 +338,7 @@ export default {
     },
     statusOrganization() {
       this.validate()
-    }
-  }
+    },
+  },
 }
 </script>

@@ -92,12 +92,12 @@ export default {
       (v) => parseFloat(v) >= 0 || 'invalid value',
     ],
     requiredRule: [(v) => !!v || 'This field is required'],
-    tempValue: ''
+    tempValue: '',
   }),
   methods: {
     /* test if the form is valid, return boolean */
     validate() {
-      if(this.items == 0){
+      if (this.items == 0) {
         this.$store.commit('questionnaire/toggleNextTab', {
           tabName: 'AssetsFarmMachineryValidated',
           valid: true,
@@ -106,7 +106,7 @@ export default {
           keyName: 'farmMachinery',
           data: this.getEmptyData(),
         })
-        return;
+        return
       }
       const valid = this.$refs.form.validate()
       this.$store.commit('questionnaire/toggleNextTab', {
@@ -121,12 +121,12 @@ export default {
       }
     },
     /* create an object that is an empty values */
-    getEmptyData(){
+    getEmptyData() {
       return {
         farmMachineryName: [],
         farmMachineryQuantity: [],
         isAcquiredGovtProgram: [],
-        farmMachineryAge: []
+        farmMachineryAge: [],
       }
     },
     /* get the data and convert it into expected key/value formats in BackEnd */
@@ -151,13 +151,13 @@ export default {
     increment() {
       this.items++
     },
-    resetData(){
+    resetData() {
       this.items = 0
       this.machineName = []
       this.machineQuantity = []
       this.ismachineAquiredGovtProg = []
       this.machineAge = []
-    }
+    },
   },
   watch: {
     machineName() {
@@ -172,32 +172,36 @@ export default {
     machineAge() {
       this.validate()
     },
-    tempValue(){
+    tempValue() {
       this.validate()
-    }
+    },
   },
   beforeMount() {
     this.machineNameItems =
       this.$store.getters['questionnaireCode/Code5FarmMachinery']
 
-    const data =  this.$store.getters['profiling/selectedRecord']
-    if(Object.keys(data).length > 0){
+    const data = this.$store.getters['profiling/selectedRecord']
+    if (Object.keys(data).length > 0) {
       const length = data.farmHouseholdAsset.farmMachinery.length
-      if(length>0){
+      if (length > 0) {
         this.items = length
-        for(let i=0; i<length; i++){
-          this.machineName[i] = data.farmHouseholdAsset.farmMachinery[i].farmMachineryName
-          this.machineQuantity[i] = data.farmHouseholdAsset.farmMachinery[i].farmMachineryQuantity
-          this.ismachineAquiredGovtProg[i] = data.farmHouseholdAsset.farmMachinery[i].isAcquiredGovtProgram
-          this.machineAge[i] = data.farmHouseholdAsset.farmMachinery[i].farmMachineryAge
-        }          
-      }else{
+        for (let i = 0; i < length; i++) {
+          this.machineName[i] =
+            data.farmHouseholdAsset.farmMachinery[i].farmMachineryName
+          this.machineQuantity[i] =
+            data.farmHouseholdAsset.farmMachinery[i].farmMachineryQuantity
+          this.ismachineAquiredGovtProg[i] =
+            data.farmHouseholdAsset.farmMachinery[i].isAcquiredGovtProgram
+          this.machineAge[i] =
+            data.farmHouseholdAsset.farmMachinery[i].farmMachineryAge
+        }
+      } else {
         this.resetData()
       }
-    }else{
+    } else {
       this.resetData()
     }
     this.tempValue = 'tempvalue'
-  }
+  },
 }
 </script>

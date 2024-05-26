@@ -180,9 +180,7 @@ export default {
     ],
     farmFinancingItems: [],
     requiredRule: [(v) => !!v || 'This field is required, n/a if none'],
-    numberRule: [
-      (v) => parseInt(v) >= 0 || 'invalid value',
-    ],
+    numberRule: [(v) => parseInt(v) >= 0 || 'invalid value'],
   }),
   methods: {
     /* test if the form is valid, return boolean */
@@ -213,16 +211,20 @@ export default {
       const data = {}
       for (let i = 0; i < this.list.length; i++) {
         const keyName = this.list[i].key
-        if(keyName == 'marketQualityPreference' || keyName === 'marketingOutlet' || keyName === 'howBringToMarketingOutlet'){
+        if (
+          keyName == 'marketQualityPreference' ||
+          keyName === 'marketingOutlet' ||
+          keyName === 'howBringToMarketingOutlet'
+        ) {
           data[keyName] = {
             variable: this.formData[keyName].variable,
             remarks: this.formData[keyName].remarks,
           }
-        }else{
+        } else {
           data[keyName] = {
             variable: parseFloat(this.formData[keyName].variable),
             remarks: this.formData[keyName].remarks,
-          }          
+          }
         }
       }
       return data
@@ -235,8 +237,10 @@ export default {
     if (Object.keys(data).length > 0) {
       for (let i = 0; i < this.list.length; i++) {
         const keyName = this.list[i].key
-        this.formData[keyName].variable = data.coffeeHarvestMarketing[keyName].variable
-        this.formData[keyName].remarks = data.coffeeHarvestMarketing[keyName].remarks
+        this.formData[keyName].variable =
+          data.coffeeHarvestMarketing[keyName].variable
+        this.formData[keyName].remarks =
+          data.coffeeHarvestMarketing[keyName].remarks
       }
     } else {
       for (let i = 0; i < this.list.length; i++) {

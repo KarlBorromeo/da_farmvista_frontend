@@ -5,14 +5,14 @@ export async function submitQuestionnaire(payload) {
     const params = {
       type: encodeURIComponent(payload.type),
     }
-    const response = await Axios.post('survey', payload.form,{
-      params: params
+    const response = await Axios.post('survey', payload.form, {
+      params: params,
     })
     return response.data.message
   } catch (error) {
-    if(Array.isArray(error.response.data.message)){
+    if (Array.isArray(error.response.data.message)) {
       throw error.response.data.message[0]
-    }else{
+    } else {
       throw error.response.data.message
     }
   }

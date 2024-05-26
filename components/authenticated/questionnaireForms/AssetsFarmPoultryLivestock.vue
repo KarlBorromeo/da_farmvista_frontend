@@ -93,12 +93,12 @@ export default {
       (v) => parseFloat(v) >= 0 || 'invalid value',
     ],
     requiredRule: [(v) => !!v || 'This field is required'],
-    tempValue: ''
+    tempValue: '',
   }),
   methods: {
     /* test if the form is valid, return boolean */
     validate() {
-      if(this.items == 0){
+      if (this.items == 0) {
         this.$store.commit('questionnaire/toggleNextTab', {
           tabName: 'AssetsFarmPoultryLivestockValidated',
           valid: true,
@@ -107,7 +107,7 @@ export default {
           keyName: 'poultryLivestock',
           data: this.getEmptyData(),
         })
-        return;
+        return
       }
       const valid = this.$refs.form.validate()
       this.$store.commit('questionnaire/toggleNextTab', {
@@ -121,8 +121,8 @@ export default {
         })
       }
     },
-     /* create an object that is an empty values */
-     getEmptyData(){
+    /* create an object that is an empty values */
+    getEmptyData() {
       return {
         poultryLivestockName: [],
         poultryLivestockQuantity: [],
@@ -152,13 +152,13 @@ export default {
     increment() {
       this.items++
     },
-    resetData(){
+    resetData() {
       this.items = 0
       this.poultryLivestockName = []
       this.poultryLivestockQuantity = []
       this.ispoultryLivestockAquiredGovtProg = []
-      this.poultryLivestockAge = []     
-    }
+      this.poultryLivestockAge = []
+    },
   },
   watch: {
     poultryLivestockName() {
@@ -173,29 +173,33 @@ export default {
     poultryLivestockAge() {
       this.validate()
     },
-    tempValue(){
+    tempValue() {
       this.validate()
-    }
+    },
   },
   beforeMount() {
     this.poultryLivestockNameItems =
       this.$store.getters['questionnaireCode/Code5PoultryAndLivestock']
 
-    const data =  this.$store.getters['profiling/selectedRecord']
-    if(Object.keys(data).length > 0){
+    const data = this.$store.getters['profiling/selectedRecord']
+    if (Object.keys(data).length > 0) {
       const length = data.farmHouseholdAsset.poultryLivestock.length
-      if(length>0){
+      if (length > 0) {
         this.items = length
-        for(let i=0; i<length; i++){
-          this.poultryLivestockName[i] = data.farmHouseholdAsset.poultryLivestock[i].poultryLivestockName
-          this.poultryLivestockQuantity[i] = data.farmHouseholdAsset.poultryLivestock[i].poultryLivestockQuantity
-          this.ispoultryLivestockAquiredGovtProg[i] = data.farmHouseholdAsset.poultryLivestock[i].isAcquiredGovtProgram
-          this.poultryLivestockAge[i] = data.farmHouseholdAsset.poultryLivestock[i].poultryLivestockAge
-        }          
-      }else{
+        for (let i = 0; i < length; i++) {
+          this.poultryLivestockName[i] =
+            data.farmHouseholdAsset.poultryLivestock[i].poultryLivestockName
+          this.poultryLivestockQuantity[i] =
+            data.farmHouseholdAsset.poultryLivestock[i].poultryLivestockQuantity
+          this.ispoultryLivestockAquiredGovtProg[i] =
+            data.farmHouseholdAsset.poultryLivestock[i].isAcquiredGovtProgram
+          this.poultryLivestockAge[i] =
+            data.farmHouseholdAsset.poultryLivestock[i].poultryLivestockAge
+        }
+      } else {
         this.resetData()
       }
-    }else{
+    } else {
       this.resetData()
     }
     this.tempValue = 'tempvalue'

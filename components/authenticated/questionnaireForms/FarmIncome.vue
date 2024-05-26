@@ -140,9 +140,9 @@ export default {
       this.validate()
     },
   },
-  beforeMount(){
-    const data =  this.$store.getters['profiling/selectedRecord']
-    if(Object.keys(data).length > 0){
+  beforeMount() {
+    const data = this.$store.getters['profiling/selectedRecord']
+    if (Object.keys(data).length > 0) {
       this.coffee = data.farmSourceIncome.coffee
       this.crops = data.farmSourceIncome.crops
       this.livestock = data.farmSourceIncome.livestock
@@ -150,7 +150,7 @@ export default {
       this.otherLivelihood = data.farmSourceIncome.otherLivelihood
       this.nonFarmIncome = data.farmSourceIncome.nonFarm
       this.otherSources = data.farmSourceIncome.otherSource
-    }else{
+    } else {
       this.coffee = 0
       this.crops = 0
       this.livestock = 0
@@ -159,6 +159,6 @@ export default {
       this.nonFarmIncome = 0
       this.otherSources = 0
     }
-  }
+  },
 }
 </script>

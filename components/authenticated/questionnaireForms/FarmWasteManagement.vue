@@ -86,19 +86,19 @@ export default {
     specialCharactersRule: [
       (v) => !!v || 'This field is required',
       (v) => {
-          const regex = /^[a-zA-Z0-9,\/]*$/;
-          if (regex.test(v)) {
-              return true;
-          }
-          return 'Special characters are not allowed except comma and slash';
-      }
+        const regex = /^[a-zA-Z0-9,\/]*$/
+        if (regex.test(v)) {
+          return true
+        }
+        return 'Special characters are not allowed except comma and slash'
+      },
     ],
-    tempValue: ''
+    tempValue: '',
   }),
   methods: {
     /* test if the form is valid, return boolean */
     validate() {
-      if(this.items == 0){
+      if (this.items == 0) {
         this.$store.commit('questionnaire/toggleNextTab', {
           tabName: 'FarmWasteManagementValidated',
           valid: true,
@@ -107,7 +107,7 @@ export default {
           keyName: 'farmWasteManagement',
           data: this.getEmptyData(),
         })
-        return;
+        return
       }
       const valid = this.$refs.form.validate()
       this.$store.commit('questionnaire/toggleNextTab', {
@@ -122,12 +122,12 @@ export default {
       }
     },
     /* create an object that is an empty values */
-    getEmptyData(){
+    getEmptyData() {
       return {
-        cropsGrown:  [],
-        kindWasteProduced:  [],
-        volumeWasteKg:  [],
-        isUtilized: []
+        cropsGrown: [],
+        kindWasteProduced: [],
+        volumeWasteKg: [],
+        isUtilized: [],
       }
     },
     /* get the data and convert it into expected key/value formats in BackEnd */
@@ -158,7 +158,7 @@ export default {
       this.kindsWasteProduced = []
       this.volumeWaste = []
       this.isUtilized = []
-    }
+    },
   },
   watch: {
     cropsGrown() {
@@ -173,32 +173,38 @@ export default {
     isUtilized() {
       this.validate()
     },
-    tempValue(){
+    tempValue() {
       this.validate()
-    }
+    },
   },
   beforeMount() {
     this.machineNameItems =
       this.$store.getters['questionnaireCode/Code5FarmMachinery']
 
-    const data =  this.$store.getters['profiling/selectedRecord']
-    if(Object.keys(data).length > 0){
+    const data = this.$store.getters['profiling/selectedRecord']
+    if (Object.keys(data).length > 0) {
       const length = data.farmWasteManagement.length
-      if(length>0){
+      if (length > 0) {
         this.items = length
-        for(let i=0; i<length; i++){
-          this.cropsGrown[i] = extractUnmatchedValueCheck(data.farmWasteManagement[i].cropsGrown,[])
-          this.kindsWasteProduced[i] = extractUnmatchedValueCheck(data.farmWasteManagement[i].kindWasteProduced,[])
+        for (let i = 0; i < length; i++) {
+          this.cropsGrown[i] = extractUnmatchedValueCheck(
+            data.farmWasteManagement[i].cropsGrown,
+            []
+          )
+          this.kindsWasteProduced[i] = extractUnmatchedValueCheck(
+            data.farmWasteManagement[i].kindWasteProduced,
+            []
+          )
           this.volumeWaste[i] = data.farmWasteManagement[i].volumeWasteKg
           this.isUtilized[i] = data.farmWasteManagement[i].isUtilized
-        }          
-      }else{
+        }
+      } else {
         this.resetData()
       }
-    }else{
+    } else {
       this.resetData()
     }
     this.tempValue = 'tempvalue'
-  }
+  },
 }
 </script>
