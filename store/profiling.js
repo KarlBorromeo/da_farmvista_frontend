@@ -62,9 +62,9 @@ export const mutations = {
         dateInterview: formattedDate,
         farmerName: name,
         farmerCode: element.profile.farmerCode,
-        regionProvince: element.regionProvince,
-        cityMunicipality: element.cityMunicipality,
-        barangay: element.barangay,
+        regionProvince: element.interview.regionProvince,
+        cityMunicipality: element.interview.cityMunicipality,
+        barangay: element.interview.barangay,
         nameOrganization: element.profileGeneralInfo.organizationName,
       }
       state.itemsCurrentPage.push(object)
@@ -84,23 +84,7 @@ export const mutations = {
       }
     }
   },
-  /*
-    reset as empty values each key/value
-  */
-  resetSelectedRecord(state){
-    const obj = state.selectedRecord;
-    const rootKeys = Object.keys(obj);
-    for(let i=0; i<rootKeys.length; i++){
-        let subKeys = Object.keys(obj[rootKeys[i]]);
-        for(let j=0; j<subKeys.length; j++){
-            if(typeof(obj[rootKeys[i]][subKeys[j]]) == 'number' || typeof(obj[rootKeys[i]][subKeys[j]]) == 'string'){
-                obj[rootKeys[i]][subKeys[j]] = ''
-            }else{
-                obj[rootKeys[i]][subKeys[j]] = []
-            }
-        }
-    }
-  },
+
   /* 
     toggle the editing record boolean holder, this holds if the user is editing a record or creating a record, reset to empty the selected if creation mode 
   */
@@ -108,9 +92,9 @@ export const mutations = {
     state.isEditingMode = bool
     if(!bool){
       state.selectedRecord = {};
-      // this.commit('resetSelectedRecord')
     }
   },
+
   /* save the single record to the store to able the form questionnaire to access the existing values of the selected record */
   saveSelectedRecord(state,obj){
     state.selectedRecord = obj;
@@ -131,6 +115,7 @@ export const actions = {
       throw error
     }
   },
+  
   /* fetch one survey record using id */
   async fetchSingleSurvey(context,payload){
     console.log('fetc;hing single record')

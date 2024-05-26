@@ -9,7 +9,7 @@
     <v-divider />
     <v-toolbar light elevation="0" v-if="currentCommodity == 'coffee'">
       <template>
-        <v-tabs fixed-tabs show-arrows center-active slider-color="red">
+        <v-tabs fixed-tabs show-arrows center-active slider-color="primary" v-model="initialTab">
           <v-tab
             @click="selectTab('SurveyInformation')"
             class="caption font-weight-black"
@@ -238,7 +238,7 @@
     <v-tabs-items v-else>
       <v-card v-if="currentCommodity == 'coffee'">
         <keep-alive>
-          <component :is="current"></component>
+          <component :is="currentTab"></component>
         </keep-alive>
       </v-card>
       <v-card v-else> EMPTY </v-card>
@@ -322,41 +322,40 @@ export default {
   data() {
     return {
       loading: false,
-      current: 'SubmissionPage',
       currentCommodity: 'coffee',
+      initialTab: 0
     }
   },
   methods: {
     /* render the form based on the tab selected */
     selectTab(item) {
-      this.current = item
+      this.$store.commit('questionnaire/displayCurrentTab',item)
     },
-    /* change the commodity type */
+    /* change/update the commodity type */
     switchCommodity(commodity) {
-      this.currentCommodity = commodity
+      this.currentCommodity = commodity.toLowerCase()
     },
-    /* fetching code request */
-    async fetchAllCodes(commodity){
+    /* fetching code requestS, and set the form type commodity in store for the submission stage */
+    async fetchAllCodes(){
       try {
         this.loading = true
-        await this.$store.dispatch('questionnaireCode/fetchAllCodes', commodity)
-        this.$store.commit('questionnaire/updateCommodity',commodity)
-        this.currentCommodity = commodity
+        this.$store.dispatch('questionnaire/updateCommodity',this.currentCommodity)
+        await this.$store.dispatch('questionnaireCode/fetchAllCodes', this.currentCommodity)   
       } catch (error) {
         this.$refs.snackbar.showBar(error,'red');
       }
       this.loading = false  
     },
+
     /* fetching one record existing using the id, needed an id first */
     async fetchOneRecord(){
-      this.currentCommodity = this.commodityProp;
-      const payload = {
-        id: this.id,
-        type: this.currentCommodity
-      }
+      this.switchCommodity(this.commodityProp)
       try{
         this.loading = true
-        await this.$store.dispatch('profiling/fetchSingleSurvey',payload)
+        await this.$store.dispatch('profiling/fetchSingleSurvey',{
+          id: this.id,
+          type: this.currentCommodity
+        })
       }catch(error){
         this.$refs.snackbar.showBar(error,'red');
       }
@@ -364,6 +363,9 @@ export default {
     }
   },
   computed: {
+    currentTab(){
+      return this.$store.getters['questionnaire/currentTab']
+    },
     SurveyInformationValidated() {
       return !this.$store.getters['questionnaire/SurveyInformationValidated']
     },
@@ -481,22 +483,23 @@ export default {
     fetch a specific survey record once only if the prop "id" is not null or undefined,
   */
   async beforeMount() {
-    await this.fetchAllCodes(this.currentCommodity)
+    await this.fetchAllCodes()
     if(this.id){
       await this.fetchOneRecord()
     }
   },
   watch: {
-    /* fetch codes if the commodity changed, create mode only */
+    /* fetch codes if the commodity changed*/
     async currentCommodity(newVal, oldVal) {
       if (newVal != oldVal) {
-        const type = newVal.toLowerCase()
-        await this.fetchAllCodes(type)
+        this.switchCommodity(newVal)
+        await this.fetchAllCodes()
       }
     },
-    /* if id is not null, we fetch one record, edit mode only */
+    /* if id prop is changed and not null, we fetch one record, edit mode only */
     async id(val){
       if(val){
+        this.initialTab = 0
         await this.fetchOneRecord()
       }
     }

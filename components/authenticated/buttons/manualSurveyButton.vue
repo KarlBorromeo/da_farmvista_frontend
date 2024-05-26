@@ -24,6 +24,13 @@ export default {
     toggleOffEditing(){
       this.$store.commit('profiling/toggleEditingMode', false)
     }
+  },
+  watch:{
+    dialog(val){
+      if(!val){
+        this.$store.commit('questionnaire/resetTabsValidity')     
+      }
+    }
   }
 }
 </script>

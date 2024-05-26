@@ -143,11 +143,16 @@ export const state = () => ({
       tempValidity: false,
     },
   ],
+  currentTab: 'SurveyInformation',
   isAllValid: false,
-  commodity: '',
+  commodity: ''
 })
 
 export const getters = {
+  /* return the updated tab selected */
+  currentTab(state){
+    return state.currentTab
+  },
   SurveyInformationValidated(state) {
     const index = state.tabs.findIndex(
       (el) => el.tabName == 'SurveyInformationValidated'
@@ -475,6 +480,19 @@ export const mutations = {
     }
   },
 
+  /* reset the validity of all tabs into false */
+  resetTabsValidity(state){
+    state.tabs.forEach( tab => {
+      tab.validity = false
+      tab.tempValidity = false
+    });
+  },
+
+  /* display the next tab contents */
+  displayCurrentTab(state,tabName){
+    state.currentTab = tabName
+  },
+
   /* save the all data of forms to a one object */
   saveData(state, obj) {
     state.form[obj.keyName] = obj.data
@@ -503,6 +521,7 @@ export const mutations = {
 }
 
 export const actions = {
+  /* submit the form if all the tabs are validated */
   async submitAll(context) {
     console.log('this is the form: ', context.state.form)
     console.log('this is the tab details: ', context.state.tabs)
@@ -522,4 +541,9 @@ export const actions = {
       throw new Error('incomplete forms')
     }
   },
+  /* change the commodity and reset the tabs validity*/
+  updateCommodity(context,commodity){
+    context.commit('updateCommodity',commodity)
+    context.commit('resetTabsValidity')
+  }
 }
