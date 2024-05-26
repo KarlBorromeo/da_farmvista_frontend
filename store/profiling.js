@@ -1,3 +1,4 @@
+
 import * as api from '../api/profiling'
 
 export const state = () => ({
@@ -99,6 +100,18 @@ export const mutations = {
   saveSelectedRecord(state,obj){
     state.selectedRecord = obj;
   },
+
+  /* delete specific record locally */
+  deleteSurvey(state,id){
+    if(state.itemsCurrentPage.length>0){
+      const index = state.itemsCurrentPage.findIndex( item => item.id === id)
+      if(index >=0){
+        state.itemsCurrentPage.splice(index,1);
+      }else{
+        throw new Error('cannot find the record in store')
+      }
+    }
+  }
 }
 
 export const actions = {
@@ -123,6 +136,17 @@ export const actions = {
       const response = await api.fetchSingleSurvey(payload);
       context.commit('saveSelectedRecord',response)
       context.commit('toggleEditingMode', true) 
+    }catch(error){
+      throw error
+    }
+  },
+
+  /* delete specific survey */
+  async deleteSurvey(context,id){
+    try{
+      const res = await api.deleteSurvey(id);
+      context.commit('deleteSurvey',id);
+      return res
     }catch(error){
       throw error
     }

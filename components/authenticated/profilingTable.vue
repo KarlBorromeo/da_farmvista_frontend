@@ -106,8 +106,17 @@ export default {
     },
 
     /* when delete button is clicked, delete the specific record using its id */
-    deleteItem(id) {
-      alert('delete: ' + id)
+    async deleteItem(id) {
+      const confirmed = confirm('Are you sure to delete this record?')
+      if(confirmed){
+        try{
+          const res = await this.$store.dispatch('profiling/deleteSurvey',id)
+          this.$refs.snackbar.showBar(res, 'success')
+        }catch(error){
+          this.$refs.snackbar.showBar(error, 'red')
+        }
+        
+      }
     },
 
     /* fetch the survey records */
