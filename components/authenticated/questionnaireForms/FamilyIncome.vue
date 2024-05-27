@@ -117,7 +117,7 @@ export default {
       { value: 'yes', label: 'Yes' },
       { value: 'no', label: 'No' },
     ],
-    requiredRule: [(v) => !!v || 'This field is required'],
+    requiredRule: [(v) => parseInt(v)>=0 || 'invalid value'],
     tempValue: '',
   }),
   methods: {

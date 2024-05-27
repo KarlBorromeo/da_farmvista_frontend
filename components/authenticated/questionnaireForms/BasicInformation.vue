@@ -30,6 +30,7 @@
         <form-input-container>
           <v-text-field
             v-model="contactNumber"
+            :rules="contactNumberRule"
             label="Farmer's Phone Number"
           ></v-text-field>
         </form-input-container>
@@ -58,6 +59,19 @@ export default {
     middleInitial: 'a',
     contactNumber: '09277494592',
     farmerCode: '00004ZuIp',
+    contactNumberRule: [
+      (v) => {
+        if(v){
+          if(v.length == 11 && v[0] == '0' && v[1] == '9'){
+            return true
+          }else{
+            return 'must be (09123456789) format'
+          }
+        }else{
+          return true
+        }
+      }
+    ]
   }),
   methods: {
     /* test if the form is valid, return boolean */

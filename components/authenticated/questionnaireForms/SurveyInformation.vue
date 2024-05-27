@@ -240,14 +240,24 @@ export default {
         })
       }
     },
+    /* converts into hh:mm format*/
+    convertTimeToHHMM(timeStr) {
+        // Split the time string by colon
+        let timeParts = timeStr.split(':');
+        // Extract hours and minutes
+        let hours = timeParts[0];
+        let minutes = timeParts[1];
+        // Format the result as hh:mm
+        return `${hours}:${minutes}`;
+    },
     /* return the data of this form as an object */
     getData() {
       return {
         dateOfInterview: this.date,
         surveyNo: parseInt(this.surveyNumber),
         validatorName: this.interviewer,
-        interviewStart: this.interviewStart,
-        interviewEnd: this.interviewEnd,
+        interviewStart: this.convertTimeToHHMM(this.interviewStart),
+        interviewEnd: this.convertTimeToHHMM(this.interviewEnd),
         regionProvince: this.regionProvince,
         cityMunicipality: this.municipality,
         barangay: this.barangay,

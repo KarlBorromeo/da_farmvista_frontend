@@ -8,6 +8,7 @@
             <v-text-field
               v-model="farmToNearestRoad.qty"
               :rules="numberRule"
+              type="number"
               label="* Details"
             ></v-text-field>
           </form-input-container>
@@ -77,6 +78,7 @@
             <v-text-field
               v-model="farmToResidence.qty"
               :rules="numberRule"
+              type="number"
               label="* Details"
             ></v-text-field>
           </form-input-container>
@@ -146,6 +148,7 @@
             <v-text-field
               v-model="farmToOutputMarket.qty"
               :rules="numberRule"
+              type="number"
               label="* Details"
             ></v-text-field>
           </form-input-container>
@@ -215,6 +218,7 @@
             <v-text-field
               v-model="residenceToOutputMarket.qty"
               :rules="numberRule"
+              type="number"
               label="* Details"
             ></v-text-field>
           </form-input-container>
@@ -286,6 +290,7 @@
             <v-text-field
               v-model="farmToInputsSupply.qty"
               :rules="numberRule"
+              type="number"
               label="* Details"
             ></v-text-field>
           </form-input-container>
@@ -355,6 +360,7 @@
             <v-text-field
               v-model="residenceToInputsSupply.qty"
               :rules="numberRule"
+              type="number"
               label="* Details"
             ></v-text-field>
           </form-input-container>
@@ -525,7 +531,7 @@ export default {
     getData() {
       return {
         farmToNearestRoad: {
-          distanceQty: this.farmToNearestRoad.qty,
+          distanceQty: parseInt(this.farmToNearestRoad.qty),
           distanceUnit: this.farmToNearestRoad.unit,
           dominantTransportation: concatinateOtherValueToString(
             this.farmToNearestRoad.dominantTransportation,
@@ -537,7 +543,7 @@ export default {
           ),
         },
         farmToResidence: {
-          distanceQty: this.farmToResidence.qty,
+          distanceQty: parseInt(this.farmToResidence.qty),
           distanceUnit: this.farmToResidence.unit,
           dominantTransportation: concatinateOtherValueToString(
             this.farmToResidence.dominantTransportation,
@@ -549,7 +555,7 @@ export default {
           ),
         },
         farmToOutputMarket: {
-          distanceQty: this.farmToOutputMarket.qty,
+          distanceQty: parseInt(this.farmToOutputMarket.qty),
           distanceUnit: this.farmToOutputMarket.unit,
           dominantTransportation: concatinateOtherValueToString(
             this.farmToOutputMarket.dominantTransportation,
@@ -561,7 +567,7 @@ export default {
           ),
         },
         residenceToOutputMarket: {
-          distanceQty: this.residenceToOutputMarket.qty,
+          distanceQty: parseInt(this.residenceToOutputMarket.qty),
           distanceUnit: this.residenceToOutputMarket.unit,
           dominantTransportation: concatinateOtherValueToString(
             this.residenceToOutputMarket.dominantTransportation,
@@ -573,7 +579,7 @@ export default {
           ),
         },
         farmToInputsSupply: {
-          distanceQty: this.farmToInputsSupply.qty,
+          distanceQty: parseInt(this.farmToInputsSupply.qty),
           distanceUnit: this.farmToInputsSupply.unit,
           dominantTransportation: concatinateOtherValueToString(
             this.farmToInputsSupply.dominantTransportation,
@@ -585,7 +591,7 @@ export default {
           ),
         },
         residenceToInputsSupply: {
-          distanceQty: this.residenceToInputsSupply.qty,
+          distanceQty: parseInt(this.residenceToInputsSupply.qty),
           distanceUnit: this.residenceToInputsSupply.unit,
           dominantTransportation: concatinateOtherValueToString(
             this.residenceToInputsSupply.dominantTransportation,

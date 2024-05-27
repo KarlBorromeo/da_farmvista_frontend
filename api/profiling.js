@@ -35,9 +35,8 @@ export async function fetchSingleSurvey(payload) {
 
 export async function deleteSurvey(id) {
   try {
-    await new Promise((resolve) => setTimeout(resolve, 5000))
-    // return 'Deleted succesfully'
-    throw new Error('unaothorized')
+    const res = await Axios.delete(`survey/${id}`)
+    return 'Deleted succesfully'
   } catch (error) {
     throw error
   }

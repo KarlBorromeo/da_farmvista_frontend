@@ -144,8 +144,7 @@ export default {
     otherExpenses: 100,
     otherExpensesSpecify: 'sample other',
     numberRule: [
-      (v) => !!v || 'This field is required',
-      (v) => v >= 0 || 'invalid value',
+      (v) => parseInt(v) >= 0 || 'invalid value',
     ],
     requiredRule: [(v) => !!v || 'This field is required'],
   }),

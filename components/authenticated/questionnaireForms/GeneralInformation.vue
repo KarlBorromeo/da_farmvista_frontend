@@ -272,7 +272,7 @@ export default {
     /* get the data and convert it into expected key/value formats in BackEnd */
     getData() {
       return {
-        age: this.age,
+        age: parseInt(this.age),
         sex: this.sex,
         civilStatus: this.civilStatus,
         religion: this.religion,
@@ -367,6 +367,7 @@ export default {
       this.sex = ''
       this.civilStatus = ''
       this.religion = ''
+      this.highestEducationAttained = ''
       this.isBelongMarginalizedSector = ''
       this.nonMarginalizedSector = []
       this.dialectSpoken = ''

@@ -68,15 +68,15 @@ export default {
   computed: {
     headers() {
       return [
-        // { text: 'ID.', align: 'start', value: 'id' },
+        { text: 'ID.', align: 'start', value: 'id' },
         { text: 'Survey No.', align: 'start', value: 'surveyNo' },
         { text: `Date Interview (YYYY/MM/DD)`, value: 'dateInterview' },
-        { text: `Farmer's Name`, value: 'farmerName' },
-        { text: `Farmer's Code`, value: 'farmerCode' },
-        { text: 'Region/Province', value: 'regionProvince' },
-        { text: 'City/Municipality', value: 'cityMunicipality' },
-        { text: 'Barangay', value: 'barangay' },
-        { text: 'Organization/Institution', value: 'nameOrganization' },
+        // { text: `Farmer's Name`, value: 'farmerName' },
+        // { text: `Farmer's Code`, value: 'farmerCode' },
+        // { text: 'Region/Province', value: 'regionProvince' },
+        // { text: 'City/Municipality', value: 'cityMunicipality' },
+        // { text: 'Barangay', value: 'barangay' },
+        // { text: 'Organization/Institution', value: 'nameOrganization' },
         { text: 'Actions', value: 'actions', sortable: false },
       ]
     },

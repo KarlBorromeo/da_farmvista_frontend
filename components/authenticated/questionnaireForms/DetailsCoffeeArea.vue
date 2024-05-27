@@ -50,6 +50,7 @@
               v-model="plantingDistanceDetails"
               :rules="requiredRule"
               label="* Details"
+              type="number"
             ></v-text-field>
           </form-input-container>
           <form-radio-container title="Reason for Using">
@@ -84,6 +85,7 @@
               v-model="numberPlantsDetails"
               :rules="requiredRule"
               label="* Details"
+              type="number"
             ></v-text-field>
           </form-input-container>
           <form-input-container>
@@ -244,7 +246,6 @@ export default {
       (v) => parseFloat(v) >= 0 || 'invalid value',
     ],
     yearRule: [
-      (v) => !!v || 'This field is required',
       (v) => {
         const value = parseInt(v)
         const currentDate = new Date()
@@ -288,7 +289,7 @@ export default {
           reasonUsing: this.classificationCropsReasons,
         },
         yearPlanted: {
-          details: this.yearPlantedDetails,
+          details: parseInt(this.yearPlantedDetails),
           reasonUsing: this.yearPlantedReasons,
         },
         plantingDistance: {
@@ -299,7 +300,7 @@ export default {
           ),
         },
         numberPlantsStands: {
-          details: this.numberPlantsDetails,
+          details: parseInt(this.numberPlantsDetails),
           reasonUsing: this.numberPlantsReasons,
         },
         intercropVariety: {

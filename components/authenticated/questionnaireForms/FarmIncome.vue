@@ -85,7 +85,6 @@ export default {
     nonFarmIncome: 100,
     otherSources: 100,
     requiredRule: [
-      (v) => !!v || 'This field is required',
       (v) => parseFloat(v) >= 0 || 'invalid value',
     ],
   }),

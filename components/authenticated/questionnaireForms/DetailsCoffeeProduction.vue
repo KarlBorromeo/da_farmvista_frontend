@@ -620,6 +620,9 @@ export default {
         this.methodInorganicApplicationOther = ''
       }
     },
+    methodInorganicApplicationOther(){
+      this.validate()
+    },
     isUseOrganicFertilizer(value) {
       this.validate()
       if (value == 'no') {
@@ -628,12 +631,18 @@ export default {
         this.methodOrganicApplicationOther = ''
       }
     },
+    methodOrganicApplicationOther(){
+      this.validate()
+    },
     sourcePlantingMaterial(value) {
       this.validate()
       const otherTicked = value.findIndex((item) => item == 'others')
       if (!otherTicked) {
         this.sourcePlantingMaterialOther = ''
       }
+    },
+    sourcePlantingMaterialOther(){
+      this.validate()
     },
     coffeeVariety(value) {
       this.validate()
@@ -642,6 +651,9 @@ export default {
         this.coffeeVarietyOther = ''
       }
     },
+    coffeeVarietyOther(){
+      this.validate()
+    },
     methodLandPreparation(value) {
       this.validate()
       const otherTicked = value.findIndex((item) => item == 'others')
@@ -649,12 +661,25 @@ export default {
         this.methodLandPreparationOther = ''
       }
     },
+    methodLandPreparationOther(){
+      this.validate()
+    },
     rowOrientation(value) {
       this.validate()
       const otherTicked = value.findIndex((item) => item == 'others')
       if (!otherTicked) {
         this.rowOrientationOther = ''
       }
+      this.validate()
+    },
+    rowOrientationOther(){
+      this.validate()
+    },
+    plantingDepth(){
+      this.validate()
+    },
+    soilType(){
+      this.validate()
     },
     weedControl(value) {
       this.validate()
