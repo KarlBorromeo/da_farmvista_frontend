@@ -97,6 +97,7 @@ export const mutations = {
 
   /* save the single record to the store to able the form questionnaire to access the existing values of the selected record */
   saveSelectedRecord(state, obj) {
+    console.log('selected record: ',obj)
     state.selectedRecord = obj
   },
 

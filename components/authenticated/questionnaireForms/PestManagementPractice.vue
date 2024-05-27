@@ -157,7 +157,7 @@
             ></v-radio>
             <v-text-field
               v-if="importantConsiderationDecidingPesticide == 'others'"
-              v-model="pesticideUsedGroup"
+              v-model="importantConsiderationDecidingPesticideOther"
               label="Other: please specify"
               :rules="requiredRule"
             />
@@ -540,6 +540,10 @@ export default {
         data.pestManagementPractice.importantConsiderationDecidingPesticide,
         this.importantConsiderationDecidingPesticideItems
       )
+      console.log('pesticie other: ',extractUnmatchedValueRadio(
+          data.pestManagementPractice.importantConsiderationDecidingPesticide,
+          this.importantConsiderationDecidingPesticideItems
+        ))
       this.importantConsiderationDecidingPesticideOther =
         extractUnmatchedValueRadio(
           data.pestManagementPractice.importantConsiderationDecidingPesticide,

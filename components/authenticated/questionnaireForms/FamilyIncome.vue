@@ -91,7 +91,7 @@ import formCard from '~/components/authenticated/form/formCard.vue'
 import formCardButton from '~/components/authenticated/form/formCardButton.vue'
 import FormInputContainer from '~/components/authenticated/form/formInputContainer.vue'
 import FormRadioContainer from '~/components/authenticated/form/formRadioContainer.vue'
-
+import { convertNumbers } from '~/reusableFunctions/questionnaireValidation'
 export default {
   components: {
     formCard,
@@ -167,7 +167,7 @@ export default {
         sex: this.sex,
         roleInFamily: this.roleFamily,
         educationAttainment: this.educationsAttainment,
-        estimatedContribution: this.contributionAmount,
+        estimatedContribution: convertNumbers(this.contributionAmount),
         isInvolvedCoffeeFarm: this.involveCoffeefarm,
       }
     },

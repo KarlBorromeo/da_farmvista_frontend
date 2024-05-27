@@ -72,6 +72,7 @@
 
 <script>
 import FormInputContainer from '~/components/authenticated/form/formInputContainer.vue'
+import { convertNumbers } from '~/reusableFunctions/questionnaireValidation'
 export default {
   components: { FormInputContainer },
   data: () => ({
@@ -107,13 +108,13 @@ export default {
     /* get the data and convert it into expected key/value formats in BackEnd */
     getData() {
       return {
-        coffee: this.coffee,
-        crops: this.crops,
-        livestock: this.livestock,
-        agroforestry: this.agroforestry,
-        otherLivelihood: this.otherLivelihood,
-        nonFarm: this.nonFarmIncome,
-        otherSource: this.otherSources,
+        coffee: convertNumbers(this.coffee),
+        crops: convertNumbers(this.crops),
+        livestock: convertNumbers(this.livestock),
+        agroforestry: convertNumbers(this.agroforestry),
+        otherLivelihood: convertNumbers(this.otherLivelihood),
+        nonFarm: convertNumbers(this.nonFarmIncome),
+        otherSource: convertNumbers(this.otherSources),
       }
     },
   },

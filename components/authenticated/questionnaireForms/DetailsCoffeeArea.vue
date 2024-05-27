@@ -310,7 +310,7 @@ export default {
           ),
         },
         totalArea: {
-          details: this.totalAreaDetails,
+          details: parseInt(this.totalAreaDetails),
           reasonUsing: this.totalAreaReasons,
         },
         seedSource: {

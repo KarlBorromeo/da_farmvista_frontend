@@ -57,7 +57,7 @@ export default {
       dialog: false,
       search: '',
       items: [],
-      itemPerPage: 5, // number of rows per page
+      itemPerPage: 20, // number of rows per page
       loading: false, // toggle the loading of the table
       page: 1, // current page number
       pageCount: 0, // number of how many pages
@@ -68,7 +68,7 @@ export default {
   computed: {
     headers() {
       return [
-        { text: 'ID.', align: 'start', value: 'id' },
+        // { text: 'ID.', align: 'start', value: 'id' },
         { text: 'Survey No.', align: 'start', value: 'surveyNo' },
         { text: `Date Interview (YYYY/MM/DD)`, value: 'dateInterview' },
         { text: `Farmer's Name`, value: 'farmerName' },

@@ -185,7 +185,7 @@ export default {
   methods: {
     /* test if the form is valid, return boolean */
     validate() {
-      console.log('validating')
+      console.log('validating',this.getData())
       const valid = this.$refs.form.validate()
       this.$store.commit('questionnaire/toggleNextTab', {
         tabName: 'CoffeeHarvestMarketingValidated',

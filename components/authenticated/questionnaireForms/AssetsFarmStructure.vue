@@ -78,6 +78,7 @@ import {
   concatinateEachIndexes,
   isOtherValueDefinedRadio,
   extractUnmatchedValueRadio,
+  convertNumbers
 } from '~/reusableFunctions/questionnaireValidation'
 export default {
   components: {
@@ -149,9 +150,9 @@ export default {
           this.structureBldgName,
           this.structureBldgNameOther
         ),
-        structureBldgLandQuantity: this.structureBldgQuantity,
+        structureBldgLandQuantity: convertNumbers(this.structureBldgQuantity),
         isAcquiredGovtProgram: this.isstructureBldgAquiredGovtProg,
-        structureBldgLandAge: this.structureBldgAge,
+        structureBldgLandAge: convertNumbers(this.structureBldgAge),
       }
     },
     // decrement the count of items

@@ -125,6 +125,7 @@
 
 <script>
 import FormInputContainer from '~/components/authenticated/form/formInputContainer.vue'
+import { convertNumbers } from '~/reusableFunctions/questionnaireValidation'
 export default {
   components: { FormInputContainer },
   data: () => ({
@@ -166,18 +167,18 @@ export default {
     /* get the data and convert it into expected key/value formats in BackEnd */
     getData() {
       return {
-        food: this.food,
-        clothing: this.clothing,
-        utilities: this.utilities,
-        household: this.householdFacilities,
-        nonFoodItems: this.nonFoodItems,
-        healthExpenses: this.healthExpenses,
-        transportation: this.transportation,
-        communication: this.communication,
-        recreation: this.recreation,
-        education: this.education,
-        specialOccasions: this.specialOccasions,
-        others: this.otherExpenses,
+        food: convertNumbers(this.food),
+        clothing: convertNumbers(this.clothing),
+        utilities: convertNumbers(this.utilities),
+        household: convertNumbers(this.householdFacilities),
+        nonFoodItems: convertNumbers(this.nonFoodItems),
+        healthExpenses: convertNumbers(this.healthExpenses),
+        transportation: convertNumbers(this.transportation),
+        communication: convertNumbers(this.communication),
+        recreation: convertNumbers(this.recreation),
+        education: convertNumbers(this.education),
+        specialOccasions: convertNumbers(this.specialOccasions),
+        others: convertNumbers(this.otherExpenses),
         otherSpecified: this.otherExpensesSpecify,
       }
     },

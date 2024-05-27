@@ -67,6 +67,7 @@ import formCardButton from '~/components/authenticated/form/formCardButton.vue'
 import FormInputContainer from '~/components/authenticated/form/formInputContainer.vue'
 import FormRadioContainer from '~/components/authenticated/form/formRadioContainer.vue'
 import FormSelectContainer from '~/components/authenticated/form/formSelectContainer.vue'
+import { convertNumbers } from '~/reusableFunctions/questionnaireValidation'
 export default {
   components: {
     formCard,
@@ -133,9 +134,9 @@ export default {
     getData() {
       return {
         farmMachineryName: this.machineName,
-        farmMachineryQuantity: this.machineQuantity,
+        farmMachineryQuantity: convertNumbers(this.machineQuantity),
         isAcquiredGovtProgram: this.ismachineAquiredGovtProg,
-        farmMachineryAge: this.machineAge,
+        farmMachineryAge: convertNumbers(this.machineAge),
       }
     },
     // decrement the count of items

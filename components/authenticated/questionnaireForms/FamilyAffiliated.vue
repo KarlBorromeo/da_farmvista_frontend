@@ -131,6 +131,7 @@ import {
   concatinateEachIndexes,
   extractUnmatchedValueRadio,
   isOtherValueDefinedRadio,
+  convertNumbers
 } from '~/reusableFunctions/questionnaireValidation'
 export default {
   components: {
@@ -211,7 +212,7 @@ export default {
           this.typeOrganizationOthers,
           this.items
         ),
-        yearsAsMember: this.numberYearsMember,
+        yearsAsMember: convertNumbers(this.numberYearsMember),
         statusMembership: this.statusMembership,
         statusOrganization: this.statusOrganization,
       }

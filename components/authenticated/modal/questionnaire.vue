@@ -216,7 +216,6 @@
             @click="selectTab('OpenEndedQuestions')"
             :disabled="InformationKnowledgeSourcesValidated"
           >
-            {{ InformationKnowledgeSourcesValidated }}
             XIV Open Ended Questions
           </v-tab>
           <v-tab

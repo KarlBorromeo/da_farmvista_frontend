@@ -175,6 +175,7 @@ import {
   concatinateEachIndexes,
   isOtherValueDefinedRadio,
   extractUnmatchedValueRadio,
+  convertNumbers
 } from '~/reusableFunctions/questionnaireValidation'
 import formCard from '~/components/authenticated/form/formCard.vue'
 import formCardButton from '~/components/authenticated/form/formCardButton.vue'
@@ -264,7 +265,7 @@ export default {
     getData() {
       return {
         parcelNumber: this.parcelNumber,
-        area: this.area,
+        area: convertNumbers(this.area),
         tenure: concatinateEachIndexes(this.tenure, this.tenureOther),
         topography: concatinateEachIndexes(
           this.topography,

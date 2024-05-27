@@ -522,8 +522,6 @@ export const mutations = {
 export const actions = {
   /* submit the form if all the tabs are validated */
   async submitAll(context) {
-    console.log('this is the form: ', context.state.form)
-    console.log('this is the tab details: ', context.state.tabs)
     context.commit('checkValidityAll')
     const payload = {
       type: context.state.commodity,
@@ -540,6 +538,26 @@ export const actions = {
       throw new Error('incomplete forms')
     }
   },
+
+  /* submit and update the existing record */
+  async submitUpdate(context,id){
+    context.commit('checkValidityAll')
+    const payload = {
+      id: id,
+      form: context.state.form,
+    }
+    if (context.state.isAllValid) {
+      try {
+        const response = await api.submitUpdate(payload)
+        return response
+      } catch (error) {
+        throw error
+      }
+    } else {
+      throw new Error('incomplete forms')
+    }
+  },
+
   /* change the commodity and reset the tabs validity*/
   updateCommodity(context, commodity) {
     context.commit('updateCommodity', commodity)

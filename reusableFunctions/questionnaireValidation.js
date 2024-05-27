@@ -39,9 +39,11 @@ export const concatinateEachIndexes = (
 //TODO: INVESTIGATE IF IT IS WORKING WELL
 /* convert into number all indexes in the array or string to ensure number type */
 export const convertNumbers = (value) => {
-  if (typeof variable === 'string') {
-    let arr = value.map((num) => parseInt(num))
-    return arr
+  if (Array.isArray(value)) {
+    let arr = [...value]
+    let newArr;
+    newArr = arr.map((num) => parseInt(num))
+    return newArr
   } else {
     return parseInt(value)
   }
