@@ -1,34 +1,39 @@
 <template>
-  <tab-description
-    icon="mdi-account-group"
-    title="Users"
-    :description="description"
-  >
-    <v-container class="mt-4">
-      <v-row>
-        <v-col cols="12" sm="6" class="">
-          <v-dialog v-model="dialog" width="700">
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn block color="success" large v-bind="attrs" v-on="on">
-                <v-icon class="mr-2">mdi-plus</v-icon>
-                Create an Account
-              </v-btn>
-            </template>
-            <create-user />
-          </v-dialog>
-        </v-col>
-      </v-row>
-    </v-container>
-    <users-table />
-  </tab-description>
+  <div>
+    <tab-description
+      icon="mdi-account-group"
+      title="Users"
+      :description="description"
+    >
+      <v-container class="mt-4">
+        <v-row>
+          <v-col cols="12" sm="6" class="">
+            <v-dialog v-model="dialog" width="700">
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn block color="success" large v-bind="attrs" v-on="on">
+                  <v-icon class="mr-2">mdi-plus</v-icon>
+                  Create an Account
+                </v-btn>
+              </template>
+              <create-user />
+            </v-dialog>
+          </v-col>
+        </v-row>
+      </v-container>
+    </tab-description>
+    <tab-contents>
+      <users-table />
+    </tab-contents>    
+  </div>
 </template>
 
 <script>
 import CreateUser from '~/components/authenticated/modal/createUser.vue'
+import TabContents from '~/components/authenticated/TabContents.vue'
 import TabDescription from '~/components/authenticated/TabDescription.vue'
 import UsersTable from '~/components/authenticated/usersTable.vue'
 export default {
-  components: { TabDescription, CreateUser, UsersTable },
+  components: { TabDescription, CreateUser, UsersTable, TabContents },
   data() {
     return {
       dialog: false,

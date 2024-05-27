@@ -1,5 +1,5 @@
 <template>
-  <v-card id="container" class="ma-5 pb-1 white rounded-lg" elevation="2">
+  <v-card class="ma-5 pb-1 white rounded-lg" elevation="2">
     <v-container class="mb-0">
       <v-card class="d-flex align-center" elevation="0">
         <v-icon>{{ icon }}</v-icon>

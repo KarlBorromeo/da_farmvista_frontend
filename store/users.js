@@ -9,7 +9,8 @@ export const mutations = {}
 export const actions = {
   async createAccount(_, credentials) {
     try {
-      await api.createAccount(credentials)
+      let res = await api.createAccount(credentials)
+      return res;
     } catch (error) {
       throw error
     }

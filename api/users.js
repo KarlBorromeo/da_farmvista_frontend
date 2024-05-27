@@ -1,13 +1,12 @@
 import Axios from '~/axios_config/Axios'
 
 export async function createAccount(credentials) {
+  console.log(credentials)
   try {
-    console.log(credentials)
-    await new Promise((resolve) => setTimeout(resolve, 1000))
-    throw new Error('sample error')
-    // await Axios.post('auth/register',credentials)
+    // await new Promise((resolve) => setTimeout(resolve, 1000))
+    const res = await Axios.post('auth/register',credentials)
+    console.log(res);
   } catch (error) {
-    throw error
-    // throw error.response.data.message
+    throw error.response.data.message
   }
 }

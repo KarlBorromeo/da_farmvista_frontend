@@ -45,6 +45,7 @@
                 :key="item"
                 :label="item"
                 :value="item"
+                class="text-capitalize"
               ></v-radio>
             </v-radio-group>
           </form-radio-container>
@@ -90,6 +91,7 @@
                 :key="item"
                 :label="item"
                 :value="item"
+                class="text-capitalize"
               ></v-radio>
             </v-radio-group>
           </form-radio-container>
@@ -112,7 +114,7 @@
             ></v-text-field>
           </form-input-container>
         </v-row>
-        <v-btn color="success" @click="createAccount">Create</v-btn>
+        <v-btn color="success" @click="createAccount" :disabled="isLoading">Create</v-btn>
       </v-container>
     </v-form>
     <snackbar ref="snackbar" />
@@ -127,16 +129,17 @@ export default {
   components: { formInputContainer, FormRadioContainer, Snackbar },
   data() {
     return {
+      isLoading: false,
       lastName: 'a',
       firstName: 'a',
       middleName: 'a',
-      type: 'Admin',
-      typeItems: ['Super Admin', 'Admin', 'Enumerator'],
+      type: 'admin',
+      typeItems: ['super admin', 'admin', 'enumerator'],
       username: '',
       email: 'aw@gmail.com',
       mobileNumber: '09123456789',
-      dateOfBirth: '2024-05-11',
-      gender: 'name',
+      dateOfBirth: '2000-05-11',
+      gender: 'male',
       genderItems: ['male', 'female', 'others'],
       company: 'aw',
       jobPosition: 'aw',
@@ -152,12 +155,14 @@ export default {
       const valid = this.validate()
       if (valid) {
         try {
+          this.isLoading = true
           const credentials = this.getData()
-          await this.$store.dispatch('users/createAccount', credentials)
+          let res = await this.$store.dispatch('users/createAccount', credentials)
+          this.$refs.snackbar.showBar(res, 'success')
         } catch (error) {
-          console.error(error)
           this.$refs.snackbar.showBar(error, 'red')
         }
+        this.isLoading = false
       }
     },
     getData() {

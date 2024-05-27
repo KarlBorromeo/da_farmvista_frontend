@@ -1,7 +1,7 @@
 <template>
   <div class="mt-5">
     <v-data-table
-      class="pt-1 pb-3 elevation-3 text-capitalize"
+      class="pt-1 pb-3 elevation-2 text-capitalize"
       :headers="headers"
       :items="items"
       item-key="name"
@@ -14,9 +14,8 @@
     >
       <template v-slot:top>
         <div style="display: flex; justify-content: end">
-          <commodity-dropdown @switchCommodity="switchCommodity" class="mt-4" />
+          <commodity-dropdown @switchCommodity="switchCommodity" class="mt-0" />
         </div>
-
         <v-text-field
           v-model="search"
           label="Search here the record"

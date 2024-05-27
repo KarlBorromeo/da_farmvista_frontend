@@ -13,10 +13,6 @@
       hide-default-footer
     >
       <template v-slot:top>
-        <div style="display: flex; justify-content: end">
-          <commodity-dropdown @switchCommodity="switchCommodity" class="mt-4" />
-        </div>
-
         <v-text-field
           v-model="search"
           label="Search here the record"
@@ -44,14 +40,32 @@
 
 <script>
 import snackbar from '../snackbar.vue'
-import CommodityDropdown from './commodityDropdown.vue'
 export default {
   emits: ['switchCommodity'],
-  components: { snackbar, CommodityDropdown },
+  components: { snackbar },
   data() {
     return {
       search: '',
-      items: [],
+      items: [
+        {
+          fullname: 'Karl Borromeo',
+          gender: 'Male',
+          type: 'Admin',
+          email: 'aw@gmail.com',
+          mobileNumber: '09123456789',
+          company: 'CSU',
+          companyPosition: 'Dev'
+        },
+        {
+          fullname: 'Karl Borromeo',
+          gender: 'Male',
+          type: 'Admin',
+          email: 'aw@gmail.com',
+          mobileNumber: '09123456789',
+          company: 'CSU',
+          companyPosition: 'Dev'
+        }
+      ],
       itemPerPage: 20, // number of rows per page
       loading: false, // toggle the loading of the table
       page: 1, // current page number
@@ -62,14 +76,13 @@ export default {
   computed: {
     headers() {
       return [
-        { text: 'Survey No.', align: 'start', value: 'surveyNo' },
-        { text: `Date Interview (YYYY/MM/DD)`, value: 'dateInterview' },
-        { text: `Farmer's Name`, value: 'farmerName' },
-        { text: `Farmer's Code`, value: 'farmerCode' },
-        { text: 'Region/Province', value: 'regionProvince' },
-        { text: 'City/Municipality', value: 'cityMunicipality' },
-        { text: 'Barangay', value: 'barangay' },
-        { text: 'Organization/Institution', value: 'nameOrganization' },
+        { text: 'Fullname', align: 'start', value: 'fullname' },
+        { text: `Gender`, value: 'gender' },
+        { text: `Type`, value: 'type' },
+        { text: `Email`, value: 'email' },
+        { text: 'Mobile Number', value: 'mobileNumber' },
+        { text: 'Company', value: 'company' },
+        { text: 'Company Position', value: 'companyPosition' },
         { text: 'Actions', value: 'actions', sortable: false },
       ]
     },
@@ -90,54 +103,6 @@ export default {
         typeof value === 'string' &&
         value.toString().toLocaleLowerCase().indexOf(search) !== -1
       )
-    },
-
-    /* when edit button is clicked, open the modal for the whole record of this specific id*/
-    editItem(id) {
-      alert('edit: ' + id)
-    },
-
-    /* when delete button is clicked, delete the specific record using its id */
-    deleteItem(id) {
-      alert('delete: ' + id)
-    },
-
-    /* fetch the survey records */
-    async fetchSurveyRecord() {
-      console.log(this.page)
-      try {
-        this.loading = true
-        this.items = []
-        await this.$store.dispatch('profiling/fetchSurvey', {
-          type: this.commodity,
-          page: this.page,
-          limit: this.itemPerPage,
-        })
-        this.items = this.$store.getters['profiling/items']
-      } catch (error) {
-        this.$refs.snackbar.showBar(error, 'red')
-      }
-      this.loading = false
-    },
-
-    /* this method will be triggered when switching the commodity, via emits */
-    async switchCommodity(commodity) {
-      this.commodity = commodity
-      await this.fetchSurveyRecord()
-    },
-  },
-
-  /* before mounting the component first http request to fetch the records */
-  async beforeMount() {
-    await this.fetchSurveyRecord()
-  },
-
-  watch: {
-    /* execute the fetching everytime navigating to other page numbers */
-    async page(newVal, oldVal) {
-      if (newVal !== oldVal) {
-        await this.fetchSurveyRecord()
-      }
     },
   },
 }
