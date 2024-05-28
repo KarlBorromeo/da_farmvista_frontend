@@ -1,12 +1,14 @@
+
+
 <template>
   <div class="mt-5">
     <v-data-table
-      class="pt-1 pb-3 elevation-3 text-capitalize"
+      class="pt-1 pb-3 elevation-2 text-capitalize"
       :headers="headers"
       :items="items"
       item-key="name"
       :search="search"
-      :custom-filter="transofromedSearchText"
+      :custom-filter="transformedSearchText"
       :items-per-page="itemPerPage"
       :loading="loading"
       loading-text="Loading... Please wait"
@@ -20,57 +22,41 @@
         ></v-text-field>
       </template>
       <template v-slot:[`item.actions`]="{ item }">
-        <v-icon small class="mr-2" @click="editItem(item.id)">
-          mdi-pencil
-        </v-icon>
-        <v-icon small @click="deleteItem(item.id)"> mdi-delete </v-icon>
+        <v-btn :color="item.active?'error':'warning'" block small @click="toggleActiveStatus(item.id,item.active)">
+          {{buttonText(item.active)}}
+        </v-btn>
       </template>
     </v-data-table>
     <v-divider />
     <div class="text-center pt-2">
       <v-pagination
         v-model="page"
-        :length="pages"
+        :length="pageCount"
         :circle="true"
       ></v-pagination>
     </div>
+    <v-dialog v-if="dialog" v-model="dialog" width="700">
+      <questionnaire-vue :id="id" :commodityProp="commodity" />
+    </v-dialog>
     <snackbar ref="snackbar" />
   </div>
+
 </template>
 
 <script>
 import snackbar from '../snackbar.vue'
+import CommodityDropdown from './commodityDropdown.vue'
+import questionnaireVue from './modal/questionnaire.vue'
 export default {
   emits: ['switchCommodity'],
-  components: { snackbar },
+  components: { snackbar, CommodityDropdown, questionnaireVue },
   data() {
     return {
+      dialog: false,
       search: '',
-      items: [
-        {
-          fullname: 'Karl Borromeo',
-          gender: 'Male',
-          type: 'Admin',
-          email: 'aw@gmail.com',
-          mobileNumber: '09123456789',
-          company: 'CSU',
-          companyPosition: 'Dev'
-        },
-        {
-          fullname: 'Karl Borromeo',
-          gender: 'Male',
-          type: 'Admin',
-          email: 'aw@gmail.com',
-          mobileNumber: '09123456789',
-          company: 'CSU',
-          companyPosition: 'Dev'
-        }
-      ],
-      itemPerPage: 20, // number of rows per page
+      itemPerPage: 8, // number of rows per page
       loading: false, // toggle the loading of the table
       page: 1, // current page number
-      pageCount: 0, // number of how many pages
-      commodity: 'coffee',
     }
   },
   computed: {
@@ -83,11 +69,14 @@ export default {
         { text: 'Mobile Number', value: 'mobileNumber' },
         { text: 'Company', value: 'company' },
         { text: 'Company Position', value: 'companyPosition' },
-        { text: 'Actions', value: 'actions', sortable: false },
+        { text: 'Actions', value: 'actions', sortable: false, align: 'center', },
       ]
     },
-    pages() {
-      return this.$store.getters['profiling/countPages']
+    pageCount() {
+      return this.$store.getters['users/countPages']
+    },
+    items(){
+      return this.$store.getters['users/users']
     },
   },
   methods: {
@@ -95,14 +84,64 @@ export default {
       this function is responsible for the search of all values in the table data, 
       and displays the records matching the search value 
     */
-    transofromedSearchText(value, search, item) {
+    transformedSearchText(value, search, item) {
       search = search.toString().toLowerCase()
       return (
         value != null &&
         search != null &&
         typeof value === 'string' &&
-        value.toString().toLocaleLowerCase().indexOf(search) !== -1
+        value.toString().toLowerCase().indexOf(search) !== -1
       )
+    },
+
+    /* toggle active status */
+    async toggleActiveStatus(id,bool){
+      const decision = bool?'deactivate':'activate';
+      const confirmed = confirm(`Are you sure to ${decision} this user `+id)
+      if(confirmed){
+        try{
+          const res = await this.$store.dispatch('users/updateActiveStatus',id)
+          this.$refs.snackbar.showBar(res,'success')
+        }catch(error){
+          this.$refs.snackbar.showBar(error,'error')
+        }
+      }
+    },
+
+    /* text button dynamic */
+    buttonText(bool){
+      return bool?'Deactivate':'Activate'
+    },
+
+    /* fetch the survey records */
+    async fetchAllUsers() {
+      console.log(this.page)
+      try {
+        this.loading = true
+        // await this.$store.dispatch('profiling/fetchAllSurvey', {
+        //   type: this.commodity,
+        //   page: this.page,
+        //   limit: this.itemPerPage,
+        // })
+      } catch (error) {
+        this.$refs.snackbar.showBar(error, 'red')
+      }
+      this.loading = false
+    },
+
+  },
+
+  /* before mounting the component first http request to fetch the records */
+  async beforeMount() {
+    await this.fetchAllUsers()
+  },
+
+  watch: {
+    /* execute the fetching everytime navigating to other page numbers */
+    async page(newVal, oldVal) {
+      if (newVal !== oldVal) {
+        await this.fetchAllUsers()
+      }
     },
   },
 }

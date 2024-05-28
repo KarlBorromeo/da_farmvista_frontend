@@ -4,9 +4,17 @@ export async function createAccount(credentials) {
   console.log(credentials)
   try {
     // await new Promise((resolve) => setTimeout(resolve, 1000))
-    const res = await Axios.post('auth/register',credentials)
-    console.log(res);
+    await Axios.post('auth/register',credentials)
+    return 'successfully user created'
   } catch (error) {
-    throw error.response.data.message
+    throw error.response.data.message[0]
+  }
+}
+
+export async function updateActiveStatus(payload){
+  try{
+    return 'successfully updated'
+  }catch(error){
+    throw error
   }
 }

@@ -94,7 +94,7 @@ export default {
         value != null &&
         search != null &&
         typeof value === 'string' &&
-        value.toString().toLocaleLowerCase().indexOf(search) !== -1
+        value.toString().toLowerCase().indexOf(search) !== -1
       )
     },
 
