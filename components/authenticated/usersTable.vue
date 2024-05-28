@@ -22,7 +22,7 @@
         ></v-text-field>
       </template>
       <template v-slot:[`item.actions`]="{ item }">
-        <v-btn :color="item.active?'error':'warning'" block small @click="toggleActiveStatus(item.id,item.active)">
+        <v-btn :color="item.active?'error':'primary'" block small @click="toggleActiveStatus(item.id,item.active)">
           {{buttonText(item.active)}}
         </v-btn>
       </template>

@@ -1,7 +1,8 @@
 <template>
   <v-card light class="pa-4">
     <div class="d-flex align-center justify-space-between pa-4">
-      <h2 class="pa-0 ma-0 headline font-weight-bold">Create user Account</h2>
+      <h2 class="pa-0 ma-0 headline font-weight-bold" v-if="!isUpdating">Create user Account</h2>
+      <h2 class="pa-0 ma-0 headline font-weight-bold" v-else>Update Account</h2>
     </div>
     <v-divider />
     <v-form ref="form" v-model="valid">
@@ -114,7 +115,8 @@
             ></v-text-field>
           </form-input-container>
         </v-row>
-        <v-btn color="success" @click="createAccount" :disabled="isLoading">Create</v-btn>
+        <v-btn color="success" @click="createAccount" :disabled="isLoading" v-if="!isUpdating">Create</v-btn>
+        <v-btn color="success" @click="createAccount" :disabled="isLoading" v-else>Update</v-btn>
       </v-container>
     </v-form>
     <snackbar ref="snackbar" />
@@ -127,6 +129,7 @@ import formInputContainer from '../form/formInputContainer.vue'
 import FormRadioContainer from '../form/formRadioContainer.vue'
 export default {
   components: { formInputContainer, FormRadioContainer, Snackbar },
+  props: ['isUpdateProps'],
   data() {
     return {
       isLoading: false,
@@ -180,6 +183,16 @@ export default {
       }
     },
   },
+  computed:{
+    isUpdating(){
+      return this.isUpdateProps
+    }
+  },
+  beforeMount(){
+    if(this.isUpdateProps){
+      alert('fetch record of current user')
+    }
+  }
 }
 </script>
 

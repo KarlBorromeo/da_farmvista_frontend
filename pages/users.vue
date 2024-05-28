@@ -15,7 +15,7 @@
                   Create an Account
                 </v-btn>
               </template>
-              <create-user />
+              <create-user :isUpdateProps="false"/>
             </v-dialog>
           </v-col>
         </v-row>
