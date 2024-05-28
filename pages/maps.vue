@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import TabDescription from '~/components/authenticated/TabDescription.vue'
+import TabDescription from '~/components/authenticated/tabDescription.vue'
 export default {
   components: { TabDescription },
   data() {

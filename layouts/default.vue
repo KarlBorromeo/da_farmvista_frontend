@@ -71,8 +71,8 @@
 </template>
 
 <script>
-import TheLogo from '~/components/authenticated/TheLogo.vue'
-import TheMenu from '~/components/authenticated/TheMenu.vue'
+import TheLogo from '~/components/authenticated/theLogo.vue'
+import TheMenu from '~/components/authenticated/theMenu.vue'
 
 export default {
   middleware: 'auth',

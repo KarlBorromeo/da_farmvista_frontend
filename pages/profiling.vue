@@ -26,11 +26,11 @@
 </template>
 
 <script>
-import TabDescription from '~/components/authenticated/TabDescription.vue'
+import TabDescription from '~/components/authenticated/tabDescription.vue'
 import UploadButton from '~/components/authenticated/buttons/uploadButton.vue'
 import ManualSurveyButton from '~/components/authenticated/buttons/manualSurveyButton.vue'
 import ProfilingTable from '~/components/authenticated/profilingTable.vue'
-import TabContents from '~/components/authenticated/TabContents.vue'
+import TabContents from '~/components/authenticated/tabContents.vue'
 export default {
   components: {
     TabDescription,

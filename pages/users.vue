@@ -5,7 +5,7 @@
       title="Users"
       :description="description"
     >
-      <v-container class="mt-4">
+      <v-container class="mt-4 pa-0 ma-0">
         <v-row>
           <v-col cols="12" sm="6" class="">
             <v-dialog v-model="dialog" width="700">
@@ -29,8 +29,8 @@
 
 <script>
 import CreateUser from '~/components/authenticated/modal/createUser.vue'
-import TabContents from '~/components/authenticated/TabContents.vue'
-import TabDescription from '~/components/authenticated/TabDescription.vue'
+import TabContents from '~/components/authenticated/tabContents.vue'
+import TabDescription from '~/components/authenticated/tabDescription.vue'
 import UsersTable from '~/components/authenticated/usersTable.vue'
 export default {
   components: { TabDescription, CreateUser, UsersTable, TabContents },
