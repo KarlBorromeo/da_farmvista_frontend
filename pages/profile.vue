@@ -23,6 +23,7 @@
         </v-col>
       </v-row>
     </tab-contents>  
+    <snackbar ref="snackbar" />
   </div>
 
 </template>
@@ -32,16 +33,22 @@ import EditProfileForm from '~/components/authenticated/form/editProfileForm.vue
 import ProfileDetails from '~/components/authenticated/profileDetails.vue'
 import TabContents from '~/components/authenticated/tabContents.vue'
 import TabDescription from '~/components/authenticated/tabDescription.vue'
+import Snackbar from '~/components/snackbar.vue'
 export default {
-  components: { TabDescription, TabContents, EditProfileForm, ProfileDetails },
+  components: { TabDescription, TabContents, EditProfileForm, ProfileDetails, Snackbar },
   data() {
     return {
       description:
         'Here, you can easily edit your personal details and update your profile picture, ensuring accurate information representation on your account.',
     }
   },
-  beforeMount() {
+  async beforeMount() {
     this.$store.commit('udpateHeaderTitle', 'PROFILE')
+    try{
+      await this.$store.dispatch('profile/fetchCurrenUserDetails')
+    }catch(error){
+      this.$refs.snackbar.showBar(error,'red')
+    }
   },
 }
 </script>

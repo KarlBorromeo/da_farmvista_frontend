@@ -12,25 +12,66 @@
                 </v-btn>
                 
             </div>
-            <p class="text-uppercase py-0 my-0">Jand Doe</p>
-            <p class="text-uppercase py-0 my-0 font-weight-thin unhighlight">sample company</p>
+            <p class="text-uppercase py-0 my-0">{{fullName}}</p>
+            <p class="text-uppercase py-0 my-0 font-weight-thin unhighlight">{{company}}</p>
             <div id="custom-divider-container">
                 <div style="width:10%; display: inline-block" class="py-0 my-0">
                     <v-divider />
                 </div>                
             </div>
-            <p class="py-0 my-0 font-weight-light">janedoe@gmail.com</p>
-            <p class="py-0 my-0 text-capitalize">manila, Philippines</p>
-            <p class="py-0 my-0 font-weight-bold">Super Admin</p>
-            <p class="text-decoration-underline" id="change-pass-btn">Change Password</p>
+            <p class="py-0 my-0 font-weight-light">{{email}}</p>
+            <p class="py-0 my-0 text-capitalize">{{address}}</p>
+            <p class="py-0 my-0 font-weight-bold">{{type}}</p>
+            <v-dialog
+                v-model="dialog"
+                width="600px"
+            >
+                <template v-slot:activator="{ on, attrs }">
+                    <p 
+                        class="text-decoration-underline" 
+                        id="change-pass-btn" 
+                        v-bind="attrs"
+                        v-on="on">
+                        Change Password
+                    </p>
+                </template>
+                <change-pass-form @emitCloseModal="emitCloseModal"/>
+            </v-dialog>
         </v-col>
     </v-row>
+    <snackbar ref="snackbar" />
   </v-card>
 </template>
 
 <script>
+import Snackbar from '../snackbar.vue'
+import changePassForm from './form/changePassForm.vue'
 export default {
-
+	components: { changePassForm, Snackbar },
+    data(){
+        return{
+            dialog: false,
+            company: '',
+            fullName: '',
+            email: '',
+            type: '',
+            address: 'manila, Philippines'
+        }
+    },
+    beforeMount(){
+        const myProfile = this.$store.getters['profile/myProfileDetails']
+        this.fullName = myProfile.fullName
+        this.email = myProfile.email
+        // this.address = ''
+        this.type = myProfile.type
+        this.company = myProfile.company
+    },
+    methods: {
+        emitCloseModal(res){
+            this.dialog = false;
+            this.$refs.snackbar.showBar(res,'success')
+        }
+    }
 }
 </script>
 
