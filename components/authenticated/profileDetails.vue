@@ -13,7 +13,7 @@
                 
             </div>
             <p class="text-uppercase py-0 my-0">{{fullName}}</p>
-            <p class="text-uppercase py-0 my-0 font-weight-thin unhighlight">{{company}}</p>
+            <p class="text-uppercase py-0 my-0 font-weight-bold">{{company}}</p>
             <div id="custom-divider-container">
                 <div style="width:10%; display: inline-block" class="py-0 my-0">
                     <v-divider />
@@ -28,15 +28,17 @@
             >
                 <template v-slot:activator="{ on, attrs }">
                     <p 
-                        class="text-decoration-underline" 
+                        class="text-decoration-underline pb-0 mb-0" 
                         id="change-pass-btn" 
                         v-bind="attrs"
                         v-on="on">
                         Change Password
                     </p>
+                    
                 </template>
                 <change-pass-form @emitCloseModal="emitCloseModal"/>
             </v-dialog>
+            <p class="py-0 my-0 unhighlight">Password Updated {{passwordLastUpdated}}</p>
         </v-col>
     </v-row>
     <snackbar ref="snackbar" />
@@ -55,7 +57,8 @@ export default {
             fullName: '',
             email: '',
             type: '',
-            address: 'manila, Philippines'
+            address: 'manila, Philippines',
+            passwordLastUpdated: '',
         }
     },
     beforeMount(){
@@ -65,6 +68,7 @@ export default {
         // this.address = ''
         this.type = myProfile.type
         this.company = myProfile.company
+        this.passwordLastUpdated = myProfile.passwordLastUpdated
     },
     methods: {
         emitCloseModal(res){
@@ -78,7 +82,7 @@ export default {
 <style scoped>
 #profile-container{
     display: inline-block;
-    background-color: #ded9d9;
+    background-color: #d9d9d9;
     border-radius: 100%;
     padding: 1rem;
     margin-bottom: 1rem;

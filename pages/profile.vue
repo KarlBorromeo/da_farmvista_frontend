@@ -42,7 +42,7 @@ export default {
         'Here, you can easily edit your personal details and update your profile picture, ensuring accurate information representation on your account.',
     }
   },
-  async beforeMount() {
+  async mounted() {
     this.$store.commit('udpateHeaderTitle', 'PROFILE')
     try{
       await this.$store.dispatch('profile/fetchCurrenUserDetails')
