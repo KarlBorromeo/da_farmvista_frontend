@@ -9,6 +9,7 @@
 <script>
 import TabDescription from '~/components/authenticated/tabDescription.vue'
 export default {
+  middleware: 'authSuperadminAdmin',
   components: { TabDescription },
   data() {
     return {

@@ -66,12 +66,6 @@ export default {
     return {
       dropdown: [
         {
-          icon: 'mdi-history',
-          sub_icon: 'mdi-chevron-right',
-          title: 'Logs',
-          method: 'routeLogs',
-        },
-        {
           icon: 'mdi-account-circle-outline',
           sub_icon: 'mdi-chevron-right',
           title: 'My Profile',
@@ -87,7 +81,7 @@ export default {
   },
   computed: {
     UserFirstname() {
-      return this.$store.getters['auth/currentFirstName']
+      return localStorage.getItem('firstname')
     },
   },
   methods: {
@@ -110,6 +104,18 @@ export default {
       alert('awww')
     },
   },
+  beforeMount(){
+    const currentUserType = localStorage.getItem('type')
+    /* add the tab for logs page if the user is superadmin */
+    if(currentUserType === 'superadmin'){
+      this.dropdown.unshift({
+        icon: 'mdi-history',
+        sub_icon: 'mdi-chevron-right',
+        title: 'Logs',
+        method: 'routeLogs',
+      })
+    }
+  }
 }
 </script>
 

@@ -35,6 +35,7 @@ import TabDescription from '~/components/authenticated/tabDescription.vue'
 import UsersTable from '~/components/authenticated/usersTable.vue'
 import snackbar from '~/components/snackbar.vue'
 export default {
+  middleware: 'authSuperadminAdmin',
   components: { TabDescription, CreateUser, UsersTable, TabContents, snackbar },
   data() {
     return {

@@ -148,7 +148,7 @@ export default {
   },
   computed: {
     typeItems(){
-      const currentUserType = this.$store.getters['auth/currentUserType']
+      const currentUserType = localStorage.getItem('type')
       if(currentUserType !== 'superadmin'){
         return ['admin', 'enumerator']
       }

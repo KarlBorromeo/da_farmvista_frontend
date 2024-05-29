@@ -16,10 +16,6 @@ export const getters = {
   userLoggedin(state) {
     return state.currentUserLoggedin
   },
-  /* return the user type of the current user logged in */
-  currentUserType(state){
-    return state.currentUser.type
-  }
 }
 
 export const mutations = {
@@ -27,12 +23,13 @@ export const mutations = {
   saveUserDataToLocalStorage(_, userData) {
     localStorage.setItem('token', userData.accessToken)
     localStorage.setItem('type', userData.type)
+    localStorage.setItem('firstname', userData.firstName)
   },
   /* save the user data to the store which will be deleted if hard refresh */
-  saveUserDataToStore(state, userData) {
-    state.currentUser.firstName = userData.firstName
-    state.currentUser.type = userData.type
-  },
+  // saveUserDataToStore(state, userData) {
+  //   state.currentUser.firstName = userData.firstName
+  //   state.currentUser.type = userData.type
+  // },
   /* delete the local storage details when logged out */
   logout() {
     localStorage.clear()
@@ -54,7 +51,7 @@ export const actions = {
     try {
       const userData = await api.login(credentials)
       context.commit('saveUserDataToLocalStorage', userData)
-      context.commit('saveUserDataToStore', userData)
+      // context.commit('saveUserDataToStore', userData)
     } catch (error) {
       throw error
     }

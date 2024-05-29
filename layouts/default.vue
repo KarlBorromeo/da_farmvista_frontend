@@ -61,7 +61,6 @@
       <v-list-item-avatar class="hidden-sm-and-down">
         <img src="https://randomuser.me/api/portraits/women/81.jpg" />
       </v-list-item-avatar>
-      <!-- menu dropdown -->
       <the-menu />
     </v-app-bar>
     <v-main style="background-color: #dcdfe3">
@@ -109,6 +108,11 @@ export default {
           title: 'Users',
           to: '/users',
         },
+        {
+          icon: 'mdi-chart-box',
+          title: 'Report',
+          to: '/report',
+        }
       ],
       miniVariant: false,
       right: true,
@@ -121,6 +125,14 @@ export default {
       return this.$store.getters['pageNameGetter']
     },
   },
+  beforeMount(){
+    const currentUserType = localStorage.getItem('type')
+    /* removes other tabs if the current user is enumerator */
+    if(currentUserType !== 'admin' && currentUserType !== 'superadmin'){
+      const length = this.items.length
+      this.items.splice(2,length)
+    }
+  }
 }
 </script>
 
