@@ -1,8 +1,7 @@
 <template>
   <v-card light class="pa-4">
     <div class="d-flex align-center justify-space-between pa-4">
-      <h2 class="pa-0 ma-0 headline font-weight-bold" v-if="!isUpdating">Create user Account</h2>
-      <h2 class="pa-0 ma-0 headline font-weight-bold" v-else>Update Account</h2>
+      <h2 class="pa-0 ma-0 headline font-weight-bold">Create user Account</h2>
     </div>
     <v-divider />
     <v-form ref="form" v-model="valid">
@@ -115,8 +114,7 @@
             ></v-text-field>
           </form-input-container>
         </v-row>
-        <v-btn color="success" @click="createAccount" :disabled="isLoading" v-if="!isUpdating">Create</v-btn>
-        <v-btn color="success" @click="createAccount" :disabled="isLoading" v-else>Update</v-btn>
+        <v-btn color="success" @click="createAccount" :disabled="isLoading">Create</v-btn>
       </v-container>
     </v-form>
     <snackbar ref="snackbar" />
@@ -129,7 +127,7 @@ import formInputContainer from '../form/formInputContainer.vue'
 import FormRadioContainer from '../form/formRadioContainer.vue'
 export default {
   components: { formInputContainer, FormRadioContainer, Snackbar },
-  props: ['isUpdateProps'],
+  emits: ['emitCloseModal'],
   data() {
     return {
       isLoading: false,
@@ -137,7 +135,6 @@ export default {
       firstName: 'a',
       middleName: 'a',
       type: 'admin',
-      typeItems: ['super admin', 'admin', 'enumerator'],
       username: '',
       email: 'aw@gmail.com',
       mobileNumber: '09123456789',
@@ -147,6 +144,15 @@ export default {
       company: 'aw',
       jobPosition: 'aw',
       requiredRule: [(v) => !!v || 'this field is required'],
+    }
+  },
+  computed: {
+    typeItems(){
+      const currentUserType = this.$store.getters['auth/currentUserType']
+      if(currentUserType !== 'superadmin'){
+        return ['admin', 'enumerator']
+      }
+      return ['superadmin', 'admin', 'enumerator']
     }
   },
   methods: {
@@ -161,7 +167,7 @@ export default {
           this.isLoading = true
           const credentials = this.getData()
           let res = await this.$store.dispatch('users/createAccount', credentials)
-          this.$refs.snackbar.showBar(res, 'success')
+          this.$emit('emitCloseModal',res);
         } catch (error) {
           this.$refs.snackbar.showBar(error, 'red')
         }
@@ -182,11 +188,6 @@ export default {
         jobPosition: this.jobPosition,
       }
     },
-  },
-  computed:{
-    isUpdating(){
-      return this.isUpdateProps
-    }
   },
   beforeMount(){
     if(this.isUpdateProps){

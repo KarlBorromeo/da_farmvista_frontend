@@ -3,7 +3,7 @@
 <template>
   <div class="mt-5">
     <v-data-table
-      class="pt-1 pb-3 elevation-2 text-capitalize"
+      class="pt-1 pb-3 elevation-2"
       :headers="headers"
       :items="items"
       item-key="name"
@@ -21,9 +21,18 @@
           class="mx-4"
         ></v-text-field>
       </template>
+      <template v-slot:[`item.switch`]="{ item }">
+        <v-container class="text-center">
+          <v-switch
+            color="primary"
+            v-model="item.status"
+            :disabled="true"
+          />
+        </v-container>
+      </template>
       <template v-slot:[`item.actions`]="{ item }">
-        <v-btn :color="item.active?'error':'primary'" block small @click="toggleActiveStatus(item.id,item.active)">
-          {{buttonText(item.active)}}
+        <v-btn :color="item.status?'error':'primary'" block small @click="toggleActiveStatus(item.id,item.status)">
+          {{buttonText(item.status)}}
         </v-btn>
       </template>
     </v-data-table>
@@ -54,7 +63,7 @@ export default {
     return {
       dialog: false,
       search: '',
-      itemPerPage: 8, // number of rows per page
+      itemPerPage: 2, // number of rows per page
       loading: false, // toggle the loading of the table
       page: 1, // current page number
     }
@@ -62,14 +71,16 @@ export default {
   computed: {
     headers() {
       return [
-        { text: 'Fullname', align: 'start', value: 'fullname' },
-        { text: `Gender`, value: 'gender' },
-        { text: `Type`, value: 'type' },
-        { text: `Email`, value: 'email' },
-        { text: 'Mobile Number', value: 'mobileNumber' },
-        { text: 'Company', value: 'company' },
-        { text: 'Company Position', value: 'companyPosition' },
-        { text: 'Actions', value: 'actions', sortable: false, align: 'center', },
+        { text: 'Username', align: 'start', value: 'username' },
+        { text: 'Fullname', align: 'start', value: 'fullName' },
+        { text: `Gender`, value: 'gender', align: 'center' },
+        { text: `Type`, value: 'type', align: 'center' },
+        { text: `Email`, value: 'email', align: 'center' },
+        { text: 'Mobile Number', value: 'mobileNumber', align: 'center' },
+        { text: 'Company', value: 'company', align: 'center' },
+        { text: 'Company Position', value: 'jobPosition', align: 'center' },
+        { text: 'Inactive/Active', value: 'switch', sortable: false, align: 'center' },
+        { text: 'Action', value: 'actions', sortable: false, align: 'center', },
       ]
     },
     pageCount() {
@@ -77,6 +88,12 @@ export default {
     },
     items(){
       return this.$store.getters['users/users']
+    },     
+    getDynamicModel() {
+      return (itemId) => {
+        // Generate the dynamic property name
+        return `item_${itemId}_active`;
+      };
     },
   },
   methods: {
@@ -97,7 +114,7 @@ export default {
     /* toggle active status */
     async toggleActiveStatus(id,bool){
       const decision = bool?'deactivate':'activate';
-      const confirmed = confirm(`Are you sure to ${decision} this user `+id)
+      const confirmed = confirm(`Are you sure to ${decision} this user `)
       if(confirmed){
         try{
           const res = await this.$store.dispatch('users/updateActiveStatus',id)
@@ -118,17 +135,15 @@ export default {
       console.log(this.page)
       try {
         this.loading = true
-        // await this.$store.dispatch('profiling/fetchAllSurvey', {
-        //   type: this.commodity,
-        //   page: this.page,
-        //   limit: this.itemPerPage,
-        // })
+        await this.$store.dispatch('users/fetchAllUsers', {
+          page: this.page,
+          limit: this.itemPerPage,
+        })
       } catch (error) {
         this.$refs.snackbar.showBar(error, 'red')
       }
       this.loading = false
     },
-
   },
 
   /* before mounting the component first http request to fetch the records */

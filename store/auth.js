@@ -3,6 +3,7 @@ export const state = () => ({
   currentUserLoggedin: false,
   currentUser: {
     firstName: '',
+    type: '',
   },
 })
 
@@ -15,6 +16,10 @@ export const getters = {
   userLoggedin(state) {
     return state.currentUserLoggedin
   },
+  /* return the user type of the current user logged in */
+  currentUserType(state){
+    return state.currentUser.type
+  }
 }
 
 export const mutations = {
@@ -26,6 +31,7 @@ export const mutations = {
   /* save the user data to the store which will be deleted if hard refresh */
   saveUserDataToStore(state, userData) {
     state.currentUser.firstName = userData.firstName
+    state.currentUser.type = userData.type
   },
   /* delete the local storage details when logged out */
   logout() {

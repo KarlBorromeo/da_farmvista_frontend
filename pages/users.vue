@@ -15,15 +15,16 @@
                   Create an Account
                 </v-btn>
               </template>
-              <create-user :isUpdateProps="false"/>
+              <create-user @emitCloseModal="closeModal"/>
             </v-dialog>
           </v-col>
         </v-row>
       </v-container>
     </tab-description>
     <tab-contents>
-      <users-table />
-    </tab-contents>    
+      <users-table ref="userTable"/>
+    </tab-contents>   
+     <snackbar ref="snackbar" /> 
   </div>
 </template>
 
@@ -32,13 +33,21 @@ import CreateUser from '~/components/authenticated/modal/createUser.vue'
 import TabContents from '~/components/authenticated/tabContents.vue'
 import TabDescription from '~/components/authenticated/tabDescription.vue'
 import UsersTable from '~/components/authenticated/usersTable.vue'
+import snackbar from '~/components/snackbar.vue'
 export default {
-  components: { TabDescription, CreateUser, UsersTable, TabContents },
+  components: { TabDescription, CreateUser, UsersTable, TabContents, snackbar },
   data() {
     return {
       dialog: false,
       description:
         'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Facilis corporis natus nostrum magnam nesciunt quos accusamus, nisi libero nemo delectus sint sequi, debitis nam saepe culpa velit voluptatem veritatis accusantium!',
+    }
+  },
+  methods:{
+    closeModal(res){
+      this.dialog = false
+      this.$refs.snackbar.showBar(res, 'success')
+      this.$refs.userTable.fetchAllUsers()
     }
   },
   beforeMount() {

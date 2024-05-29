@@ -2,107 +2,19 @@ import * as api from '../api/users'
 
 export const state = () => ({
   users:[
-    {
-      id: `Karl Borromeo',`,
-      fullname: 'Karl Borromeo',
-      gender: 'Male',
-      type: 'Admin',
-      email: 'aw@gmail.com',
-      mobileNumber: '09123456789',
-      company: 'CSU',
-      companyPosition: 'Dev',
-      active: true
-    },
-    {
-      id: `unknwown',`,
-      fullname: 'unknwown',
-      gender: 'Male',
-      type: 'admin',
-      email: 'secret@gmail.com',
-      mobileNumber: '09123456789',
-      company: 'CSU',
-      companyPosition: 'Dev',
-      active: false
-    },
-    {
-      id: `Aubrey',`,
-      fullname: 'Aubrey',
-      gender: 'Female',
-      type: 'Super Admin',
-      email: 'law@gmail.com',
-      mobileNumber: '09123456789',
-      company: 'CSU',
-      companyPosition: 'Dev',
-      active: true
-    },
-    {
-      id: `John Warren',`,
-      fullname: 'John Warren',
-      gender: 'Male',
-      type: 'Validator',
-      email: 'warren@gmail.com',
-      mobileNumber: '09123456789',
-      company: 'CSU',
-      companyPosition: 'Field Validator',
-      active: true
-    },
-    {
-      id: `Paul 1',`,
-      fullname: 'Paul 1',
-      gender: 'Male',
-      type: 'Validator',
-      email: 'jul1@gmail.com',
-      mobileNumber: '09123456789',
-      company: 'CSU',
-      companyPosition: 'Field Validator',
-      active: true
-    },
-    {
-      id: `Paul 2',`,
-      fullname: 'Paul 2',
-      gender: 'Male',
-      type: 'Validator',
-      email: 'jul2@gmail.com',
-      mobileNumber: '09123456789',
-      company: 'CSU',
-      companyPosition: 'Field Validator',
-      active: true
-    },
-    {
-      id: `hehe Sabaan',`,
-      fullname: 'hehe Sabaan',
-      gender: 'Female',
-      type: 'Validator',
-      email: 'donna@gmail.com',
-      mobileNumber: '09123456789',
-      company: 'CSU',
-      companyPosition: 'Field Validator',
-      active: false
-    },
-    {
-      id: `Donna Sabaan',`,
-      fullname: 'Donna Sabaan',
-      gender: 'Female',
-      type: 'Validator',
-      email: 'donna@gmail.com',
-      mobileNumber: '09123456789',
-      company: 'CSU',
-      companyPosition: 'Field Validator',
-      active: true
-    },
-    {
-      id: `haha Sabaan',`,
-      fullname: 'haha Sabaan',
-      gender: 'Female',
-      type: 'Validator',
-      email: 'donna@gmail.com',
-      mobileNumber: '09123456789',
-      company: 'CSU',
-      companyPosition: 'Field Validator',
-      active: false
-    }
+    // {
+    //   id: `Karl Borromeo',`,
+    //   fullname: 'Karl Borromeo',
+    //   gender: 'Male',
+    //   type: 'Admin',
+    //   email: 'aw@gmail.com',
+    //   mobileNumber: '09123456789',
+    //   company: 'CSU',
+    //   companyPosition: 'Dev',
+    //   active: true
+    // },
   ],
-  countPages: 4
+  countPages: 1
 })
 
 export const getters = {
@@ -115,16 +27,50 @@ export const getters = {
 }
 
 export const mutations = {
+  /* select  and extract specific key/values from the response and push it in our store */
+  saveItems(state, users) {
+    state.users = users
+  },
+
+  /* 
+    calculate the total pages we have based on the length returned by the API and also the limit we assigned
+    and set the pages the total of length / limit
+  */
+  savePageLength(state, obj) {
+    if (obj.limit >= obj.length) {
+      state.countPages = 1
+    } else {
+    state.countPages = Math.floor(obj.length / obj.limit)
+    if (obj.length % obj.limit != 0) {
+      state.countPages++
+      }
+    }
+  },
   /* update the active status in store */
   updateActiveStatus(state,id){
     const index = state.users.findIndex( user => user.id == id)
+    console.log(index,state.users[index])
     if(index>=0){
-      state.users[index].active = !state.users[index].active
+      state.users[index].status = !state.users[index].status
     }
   }
 }
 
 export const actions = {
+  /* fetch all users */
+  async fetchAllUsers(context,payload){
+   try {
+      const response = await api.fetchAllUsers(payload)
+      context.commit('saveItems', response.data)
+      context.commit('savePageLength', {
+        length: response.count,
+        limit: payload.limit,
+      })
+    } catch (error) {
+      throw error
+    }
+  },
+
   /* create account */
   async createAccount(_, credentials) {
     try {
