@@ -21,6 +21,20 @@
           class="mx-4"
         ></v-text-field>
       </template>
+      <template v-slot:[`item.affectedData`]="{ item }">
+        <div v-if="isAffectedDataNull(item.affectedData)"> 
+          <ul v-if="item.affectedData.survey" class="my-0 py-0 caption text-capitalize">
+            <p class="my-0 py-0 font-weight-bold">Survey IDs modified</p>
+            <li v-for="id in item.affectedData.survey.id" :key="id">
+              {{id}}
+            </li>
+          </ul>
+          <section v-else>
+            <p class="my-0 py-0 caption text-capitalize"><span class="font-weight-bold">Position:</span> {{ item.affectedData.user.type }}</p>
+            <p class="my-0 py-0 caption text-capitalize"><span class="font-weight-bold">Fullname:</span> {{ item.affectedData.user.fullName }}</p>
+          </section>
+        </div>
+      </template>
       <template v-slot:[`item.status`]="{ item }">
         <v-container class="text-center">
           <v-icon v-if="item.status" color="success">mdi-check-circle</v-icon>
@@ -61,11 +75,11 @@ export default {
   computed: {
     headers() {
       return [
-        { text: 'Performer', value: 'performer' },
+        { text: 'Performer', value: 'performerName' },
         { text: `Details`, value: 'details'},
         { text: `Date`, value: 'date'},
         { text: `Time`, value: 'time'},
-        { text: 'Affected', value: 'affected'},
+        { text: 'Affected Data', value: 'affectedData', align:'center'},
         { text: 'Status', value: 'status', sortable: false, align:'center'},
       ]
     },
@@ -74,7 +88,8 @@ export default {
     },
     items(){
       return this.$store.getters['logs/logs']
-    }, 
+    },
+
   },
   methods: {
     /* 
@@ -104,7 +119,43 @@ export default {
       }
       this.loading = false
       },
+
+    /* dynamic text format for affected data column */
+    generateText(obj){
+      if(!obj){
+        return ''
+      }
+      const keys = Object.keys(obj)
+      const affectedDataType = keys[0]
+      if(affectedDataType){
+        if(affectedDataType === 'survey'){
+          const ids = obj[affectedDataType].id
+          let str = '';
+          // concatinate all ids
+          ids.forEach(element => {
+            str += element + ', '
+          });
+          // removes the last ', ' in the string
+          if (str.endsWith(', ')) {
+            str = str.slice(0, -2)
+          }
+          return str
+        }else if(affectedDataType === 'user'){
+          return `Position: ${obj[affectedDataType].type}, Fullname: ${obj[affectedDataType].fullName}`
+        }else{
+          return 'not found affected data type'
+        }
+      }
+      return ''
     },
+    /* bool return if null or not */
+    isAffectedDataNull(obj){
+      if(!obj){
+        return false
+      }
+      return true
+    }
+  },
 
   /* before mounting the component first http request to fetch the records */
   async beforeMount() {

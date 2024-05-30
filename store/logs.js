@@ -1,80 +1,7 @@
 import * as api from '../api/logs'
 
 export const state = () => ({
-  logs:[
-    {
-        id : "c31481ab-c7d5-4e76-bdd8-fa49fd6c1ab6",
-        details : "Update Own Password Invalid Current User Password",
-        ownerId : "bfda2e8a-6728-43f7-920b-d9641332fc39",
-        editorId : "bfda2e8a-6728-43f7-920b-d9641332fc39",
-        affected : "",
-        performer : "Aubrey Mae Mulawan",
-        status : true,
-        date : "05/30/2024",
-        time : "08:35 AM",
-        createDate: "2024-05-30T00:35:23.445Z"
-    },
-    {
-        id: "11dbc648-fadd-40f5-b214-c9f0ab9aec34",
-        details: "Login",
-        ownerId: "bfda2e8a-6728-43f7-920b-d9641332fc39",
-        editorId: "bfda2e8a-6728-43f7-920b-d9641332fc39",
-        affected: "",
-        performer: "Aubrey Mae Mulawan",
-        status: false,
-        date: "05/30/2024",
-        time: "08:33 AM",
-        createDate: "2024-05-30T00:33:27.699Z"
-    },
-    {
-        id: "11dbc648-fadd-40f5-b214-c9f0ab9aec34",
-        details: "Created new user",
-        ownerId: "bfda2e8a-6728-43f7-920b-d9641332fc39",
-        editorId: "bfda2e8a-6728-43f7-920b-d9641332fc39",
-        affected: "Karl Borromeo",
-        performer: "Aubrey Mae Mulawan",
-        status: true,
-        date: "05/30/2024",
-        time: "08:33 AM",
-        createDate: "2024-05-30T00:33:27.699Z"
-    },
-    {
-        id: "11dbc648-fadd-40f5-b214-c9f0ab9aec34",
-        details: "Created new user",
-        ownerId: "bfda2e8a-6728-43f7-920b-d9641332fc39",
-        editorId: "bfda2e8a-6728-43f7-920b-d9641332fc39",
-        affected: "John Warren",
-        performer: "Aubrey Mae Mulawan",
-        status: true,
-        date: "05/30/2024",
-        time: "08:33 AM",
-        createDate: "2024-05-30T00:33:27.699Z"
-    },
-    {
-        id: "11dbc648-fadd-40f5-b214-c9f0ab9aec34",
-        details: "Login",
-        ownerId: "bfda2e8a-6728-43f7-920b-d9641332fc39",
-        editorId: "bfda2e8a-6728-43f7-920b-d9641332fc39",
-        affected: "",
-        performer: "Aubrey Mae Mulawan",
-        status: true,
-        date: "05/30/2024",
-        time: "08:33 AM",
-        createDate: "2024-05-30T00:33:27.699Z"
-    },
-    {
-        id: "11dbc648-fadd-40f5-b214-c9f0ab9aec34",
-        details: "Created Manual Survey",
-        ownerId: "bfda2e8a-6728-43f7-920b-d9641332fc39",
-        editorId: "bfda2e8a-6728-43f7-920b-d9641332fc39",
-        affected: "",
-        performer: "Aubrey Mae Mulawan",
-        status: true,
-        date: "05/30/2024",
-        time: "08:33 AM",
-        createDate: "2024-05-30T00:33:27.699Z"
-    }
-  ],
+  logs:[],
   countPages: 1
 })
 
@@ -114,11 +41,11 @@ export const actions = {
   async fetchAllLogs(context,payload){
    try {
       const response = await api.fetchAllLogs(payload)
-    //   context.commit('saveItems', response.data)
-    //   context.commit('savePageLength', {
-    //     length: response.count,
-    //     limit: payload.limit,
-    //   })
+      context.commit('saveItems', response.data)
+      context.commit('savePageLength', {
+        length: response.count,
+        limit: payload.limit,
+      })
     } catch (error) {
       throw error
     }
