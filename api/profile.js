@@ -19,10 +19,12 @@ export async function fetchCurrenUserDetails() {
 
 export async function updatePassword(payload) {
     try{
-        let res = await Axios.patch('user/me/password',payload)
-        console.log(res);
-        return res;
+        await Axios.patch('user/me/password',payload)
+        return 'password updated successfully';
     }catch(err){
-        throw err
+        if(Array.isArray(err.response.data.message)){
+            throw err.response.data.message[0]
+        }
+        throw err.response.data.message
     }
 }

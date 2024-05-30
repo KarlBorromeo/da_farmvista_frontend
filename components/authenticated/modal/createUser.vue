@@ -80,6 +80,15 @@
             ></v-text-field>
           </form-input-container>
 
+          <form-input-container>
+            <v-text-field
+              v-model="address"
+              :rules="requiredRule"
+              label="Address"
+              required
+            ></v-text-field>
+          </form-input-container>
+
           <form-radio-container title="Gender">
             <v-radio-group
               :rules="requiredRule"
@@ -139,6 +148,7 @@ export default {
       email: 'aw@gmail.com',
       mobileNumber: '09123456789',
       dateOfBirth: '2000-05-11',
+      address: 'Ampayon',
       gender: 'male',
       genderItems: ['male', 'female', 'others'],
       company: 'aw',
@@ -183,6 +193,7 @@ export default {
         email: this.email,
         mobileNumber: this.mobileNumber,
         dateOfBirth: this.dateOfBirth,
+        address: this.address,
         gender: this.gender,
         company: this.company,
         jobPosition: this.jobPosition,

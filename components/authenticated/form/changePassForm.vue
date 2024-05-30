@@ -60,6 +60,7 @@ export default{
     components: {Snackbar},
     data(){
         return{
+            valid: false,
             showOldPassword: false,
             oldPassword: '',
             showNewPassword: false,
@@ -81,7 +82,7 @@ export default{
                     const res = await this.$store.dispatch('profile/updatePassword',this.getData())
                     this.$emit('emitCloseModal',res)
                 }catch(error){
-                    ths.$refs.snackbar.showBar(error,red)
+                    this.$refs.snackbar.showBar(error,'red')
                 }
             }
         },
