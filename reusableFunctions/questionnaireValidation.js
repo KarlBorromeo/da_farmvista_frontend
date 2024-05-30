@@ -40,7 +40,6 @@ export const concatinateEachIndexes = (
   return arr
 }
 
-//TODO: INVESTIGATE IF IT IS WORKING WELL
 /* convert into number all indexes in the array or string to ensure number type */
 export const convertNumbers = (value) => {
   if (Array.isArray(value)) {
