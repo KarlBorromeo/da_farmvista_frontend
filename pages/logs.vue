@@ -1,16 +1,24 @@
 <template>
-  <tab-description
-    icon="mdi-history"
-    title="Logs"
-    :description="description"
-  ></tab-description>
+  <div>
+    <tab-description
+      icon="mdi-history"
+      title="Logs"
+      :description="description"
+    />    
+    <tab-contents>
+      <logs-table />
+    </tab-contents>
+  </div>
+
 </template>
 
 <script>
+import LogsTable from '~/components/authenticated/logsTable.vue'
+import TabContents from '~/components/authenticated/tabContents.vue'
 import TabDescription from '~/components/authenticated/tabDescription.vue'
 export default {
   middleware :'authSuperadmin',
-  components: { TabDescription },
+  components: { TabDescription, TabContents, LogsTable },
   data() {
     return {
       description:

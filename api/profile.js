@@ -23,7 +23,6 @@ export async function updatePassword(payload) {
         console.log(res);
         return res;
     }catch(err){
-        console.error(err)
         throw err
     }
 }

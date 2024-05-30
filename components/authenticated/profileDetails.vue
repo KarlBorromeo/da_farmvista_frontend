@@ -61,14 +61,20 @@ export default {
             passwordLastUpdated: '',
         }
     },
-    beforeMount(){
-        const myProfile = this.$store.getters['profile/myProfileDetails']
-        this.fullName = myProfile.fullName
-        this.email = myProfile.email
-        // this.address = ''
-        this.type = myProfile.type
-        this.company = myProfile.company
-        this.passwordLastUpdated = myProfile.passwordLastUpdated
+    async beforeMount(){
+        try{
+            await this.$store.dispatch('profile/fetchCurrenUserDetails')      
+            const myProfile = this.$store.getters['profile/myProfileDetails']
+            this.fullName = myProfile.fullName
+            this.email = myProfile.email
+            // this.address = ''
+            this.type = myProfile.type
+            this.company = myProfile.company
+            this.passwordLastUpdated = myProfile.passwordLastUpdated  
+        }catch(error){
+            this.$refs.snackbar.showBar(error,'red')
+        }
+
     },
     methods: {
         emitCloseModal(res){

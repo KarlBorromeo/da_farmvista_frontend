@@ -68,14 +68,16 @@
             </v-row>
             <v-btn color="success" @click="validate" :disabled="!isModify">Save</v-btn>
         </v-container>
+        <snackbar ref="snackbar"/>
     </v-form>
    </v-card>
 </template>
 
 <script>
+import Snackbar from '~/components/snackbar.vue'
 import formInputContainer from './formInputContainer.vue'
 export default {
-    components: { formInputContainer },
+    components: { formInputContainer, Snackbar },
     data(){
         return{
             valid: false,
@@ -113,16 +115,22 @@ export default {
             this.isModify = bool;
         }
     },
-    beforeMount(){
-        const myProfile = this.$store.getters['profile/myProfileDetails']
-        this.myProfile = myProfile
-        this.userName = myProfile.username
-        this.email = myProfile.email
-        this.firstName = myProfile.firstName
-        this.lastName = myProfile.lastName
-        // this.address = myProfile.
-        this.company = myProfile.company
-        this.position = myProfile.jobPosition
+    async beforeMount(){
+        try{
+            await this.$store.dispatch('profile/fetchCurrenUserDetails')
+            const myProfile = this.$store.getters['profile/myProfileDetails']
+            this.myProfile = myProfile
+            this.userName = myProfile.username
+            this.email = myProfile.email
+            this.firstName = myProfile.firstName
+            this.lastName = myProfile.lastName
+            // this.address = myProfile.
+            this.company = myProfile.company
+            this.position = myProfile.jobPosition
+        }catch(error){
+            console.error(error)
+            this.$refs.snackbar.showBar(error,'red')
+        }
     },
     watch: {
         userName(newVal){

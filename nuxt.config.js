@@ -67,7 +67,7 @@ export default {
           primary: '#1a7358', // ex: drawer bg-color
           accent: '#d3e8d3', // ex: card bg-color
           secondary: '#d9d9d9', // ex: page bg-color
-          success: '#f55525', // ex: btn
+          success: '#008000', // ex: btn
           info: '#F7F5F2',
           warning: '#D9D9D9',
         },

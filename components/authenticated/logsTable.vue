@@ -21,19 +21,11 @@
           class="mx-4"
         ></v-text-field>
       </template>
-      <template v-slot:[`item.switch`]="{ item }">
+      <template v-slot:[`item.status`]="{ item }">
         <v-container class="text-center">
-          <v-switch
-            color="primary"
-            v-model="item.status"
-            :disabled="true"
-          />
+          <v-icon v-if="item.status" color="success">mdi-check-circle</v-icon>
+          <v-icon v-else color="red">mdi-alert</v-icon>
         </v-container>
-      </template>
-      <template v-slot:[`item.actions`]="{ item }">
-        <v-btn :color="item.status?'error':'primary'" block small @click="toggleActiveStatus(item.id,item.status)">
-          {{buttonText(item.status)}}
-        </v-btn>
       </template>
     </v-data-table>
     <v-divider />
@@ -56,12 +48,12 @@
 import snackbar from '../snackbar.vue'
 export default {
   emits: ['switchCommodity'],
-  components: { snackbar},
+  components: { snackbar,},
   data() {
     return {
       dialog: false,
       search: '',
-      itemPerPage: 2, // number of rows per page
+      itemPerPage: 5, // number of rows per page
       loading: false, // toggle the loading of the table
       page: 1, // current page number
     }
@@ -69,30 +61,20 @@ export default {
   computed: {
     headers() {
       return [
-        { text: 'Username', align: 'start', value: 'username' },
-        { text: 'Fullname', align: 'start', value: 'fullName' },
-        { text: `Gender`, value: 'gender'},
-        { text: `Type`, value: 'type'},
-        { text: `Email`, value: 'email'},
-        { text: 'Mobile Number', value: 'mobileNumber'},
-        { text: 'Company', value: 'company'},
-        { text: 'Company Position', value: 'jobPosition'},
-        { text: 'Inactive/Active', value: 'switch', sortable: false},
-        { text: 'Action', value: 'actions', sortable: false, align: 'center', },
+        { text: 'Performer', value: 'performer' },
+        { text: `Details`, value: 'details'},
+        { text: `Date`, value: 'date'},
+        { text: `Time`, value: 'time'},
+        { text: 'Affected', value: 'affected'},
+        { text: 'Status', value: 'status', sortable: false, align:'center'},
       ]
     },
     pageCount() {
-      return this.$store.getters['users/countPages']
+      return this.$store.getters['logs/countPages']
     },
     items(){
-      return this.$store.getters['users/users']
-    },     
-    getDynamicModel() {
-      return (itemId) => {
-        // Generate the dynamic property name
-        return `item_${itemId}_active`;
-      };
-    },
+      return this.$store.getters['logs/logs']
+    }, 
   },
   methods: {
     /* 
@@ -109,31 +91,11 @@ export default {
       )
     },
 
-    /* toggle active status */
-    async toggleActiveStatus(id,bool){
-      const decision = bool?'deactivate':'activate';
-      const confirmed = confirm(`Are you sure to ${decision} this user `)
-      if(confirmed){
-        try{
-          const res = await this.$store.dispatch('users/updateActiveStatus',id)
-          this.$refs.snackbar.showBar(res,'success')
-        }catch(error){
-          this.$refs.snackbar.showBar(error,'error')
-        }
-      }
-    },
-
-    /* text button dynamic */
-    buttonText(bool){
-      return bool?'Deactivate':'Activate'
-    },
-
     /* fetch the survey records */
-    async fetchAllUsers() {
-      console.log(this.page)
+    async fetchAllLogs() {
       try {
         this.loading = true
-        await this.$store.dispatch('users/fetchAllUsers', {
+        await this.$store.dispatch('logs/fetchAllLogs', {
           page: this.page,
           limit: this.itemPerPage,
         })
@@ -141,19 +103,19 @@ export default {
         this.$refs.snackbar.showBar(error, 'red')
       }
       this.loading = false
+      },
     },
-  },
 
   /* before mounting the component first http request to fetch the records */
   async beforeMount() {
-    await this.fetchAllUsers()
+    await this.fetchAllLogs()
   },
 
   watch: {
     /* execute the fetching everytime navigating to other page numbers */
     async page(newVal, oldVal) {
       if (newVal !== oldVal) {
-        await this.fetchAllUsers()
+        await this.fetchAllLogs()
       }
     },
   },

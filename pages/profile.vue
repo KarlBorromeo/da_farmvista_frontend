@@ -11,19 +11,18 @@
           cols="12" sm="7"
         >
           <v-card class="elevation-1">
-            <edit-profile-form />
+            <edit-profile-form :myProfile="myProfile"/>
           </v-card>
         </v-col>
         <v-col
           cols="12" sm="5"
         >
           <v-card class="elevation-1">
-            <profile-details />
+            <profile-details :myProfile="myProfile"/>
           </v-card>
         </v-col>
       </v-row>
     </tab-contents>  
-    <snackbar ref="snackbar" />
   </div>
 
 </template>
@@ -33,23 +32,15 @@ import EditProfileForm from '~/components/authenticated/form/editProfileForm.vue
 import ProfileDetails from '~/components/authenticated/profileDetails.vue'
 import TabContents from '~/components/authenticated/tabContents.vue'
 import TabDescription from '~/components/authenticated/tabDescription.vue'
-import Snackbar from '~/components/snackbar.vue'
 export default {
-  components: { TabDescription, TabContents, EditProfileForm, ProfileDetails, Snackbar },
+  components: { TabDescription, TabContents, EditProfileForm, ProfileDetails },
   data() {
     return {
       description:
         'Here, you can easily edit your personal details and update your profile picture, ensuring accurate information representation on your account.',
+      myProfile : {}
     }
-  },
-  async mounted() {
-    this.$store.commit('udpateHeaderTitle', 'PROFILE')
-    try{
-      await this.$store.dispatch('profile/fetchCurrenUserDetails')
-    }catch(error){
-      this.$refs.snackbar.showBar(error,'red')
-    }
-  },
+  }
 }
 </script>
 
