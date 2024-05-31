@@ -5,12 +5,12 @@ export const state = () => ({
   },
   tabs: [
     {
-      tabName: 'SurveyInformationValidated',
+      tabName: 'BasicInformationValidated',
       validity: false,
       tempValidity: false,
     },
     {
-      tabName: 'BasicInformationValidated',
+      tabName: 'SurveyInformationValidated',
       validity: false,
       tempValidity: false,
     },
@@ -143,12 +143,18 @@ export const state = () => ({
       tempValidity: false,
     },
   ],
-  currentTab: 'SurveyInformation',
+  currentTab: 'BasicInformation',
   isAllValid: false,
   commodity: '',
+  isIntervieweeValidated: true,
+  isBasicInfoSurveyInfoValid: false
 })
 
 export const getters = {
+  /* return boolean if the current interview is validated or not eg(diseased,declined,not-present, et.) */
+  isIntervieweeValidated(state){
+    return state.isIntervieweeValidated
+  },
   /* return the updated tab selected */
   currentTab(state) {
     return state.currentTab
@@ -513,21 +519,44 @@ export const mutations = {
     }
   },
 
+  /* test if the basic information and survey information form are valid before submission */
+  checkBasicInfoSurveyInfoValdity(state){
+    state.isBasicInfoSurveyInfoValid = false
+    if(state.tabs[0].validity && state.tabs[1].validity){
+      state.isBasicInfoSurveyInfoValid = true
+    }
+  },
+
   /* update the commodity type */
   updateCommodity(state, commodity) {
     state.commodity = commodity
   },
+
+  /* toggle the isIntervieweeValidated */
+  toggleIsIntervieweeValidated(state,bool){
+    state.isIntervieweeValidated = bool
+    // this will remove or add the 'farmHouseholdAsset' key in the form to just remove it when the interviewee is not validated, the default form has an existing 'farmHouseholdAsset' already
+    if(!bool){
+      delete state.form.farmHouseholdAsset
+    }else{
+      state.form.farmHouseholdAsset = {}
+    }
+  }
 }
 
 export const actions = {
-  /* submit the form if all the tabs are validated */
+  /* submit the form if all the tabs are validated or (basicInfo and surveyInfo only if interviewee is not validated) */
   async submitAll(context) {
-    context.commit('checkValidityAll')
+    if(context.state.isIntervieweeValidated){
+      context.commit('checkValidityAll')
+    }else{
+      context.commit('checkBasicInfoSurveyInfoValdity')
+    }
     const payload = {
       type: context.state.commodity,
       form: context.state.form,
     }
-    if (context.state.isAllValid) {
+    if (context.state.isAllValid || context.state.isBasicInfoSurveyInfoValid) {
       try {
         const response = await api.submitQuestionnaire(payload)
         return response
@@ -535,18 +564,23 @@ export const actions = {
         throw error
       }
     } else {
-      throw new Error('incomplete forms')
+      throw new Error('incomplete forms for creating survey')
     }
   },
 
-  /* submit and update the existing record */
+  /* submit and update the existing record or (basicInfo and surveyInfo only if interviewee is not validated) */
   async submitUpdate(context,id){
-    context.commit('checkValidityAll')
+    if(context.state.isIntervieweeValidated){
+      context.commit('checkValidityAll')
+    }else{
+      context.commit('checkBasicInfoSurveyInfoValdity')
+    }
     const payload = {
       id: id,
       form: context.state.form,
     }
-    if (context.state.isAllValid) {
+    console.log('updated form: ',context.state.form)
+    if (context.state.isAllValid || context.state.isBasicInfoSurveyInfoValid) {
       try {
         const response = await api.submitUpdate(payload)
         return response
@@ -554,7 +588,7 @@ export const actions = {
         throw error
       }
     } else {
-      throw new Error('incomplete forms')
+      throw new Error('incomplete forms for updating survey')
     }
   },
 

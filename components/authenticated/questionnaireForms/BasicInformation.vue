@@ -95,7 +95,7 @@ export default {
         firstName: this.firstname,
         middleInitial: this.middleInitial,
         contactNumber: this.contactNumber,
-        farmerCode: this.farmerCode,
+        farmerCode: this.farmerCode?this.farmerCode:'',
       }
     },
   },

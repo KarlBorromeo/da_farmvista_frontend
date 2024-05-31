@@ -54,18 +54,17 @@ export const mutations = {
 
       // convert to string the survey number
       const surveyNumber = element.interview.surveyNo
-      const convertedSurveyNumber = surveyNumber.toString()
 
       const object = {
         id: element.interview.id,
-        surveyNo: convertedSurveyNumber,
+        surveyNo: surveyNumber?surveyNumber.toString():'N/A',
         dateInterview: formattedDate,
         farmerName: name,
-        farmerCode: element.profile.farmerCode,
+        farmerCode: element.profile.farmerCode?element.profile.farmerCode:'',
         regionProvince: element.interview.regionProvince,
         cityMunicipality: element.interview.cityMunicipality,
         barangay: element.interview.barangay,
-        nameOrganization: element.profileGeneralInfo.organizationName,
+        nameOrganization: element.profileGeneralInfo?element.profileGeneralInfo.organizationName:'',
       }
       state.itemsCurrentPage.push(object)
     })

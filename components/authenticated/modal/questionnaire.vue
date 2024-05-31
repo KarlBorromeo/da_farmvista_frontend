@@ -17,26 +17,31 @@
           v-model="initialTab"
         >
           <v-tab
-            @click="selectTab('SurveyInformation')"
-            class="caption font-weight-black"
-          >
-            Survey Information
-          </v-tab>
-          <v-tab
             class="caption font-weight-black"
             @click="selectTab('BasicInformation')"
-            :disabled="SurveyInformationValidated"
+         
           >
             I. Farmer's Basic Information
           </v-tab>
           <v-tab
+            @click="selectTab('SurveyInformation')"
+            class="caption font-weight-black"
+             :disabled="BasicInformationValidated"
+          >
+            Survey Information
+          </v-tab>
+
+          <v-tab
+            v-if="isIntervieweeValidated"
             class="caption font-weight-black"
             @click="selectTab('GeneralInformation')"
-            :disabled="BasicInformationValidated"
+              :disabled="SurveyInformationValidated"
           >
             II. General Information
-          </v-tab>
+          </v-tab>            
+
           <v-tab
+            v-if="isIntervieweeValidated"
             class="caption font-weight-black"
             @click="selectTab('FamilyAffiliated')"
             :disabled="GeneralInformationValidated"
@@ -44,6 +49,7 @@
             II. Family Affiliated
           </v-tab>
           <v-tab
+            v-if="isIntervieweeValidated"
             class="caption font-weight-black"
             @click="selectTab('FamilyIncome')"
             :disabled="FamilyAffiliatedValidated"
@@ -51,6 +57,7 @@
             III. Family Income
           </v-tab>
           <v-tab
+            v-if="isIntervieweeValidated"
             class="caption font-weight-black"
             @click="selectTab('FarmIncome')"
             :disabled="FamilyIncomeValidated"
@@ -58,6 +65,7 @@
             III. Farm Income
           </v-tab>
           <v-tab
+            v-if="isIntervieweeValidated"
             class="caption font-weight-black"
             @click="selectTab('HouseholdExpenses')"
             :disabled="FarmIncomeValidated"
@@ -65,6 +73,7 @@
             IV. Household Expenses
           </v-tab>
           <v-tab
+            v-if="isIntervieweeValidated"
             class="caption font-weight-black"
             @click="selectTab('AssetsFarmTools')"
             :disabled="HouseholdExpensesValidated"
@@ -72,6 +81,7 @@
             V. Assets Farm Tools
           </v-tab>
           <v-tab
+            v-if="isIntervieweeValidated"
             class="caption font-weight-black"
             @click="selectTab('AssetsFarmMachinery')"
             :disabled="AssetsFarmToolsValidated"
@@ -79,6 +89,7 @@
             V. Assets Farm Machinery
           </v-tab>
           <v-tab
+            v-if="isIntervieweeValidated"
             class="caption font-weight-black"
             @click="selectTab('AssetsFarmPoultryLivestock')"
             :disabled="AssetsFarmMachineryValidated"
@@ -86,6 +97,7 @@
             V. Assets Farm Poultry Livestock
           </v-tab>
           <v-tab
+            v-if="isIntervieweeValidated"
             class="caption font-weight-black"
             @click="selectTab('AssetsFarmStructure')"
             :disabled="AssetsFarmPoultryLivestockValidated"
@@ -93,6 +105,7 @@
             V. Assets Farm Structure
           </v-tab>
           <v-tab
+            v-if="isIntervieweeValidated"
             class="caption font-weight-black"
             @click="selectTab('InformationDwellingPlace')"
             :disabled="AssetsFarmStructureValidated"
@@ -100,6 +113,7 @@
             VI. Information Dwelling Place
           </v-tab>
           <v-tab
+            v-if="isIntervieweeValidated"
             class="caption font-weight-black"
             @click="selectTab('GeneralFarmingInformation')"
             :disabled="InformationDwellingPlaceValidated"
@@ -107,6 +121,7 @@
             VII. General Farming Information
           </v-tab>
           <v-tab
+            v-if="isIntervieweeValidated"
             class="caption font-weight-black"
             @click="selectTab('ParcelInformation')"
             :disabled="GeneralFarmingInformationValidated"
@@ -114,6 +129,7 @@
             VII.IV Parcel Information
           </v-tab>
           <v-tab
+            v-if="isIntervieweeValidated"
             class="caption font-weight-black"
             @click="selectTab('DetailsCoffeeArea')"
             :disabled="ParcelInformationValidated"
@@ -121,6 +137,7 @@
             VII.V Details Coffee Area
           </v-tab>
           <v-tab
+            v-if="isIntervieweeValidated"
             class="caption font-weight-black"
             @click="selectTab('InfrastructureDistanceAccessibility')"
             :disabled="DetailsCoffeeAreaValidated"
@@ -128,6 +145,7 @@
             VII.VI Infrastructure Distance Accessibility
           </v-tab>
           <v-tab
+            v-if="isIntervieweeValidated"
             class="caption font-weight-black"
             @click="selectTab('FarmActivities')"
             :disabled="InfrastructureDistanceAccessibilityValidated"
@@ -135,6 +153,7 @@
             VIII Farm Activities
           </v-tab>
           <v-tab
+            v-if="isIntervieweeValidated"
             class="caption font-weight-black"
             @click="selectTab('FarmWasteManagement')"
             :disabled="FarmActivitiesValidated"
@@ -142,6 +161,7 @@
             VIII.IV Farm Waste Management
           </v-tab>
           <v-tab
+            v-if="isIntervieweeValidated"
             class="caption font-weight-black"
             @click="selectTab('CroppingPatternCalendar')"
             :disabled="FarmWasteManagementValidated"
@@ -149,6 +169,7 @@
             VIII.V Cropping Pattern Calendar
           </v-tab>
           <v-tab
+            v-if="isIntervieweeValidated"
             class="caption font-weight-black"
             @click="selectTab('DetailsCoffeeProduction')"
             :disabled="CroppingPatternCalendarValidated"
@@ -156,6 +177,7 @@
             IX Details Coffee Production
           </v-tab>
           <v-tab
+            v-if="isIntervieweeValidated"
             class="caption font-weight-black"
             @click="selectTab('LaborUtilizationOperations')"
             :disabled="DetailsCoffeeProductionValidated"
@@ -163,6 +185,7 @@
             IX.II Labor Utilization Operations
           </v-tab>
           <v-tab
+            v-if="isIntervieweeValidated"
             class="caption font-weight-black"
             @click="selectTab('DetailWageOperation')"
             :disabled="LaborUtilizationOperationsValidated"
@@ -170,6 +193,7 @@
             IX.III Detail Wage Operation
           </v-tab>
           <v-tab
+            v-if="isIntervieweeValidated"
             class="caption font-weight-black"
             @click="selectTab('CostInputsCoffee')"
             :disabled="DetailWageOperationValidated"
@@ -177,6 +201,7 @@
             IX.IV Cost Inputs Coffee
           </v-tab>
           <v-tab
+            v-if="isIntervieweeValidated"
             class="caption font-weight-black"
             @click="selectTab('PestDamageObserved')"
             :disabled="CostInputsCoffeeValidated"
@@ -184,6 +209,7 @@
             X Pest Damage Observed
           </v-tab>
           <v-tab
+            v-if="isIntervieweeValidated"
             class="caption font-weight-black"
             @click="selectTab('PestManagementPractice')"
             :disabled="PestDamageObservedValidated"
@@ -191,6 +217,7 @@
             X.I Pest Management Practice
           </v-tab>
           <v-tab
+            v-if="isIntervieweeValidated"
             class="caption font-weight-black"
             @click="selectTab('CoffeeHarvestMarketing')"
             :disabled="PestManagementPracticeValidated"
@@ -198,6 +225,7 @@
             XI Coffee Harvest Marketing
           </v-tab>
           <v-tab
+            v-if="isIntervieweeValidated"
             class="caption font-weight-black"
             @click="selectTab('TechAwareness')"
             :disabled="CoffeeHarvestMarketingValidated"
@@ -205,6 +233,7 @@
             XII Technology Awareness
           </v-tab>
           <v-tab
+            v-if="isIntervieweeValidated"
             class="caption font-weight-black"
             @click="selectTab('InformationKnowledgeSources')"
             :disabled="TechAwarenessValidated"
@@ -212,6 +241,7 @@
             XIII Information Knowledge Sources
           </v-tab>
           <v-tab
+            v-if="isIntervieweeValidated"
             class="caption font-weight-black"
             @click="selectTab('OpenEndedQuestions')"
             :disabled="InformationKnowledgeSourcesValidated"
@@ -219,6 +249,7 @@
             XIV Open Ended Questions
           </v-tab>
           <v-tab
+            v-if="isIntervieweeValidated"
             class="caption font-weight-black"
             @click="selectTab('OpenEndedQuestionRating')"
             :disabled="OpenEndedQuestionsValidated"
@@ -226,6 +257,7 @@
             XV Open EndedQuestion Rating
           </v-tab>
           <v-tab
+
             class="caption font-weight-black"
             @click="selectTab('SubmissionPage')"
             :disabled="OpenEndedQuestionRatingValidated"
@@ -253,8 +285,8 @@
 </template>
 
 <script>
-import SurveyInformation from '../questionnaireForms/SurveyInformation.vue'
 import BasicInformation from '../questionnaireForms/BasicInformation.vue'
+import SurveyInformation from '../questionnaireForms/SurveyInformation.vue'
 import GeneralInformation from '../questionnaireForms/GeneralInformation.vue'
 import FamilyAffiliated from '../questionnaireForms/FamilyAffiliated.vue'
 import FamilyIncome from '../questionnaireForms/FamilyIncome.vue'
@@ -374,6 +406,9 @@ export default {
     },
   },
   computed: {
+    isIntervieweeValidated(){
+      return this.$store.getters['questionnaire/isIntervieweeValidated'] 
+    },
     currentTab() {
       return this.$store.getters['questionnaire/currentTab']
     },

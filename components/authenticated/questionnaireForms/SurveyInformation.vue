@@ -2,7 +2,22 @@
   <v-form ref="form" v-model="valid" lazy-validation>
     <v-container>
       <v-row>
-        <form-input-container>
+        <form-radio-container title="Interviewee Status" class="mt-2">
+          <v-radio-group
+            :rules="requiredRule"
+            v-model="intervieweeStatus"
+            class="pa-0 ma-0"
+          >
+            <v-radio
+              v-for="item in intervieweeStatusItems"
+              :key="item"
+              :label="item"
+              :value="item"
+              class="text-capitalize"
+            ></v-radio>
+          </v-radio-group>
+        </form-radio-container>
+        <form-input-container v-if="intervieweeStatus === 'validated'">
           <v-text-field
             v-model="surveyNumber"
             :rules="surveyNumberRule"
@@ -25,13 +40,13 @@
           <v-text-field
             v-model="date"
             :rules="dateRule"
-            label="Date of Interview"
+            label="Date of Validation"
             required
             type="date"
           ></v-text-field>
         </form-input-container>
 
-        <form-menu-container>
+        <form-menu-container v-if="intervieweeStatus === 'validated'">
           <v-dialog
             ref="timeStartPicker"
             v-model="timeStartPicker"
@@ -62,7 +77,7 @@
               <v-btn
                 text
                 color="primary"
-                @click="$refs.timeStartPicker.save(interviewStart)"
+                @click="saveTimeStart"
               >
                 OK
               </v-btn>
@@ -70,7 +85,7 @@
           </v-dialog>
         </form-menu-container>
 
-        <form-menu-container>
+        <form-menu-container v-if="intervieweeStatus === 'validated'">
           <v-dialog
             ref="timeEndPicker"
             v-model="timeEndPicker"
@@ -101,7 +116,7 @@
               <v-btn
                 text
                 color="primary"
-                @click="$refs.timeEndPicker.save(interviewEnd)"
+                @click="saveTimeEnd"
               >
                 OK
               </v-btn>
@@ -159,6 +174,8 @@ export default {
   data() {
     return {
       valid: false,
+      intervieweeStatus: '',
+      intervieweeStatusItems: ['validated','declined','not validated','diseased','not-present'],
       surveyNumber: '555',
       surveyNumberRule: [(v) => !!v || 'survey number is required'],
       interviewer: 'Karl Borromeo',
@@ -228,33 +245,45 @@ export default {
     /* test if the form is valid, return boolean */
     validate() {
       const valid = this.$refs.form.validate()
-      console.log('validated', valid)
       this.$store.commit('questionnaire/toggleNextTab', {
         tabName: 'SurveyInformationValidated',
         valid,
       })
+
       if (valid) {
         this.$store.commit('questionnaire/saveData', {
           keyName: 'interview',
           data: this.getData(),
         })
       }
+
+      // this is the basis to enable the submission tab, it is not really related to this form, it just to toggle the submission tab if the interviewee status is !validated <3
+      if(this.intervieweeStatus !== 'validated'){
+        this.$store.commit('questionnaire/toggleNextTab', {
+          tabName: 'OpenEndedQuestionRatingValidated',   
+          valid,
+        })      
+      }
     },
     /* converts into hh:mm format*/
     convertTimeToHHMM(timeStr) {
-        // Split the time string by colon
-        let timeParts = timeStr.split(':');
-        // Extract hours and minutes
-        let hours = timeParts[0];
-        let minutes = timeParts[1];
-        // Format the result as hh:mm
-        return `${hours}:${minutes}`;
+      if(!timeStr){
+        return ''
+      }
+      // Split the time string by colon
+      let timeParts = timeStr.split(':');
+      // Extract hours and minutes
+      let hours = timeParts[0];
+      let minutes = timeParts[1];
+      // Format the result as hh:mm
+      return `${hours}:${minutes}`;
     },
     /* return the data of this form as an object */
     getData() {
       return {
+        intervieweeStatus: this.intervieweeStatus,
         dateOfInterview: this.date,
-        surveyNo: parseInt(this.surveyNumber),
+        surveyNo: this.surveyNumber?parseInt(this.surveyNumber):'',
         validatorName: this.interviewer,
         interviewStart: this.convertTimeToHHMM(this.interviewStart),
         interviewEnd: this.convertTimeToHHMM(this.interviewEnd),
@@ -263,8 +292,33 @@ export default {
         barangay: this.barangay,
       }
     },
+    /* ensure to execute the method validate() if saving time, sometimes the watch is not working well on this part*/
+    saveTimeStart(){
+      this.$refs.timeStartPicker.save(this.interviewStart)
+      this.validate()
+    },
+    /* ensure to execute the method validate() if saving time, sometimes the watch is not working well on this part*/
+    saveTimeEnd(){
+      this.$refs.timeEndPicker.save(this.interviewEnd)
+      this.validate()
+    }
   },
   watch: {
+    intervieweeStatus(val){
+      if(val !== 'validated'){
+        this.surveyNumber = ''
+        this.interviewStart = ''
+        this.interviewEnd = ''
+        this.validate()
+        this.$store.commit('questionnaire/toggleIsIntervieweeValidated',false)
+      }else{
+        this.$store.commit('questionnaire/toggleNextTab', {
+          tabName: 'SurveyInformationValidated',
+          valid: false,
+        })
+        this.$store.commit('questionnaire/toggleIsIntervieweeValidated',true)
+      }
+    },
     date() {
       this.validate()
     },
@@ -293,6 +347,7 @@ export default {
   beforeMount() {
     const data = this.$store.getters['profiling/selectedRecord']
     if (Object.keys(data).length > 0) {
+      this.intervieweeStatus = data.interview.intervieweeStatus
       this.date = data.interview.dateOfInterview
       this.surveyNumber = data.interview.surveyNo
       this.interviewer = data.interview.validatorName
@@ -302,6 +357,7 @@ export default {
       this.municipality = data.interview.cityMunicipality
       this.barangay = data.interview.barangay
     } else {
+      this.intervieweeStatus = ''
       this.date = ''
       this.surveyNumber = ''
       this.interviewer = ''

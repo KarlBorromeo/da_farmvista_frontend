@@ -100,6 +100,8 @@ export default {
 
     /* when edit button is clicked, open the modal for the whole record of this specific id, and enable editing mode and disabling create mode*/
     editItem(id) {
+      //TODO: make a statement here that triggers the validated status of the existing survey, and it will affects the tabs visiblity on the questionnaire modal
+      this.$store.commit('questionnaire/toggleIsIntervieweeValidated',false)
       this.dialog = true
       this.id = id
     },
