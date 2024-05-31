@@ -1,6 +1,6 @@
 <template>
-    <tab-contents>
-      <v-row class="ma-5" justify="center" style="border: 1px solid black">
+    <tab-contents class="mt-3 elevation-0" style="background-color: transparent!important">
+      <v-row justify="center">
           <active-farmers  
             :name="provinces[0].name"
             :count="provinces[0].count"
@@ -25,17 +25,24 @@
             :name="provinces[4].name"
             :count="provinces[4].count"
           />
-      </v-row>      
+      </v-row>    
+      <v-row justify="center">
+          <list-comparison />
+          <active-incative-comparison />
+          <total-coffee-farmers />
+      </v-row>  
     </tab-contents>
 
 </template>
 
 <script>
 import ActiveFarmers from '~/components/authenticated/charts/activeFarmers.vue'
-import SampleChart from '~/components/authenticated/charts/sampleChart.vue'
 import TabContents from '~/components/authenticated/tabContents.vue'
+import listComparison from '~/components/authenticated/charts/listComparison.vue'
+import ActiveIncativeComparison from '~/components/authenticated/charts/activeIncativeComparison.vue'
+import totalCoffeeFarmers from '~/components/authenticated/charts/totalCoffeeFarmers.vue'
 export default {
-  components: {SampleChart, TabContents, ActiveFarmers},
+  components: {TabContents, ActiveFarmers, listComparison, ActiveIncativeComparison, totalCoffeeFarmers},
   beforeMount() {
     this.$store.commit('udpateHeaderTitle', 'DASHBOARD')
   },
