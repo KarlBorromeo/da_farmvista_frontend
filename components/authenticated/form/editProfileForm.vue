@@ -194,6 +194,7 @@ export default {
 		async fetchProfileDetails() {
 			try {
 				await this.$store.dispatch('profile/fetchCurrenUserDetails')
+                await this.$store.dispatch('profile/getAvatarUrl')
 				const myProfile = this.$store.getters['profile/myProfileDetails']
 				this.myProfile = myProfile
 				this.username = myProfile.username

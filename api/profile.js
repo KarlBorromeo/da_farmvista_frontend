@@ -37,3 +37,16 @@ export async function updateProfileDetails(payload) {
         throw error
     }
 }
+
+export async function getAvatarUrl(){
+    try{
+        const res = await Axios.get('https://e974-103-80-142-50.ngrok-free.app/api/v1/user/9df8a345-8d49-4d48-8121-ce46479cb062/avatar',{
+            responseType: 'blob'
+        })
+        const blob = new Blob([res.data], { type: 'image/png' });
+        const url = URL.createObjectURL(blob)
+        return url;
+    }catch(err){
+        console.error(err)
+    }
+}

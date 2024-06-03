@@ -3,14 +3,23 @@
     <v-row class="mt-4">
         <v-col class="text-center">
             <div id="profile-container">
-                <v-icon id="icon" x-large>mdi-account</v-icon>
+                <v-img 
+                    alt=""
+                    :src="avatar+'.png'"
+                    :contain="true"
+                    position="center"
+                    :aspect-ratio="1"
+                    width="100"
+                    style="border: 1px solid black"
+                />
+                {{avatar}}
+                <!-- <v-icon id="icon" x-large>mdi-account</v-icon>
                 <v-btn
                     icon
                     id="add-profile"
                 >
                     <v-icon id="add-profile-icon">mdi-plus</v-icon>
-                </v-btn>
-                
+                </v-btn> -->             
             </div>
             <p class="text-uppercase py-0 my-0">{{fullName}}</p>
             <p class="text-uppercase py-0 my-0 font-weight-bold">{{company}}</p>
@@ -73,6 +82,13 @@ export default {
         },
         passwordLastUpdated(){
             return this.$store.getters['profile/myProfileDetails'].passwordLastUpdated
+        },
+        // avatar(){
+        //     return this.$store.getters['profile/myProfileDetails'].avatarURL
+        // },
+        avatar(){
+            // return this.$store.getters['profile/myAvatarUrl']
+            return 'http://e974-103-80-142-50.ngrok-free.app/api/v1/user/9df8a345-8d49-4d48-8121-ce46479cb062/avatar'
         }
     },
     methods: {
@@ -85,14 +101,14 @@ export default {
 </script>
 
 <style scoped>
-#profile-container{
+/* #profile-container{
     display: inline-block;
     background-color: #d9d9d9;
     border-radius: 100%;
     padding: 1rem;
     margin-bottom: 1rem;
     position: relative;
-}
+} */
 
 #icon{
     transform: scale(1.5);
