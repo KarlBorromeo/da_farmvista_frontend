@@ -5,12 +5,11 @@
       :headers="headers"
       :items="items"
       item-key="name"
-      :search="search"
-      :custom-filter="transofromedSearchText"
       :items-per-page="itemPerPage"
       :loading="loading"
       loading-text="Loading... Please wait"
-      hide-default-footer
+      :hide-default-footer="!isSearching"
+      :footer-props="pagesSearch"
     >
       <template v-slot:top>
         <div style="display: flex; justify-content: end">
@@ -30,7 +29,7 @@
       </template>
     </v-data-table>
     <v-divider />
-    <div class="text-center pt-2">
+    <div class="text-center pt-2" v-if="!isSearching">
       <v-pagination
         v-model="page"
         :length="pages"
@@ -56,12 +55,13 @@ export default {
       dialog: false,
       search: '',
       items: [],
-      itemPerPage: 20, // number of rows per page
+      itemPerPage: 10, // number of rows per page
       loading: false, // toggle the loading of the table
       page: 1, // current page number
       pageCount: 0, // number of how many pages
       commodity: 'coffee',
       id: '', // this is used for specific fetch record
+      isSearching: false
     }
   },
   computed: {
@@ -82,25 +82,36 @@ export default {
     pages() {
       return this.$store.getters['profiling/countPages']
     },
+    pagesSearch(){
+      return {
+        'items-per-page-options': this.$store.getters['profiling/pageArraysSearch']
+        }
+    }
   },
   methods: {
     /* 
       this function is responsible for the search of all values in the table data, 
       and displays the records matching the search value 
     */
-    transofromedSearchText(value, search, item) {
-      search = search.toString().toLowerCase()
-      return (
-        value != null &&
-        search != null &&
-        typeof value === 'string' &&
-        value.toString().toLowerCase().indexOf(search) !== -1
-      )
-    },
+    // async transofromedSearchText(value, search, item) {
+    //   console.log('searching: ',value,search,item)
+    //   search = search.toString().toLowerCase()
+    //   await this.$store.dispatch('profiling/fetchAllSurvey', {
+    //     type: this.commodity,
+    //     page: this.page,
+    //     limit: this.itemPerPage,
+    //   })
+    //   return []
+    //   // return (
+      //   value != null &&
+      //   search != null &&
+      //   typeof value === 'string' &&
+      //   value.toString().toLowerCase().indexOf(search) !== -1
+      // )
+    // },
 
     /* when edit button is clicked, open the modal for the whole record of this specific id, and enable editing mode and disabling create mode*/
     editItem(id) {
-      //TODO: make a statement here that triggers the validated status of the existing survey, and it will affects the tabs visiblity on the questionnaire modal
       this.$store.commit('questionnaire/toggleIsIntervieweeValidated',false)
       this.dialog = true
       this.id = id
@@ -120,9 +131,9 @@ export default {
     },
 
     /* fetch the survey records */
-    async fetchAllRecord() {
-      console.log(this.page)
+    async fetchAllSurvey() {
       try {
+        this.isSearching = false
         this.loading = true
         this.items = []
         await this.$store.dispatch('profiling/fetchAllSurvey', {
@@ -137,23 +148,42 @@ export default {
       this.loading = false
     },
 
+    /* fetch search results */
+    async searchSurvey() {
+      try {
+        this.isSearching = true
+        this.loading = true
+        this.items = []
+        await this.$store.dispatch('profiling/searchSurvey', {
+          search: this.search,
+          limit: this.itemPerPage,
+        })
+        this.items = this.$store.getters['profiling/items']
+      } catch (error) {
+        this.$refs.snackbar.showBar(error, 'red')
+      }
+      this.loading = false
+    },
+
     /* this method will be triggered when switching the commodity, via emits */
     async switchCommodity(commodity) {
       this.commodity = commodity
-      await this.fetchAllRecord()
+      await this.fetchAllSurvey()
     },
   },
 
   /* before mounting the component first http request to fetch the records */
   async beforeMount() {
-    await this.fetchAllRecord()
+    await this.fetchAllSurvey()
   },
 
   watch: {
     /* execute the fetching everytime navigating to other page numbers */
     async page(newVal, oldVal) {
       if (newVal !== oldVal) {
-        await this.fetchAllRecord()
+        if(!this.isSearching){
+          await this.fetchAllSurvey()
+        }
       }
     },
     /* delete the selected id, if the modal is closed */
@@ -167,6 +197,14 @@ export default {
         )
       }
     },
+    async search(val){
+      if(!val){ 
+        await this.fetchAllSurvey();  // fetch again the all list of surveys
+      }else{
+        // search method here
+        await this.searchSurvey()
+      }
+    }
   },
 }
 </script>

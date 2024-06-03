@@ -7,6 +7,7 @@ export const state = () => ({
     /* define here the keys and empty values each forms */
   },
   isEditingMode: false,
+  pageArraysSearch: [],
 })
 
 export const getters = {
@@ -22,6 +23,9 @@ export const getters = {
   isEditingMode(state) {
     return state.isEditingMode
   },
+  pageArraysSearch(state){
+    return state.pageArraysSearch
+  }
 }
 
 /* function for capitalizing the first index of the word and also */
@@ -82,6 +86,17 @@ export const mutations = {
         state.countPages++
       }
     }
+  },
+
+  /* create an array of pages for search results */
+  generateArrayPages(state,obj){
+    let arr = [];
+    const indexes = obj.length/obj.limit;
+    for(let i=1; i<=indexes; i++){
+      arr.push(obj.limit*i)
+    }
+    arr.push(obj.length)
+    state.pageArraysSearch = arr;
   },
 
   /* 
@@ -146,6 +161,21 @@ export const actions = {
       const res = await api.deleteSurvey(id)
       context.commit('deleteSurvey', id)
       return res
+    } catch (error) {
+      throw error
+    }
+  },
+
+  /* search survey */
+  async searchSurvey(context, payload) {
+    try {
+      const response = await api.searchSurvey(payload)
+      context.commit('saveItems', response.data)
+      context.commit('generateArrayPages', {
+        search: payload.search,
+        length: response.count,
+        limit: payload.limit,
+      })
     } catch (error) {
       throw error
     }
