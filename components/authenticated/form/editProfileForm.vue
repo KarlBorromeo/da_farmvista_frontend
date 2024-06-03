@@ -24,7 +24,7 @@
                     type="email"
                     ></v-text-field>
                 </v-col>
-                <v-col cols="6">
+                <v-col cols="12">
                     <v-text-field
                     v-model="firstName"
                     :rules="requiredRule"
@@ -39,6 +39,47 @@
                     label="Last Name"
                     required
                     type="email"
+                    ></v-text-field>
+                </v-col>
+                <v-col cols="6">
+                    <v-text-field
+                    v-model="middleName"
+                    :rules="requiredRule"
+                    label="Middle initial"
+                    required
+                    ></v-text-field>
+                </v-col>
+                <form-radio-container title="Gender">
+                    <v-radio-group
+                    :rules="requiredRule"
+                    v-model="gender"
+                    class="pa-0 ma-0"
+                    row
+                    >
+                    <v-radio
+                        v-for="item in genderItems"
+                        :key="item"
+                        :label="item"
+                        :value="item"
+                        class="text-capitalize"
+                    ></v-radio>
+                    </v-radio-group>
+                </form-radio-container>
+                <v-col cols="12">
+                    <v-text-field
+                    v-model="dateBirth"
+                    :rules="requiredRule"
+                    label="Date of birth"
+                    required
+                    type="date"
+                    ></v-text-field>
+                </v-col>
+                <v-col cols="12">
+                    <v-text-field
+                    v-model="mobileNumber"
+                    :rules="mobileNumberRule"
+                    label="Mobile Number"
+                    required
                     ></v-text-field>
                 </v-col>
                 <v-col cols="12">
@@ -76,8 +117,9 @@
 <script>
 import Snackbar from '~/components/snackbar.vue'
 import formInputContainer from './formInputContainer.vue'
+import formRadioContainer from './formRadioContainer.vue'
 export default {
-    components: { formInputContainer, Snackbar },
+    components: { formInputContainer, Snackbar, formRadioContainer },
     data(){
         return{
             valid: false,
@@ -85,12 +127,31 @@ export default {
             email: '',
             firstName: '',
             lastName: '',
+            middleName: '',
+            mobileNumber: '',
+            gender: '',
+            dateBirth: '',
             address: '',
             company: '',
             position: '',
+            genderItems: ['male','female','others'],
             requiredRule: [
                 (v) => !!v || 'this field is required'
             ],
+            mobileNumberRule: [
+                (v) => !!v || 'this field is required',
+                (v) => {
+                    if(v){
+                    if(v.length == 11 && v[0] == '0' && v[1] == '9'){
+                        return true
+                    }else{
+                        return 'must be (09123456789) format'
+                    }
+                    }else{
+                    return true
+                    }
+                }
+                ],
             isModify: false
         }
     },
@@ -105,6 +166,10 @@ export default {
                 email : this.email,
                 firstName : this.firstName,
                 lastName : this.lastName,
+                middleName : this.middleName,
+                mobileNumber : this.mobileNumber,
+                gender : this.gender,
+                dateBirth : this.dateBirth,
                 address : this.address,
                 company : this.company,
                 position : this.position
@@ -124,7 +189,11 @@ export default {
             this.email = myProfile.email
             this.firstName = myProfile.firstName
             this.lastName = myProfile.lastName
-            // this.address = myProfile.
+            this.middleName = myProfile.middleName
+            this.mobileNumber = myProfile.mobileNumber
+            this.gender = myProfile.gender
+            this.dateBirth = myProfile.dateOfBirth
+            this.address = myProfile.address
             this.company = myProfile.company
             this.position = myProfile.jobPosition
         }catch(error){

@@ -57,7 +57,7 @@ export default {
             fullName: '',
             email: '',
             type: '',
-            address: 'manila, Philippines',
+            address: '',
             passwordLastUpdated: '',
         }
     },
@@ -67,7 +67,7 @@ export default {
             const myProfile = this.$store.getters['profile/myProfileDetails']
             this.fullName = myProfile.fullName
             this.email = myProfile.email
-            // this.address = ''
+            this.address = ''
             this.type = myProfile.type
             this.company = myProfile.company
             this.passwordLastUpdated = myProfile.passwordLastUpdated  
