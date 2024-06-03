@@ -81,7 +81,7 @@ export default {
   },
   computed: {
     UserFirstname() {
-      return localStorage.getItem('firstname')
+      return this.$store.getters['auth/currentFirstName']
     },
   },
   methods: {

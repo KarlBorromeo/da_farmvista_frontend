@@ -61,7 +61,7 @@ export default {
     return {
       dialog: false,
       search: '',
-      itemPerPage: 2, // number of rows per page
+      itemPerPage: 10, // number of rows per page
       loading: false, // toggle the loading of the table
       page: 1, // current page number
     }

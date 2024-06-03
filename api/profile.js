@@ -12,7 +12,7 @@ export async function fetchCurrenUserDetails() {
         })
         return res.data.data;
     }catch(error){
-        console.error(error);
+        console.error(error)
         throw error
     }
 }
@@ -21,10 +21,19 @@ export async function updatePassword(payload) {
     try{
         await Axios.patch('user/me/password',payload)
         return 'password updated successfully';
-    }catch(err){
-        if(Array.isArray(err.response.data.message)){
-            throw err.response.data.message[0]
+    }catch(error){
+        if(Array.isArray(error.response.data.message)){
+            throw error.response.data.message[0]
         }
-        throw err.response.data.message
+        throw error.response.data.message
+    }
+}
+
+export async function updateProfileDetails(payload) {
+    try{
+        await Axios.patch('user/me',payload)
+    }catch(error){
+        console.error(error)
+        throw error
     }
 }

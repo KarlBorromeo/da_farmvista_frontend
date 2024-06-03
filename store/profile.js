@@ -24,6 +24,18 @@ export const actions = {
             throw error
         }
     },
+    async updateProfileDetails(context, payload){
+        try{
+            await api.updateProfileDetails(payload)
+            context.commit('setMyProfileDetails',payload)
+            return 'Successfully updated'
+        }catch(error){
+            if(Array.isArray(error.response.data.message)){
+                throw error.response.data.message[0]
+            }
+            throw error.response.data.message
+        }
+    },
     async updatePassword(_,payload){
         try{
             let res = await api.updatePassword(payload)

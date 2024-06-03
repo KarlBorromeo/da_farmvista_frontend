@@ -16,20 +16,22 @@ export const getters = {
   userLoggedin(state) {
     return state.currentUserLoggedin
   },
+  /* return firstname */
 }
 
 export const mutations = {
   /* save the user data to the local storage which will not be deleted after hard refresh*/
-  saveUserDataToLocalStorage(_, userData) {
+  saveUserDataToLocalStorage(state, userData) {
+    state.currentUser.firstName = userData.firstName
     localStorage.setItem('token', userData.accessToken)
     localStorage.setItem('type', userData.type)
     localStorage.setItem('firstname', userData.firstName)
   },
   /* save the user data to the store which will be deleted if hard refresh */
-  // saveUserDataToStore(state, userData) {
-  //   state.currentUser.firstName = userData.firstName
-  //   state.currentUser.type = userData.type
-  // },
+  updateFirstname(state, firstname) {
+    localStorage.setItem('firstname', firstname)
+    state.currentUser.firstName = firstname
+  },
   /* delete the local storage details when logged out */
   logout() {
     localStorage.clear()

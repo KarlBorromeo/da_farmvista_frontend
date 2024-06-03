@@ -53,28 +53,27 @@ export default {
     data(){
         return{
             dialog: false,
-            company: '',
-            fullName: '',
-            email: '',
-            type: '',
-            address: '',
-            passwordLastUpdated: '',
         }
     },
-    async beforeMount(){
-        try{
-            await this.$store.dispatch('profile/fetchCurrenUserDetails')      
-            const myProfile = this.$store.getters['profile/myProfileDetails']
-            this.fullName = myProfile.fullName
-            this.email = myProfile.email
-            this.address = ''
-            this.type = myProfile.type
-            this.company = myProfile.company
-            this.passwordLastUpdated = myProfile.passwordLastUpdated  
-        }catch(error){
-            this.$refs.snackbar.showBar(error,'red')
+    computed: {
+        fullName(){
+            return this.$store.getters['profile/myProfileDetails'].fullName
+        },
+        email(){
+            return this.$store.getters['profile/myProfileDetails'].email
+        },
+        address(){
+            return this.$store.getters['profile/myProfileDetails'].address
+        },
+        type(){
+            return this.$store.getters['profile/myProfileDetails'].type
+        },
+        company(){
+            return this.$store.getters['profile/myProfileDetails'].company
+        },
+        passwordLastUpdated(){
+            return this.$store.getters['profile/myProfileDetails'].passwordLastUpdated
         }
-
     },
     methods: {
         emitCloseModal(res){

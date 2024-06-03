@@ -52,7 +52,8 @@ export async function searchSurvey(payload) {
     //   params: params,
     // })
     const params = {
-      search: '',
+      // search: '',
+      type: 'coffee',
       page: 0,
       limit: 0,
     }
