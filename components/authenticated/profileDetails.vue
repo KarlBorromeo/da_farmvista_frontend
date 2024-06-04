@@ -6,20 +6,29 @@
                 <v-img 
                     alt=""
                     :src="avatar+'.png'"
-                    :contain="true"
+                    :contain="false"
                     position="center"
                     :aspect-ratio="1"
-                    width="100"
+                    width="80"
                     style="border: 1px solid black"
+                    class="rounded-pill"
                 />
-                {{avatar}}
-                <!-- <v-icon id="icon" x-large>mdi-account</v-icon>
-                <v-btn
-                    icon
-                    id="add-profile"
-                >
-                    <v-icon id="add-profile-icon">mdi-plus</v-icon>
-                </v-btn> -->             
+                <v-dialog
+                    v-model="uploadAvatarModal"
+                    width="500"
+                    >
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-btn
+                            icon
+                            id="add-profile"
+                            v-on="on"
+                            v-bind="attrs"
+                        >
+                            <v-icon id="add-profile-icon" class="black--text">mdi-plus</v-icon>
+                        </v-btn> 
+                    </template>
+                    <upload-avatar @emitCloseModal="emitCloseModalPassword"/>
+                </v-dialog>           
             </div>
             <p class="text-uppercase py-0 my-0">{{fullName}}</p>
             <p class="text-uppercase py-0 my-0 font-weight-bold">{{company}}</p>
@@ -45,7 +54,7 @@
                     </p>
                     
                 </template>
-                <change-pass-form @emitCloseModal="emitCloseModal"/>
+                <change-password @emitCloseModal="emitCloseModalPassword"/>
             </v-dialog>
             <p class="py-0 my-0 unhighlight">Password Updated {{passwordLastUpdated}}</p>
         </v-col>
@@ -56,12 +65,14 @@
 
 <script>
 import Snackbar from '../snackbar.vue'
-import changePassForm from './form/changePassForm.vue'
+import changePassword from './modal/changePasword.vue'
+import UploadAvatar from './modal/uploadAvatar.vue'
 export default {
-	components: { changePassForm, Snackbar },
+	components: { changePassword, Snackbar, UploadAvatar },
     data(){
         return{
             dialog: false,
+            uploadAvatarModal: false,
         }
     },
     computed: {
@@ -83,17 +94,18 @@ export default {
         passwordLastUpdated(){
             return this.$store.getters['profile/myProfileDetails'].passwordLastUpdated
         },
-        // avatar(){
-        //     return this.$store.getters['profile/myProfileDetails'].avatarURL
-        // },
         avatar(){
-            // return this.$store.getters['profile/myAvatarUrl']
-            return 'http://e974-103-80-142-50.ngrok-free.app/api/v1/user/9df8a345-8d49-4d48-8121-ce46479cb062/avatar'
-        }
+            return 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKD6oaLMOe4gb4BYZKpY1S4OyQ1CMfVGFD-Q&s'
+            // return this.$store.getters['profile/myProfileDetails'].avatarURL
+        },
     },
     methods: {
-        emitCloseModal(res){
+        emitCloseModalPassword(res){
             this.dialog = false;
+            this.$refs.snackbar.showBar(res,'success')
+        },
+        emitCloseModalPassword(res){
+            this.uploadAvatarModal = false;
             this.$refs.snackbar.showBar(res,'success')
         }
     }
@@ -101,21 +113,19 @@ export default {
 </script>
 
 <style scoped>
-/* #profile-container{
+#profile-container{
     display: inline-block;
-    background-color: #d9d9d9;
-    border-radius: 100%;
-    padding: 1rem;
-    margin-bottom: 1rem;
     position: relative;
-} */
+}
 
 #icon{
     transform: scale(1.5);
 }
 #add-profile{
     position: absolute;
-    bottom: 0;
+    bottom: -.5rem;
+    right: -1rem;
+    background-color: white;
 }
 #add-profile-icon{
     border: 1px solid rgba(0, 0, 0, 0.1);

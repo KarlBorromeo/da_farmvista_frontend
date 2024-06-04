@@ -50,3 +50,14 @@ export async function getAvatarUrl(){
         console.error(err)
     }
 }
+
+export async function uploadAvatar(avatar){
+    try{
+        const formData = new FormData()
+        formData.append('avatar', avatar)
+        await Axios.patch('user/me/avatar',formData)
+        return 'succesfully uploaded'
+    }catch(err){
+        throw err
+    }
+}

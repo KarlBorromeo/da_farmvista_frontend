@@ -23,7 +23,7 @@
         counter
       ></v-file-input>
     </div>
-    <v-btn @click="showFile" block color="success" small :disabled="disabledBtn"
+    <v-btn @click="upload" block color="success" small :disabled="disabledBtn"
       >Upload</v-btn
     >
     <snackbar ref="snackbar" />
@@ -33,6 +33,7 @@
 <script>
 import snackbar from '~/components/snackbar.vue'
 export default {
+  emits: ['emitCloseModal'],
   components: { snackbar },
   props: ['commodity'],
   data() {
@@ -42,7 +43,7 @@ export default {
     }
   },
   methods: {
-    async showFile() {
+    async upload() {
       if (!this.file) {
         this.$refs.snackbar.showBar('no file upload', 'red')
         return

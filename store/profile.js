@@ -58,5 +58,13 @@ export const actions = {
         }catch(error){
             throw error
         }
+    },
+    async uploadAvatar(_,avatar){
+        try{
+            let res = await api.uploadAvatar(avatar)
+            return res;
+        }catch(error){
+            throw error
+        }
     }
 }
