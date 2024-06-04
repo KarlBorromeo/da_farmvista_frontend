@@ -166,19 +166,4 @@ export const actions = {
       throw error
     }
   },
-
-  /* search survey */
-  async searchSurvey(context, payload) {
-    try {
-      const response = await api.searchSurvey(payload)
-      context.commit('saveItems', response.data)
-      context.commit('generateArrayPages', {
-        search: payload.search,
-        length: response.count,
-        limit: payload.limit,
-      })
-    } catch (error) {
-      throw error
-    }
-  },
 }

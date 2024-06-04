@@ -158,6 +158,15 @@ export const getters = {
   CroppingSystem(state) {
     return generateArray(state.codes.CroppingSystem)
   },
+  IntervieweeStatus(state){
+    return generateArray(state.codes.IntervieweeStatus)
+  },
+  RegionProvince(state){
+    return generateArray(state.codes.RegionProvince)
+  },
+  CityMunicipality(state){
+    return generateArray(state.codes.CityMunicipality)
+  }
 }
 
 export const mutations = {

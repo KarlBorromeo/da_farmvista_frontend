@@ -5,7 +5,7 @@
             <div id="profile-container">
                 <v-img 
                     alt=""
-                    :src="avatar+'.png'"
+                    :src="avatar"
                     :contain="false"
                     position="center"
                     :aspect-ratio="1"
@@ -28,8 +28,10 @@
                         </v-btn> 
                     </template>
                     <upload-avatar @emitCloseModal="emitCloseModalPassword"/>
-                </v-dialog>           
+                </v-dialog>  
+                
             </div>
+            {{avatar}}         
             <p class="text-uppercase py-0 my-0">{{fullName}}</p>
             <p class="text-uppercase py-0 my-0 font-weight-bold">{{company}}</p>
             <div id="custom-divider-container">
@@ -95,8 +97,9 @@ export default {
             return this.$store.getters['profile/myProfileDetails'].passwordLastUpdated
         },
         avatar(){
-            return 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKD6oaLMOe4gb4BYZKpY1S4OyQ1CMfVGFD-Q&s'
-            // return this.$store.getters['profile/myProfileDetails'].avatarURL
+        //    return 'https://4.img-dpreview.com/files/p/E~TS590x0~articles/3925134721/0266554465.jpeg'
+            // return 'https://nikonrumors.com/wp-content/uploads/2014/03/Nikon-1-V3-sample-photo.jpg'
+           return this.$store.getters['profile/myProfileDetails'].avatarURL
         },
     },
     methods: {

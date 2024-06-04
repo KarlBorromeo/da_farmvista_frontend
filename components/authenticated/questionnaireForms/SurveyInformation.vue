@@ -123,26 +123,29 @@
             </v-time-picker>
           </v-dialog>
         </form-menu-container>
-
-        <form-input-container>
-          <v-text-field
+        
+        <form-select-container>
+          <v-select
             v-model="regionProvince"
-            :rules="requiredRule"
+            :items="regionProvinceItems"
             label="Region/Pronvince"
+            dense
+            class="text-capitalize"
+            :rules="requiredRule"
             required
-            class="mb-2"
-          ></v-text-field>
-        </form-input-container>
+          ></v-select>
+        </form-select-container>
 
-        <form-input-container>
-          <v-text-field
+        <form-select-container>
+          <v-select
+            :items="municipalityItems"
             v-model="municipality"
             :rules="requiredRule"
             label="City/Municipality"
             required
-            class="mb-2"
-          ></v-text-field>
-        </form-input-container>
+            class="text-capitalize"
+          ></v-select>
+        </form-select-container>
 
         <form-input-container>
           <v-text-field
@@ -175,7 +178,7 @@ export default {
     return {
       valid: false,
       intervieweeStatus: '',
-      intervieweeStatusItems: ['validated','declined','not validated','diseased','not-present'],
+      intervieweeStatusItems: [],
       surveyNumber: '555',
       surveyNumberRule: [(v) => !!v || 'survey number is required'],
       interviewer: 'Karl Borromeo',
@@ -188,53 +191,9 @@ export default {
       timeEndPicker: false,
       interviewEndRule: [(v) => !!v || 'time end is required'],
       regionProvince: 'AGUSAN DEL NORTE',
-      regionProvinceItems: [
-        'agusan del norte',
-        'agusan del sur',
-        'dinagat island',
-        'surigao del norte',
-        'surigao del sur',
-      ],
+      regionProvinceItems: [],
       municipality: 'ALEGRIA',
-      municipalityItems: [
-        'alegria',
-        'bacuag',
-        'barobo',
-        'basilisa',
-        'bislig',
-        'buenavista',
-        'bunawan',
-        'butuan city',
-        'cabadbaran city',
-        'cantilan',
-        'carascal',
-        'ezperanza',
-        'hinatuan',
-        'jabonga',
-        'kitcharao',
-        'las nieves',
-        'lianga',
-        'lingig',
-        'loreto',
-        'nasipit',
-        'prosperidad',
-        'rosario',
-        'san agustin',
-        'san francisco',
-        'san jose',
-        'santiago',
-        'sibagat',
-        'sta. josefa',
-        'surigao city',
-        'taganaan',
-        'tagbina',
-        'tago',
-        'talacogon',
-        'tandag',
-        'trento',
-        'tubajon',
-        'tubay',
-      ],
+      municipalityItems: [],
       barangay: 'Brgy. Binutbut',
       barangayRule: [(v) => !!v || 'Barangay is required'],
       requiredRule: [(v) => !!v || 'This field is required'],
@@ -345,6 +304,9 @@ export default {
     },
   },
   beforeMount() {
+    this.intervieweeStatusItems = this.$store.getters['questionnaireCode/IntervieweeStatus']
+    this.regionProvinceItems = this.$store.getters['questionnaireCode/RegionProvince']
+    this.municipalityItems = this.$store.getters['questionnaireCode/CityMunicipality']
     const data = this.$store.getters['profiling/selectedRecord']
     if (Object.keys(data).length > 0) {
       this.intervieweeStatus = data.interview.intervieweeStatus
