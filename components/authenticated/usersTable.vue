@@ -7,8 +7,6 @@
       :headers="headers"
       :items="items"
       item-key="name"
-      :search="search"
-      :custom-filter="transformedSearchText"
       :items-per-page="itemPerPage"
       :loading="loading"
       loading-text="Loading... Please wait"
@@ -49,7 +47,6 @@
     </v-dialog>
     <snackbar ref="snackbar" />
   </div>
-
 </template>
 
 <script>
@@ -95,20 +92,6 @@ export default {
     },
   },
   methods: {
-    /* 
-      this function is responsible for the search of all values in the table data, 
-      and displays the records matching the search value 
-    */
-    transformedSearchText(value, search, item) {
-      search = search.toString().toLowerCase()
-      return (
-        value != null &&
-        search != null &&
-        typeof value === 'string' &&
-        value.toString().toLowerCase().indexOf(search) !== -1
-      )
-    },
-
     /* toggle active status */
     async toggleActiveStatus(id,bool){
       const decision = bool?'deactivate':'activate';
@@ -136,6 +119,7 @@ export default {
         await this.$store.dispatch('users/fetchAllUsers', {
           page: this.page,
           limit: this.itemPerPage,
+          search: this.search.toLowerCase(),
         })
       } catch (error) {
         this.$refs.snackbar.showBar(error, 'red')
@@ -156,6 +140,11 @@ export default {
         await this.fetchAllUsers()
       }
     },
+    async search(){
+      await new Promise(resolve=>setTimeout(resolve,500))
+      this.page = 1;
+      await this.fetchAllUsers();  // fetch the all list with filter search value
+    }
   },
 }
 </script>

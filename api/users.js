@@ -6,6 +6,7 @@ export async function fetchAllUsers(payload){
     const params = {
       page: encodeURIComponent(payload.page - 1),
       limit: encodeURIComponent(payload.limit),
+      search: payload.search?payload.search:''
     }
     const response = await Axios.get('user', {
       params: params,

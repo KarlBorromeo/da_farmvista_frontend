@@ -6,6 +6,7 @@ export async function fetchAllRecords(payload) {
       type: encodeURIComponent(payload.type),
       page: encodeURIComponent(payload.page - 1),
       limit: encodeURIComponent(payload.limit),
+      search: payload.search?payload.search:''
     }
     const response = await Axios.get('survey', {
       params: params,
@@ -41,27 +42,3 @@ export async function deleteSurvey(id) {
   }
 }
 
-export async function searchSurvey(payload) {
-  try {
-    // const params = {
-    //   search: encodeURIComponent(payload.type),
-    //   page: encodeURIComponent(payload.page - 1),
-    //   limit: encodeURIComponent(payload.limit),
-    // }
-    // const response = await Axios.get('survey', {
-    //   params: params,
-    // })
-    const params = {
-      // search: '',
-      type: 'coffee',
-      page: 0,
-      limit: 0,
-    }
-    const response = await Axios.get('survey', {
-      params: params,
-    })
-    return response.data
-  } catch (error) {
-    throw error.response.data.message
-  }
-}

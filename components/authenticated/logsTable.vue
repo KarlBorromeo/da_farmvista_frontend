@@ -7,8 +7,6 @@
       :headers="headers"
       :items="items"
       item-key="name"
-      :search="search"
-      :custom-filter="transformedSearchText"
       :items-per-page="itemPerPage"
       :loading="loading"
       loading-text="Loading... Please wait"
@@ -67,7 +65,7 @@ export default {
     return {
       dialog: false,
       search: '',
-      itemPerPage: 5, // number of rows per page
+      itemPerPage: 50, // number of rows per page
       loading: false, // toggle the loading of the table
       page: 1, // current page number
     }
@@ -92,20 +90,6 @@ export default {
 
   },
   methods: {
-    /* 
-      this function is responsible for the search of all values in the table data, 
-      and displays the records matching the search value 
-    */
-    transformedSearchText(value, search, item) {
-      search = search.toString().toLowerCase()
-      return (
-        value != null &&
-        search != null &&
-        typeof value === 'string' &&
-        value.toString().toLowerCase().indexOf(search) !== -1
-      )
-    },
-
     /* fetch the survey records */
     async fetchAllLogs() {
       try {
@@ -113,6 +97,7 @@ export default {
         await this.$store.dispatch('logs/fetchAllLogs', {
           page: this.page,
           limit: this.itemPerPage,
+          search: this.search.toLowerCase(),
         })
       } catch (error) {
         this.$refs.snackbar.showBar(error, 'red')
@@ -169,6 +154,11 @@ export default {
         await this.fetchAllLogs()
       }
     },
+    async search(){
+      await new Promise(resolve=>setTimeout(resolve,500))
+      this.page = 1;
+      await this.fetchAllLogs();  // fetch the all list with filter search value
+    }
   },
 }
 </script>

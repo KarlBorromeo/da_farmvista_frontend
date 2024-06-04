@@ -8,8 +8,7 @@
       :items-per-page="itemPerPage"
       :loading="loading"
       loading-text="Loading... Please wait"
-      :hide-default-footer="!isSearching"
-      :footer-props="pagesSearch"
+      :hide-default-footer="true"
     >
       <template v-slot:top>
         <div style="display: flex; justify-content: end">
@@ -21,6 +20,9 @@
           class="mx-4"
         ></v-text-field>
       </template>
+      <template v-slot:[`item.validated`]="{ item }">
+        <p class="text-center" :class="item.status!='validated'?'red--text':''">{{item.status}}</p>
+      </template>
       <template v-slot:[`item.actions`]="{ item }">
         <v-icon small class="mr-2" @click="editItem(item.id)">
           mdi-pencil
@@ -29,7 +31,7 @@
       </template>
     </v-data-table>
     <v-divider />
-    <div class="text-center pt-2" v-if="!isSearching">
+    <div class="text-center pt-2">
       <v-pagination
         v-model="page"
         :length="pages"
@@ -58,10 +60,8 @@ export default {
       itemPerPage: 10, // number of rows per page
       loading: false, // toggle the loading of the table
       page: 1, // current page number
-      pageCount: 0, // number of how many pages
       commodity: 'coffee',
       id: '', // this is used for specific fetch record
-      isSearching: false
     }
   },
   computed: {
@@ -76,40 +76,15 @@ export default {
         { text: 'City/Municipality', value: 'cityMunicipality' },
         { text: 'Barangay', value: 'barangay' },
         { text: 'Organization/Institution', value: 'nameOrganization' },
+        { text: 'Status', value: 'validated',align: 'center' },
         { text: 'Actions', value: 'actions', sortable: false },
       ]
     },
     pages() {
       return this.$store.getters['profiling/countPages']
     },
-    pagesSearch(){
-      return {
-        'items-per-page-options': this.$store.getters['profiling/pageArraysSearch']
-        }
-    }
   },
   methods: {
-    /* 
-      this function is responsible for the search of all values in the table data, 
-      and displays the records matching the search value 
-    */
-    // async transofromedSearchText(value, search, item) {
-    //   console.log('searching: ',value,search,item)
-    //   search = search.toString().toLowerCase()
-    //   await this.$store.dispatch('profiling/fetchAllSurvey', {
-    //     type: this.commodity,
-    //     page: this.page,
-    //     limit: this.itemPerPage,
-    //   })
-    //   return []
-    //   // return (
-      //   value != null &&
-      //   search != null &&
-      //   typeof value === 'string' &&
-      //   value.toString().toLowerCase().indexOf(search) !== -1
-      // )
-    // },
-
     /* when edit button is clicked, open the modal for the whole record of this specific id, and enable editing mode and disabling create mode*/
     editItem(id) {
       this.$store.commit('questionnaire/toggleIsIntervieweeValidated',false)
@@ -133,11 +108,11 @@ export default {
     /* fetch the survey records */
     async fetchAllSurvey() {
       try {
-        this.isSearching = false
         this.loading = true
         this.items = []
         await this.$store.dispatch('profiling/fetchAllSurvey', {
           type: this.commodity,
+          search: this.search.toLowerCase(),
           page: this.page,
           limit: this.itemPerPage,
         })
@@ -148,22 +123,6 @@ export default {
       this.loading = false
     },
 
-    /* fetch search results */
-    async searchSurvey() {
-      try {
-        this.isSearching = true
-        this.loading = true
-        this.items = []
-        await this.$store.dispatch('profiling/searchSurvey', {
-          search: this.search,
-          limit: this.itemPerPage,
-        })
-        this.items = this.$store.getters['profiling/items']
-      } catch (error) {
-        this.$refs.snackbar.showBar(error, 'red')
-      }
-      this.loading = false
-    },
 
     /* this method will be triggered when switching the commodity, via emits */
     async switchCommodity(commodity) {
@@ -181,9 +140,7 @@ export default {
     /* execute the fetching everytime navigating to other page numbers */
     async page(newVal, oldVal) {
       if (newVal !== oldVal) {
-        if(!this.isSearching){
-          await this.fetchAllSurvey()
-        }
+        await this.fetchAllSurvey()
       }
     },
     /* delete the selected id, if the modal is closed */
@@ -197,13 +154,10 @@ export default {
         )
       }
     },
-    async search(val){
-      if(!val){ 
-        await this.fetchAllSurvey();  // fetch again the all list of surveys
-      }else{
-        // search method here
-        await this.searchSurvey()
-      }
+    async search(){
+      await new Promise(resolve=>setTimeout(resolve,500))
+      this.page = 1;
+      await this.fetchAllSurvey();  // fetch the all list with filter search value
     }
   },
 }

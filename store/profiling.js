@@ -69,6 +69,7 @@ export const mutations = {
         cityMunicipality: element.interview.cityMunicipality,
         barangay: element.interview.barangay,
         nameOrganization: element.profileGeneralInfo?element.profileGeneralInfo.organizationName:'',
+        status: element.interview.intervieweeStatus
       }
       state.itemsCurrentPage.push(object)
     })
