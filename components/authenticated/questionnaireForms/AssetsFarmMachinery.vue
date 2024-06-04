@@ -16,6 +16,12 @@
               label="* Machine Items"
               dense
             ></v-select>
+            <v-text-field
+              v-if="machineName[i - 1]=='others'"
+              v-model="machineNameOther[i - 1]"
+              :rules="requiredRule"
+              label="* Specify other machinery"
+            ></v-text-field>
           </form-select-container>
 
           <form-input-container>
@@ -67,7 +73,7 @@ import formCardButton from '~/components/authenticated/form/formCardButton.vue'
 import FormInputContainer from '~/components/authenticated/form/formInputContainer.vue'
 import FormRadioContainer from '~/components/authenticated/form/formRadioContainer.vue'
 import FormSelectContainer from '~/components/authenticated/form/formSelectContainer.vue'
-import { convertNumbers } from '~/reusableFunctions/questionnaireValidation'
+import { convertNumbers, concatinateEachIndexes, isOtherValueDefinedRadio, extractUnmatchedValueRadio } from '~/reusableFunctions/questionnaireValidation'
 export default {
   components: {
     formCard,
@@ -81,6 +87,7 @@ export default {
     items: 1,
     machineName: ['tractor'],
     machineNameItems: [],
+    machineNameOther: [],
     machineQuantity: [1],
     ismachineAquiredGovtProg: ['yes'],
     ismachineAquiredGovtProgItems: [
@@ -133,7 +140,7 @@ export default {
     /* get the data and convert it into expected key/value formats in BackEnd */
     getData() {
       return {
-        farmMachineryName: this.machineName,
+        farmMachineryName: concatinateEachIndexes(this.machineName,this.machineNameOther,this.items),
         farmMachineryQuantity: convertNumbers(this.machineQuantity),
         isAcquiredGovtProgram: this.ismachineAquiredGovtProg,
         farmMachineryAge: convertNumbers(this.machineAge),
@@ -144,6 +151,7 @@ export default {
       if (this.items > 1) {
         this.items--
         this.machineName.pop()
+        this.machineNameOther.pop()
         this.machineQuantity.pop()
         this.ismachineAquiredGovtProg.pop()
         this.machineAge.pop()
@@ -155,6 +163,7 @@ export default {
     resetData() {
       this.items = 0
       this.machineName = []
+      this.machineNameOther = []
       this.machineQuantity = []
       this.ismachineAquiredGovtProg = []
       this.machineAge = []
@@ -162,6 +171,9 @@ export default {
   },
   watch: {
     machineName() {
+      this.validate()
+    },
+    machineNameOther() {
       this.validate()
     },
     machineQuantity() {
@@ -187,8 +199,9 @@ export default {
       if (length > 0) {
         this.items = length
         for (let i = 0; i < length; i++) {
-          this.machineName[i] =
+          this.machineName[i] = isOtherValueDefinedRadio(data.farmHouseholdAsset.farmMachinery[i].farmMachineryName,this.machineNameItems)
             data.farmHouseholdAsset.farmMachinery[i].farmMachineryName
+          this.machineNameOther[i] = extractUnmatchedValueRadio(data.farmHouseholdAsset.farmMachinery[i].farmMachineryName,this.machineNameItems)
           this.machineQuantity[i] =
             data.farmHouseholdAsset.farmMachinery[i].farmMachineryQuantity
           this.ismachineAquiredGovtProg[i] =
