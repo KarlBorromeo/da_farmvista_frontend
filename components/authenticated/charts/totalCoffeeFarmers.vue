@@ -1,75 +1,97 @@
 <template>
-  <v-col cols="12" lg="6" class="mt-2">
-    <v-card id="total-farmers" style="width: 100%" class="pt-4" />  
-  </v-col>
-
+	<v-col cols="12" lg="6" class="mt-2">
+		<v-card
+			class="pa-3 text-center"
+			style="height: 100%"
+		>
+			<apexchart
+				:options="options"
+				:series="series"
+				style="display: flex; justify-content: center"
+			/>
+		</v-card>
+	</v-col>
 </template>
 
 <script>
-import {chartPallet} from '~/chart_config/chart'
-import ApexCharts from 'apexcharts';
+import VueApexCharts from 'vue-apexcharts'
 export default {
-  mounted() {
-    this.palette = chartPallet()
-    this.renderChart();
-  },
-  data(){
-    return{
-      pallete: '',
-    }
-  },
-  methods: {
-    renderChart() {
-      const options = {
-        title: {
-          text: 'Total Coffee Farmer Population 456',
-          align: 'start'
-        },
-        series: [44, 55, 41, 17, 15],
-        labels: ['SDS', 'SDN', 'AGN', 'AGS','DINAGAT'],
-        chart: {
-          type: 'pie',
-          align: 'center',
-          height: 350,
-          toolbar: {
-            show: false,
-          }
-        },
-        dataLabels: {
-          enabled: true,
-        },
-        stroke: {
-          show: true,
-          width: 1,
-          colors: ['white'],
-        },
-        legend: {
-          show: true
-        },
-        fill: {
-          opacity: 1,
-        },
-        tooltip: {
-          y: {
-            formatter: (val) => `${val} farmers`,
-          },
-        },
-        noData: {
-          text: 'No Data Available!',
-          align: 'center',
-          verticalAlign: 'middle',
-        },
-        theme: {
-          mode: 'light', 
-          palette: this.palette, 
-        }
-      };
-
-      const chart = new ApexCharts(document.querySelector('#total-farmers'), options);
-      chart.render();
-    },
-  },
-};
+	components: {
+		apexchart: VueApexCharts,
+	},
+	data() {
+		return {
+			pallete: '',
+		}
+	},
+	computed: {
+		series() {
+			return this.$store.getters['dashboard/data'].totalFarmerCountByProvince.series
+		},
+		options() {
+			return {
+				title: {
+					text: this.$store.getters['dashboard/data'].totalFarmerCountByProvince.title +' ' + this.$store.getters['dashboard/data'].totalFarmerCountByProvince.total,
+					align: 'center',
+				},
+				chart: {
+					type: 'pie',
+					width: '100%',
+				},
+				colors: ['#1a7358', '#d3e8d3', '#d9d9d9', '#008000', '#F7F5F2'],
+				labels: this.$store.getters['dashboard/data'].totalFarmerCountByProvince.labels,
+				stroke: {
+					width: 2,
+				},
+				legend: {
+					position: 'bottom',
+				},
+				dataLabels: {
+					enabled: true,
+					style: {
+						colors: ['black'],
+						fontWeight: 'normal',
+					},
+				},
+				responsive: [
+					{
+						breakpoint: 405,
+						options: {
+							chart: {
+								width: '120%',
+							},
+							legend: {
+								position: 'bottom',
+							},
+						},
+					},
+					{
+						breakpoint: 650,
+						options: {
+							chart: {
+								width: '100%',
+							},
+							legend: {
+								position: 'bottom',
+							},
+						},
+					},
+					{
+						breakpoint: 1264,
+						options: {
+							chart: {
+								width: '70%',
+							},
+							legend: {
+								position: 'right',
+							},
+						},
+					},
+				],
+			}
+		},
+	},
+}
 </script>
 
 <style scoped>

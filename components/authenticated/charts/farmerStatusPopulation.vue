@@ -1,34 +1,28 @@
 <template>
   <v-col cols="12" lg="6" class="mt-2">
-    <v-card id="list-comparison" style="width: 100%" class="pt-4 pl-2"></v-card>    
+    <v-card class="pa-3" style="height:100%">
+      <apexchart :options="options" :series="series" />       
+    </v-card>
   </v-col>
-
 </template>
 
 <script>
 import {chartPallet} from '~/chart_config/chart'
-import ApexCharts from 'apexcharts';
+import VueApexCharts from 'vue-apexcharts';
 export default {
-  mounted() {
-    this.palette = chartPallet()
-    this.renderChart();
+  components: {
+    apexchart: VueApexCharts,
   },
-  data(){
-    return{
-      pallete: '',
-    }
-  },
-  methods: {
-    renderChart() {
-      const options = {
+  computed:{
+    series(){
+      return this.$store.getters['dashboard/data'].intervieweeStatusByProvince.series
+    },
+    options(){
+      return {
         title: {
-          text: 'Farmer Population Comparison',
+          text: this.$store.getters['dashboard/data'].intervieweeStatusByProvince.title,
           align: 'center'
         },
-        series: [
-          { name: 'Dept. of Agricluture List', data: [1222, 86, 712, 787, 70]},
-          { name: 'Actual List', data: [1174, 86, 712, 764, 70] },
-        ],
         chart: {
           type: 'bar',
           height: 350,
@@ -55,11 +49,12 @@ export default {
           show: true
         },
         xaxis: {
-          categories: ['Surigao del Sur','Surigao del Norte','Agusan del Sur','Agusan del Norte','Dinagat Island'],
+          categories: this.$store.getters['dashboard/data'].intervieweeStatusByProvince.categories,
         },
+        colors: ['#1a7358', '#d3e8d3', '#d9d9d9', '#008000', '#F7F5F2'],
         yaxis: {
           title: {
-            text: 'Coffee Farmer Population',
+            text: this.$store.getters['dashboard/data'].intervieweeStatusByProvince.yLabel,
           },
         },
         fill: {
@@ -73,11 +68,11 @@ export default {
         responsive: [{
             breakpoint: 960,
             options: {
-              plotOptions: {
-                  bar: {
-                      horizontal: true
-                  },
-              },
+                plotOptions: {
+                    bar: {
+                        horizontal: true
+                    },
+                },
               //modify the options here, this modification will be applied below the breakpoint value provided
             },
         }],
@@ -88,17 +83,10 @@ export default {
         },
         theme: {
           mode: 'light', 
-          palette: this.palette, 
+          palette: chartPallet(), 
         }
-      };
-
-      const chart = new ApexCharts(document.querySelector('#list-comparison'), options);
-      chart.render();
-    },
-  },
-};
+      }
+    }
+  }
+}
 </script>
-
-<style scoped>
-/* Add any custom styles for your chart here */
-</style>

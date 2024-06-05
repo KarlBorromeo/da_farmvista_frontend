@@ -1,76 +1,61 @@
 <template>
     <tab-contents class="mt-3 elevation-0" style="background-color: transparent!important">
       <v-row justify="center">
-          <active-farmers  
-            :name="provinces[0].name"
-            :count="provinces[0].count"
+        <active-farmers  
+            v-for="prov,ind in provinces"
+            :key="ind"
+            :name="prov.provinceName"
+            :count="prov.count"
+            :styleProp="prov.style"
           />
-          <v-spacer />
-          <active-farmers  
-            :name="provinces[1].name"
-            :count="provinces[1].count"
-          />
-          <v-spacer />
-          <active-farmers  
-            :name="provinces[2].name"
-            :count="provinces[2].count"
-          />
-          <v-spacer />
-          <active-farmers  
-            :name="provinces[3].name"
-            :count="provinces[3].count"
-          />
-          <v-spacer />
-          <active-farmers  
-            :name="provinces[4].name"
-            :count="provinces[4].count"
-          />
-      </v-row>    
+      </v-row>
       <v-row justify="center">
-          <list-comparison />
-          <active-incative-comparison />
+          <farmer-status-population />
           <total-coffee-farmers />
       </v-row>  
     </tab-contents>
-
 </template>
 
 <script>
 import ActiveFarmers from '~/components/authenticated/charts/activeFarmers.vue'
 import TabContents from '~/components/authenticated/tabContents.vue'
-import listComparison from '~/components/authenticated/charts/listComparison.vue'
-import ActiveIncativeComparison from '~/components/authenticated/charts/activeIncativeComparison.vue'
+import FarmerStatusPopulation from '~/components/authenticated/charts/farmerStatusPopulation.vue'
 import totalCoffeeFarmers from '~/components/authenticated/charts/totalCoffeeFarmers.vue'
 export default {
-  components: {TabContents, ActiveFarmers, listComparison, ActiveIncativeComparison, totalCoffeeFarmers},
-  beforeMount() {
+  components: {TabContents, ActiveFarmers, FarmerStatusPopulation, totalCoffeeFarmers},
+  async beforeMount() {
     this.$store.commit('udpateHeaderTitle', 'DASHBOARD')
+    try{
+      await this.$store.dispatch('dashboard/dashboardFetch')
+    }catch(err){
+      console.error(err);
+    }
   },
   data(){
     return{
-      provinces: [
-        {
-          name: 'Surigao Del Sur',
-          count: 1222
-        },
-        {
-          name: 'Surigao Del Norte',
-          count: 86
-        },
-        {
-          name: 'Agusan Del Sur',
-          count: 712
-        },
-        {
-          name: 'Agusan Del Norte',
-          count: 787
-        },
-        {
-          name: 'Province of Dinagat Island',
-          count: 70
-        }
-      ]
+      styles: [
+        `background-image: linear-gradient( 135deg, #dcdfe3 10%, #1a7358 100%)`,
+        `background-image: linear-gradient( 135deg, #dcdfe3 10%, #d3e8d3 100%)`,
+        `background-image: linear-gradient( 135deg, #dcdfe3 10%, #d9d9d9 100%)`,
+        `background-image: linear-gradient( 135deg, #dcdfe3 10%, #008000 100%)`,
+        `background-image: linear-gradient( 135deg, #dcdfe3 10%, #F7F5F2 100%)`,
+      ],
     }
-  }
+  },
+  methods:{
+    aw(){
+      this.$store.commit('dashboard/modify')
+    },
+    ew(){
+      this.$store.commit('dashboard/ew')
+    }
+  },
+  computed:{
+    provinces(){
+      const activeFarmers = this.$store.getters['dashboard/data'].activeFarmersByProvince
+      const provinces = activeFarmers.map((data,index) => data = {...data,style:this.styles[index]})
+      return provinces
+    }
+  },
 }
 </script>
