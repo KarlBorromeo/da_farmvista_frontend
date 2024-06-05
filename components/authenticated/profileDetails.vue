@@ -10,8 +10,7 @@
                     position="center"
                     :aspect-ratio="1"
                     width="80"
-                    style="border: 1px solid black"
-                    class="rounded-pill"
+                    class="rounded-pill elevation-4"
                 />
                 <v-dialog
                     v-model="uploadAvatarModal"
@@ -23,15 +22,14 @@
                             id="add-profile"
                             v-on="on"
                             v-bind="attrs"
+                            class="elevation-1"
                         >
-                            <v-icon id="add-profile-icon" class="black--text">mdi-plus</v-icon>
+                            <v-icon id="add-profile-icon" color="primary" dark style="border: 1px solid white">mdi-plus</v-icon>
                         </v-btn> 
                     </template>
                     <upload-avatar @emitCloseModal="emitCloseModalPassword"/>
-                </v-dialog>  
-                
-            </div>
-            {{avatar}}         
+                </v-dialog>   
+            </div>     
             <p class="text-uppercase py-0 my-0">{{fullName}}</p>
             <p class="text-uppercase py-0 my-0 font-weight-bold">{{company}}</p>
             <div id="custom-divider-container">
@@ -97,17 +95,16 @@ export default {
             return this.$store.getters['profile/myProfileDetails'].passwordLastUpdated
         },
         avatar(){
-        //    return 'https://4.img-dpreview.com/files/p/E~TS590x0~articles/3925134721/0266554465.jpeg'
-            // return 'https://nikonrumors.com/wp-content/uploads/2014/03/Nikon-1-V3-sample-photo.jpg'
            return this.$store.getters['profile/myProfileDetails'].avatarURL
         },
     },
     methods: {
-        emitCloseModalPassword(res){
+        async emitCloseModalPassword(res){
             this.dialog = false;
             this.$refs.snackbar.showBar(res,'success')
+            await this.$store.dispatch('profile/fetchCurrenUserDetails')
         },
-        emitCloseModalPassword(res){
+        async emitCloseModalPassword(res){
             this.uploadAvatarModal = false;
             this.$refs.snackbar.showBar(res,'success')
         }
@@ -129,6 +126,7 @@ export default {
     bottom: -.5rem;
     right: -1rem;
     background-color: white;
+    padding: 0;
 }
 #add-profile-icon{
     border: 1px solid rgba(0, 0, 0, 0.1);
