@@ -91,12 +91,7 @@ export default {
 				xaxis: {
 					categories: this.$store.getters['dashboard/data'].timelineFrequencyOfHarvestPerYear.categories,
 				},
-				labels: {
-					formatter: function (value, timestamp) {
-						var date = new Date(timestamp)
-						return date.getFullYear()
-					},
-				},
+        colors: ['#1a7358', '#d3e8d3', '#d9d9d9', '#008000', '#F7F5F2'],
 			}
 		},
 	},
