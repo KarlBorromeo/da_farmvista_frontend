@@ -119,7 +119,7 @@ export default {
 </script>
 
 <style scoped>
-#year-dropdown, .v-select__selection{
+#year-dropdown{
   z-index: 20!important;
   display: flex;
   justify-content: center;

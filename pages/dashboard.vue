@@ -21,6 +21,10 @@
           <hear-coffee-farm-tech />
           <hear-coffee-farm-tech />
       </v-row>
+      <v-row>
+          <marketing-outlets />
+          <farm-organizations />
+      </v-row>
     </tab-contents>
 </template>
 
@@ -32,8 +36,10 @@ import totalCoffeeFarmers from '~/components/authenticated/charts/totalCoffeeFar
 import coffeeProduction from '~/components/authenticated/charts/coffeeProduction.vue'
 import soldCoffeeProvinces from '~/components/authenticated/charts/soldCoffeeProvinces.vue'
 import hearCoffeeFarmTech from '~/components/authenticated/charts/hearCoffeeFarmTech.vue'
+import farmOrganizations from '~/components/authenticated/tables/farmOrganizations.vue'
+import marketingOutlets from '~/components/authenticated/tables/marketingOutlets.vue'
 export default {
-  components: {TabContents, ActiveFarmers, FarmerStatusPopulation, totalCoffeeFarmers, coffeeProduction, soldCoffeeProvinces, hearCoffeeFarmTech},
+  components: {TabContents, ActiveFarmers, FarmerStatusPopulation, totalCoffeeFarmers, coffeeProduction, soldCoffeeProvinces, hearCoffeeFarmTech, farmOrganizations, marketingOutlets},
   async beforeMount() {
     this.$store.commit('udpateHeaderTitle', 'DASHBOARD')
     try{

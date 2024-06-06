@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import snackbar from '../snackbar.vue'
+import snackbar from '../../snackbar.vue'
 export default {
   emits: ['switchCommodity'],
   components: { snackbar},

@@ -1,7 +1,7 @@
 
 
 <template>
-  <div class="mt-5">
+  <v-col cols="12" lg="4" class="mt-5">
     <v-data-table
       class="pt-1 pb-3 elevation-2"
       :headers="headers"
@@ -13,6 +13,7 @@
       hide-default-footer
     >
       <template v-slot:top>
+        <h2 class="title text-center mt-3">Marketing Outlets</h2>
         <v-text-field
           v-model="search"
           label="Search here the record"
@@ -51,16 +52,16 @@
     <v-dialog v-if="dialog" v-model="dialog" width="700">
       <questionnaire-vue :id="id" :commodityProp="commodity" />
     </v-dialog>
-    <snackbar ref="snackbar" />
-  </div>
+    <!-- <snackbar ref="snackbar" /> -->
+  </v-col>
 
 </template>
 
 <script>
-import snackbar from '../snackbar.vue'
+// import snackbar from '../snackbar.vue'
 export default {
   emits: ['switchCommodity'],
-  components: { snackbar,},
+//   components: { snackbar,},
   data() {
     return {
       dialog: false,
@@ -73,12 +74,10 @@ export default {
   computed: {
     headers() {
       return [
-        { text: 'Performer', value: 'performerName' },
-        { text: `Details`, value: 'details'},
-        { text: `Date`, value: 'date'},
-        { text: `Time`, value: 'time'},
-        { text: 'Affected Data', value: 'affectedData', align:'center'},
-        { text: 'Status', value: 'status', sortable: false, align:'center'},
+        { text: 'Name', value: 'performerName' },
+        { text: 'Quality Preference', value: 'performerName' },
+        { text: 'How Bring to Outlet', value: 'performerName' },
+        { text: `Count`, value: 'performerName'},
       ]
     },
     pageCount() {

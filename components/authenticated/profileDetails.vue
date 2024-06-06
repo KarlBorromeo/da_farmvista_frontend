@@ -27,7 +27,7 @@
                             <v-icon id="add-profile-icon" color="primary" dark style="border: 1px solid white">mdi-plus</v-icon>
                         </v-btn> 
                     </template>
-                    <upload-avatar @emitCloseModal="emitCloseModalPassword"/>
+                    <upload-avatar @emitCloseModal="emitCloseModalUploadAvatar"/>
                 </v-dialog>   
             </div>     
             <p class="text-uppercase py-0 my-0">{{fullName}}</p>
@@ -99,8 +99,8 @@ export default {
         },
     },
     methods: {
-        async emitCloseModalPassword(res){
-            this.dialog = false;
+        async emitCloseModalUploadAvatar(res){
+            this.uploadAvatarModal = false;
             this.$refs.snackbar.showBar(res,'success')
             await this.$store.dispatch('profile/fetchCurrenUserDetails')
         },

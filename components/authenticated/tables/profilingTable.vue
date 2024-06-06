@@ -46,9 +46,9 @@
 </template>
 
 <script>
-import snackbar from '../snackbar.vue'
-import CommodityDropdown from './commodityDropdown.vue'
-import questionnaireVue from './modal/questionnaire.vue'
+import snackbar from '../../snackbar.vue'
+import CommodityDropdown from '../commodityDropdown.vue'
+import questionnaireVue from '../modal/questionnaire.vue'
 export default {
   emits: ['switchCommodity'],
   components: { snackbar, CommodityDropdown, questionnaireVue },

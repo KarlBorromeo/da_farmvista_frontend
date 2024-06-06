@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import LogsTable from '~/components/authenticated/logsTable.vue'
+import LogsTable from '~/components/authenticated/tables/logsTable.vue'
 import TabContents from '~/components/authenticated/tabContents.vue'
 import TabDescription from '~/components/authenticated/tabDescription.vue'
 export default {

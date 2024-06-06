@@ -32,7 +32,7 @@
 import CreateUser from '~/components/authenticated/modal/createUser.vue'
 import TabContents from '~/components/authenticated/tabContents.vue'
 import TabDescription from '~/components/authenticated/tabDescription.vue'
-import UsersTable from '~/components/authenticated/usersTable.vue'
+import UsersTable from '~/components/authenticated/tables/usersTable.vue'
 import snackbar from '~/components/snackbar.vue'
 export default {
   middleware: 'authSuperadminAdmin',
