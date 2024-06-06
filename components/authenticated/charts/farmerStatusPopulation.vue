@@ -1,7 +1,7 @@
 <template>
   <v-col cols="12" lg="6" class="mt-2">
     <v-card class="pa-3" style="height:100%">
-      <apexchart :options="options" :series="series" />       
+      <apexchart :options="options" :series="series" style="height:100%"/>       
     </v-card>
   </v-col>
 </template>
@@ -25,7 +25,6 @@ export default {
         },
         chart: {
           type: 'bar',
-          height: 350,
           toolbar: {
             show: false,
           }

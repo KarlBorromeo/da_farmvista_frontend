@@ -36,7 +36,7 @@ export default {
 				},
 				chart: {
 					type: 'pie',
-					width: '100%',
+					width: '90%',
 				},
 				colors: ['#1a7358', '#d3e8d3', '#d9d9d9', '#008000', '#F7F5F2'],
 				labels: this.$store.getters['dashboard/data'].totalFarmerCountByProvince.labels,
@@ -52,6 +52,13 @@ export default {
 						colors: ['black'],
 						fontWeight: 'normal',
 					},
+				},
+				tooltip: {
+					enabled: true
+				},
+				subtitle: {
+      				text: 'Total of validated and non',
+					align: 'center'
 				},
 				responsive: [
 					{
