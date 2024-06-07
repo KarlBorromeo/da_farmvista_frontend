@@ -24,7 +24,12 @@ export async function createAccount(credentials) {
     await Axios.post('auth/register',credentials)
     return 'successfully user created'
   } catch (error) {
-    throw error.response.data.message[0]
+    if(Array.isArray(error.response.data.message)){
+      throw error.response.data.message[0]
+    }else{
+      throw error.response.data.message
+    }
+    
   }
 }
 

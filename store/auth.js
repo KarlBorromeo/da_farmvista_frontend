@@ -40,10 +40,13 @@ export const mutations = {
   getUserDataFromLocalStorage(state) {
     const token = localStorage.getItem('token')
     const type = localStorage.getItem('type')
+    const firstname = localStorage.getItem('firstname')
     if (!token || !type) {
+      
       state.currentUserLoggedin = false
-    } else {
+    } else {  
       state.currentUserLoggedin = true
+      state.currentUser.firstName = firstname
     }
   },
 }

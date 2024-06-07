@@ -1,18 +1,18 @@
-
-
 <template>
   <v-col cols="12" lg="8" class="mt-5">
     <v-data-table
+      style="min-height:600px; max-height:600px; overflow:auto"
       class="pt-1 pb-3 elevation-2"
       :headers="headers"
       :items="items"
       item-key="name"
+      :search="search"
+      :custom-filter="transformedSearchText"
       :items-per-page="itemPerPage"
       :loading="loading"
       loading-text="Loading... Please wait"
-      hide-default-footer
+      :hide-default-footer='false'
     >
-    
       <template v-slot:top>
         <h2 class="title text-center mt-3">Farm Organizations</h2>
         <v-text-field
@@ -21,146 +21,48 @@
           class="mx-4"
         ></v-text-field>
       </template>
-      <template v-slot:[`item.affectedData`]="{ item }">
-        <div v-if="isAffectedDataNull(item.affectedData)"> 
-          <ul v-if="item.affectedData.survey" class="my-0 py-0 caption text-capitalize">
-            <p class="my-0 py-0 font-weight-bold">Survey IDs modified</p>
-            <li v-for="id in item.affectedData.survey.id" :key="id">
-              {{id}}
-            </li>
-          </ul>
-          <section v-else>
-            <p class="my-0 py-0 caption text-capitalize"><span class="font-weight-bold">Position:</span> {{ item.affectedData.user.type }}</p>
-            <p class="my-0 py-0 caption text-capitalize"><span class="font-weight-bold">Fullname:</span> {{ item.affectedData.user.fullName }}</p>
-          </section>
-        </div>
-      </template>
-      <template v-slot:[`item.status`]="{ item }">
-        <v-container class="text-center">
-          <v-icon v-if="item.status" color="success">mdi-check-circle</v-icon>
-          <v-icon v-else color="red">mdi-alert</v-icon>
-        </v-container>
-      </template>
     </v-data-table>
     <v-divider />
-    <div class="text-center pt-2">
-      <v-pagination
-        v-model="page"
-        :length="pageCount"
-        :circle="true"
-      ></v-pagination>
-    </div>
-    <v-dialog v-if="dialog" v-model="dialog" width="700">
-      <questionnaire-vue :id="id" :commodityProp="commodity" />
-    </v-dialog>
-    <!-- <snackbar ref="snackbar" /> -->
   </v-col>
 
 </template>
 
 <script>
-// import snackbar from '../snackbar.vue'
 export default {
-  emits: ['switchCommodity'],
-//   components: { snackbar,},
   data() {
     return {
       dialog: false,
       search: '',
-      itemPerPage: 50, // number of rows per page
-      loading: false, // toggle the loading of the table
-      page: 1, // current page number
+      itemPerPage: 10, // number of rows per page
+      loading: false,  // toggle the loading of the table
     }
   },
   computed: {
     headers() {
       return [
-        { text: 'Name', value: 'performerName' },
-        { text: 'Status', value: 'performerName' },
-        { text: 'Type', value: 'performerName' },
-        { text: `Active Farmers`, value: 'performerName'},
-        { text: `Inactive Farmers`, value: 'performerName'},
-        { text: `Total Farmers`, value: 'performerName'},
+        { text: 'Name', value: 'name' },
+        { text: 'Status', value: 'status' },
+        { text: 'Type', value: 'type' },
+        { text: `Active Farmers`, value: 'activeFarmerCount'},
+        { text: `Inactive Farmers`, value: 'inactiveFarmerCount'},
+        { text: `Total Farmers`, value: 'allFarmerCount'},
       ]
     },
-    pageCount() {
-      return this.$store.getters['logs/countPages']
-    },
     items(){
-      return this.$store.getters['logs/logs']
-    },
-
+      return this.$store.getters['dashboard/data'].farmOrganizationFarmerCount
+    }
   },
   methods: {
-    /* fetch the survey records */
-    async fetchAllLogs() {
-      try {
-        this.loading = true
-        await this.$store.dispatch('logs/fetchAllLogs', {
-          page: this.page,
-          limit: this.itemPerPage,
-          search: this.search.toLowerCase(),
-        })
-      } catch (error) {
-        this.$refs.snackbar.showBar(error, 'red')
-      }
-      this.loading = false
-      },
-
-    /* dynamic text format for affected data column */
-    generateText(obj){
-      if(!obj){
-        return ''
-      }
-      const keys = Object.keys(obj)
-      const affectedDataType = keys[0]
-      if(affectedDataType){
-        if(affectedDataType === 'survey'){
-          const ids = obj[affectedDataType].id
-          let str = '';
-          // concatinate all ids
-          ids.forEach(element => {
-            str += element + ', '
-          });
-          // removes the last ', ' in the string
-          if (str.endsWith(', ')) {
-            str = str.slice(0, -2)
-          }
-          return str
-        }else if(affectedDataType === 'user'){
-          return `Position: ${obj[affectedDataType].type}, Fullname: ${obj[affectedDataType].fullName}`
-        }else{
-          return 'not found affected data type'
-        }
-      }
-      return ''
+    transformedSearchText(value, search, item) {
+      console.log(value)
+      search = search.toString().toLowerCase()
+      return (
+        value != null &&
+        search != null &&
+        typeof value === 'string' &&
+        value.toString().toLowerCase().indexOf(search) !== -1
+      )
     },
-    /* bool return if null or not */
-    isAffectedDataNull(obj){
-      if(!obj){
-        return false
-      }
-      return true
-    }
-  },
-
-  /* before mounting the component first http request to fetch the records */
-  async beforeMount() {
-    await this.fetchAllLogs()
-  },
-
-  watch: {
-    /* execute the fetching everytime navigating to other page numbers */
-    async page(newVal, oldVal) {
-      if (newVal !== oldVal) {
-        await this.fetchAllLogs()
-      }
-    },
-    async search(){
-      await new Promise(resolve=>setTimeout(resolve,500))
-      this.page = 1;
-      await this.fetchAllLogs();  // fetch the all list with filter search value
-    }
   },
 }
 </script>

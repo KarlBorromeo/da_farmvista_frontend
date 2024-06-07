@@ -47,7 +47,79 @@ export const state = () => ({
       yLabel: '',
       provinces: [],
       data: [],
-    }
+    },
+    haveHeardFarmTechFarmerCount: 12,
+    farmOrganizationFarmerCount: [
+      {
+        name: "Adisffamco",
+        activeFarmerCount: 1,
+        inactiveFarmerCount: 0,
+        allFarmerCount: 1,
+        status: "active",
+        type: "Aubrey"
+      },
+      {
+        name: "Adisffamco",
+        activeFarmerCount: 1,
+        inactiveFarmerCount: 0,
+        allFarmerCount: 1,
+        status: "active",
+        type: "Cooperative"
+      },
+      {
+        name: "Agricultural Upland Farmers Association",
+        activeFarmerCount: 1,
+        inactiveFarmerCount: 0,
+        allFarmerCount: 1,
+        status: "active",
+        type: "Association"
+      },
+      {
+        name: "Agricultural Upland Farmers Association",
+        activeFarmerCount: 1,
+        inactiveFarmerCount: 0,
+        allFarmerCount: 1,
+        status: "active",
+        type: "Aubrey"
+      },
+      {
+        name: "Babuyan Farmers Developers Core Group Incorporated (Bafamdcgi)",
+        activeFarmerCount: 1,
+        inactiveFarmerCount: 0,
+        allFarmerCount: 1,
+        status: "active",
+        type: "Cooperative"
+      },
+      {
+        name: "Barcapa",
+        activeFarmerCount: 1,
+        inactiveFarmerCount: 0,
+        allFarmerCount: 1,
+        status: "active",
+        type: "Association"
+      }
+    ],
+    marketingOutletFarmerCount: [
+      {
+        name: "Local/ Ambulant Buyer",
+        qualityPreference: [
+            "Grade 3"
+        ],
+        howBringToOutlet: "Own Funds",
+        count: 1
+      },
+      {
+        name: "Tagbina",
+        qualityPreference: [
+              "Grade 1",
+              "Grade 1 And 2",
+              "Grade 2",
+              "Grading 2"
+          ],
+        howBringToOutlet: "Own Funds",
+        count: 14
+      },
+    ]
   },
   timelineFrequencySelected: {},
   soldCommodityByProvinceSelected: {}

@@ -34,6 +34,9 @@ import TabContents from '~/components/authenticated/tabContents.vue'
 import TabDescription from '~/components/authenticated/tabDescription.vue'
 export default {
   components: { TabDescription, TabContents, EditProfileForm, ProfileDetails },
+  beforeMount() {
+    this.$store.commit('udpateHeaderTitle', 'MY PROFILE')
+  },
   data() {
     return {
       description:

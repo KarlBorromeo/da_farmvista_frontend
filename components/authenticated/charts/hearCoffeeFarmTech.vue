@@ -26,7 +26,7 @@ export default {
 	},
 	computed: {
 		series() {
-			return [56]
+			return [this.$store.getters['dashboard/data'].haveHeardFarmTechFarmerCount]
 		},
 		options() {
 			return {
@@ -39,9 +39,9 @@ export default {
 					width: '100%',
 				},
 				colors: ['#1a7358', '#d3e8d3', '#d9d9d9', '#008000', '#F7F5F2'],
-				labels: this.$store.getters['dashboard/data'].totalFarmerCountByProvince.labels,
+				labels: ['Yes'],
 				stroke: {
-					width: 2,
+					width: 5,
 				},
 				legend: {
 					position: 'bottom',
