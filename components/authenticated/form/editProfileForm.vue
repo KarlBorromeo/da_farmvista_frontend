@@ -234,6 +234,18 @@ export default {
 		lastName(newVal) {
 			this.toggleModify(newVal !== this.myProfile.lastName ? true : false)
 		},
+		middleName(newVal) {
+			this.toggleModify(newVal !== this.myProfile.middleName ? true : false)
+		},
+		mobileNumber(newVal) {
+			this.toggleModify(newVal !== this.myProfile.mobileNumber ? true : false)
+		},
+		gender(newVal) {
+			this.toggleModify(newVal !== this.myProfile.gender ? true : false)
+		},
+		dateOfBirth(newVal) {
+			this.toggleModify(newVal !== this.myProfile.dateOfBirth ? true : false)
+		},
 		address(newVal) {
 			this.toggleModify(newVal !== this.myProfile.address ? true : false)
 		},
