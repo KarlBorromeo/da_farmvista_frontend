@@ -19,6 +19,17 @@
           class="mx-4"
         ></v-text-field>
       </template>
+      <template v-slot:[`item.avatar`]="{ item }">
+        <v-container class="">
+          <v-avatar>
+            <img
+              :src="item.avatarURL"
+              alt="John"
+            >
+          </v-avatar>
+          <!-- {{item.avatarURL}} -->
+        </v-container>
+      </template>
       <template v-slot:[`item.switch`]="{ item }">
         <v-container class="text-center">
           <v-switch
@@ -66,6 +77,7 @@ export default {
   computed: {
     headers() {
       return [
+        { text: 'Profile', align: 'center', value: 'avatar' },
         { text: 'Username', align: 'start', value: 'username' },
         { text: 'Fullname', align: 'start', value: 'fullName' },
         { text: `Gender`, value: 'gender'},

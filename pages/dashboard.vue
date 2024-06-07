@@ -1,30 +1,42 @@
 <template>
     <tab-contents class="mt-3 elevation-0" style="background-color: transparent!important">
-      <v-row justify="center">
-        <active-farmers  
-            v-for="prov,ind in provinces"
-            :key="ind"
-            :name="prov.provinceName"
-            :count="prov.count"
-            :styleProp="prov.style"
-          />
-      </v-row>
-      <v-row justify="center">
-          <farmer-status-population />
-          <total-coffee-farmers />
-      </v-row>
-      <v-row>
-        <sold-coffee-provinces />
-      </v-row>
-      <v-row>
-          <coffee-production />
-          <hear-coffee-farm-tech />
-          <hear-coffee-farm-tech />
-      </v-row>
-      <v-row>
-          <marketing-outlets />
-          <farm-organizations />
-      </v-row>
+      <div v-if="fetching">
+        <v-skeleton-loader
+          v-bind="attrs"
+          type="article, actions,image"
+          v-for="i in 3"
+          :key="i"     
+          class="mb-4" 
+        />        
+      </div>
+      <div v-else>
+        <v-row justify="center">
+          <active-farmers  
+              v-for="prov,ind in provinces"
+              :key="ind"
+              :name="prov.provinceName"
+              :count="prov.count"
+              :styleProp="prov.style"
+            />
+        </v-row>
+        <v-row justify="center">
+            <farmer-status-population />
+            <total-coffee-farmers />
+        </v-row>
+        <v-row>
+          <sold-coffee-provinces />
+        </v-row>
+        <v-row>
+            <coffee-production />
+            <hear-coffee-farm-tech />
+            <hear-coffee-farm-tech />
+        </v-row>
+        <v-row>
+            <marketing-outlets />
+            <farm-organizations />
+        </v-row>        
+      </div>
+
     </tab-contents>
 </template>
 
@@ -43,13 +55,16 @@ export default {
   async beforeMount() {
     this.$store.commit('udpateHeaderTitle', 'DASHBOARD')
     try{
+      this.fetching = true
       await this.$store.dispatch('dashboard/dashboardFetch')
     }catch(err){
       console.error(err);
     }
+    this.fetching = false
   },
   data(){
     return{
+      fetching: true,
       styles: [
         `background-image: linear-gradient( 135deg, #dcdfe3 10%, #1a7358 100%)`,
         `background-image: linear-gradient( 135deg, #dcdfe3 10%, #d3e8d3 100%)`,

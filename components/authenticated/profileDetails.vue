@@ -30,7 +30,8 @@
                     <upload-avatar @emitCloseModal="emitCloseModalUploadAvatar"/>
                 </v-dialog>   
             </div>     
-            <p class="text-uppercase py-0 my-0">{{fullName}}</p>
+            <p> {{avatar}}</p>
+            <p class="text-uppercase py-0 my-0">{{fullName}}</p>    
             <p class="text-uppercase py-0 my-0 font-weight-bold">{{company}}</p>
             <div id="custom-divider-container">
                 <div style="width:10%; display: inline-block" class="py-0 my-0">
@@ -95,6 +96,7 @@ export default {
             return this.$store.getters['profile/myProfileDetails'].passwordLastUpdated
         },
         avatar(){
+            // return 'https://4.img-dpreview.com/files/p/E~TS590x0~articles/3925134721/0266554465.jpeg'
            return this.$store.getters['profile/myProfileDetails'].avatarURL
         },
     },

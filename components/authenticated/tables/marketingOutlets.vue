@@ -5,7 +5,7 @@
       class="pt-1 pb-3 elevation-2"
       :headers="headers"
       :items="items"
-      item-key="name"
+      item-key="id"
       :search="search"
       :custom-filter="transformedSearchText"
       :items-per-page="itemPerPage"
