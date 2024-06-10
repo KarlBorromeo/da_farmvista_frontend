@@ -27,9 +27,10 @@
             <sold-coffee-provinces />
         </v-row>
         <v-row>
+            <outlet-market-population />
             <coffee-production />
             <hear-coffee-farm-tech />
-            <hear-coffee-farm-tech />
+            
         </v-row>
         <v-row>
             <marketing-outlets />
@@ -50,8 +51,9 @@ import soldCoffeeProvinces from '~/components/authenticated/charts/soldCoffeePro
 import hearCoffeeFarmTech from '~/components/authenticated/charts/hearCoffeeFarmTech.vue'
 import farmOrganizations from '~/components/authenticated/tables/farmOrganizations.vue'
 import marketingOutlets from '~/components/authenticated/tables/marketingOutlets.vue'
+import OutletMarketPopulation from '~/components/authenticated/charts/outletMarketPopulation.vue'
 export default {
-  components: {TabContents, ActiveFarmers, FarmerStatusPopulation, FarmerTotalPopulation, coffeeProduction, soldCoffeeProvinces, hearCoffeeFarmTech, farmOrganizations, marketingOutlets},
+  components: {TabContents, ActiveFarmers, FarmerStatusPopulation, FarmerTotalPopulation, coffeeProduction, soldCoffeeProvinces, hearCoffeeFarmTech, farmOrganizations, marketingOutlets, OutletMarketPopulation},
   async beforeMount() {
     this.$store.commit('udpateHeaderTitle', 'DASHBOARD')
     try{

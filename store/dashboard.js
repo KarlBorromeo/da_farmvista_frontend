@@ -122,7 +122,12 @@ export const state = () => ({
     ]
   },
   timelineFrequencySelected: {},
-  soldCommodityByProvinceSelected: {}
+  soldCommodityByProvinceSelected: {},
+  intervieweeStatusByProvinceSelected: {},
+  totalFarmerCountByProvinceSelected: {},
+  haveHeardFarmTechFarmerCountSelected: {},
+  farmOrganizationFarmerCountSelected: {},
+  marketingOutletFarmerCountSelected: {}
 })
 
 export const getters = {
@@ -177,11 +182,39 @@ export const mutations = {
       }
     }
   },
-  /* update the Coffee Harvest Data when province is changed */
-  changeSoldCommodityByProvinceSelected(state,province){
-    const index = state.data.soldCommodityByProvince.data.findIndex(item => item.province === province)
+
+  /* intialize the intervieweeStatusByProvinceSelected Data */
+  inititializeIntervieweeStatusByProvince(state,data){
+
+  },
+  /* intialize the totalFarmerCountByProvinceSelected Data */
+  inititializeTotalFarmerCountByProvince(state,data){
+
+  },
+  /* intialize the haveHeardFarmTechFarmerCountSelected Data */
+  inititializeHaveHeardFarmTechFarmerCount(state,data){
+
+  },
+  /* intialize the farmOrganizationFarmerCountSelected Data */
+  inititializeFarmOrganizationFarmerCount(state,data){
+
+  },
+  /* intialize the marketingOutletFarmerCountSelected Data */
+  inititializeMarketingOutletFarmerCount(state,data){
+
+  },
+  /* 
+    updates the state values dynamically if the province was changed,
+    obj = {
+      province: ''  #province name here
+      stateName: '' #dynamic state key
+      stateNameSelected: '' #dynamic state key selected
+    } 
+  */
+  changeProvince(state,obj){
+    const index = state.data[obj.stateName].data.findIndex(item => item.province === obj.province)
     if(index>=0){
-      state.soldCommodityByProvinceSelected = {...state.data.soldCommodityByProvince.data[index]}
+      state[obj.stateNameSelected] = {...state.data[obj.stateName].data[index]}
     }
   }
 }
