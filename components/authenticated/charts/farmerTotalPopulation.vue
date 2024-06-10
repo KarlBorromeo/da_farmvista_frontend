@@ -4,6 +4,7 @@
 			class="pa-3 text-center"
 			style="height: 100%"
 		>
+      <menu-dropdown-provinces />
 			<apexchart
 				:options="options"
 				:series="series"
@@ -16,9 +17,11 @@
 <script>
 import VueApexCharts from 'vue-apexcharts'
 import { chartPallet } from '~/chart_config/chart'
+import menuDropdownProvinces from '../menuDropdownProvinces.vue'
 export default {
 	components: {
-		apexchart: VueApexCharts,
+		apexchart: VueApexCharts, 
+    menuDropdownProvinces
 	},
 	data() {
 		return {

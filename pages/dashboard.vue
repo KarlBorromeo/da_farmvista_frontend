@@ -21,10 +21,10 @@
         </v-row>
         <v-row justify="center">
             <farmer-status-population />
-            <total-coffee-farmers />
+            <farmer-total-population />
         </v-row>
-        <v-row>
-          <sold-coffee-provinces />
+        <v-row justify="center">
+            <sold-coffee-provinces />
         </v-row>
         <v-row>
             <coffee-production />
@@ -44,14 +44,14 @@
 import ActiveFarmers from '~/components/authenticated/charts/activeFarmers.vue'
 import TabContents from '~/components/authenticated/tabContents.vue'
 import FarmerStatusPopulation from '~/components/authenticated/charts/farmerStatusPopulation.vue'
-import totalCoffeeFarmers from '~/components/authenticated/charts/totalCoffeeFarmers.vue'
+import FarmerTotalPopulation from '~/components/authenticated/charts/farmerTotalPopulation.vue'
 import coffeeProduction from '~/components/authenticated/charts/coffeeProduction.vue'
 import soldCoffeeProvinces from '~/components/authenticated/charts/soldCoffeeProvinces.vue'
 import hearCoffeeFarmTech from '~/components/authenticated/charts/hearCoffeeFarmTech.vue'
 import farmOrganizations from '~/components/authenticated/tables/farmOrganizations.vue'
 import marketingOutlets from '~/components/authenticated/tables/marketingOutlets.vue'
 export default {
-  components: {TabContents, ActiveFarmers, FarmerStatusPopulation, totalCoffeeFarmers, coffeeProduction, soldCoffeeProvinces, hearCoffeeFarmTech, farmOrganizations, marketingOutlets},
+  components: {TabContents, ActiveFarmers, FarmerStatusPopulation, FarmerTotalPopulation, coffeeProduction, soldCoffeeProvinces, hearCoffeeFarmTech, farmOrganizations, marketingOutlets},
   async beforeMount() {
     this.$store.commit('udpateHeaderTitle', 'DASHBOARD')
     try{

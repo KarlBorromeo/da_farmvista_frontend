@@ -14,6 +14,7 @@
       :hide-default-footer='false'
     >
       <template v-slot:top>
+        <menu-dropdown-provinces class="mt-2"/>
         <h2 class="title text-center mt-3">Farm Organizations</h2>
         <v-text-field
           v-model="search"
@@ -28,7 +29,11 @@
 </template>
 
 <script>
+import menuDropdownProvinces from '~/components/authenticated/menuDropdownProvinces.vue'
 export default {
+  components: {
+    menuDropdownProvinces
+  },
   data() {
     return {
       dialog: false,

@@ -1,6 +1,7 @@
 <template>
   <v-col cols="12" lg="6" class="mt-2">
     <v-card class="pa-3 rounded-lg" style="height:100%">
+      <menu-dropdown-provinces />
       <apexchart :options="options" :series="series" style="height:100%"/>       
     </v-card>
   </v-col>
@@ -9,11 +10,16 @@
 <script>
 import {chartPallet} from '~/chart_config/chart'
 import VueApexCharts from 'vue-apexcharts';
+import MenuDropdownProvinces from '../menuDropdownProvinces.vue';
 export default {
   components: {
     apexchart: VueApexCharts,
+    MenuDropdownProvinces,
   },
   computed:{
+    provinces(){
+      return this.$store.getters['dashboard/data'].soldCommodityByProvince.provinces
+    },
     series(){
       return this.$store.getters['dashboard/data'].intervieweeStatusByProvince.series
     },

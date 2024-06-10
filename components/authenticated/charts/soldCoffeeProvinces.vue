@@ -1,36 +1,24 @@
 <template>
   <v-col cols="12" class="mt-2">
-    <v-card class="pa-3" style="height:100%">
-      <v-row justify="end">
-        <v-col cols="1" id="year-dropdown">
-          <v-menu offset-y left>
-            <template v-slot:activator="{ on, attrs }">
-                <v-icon v-bind="attrs" v-on="on">mdi-dots-vertical</v-icon>
-            </template>
-            <v-list>
-              <v-list-item
-                v-for="(province, index) in provinces"
-                :key="index"
-                color="white"
-                @click="changeprovince(province)"
-              >
-              {{province}}
-              </v-list-item>
-            </v-list>
-          </v-menu>
+    <v-card class="pa-3">
+      <menu-dropdown-provinces @emitChangeProvince="changeprovince"/>
+      <v-row justify="center">
+         <v-col cols="12" lg="9" >
+          <apexchart :options="options" :series="series"/> 
         </v-col>
       </v-row>
-      <apexchart :options="options" :series="series" style="max-height:300px; display:flex; align-items:center"/>       
     </v-card>
   </v-col>
-</template>
+  </template>
 
 <script>
 import {chartPallet} from '~/chart_config/chart'
 import VueApexCharts from 'vue-apexcharts';
+import MenuDropdownProvinces from '../menuDropdownProvinces.vue';
 export default {
   components: {
     apexchart: VueApexCharts,
+    MenuDropdownProvinces,
   },
   methods: {
     changeprovince(province){
@@ -52,7 +40,6 @@ export default {
         },
         chart: {
           stacked: true,
-          height: 400,
           type: 'bar',
           toolbar: {
             show: false,
