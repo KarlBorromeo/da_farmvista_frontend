@@ -48,8 +48,8 @@ export default {
     headers() {
       return [
         { text: 'Name', value: 'name' },
-        { text: 'Quality Preference', value: 'qualityPreference' },
-        { text: 'Count', value: 'count' }
+        { text: 'Commonly Produced', value: 'qualityPreference' },
+        { text: 'Price Range', value: 'count' }
       ]
     },
     items(){

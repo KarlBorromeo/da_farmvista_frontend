@@ -22,7 +22,12 @@ export default {
   },
   methods: {
     changeprovince(province){
-      this.$store.commit('dashboard/changeSoldCommodityByProvinceSelected',province)
+      const obj = {
+        province,
+        stateName: 'soldCommodityByProvince',
+        stateNameSelected: 'soldCommodityByProvinceSelected' 
+      }
+      this.$store.commit('dashboard/changeProvince',obj)
     }
   },
   computed:{
