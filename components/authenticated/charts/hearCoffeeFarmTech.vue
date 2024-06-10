@@ -4,12 +4,7 @@
 			class="pa-3 text-center rounded-lg"
 			style="height: 100%"
 		>
-      <menu-dropdown-provinces />
-			<!-- <apexchart
-				:options="options"
-				:series="series"
-				style="height:100%; display: flex; justify-content: center; align-items:center"
-			/> -->
+      <menu-dropdown-provinces @emitChangeProvince="changeProvince"/>
 			   <v-row justify="center">
 					<v-col cols="12">
 					<apexchart
@@ -32,14 +27,24 @@ export default {
 		apexchart: VueApexCharts,
     MenuDropdownProvinces
 	},
+	methods: {
+		changeProvince(province){
+		const obj = {
+			province,
+			stateName: 'haveHeardFarmTechFarmerCount',
+			stateNameSelected: 'haveHeardFarmTechFarmerCountSelected' 
+		}
+		this.$store.commit('dashboard/changeProvince',obj)
+    	}
+	},
 	computed: {
 		series() {
-			return [this.$store.getters['dashboard/data'].haveHeardFarmTechFarmerCount]
+			return [this.$store.getters['dashboard/haveHeardFarmTechFarmerCountSelected'].percentage]
 		},
 		options() {
 			return {
 				title: {
-					text: 'Have heard coffe farm tech',
+					text: this.$store.getters['dashboard/data'].haveHeardFarmTechFarmerCount.title +' - '+ this.$store.getters['dashboard/haveHeardFarmTechFarmerCountSelected'].province,
 					align: 'center',
 					floating: true,
 				},

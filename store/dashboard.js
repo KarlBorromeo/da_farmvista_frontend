@@ -1,6 +1,7 @@
 import * as api from '../api/dashboard'
 export const state = () => ({
   data: {
+    provinces: [],
     activeFarmersByProvince: [
       {
         provinceName: 'Surigao Del Sur',
@@ -26,14 +27,13 @@ export const state = () => ({
     intervieweeStatusByProvince: {
       title: '',
       yLabel: '',
-      categories: [],
-      series: [],
+      data: []
     },
     totalFarmerCountByProvince: {
-      series: [],
-      labels: [],
       title: '',
-      total: 0,
+      subtitle: '',
+      total: 40,
+      data: []
     },
     timelineFrequencyOfHarvestPerYear: {
       yLabel: '',
@@ -48,7 +48,10 @@ export const state = () => ({
       provinces: [],
       data: [],
     },
-    haveHeardFarmTechFarmerCount: 12,
+    haveHeardFarmTechFarmerCount: {
+      title: '',
+      data: []
+    },
     farmOrganizationFarmerCount: [
       {
         name: "Adisffamco",
@@ -99,7 +102,7 @@ export const state = () => ({
         type: "Association"
       }
     ],
-    marketingOutletFarmerCount: [
+    marketingOutletInfo: [
       {
         name: "Local/ Ambulant Buyer",
         qualityPreference: [
@@ -121,13 +124,17 @@ export const state = () => ({
       },
     ]
   },
-  timelineFrequencySelected: {},
-  soldCommodityByProvinceSelected: {},
+ 
+  
   intervieweeStatusByProvinceSelected: {},
   totalFarmerCountByProvinceSelected: {},
+  soldCommodityByProvinceSelected: {},
+  // TODO: 
+  marketingOutletFarmerCountSelected: {},
+  timelineFrequencySelected: {},
   haveHeardFarmTechFarmerCountSelected: {},
   farmOrganizationFarmerCountSelected: {},
-  marketingOutletFarmerCountSelected: {}
+  
 })
 
 export const getters = {
@@ -137,15 +144,23 @@ export const getters = {
   activeFarmersByProvince(state) {
     return state.data.activeFarmersByProvince
   },
-  intervieweeStatusByProvince(state) {
-    return state.data.intervieweeStatusByProvince
+  intervieweeStatusByProvinceSelected(state) {
+    return state.intervieweeStatusByProvinceSelected
   },
-  timelineFrequencySelected(state){
-    return state.timelineFrequencySelected
+  totalFarmerCountByProvinceSelected(state){
+    return state.totalFarmerCountByProvinceSelected
   },
   soldCommodityByProvinceSelected(state){
     return state.soldCommodityByProvinceSelected
+  },
+  // TODO: write here the outalet market population
+  timelineFrequencySelected(state){
+    return state.timelineFrequencySelected
+  },
+  haveHeardFarmTechFarmerCountSelected(state){
+    return state.haveHeardFarmTechFarmerCountSelected
   }
+
 }
 
 export const mutations = {
@@ -185,15 +200,40 @@ export const mutations = {
 
   /* intialize the intervieweeStatusByProvinceSelected Data */
   inititializeIntervieweeStatusByProvince(state,data){
-
+    if(data.intervieweeStatusByProvince.data.length>0){
+      state.intervieweeStatusByProvinceSelected = data.intervieweeStatusByProvince.data[0]
+      console.log('inteview status selected: ',state.intervieweeStatusByProvinceSelected)
+    }else{
+      state.intervieweeStatusByProvinceSelected = {
+        province: '',
+        series: [],
+        categories: []
+      }
+    }
   },
   /* intialize the totalFarmerCountByProvinceSelected Data */
   inititializeTotalFarmerCountByProvince(state,data){
-
+    if(data.totalFarmerCountByProvince.data.length>0){
+      state.totalFarmerCountByProvinceSelected = data.totalFarmerCountByProvince.data[0]
+    }else{
+      state.totalFarmerCountByProvinceSelected = {
+        province: '',
+        series: [],
+        categories: []
+      }
+    }
   },
+    //TODO:
   /* intialize the haveHeardFarmTechFarmerCountSelected Data */
   inititializeHaveHeardFarmTechFarmerCount(state,data){
-
+    if(data.haveHeardFarmTechFarmerCount.data.length>0){
+      state.haveHeardFarmTechFarmerCountSelected = data.haveHeardFarmTechFarmerCount.data[0]
+    }else{
+      state.haveHeardFarmTechFarmerCountSelected = {
+        province: '',
+        percentage: 0
+      }
+    }
   },
   /* intialize the farmOrganizationFarmerCountSelected Data */
   inititializeFarmOrganizationFarmerCount(state,data){
@@ -224,8 +264,12 @@ export const actions = {
     try {
       const data = await api.dashboardFetch()
       context.commit('saveData', data)
-      context.commit('initializeTimelineFrequencySelected',data)
+      context.commit('inititializeIntervieweeStatusByProvince',data)
+      context.commit('inititializeTotalFarmerCountByProvince',data)
       context.commit('initializeSoldCommodityByProvinceSelected',data)
+      //TODO:
+      context.commit('initializeTimelineFrequencySelected',data)
+      context.commit('inititializeHaveHeardFarmTechFarmerCount',data)
     } catch (err) {
       throw err
     }

@@ -6,7 +6,7 @@
 		>
       <menu-dropdown-provinces />
       <v-row justify="center">
-        <v-col cols="11">
+        <v-col cols="9" lg="12">
           <apexchart
             :options="options"
             :series="series"
@@ -40,18 +40,18 @@ export default {
 				},
 				chart: {
 					type: 'donut',
-					width: '150%',
+					width: '100%'
 				},
 				colors: chartPallet(),
-                labels: ['Apple', 'Mango', 'Orange', 'Watermelon','jaja','Mango', 'Orange', 'Watermelon','jaja'],
+                labels: ['Apple', 'Mango', 'Orange', 'Watermelon','Mango', 'Orange', 'Watermelon'],
 				stroke: {
 					width: 2,
 				},
 				legend: {
-					position: 'right',
+					position: 'bottom',
 				},
 				dataLabels: {
-					enabled: true,
+					enabled: false,
 					offsetX: 15,
   					offsetY: 20,
 					style: {
@@ -69,16 +69,27 @@ export default {
                 subtitle: {
 					text: 'a',
                     style: {
-                        fontSize:  '15px',
+                        // fontSize:  '17px',
                         color:  '#ffffff'
                     },
 				},
 				responsive: [
 					{
-						breakpoint: 405,
+						breakpoint: 320,
 						options: {
 							chart: {
-								width: '120%',
+								width: '200%',
+							},
+							legend: {
+								position: 'bottom',
+							},
+						},
+					},
+					{
+						breakpoint: 450,
+						options: {
+							chart: {
+								width: '160%',
 							},
 							legend: {
 								position: 'bottom',
@@ -89,7 +100,7 @@ export default {
 						breakpoint: 650,
 						options: {
 							chart: {
-								width: '100%',
+								width: '150%',
 							},
 							legend: {
 								position: 'bottom',
@@ -100,7 +111,18 @@ export default {
 						breakpoint: 1264,
 						options: {
 							chart: {
-								width: '70%',
+								width: '90%',
+							},
+							legend: {
+								position: 'right',
+							},
+						},
+					},
+					{
+						breakpoint: 1904,
+						options: {
+							chart: {
+								width: '110%',
 							},
 							legend: {
 								position: 'right',

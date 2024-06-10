@@ -3,7 +3,7 @@
 		<v-card
 			class="pa-3 text-center rounded-lg"
 		>
-      <menu-dropdown-provinces />
+      <menu-dropdown-provinces @emitChangeProvince="changeProvince"/>
       <v-row justify="center">
         <v-col cols="12" sm="10">
           <apexchart
@@ -27,9 +27,20 @@ export default {
 		apexchart: VueApexCharts, 
     menuDropdownProvinces
 	},
+	methods: {
+		changeProvince(province){
+		const obj = {
+			province,
+			stateName: 'totalFarmerCountByProvince',
+			stateNameSelected: 'totalFarmerCountByProvinceSelected' 
+		}
+		this.$store.commit('dashboard/changeProvince',obj)
+    	}
+	},
 	computed: {
 		series() {
-			return this.$store.getters['dashboard/data'].totalFarmerCountByProvince.series
+			// return []
+			return this.$store.getters['dashboard/totalFarmerCountByProvinceSelected'].series
 		},
 		options() {
 			return {
@@ -39,10 +50,9 @@ export default {
 				},
 				chart: {
 					type: 'pie',
-					width: '40%',
 				},
 				colors: chartPallet(),
-				labels: this.$store.getters['dashboard/data'].totalFarmerCountByProvince.labels,
+				labels: this.$store.getters['dashboard/totalFarmerCountByProvinceSelected'].categories,
 				stroke: {
 					width: 2,
 				},
@@ -66,7 +76,7 @@ export default {
 					enabled: true
 				},
 				subtitle: {
-          text: 'Total of validated and non', //TODO: add get store here
+					text: this.$store.getters['dashboard/data'].totalFarmerCountByProvince.subtitle,
 					align: 'center'
 				},
 				responsive: [
@@ -104,6 +114,11 @@ export default {
 						},
 					},
 				],
+				noData: {
+					text: 'No Data Available!',
+					align: 'center',
+					verticalAlign: 'middle',
+				},
 			}
 		},
 	},

@@ -1,12 +1,11 @@
 <template>
   <v-col cols="12" lg="6" class="mt-2">
     <v-card class="pa-3 rounded-lg" style="height: 100%; display:flex; flex-direction: column;">
-      <menu-dropdown-provinces/>
-      <apexchart :options="options" :series="series"/>    
+      <menu-dropdown-provinces @emitChangeProvince="changeProvince"/>
+      <apexchart :options="options" :series="series"/>
     </v-card>
   </v-col>
 </template>
-
 <script>
 import {chartPallet} from '~/chart_config/chart'
 import VueApexCharts from 'vue-apexcharts';
@@ -16,12 +15,19 @@ export default {
     apexchart: VueApexCharts,
     MenuDropdownProvinces,
   },
+  methods: {
+    changeProvince(province){
+      const obj = {
+        province,
+        stateName: 'intervieweeStatusByProvince',
+        stateNameSelected: 'intervieweeStatusByProvinceSelected' 
+      }
+      this.$store.commit('dashboard/changeProvince',obj)
+    }
+  },
   computed:{
-    provinces(){
-      return this.$store.getters['dashboard/data'].soldCommodityByProvince.provinces
-    },
     series(){
-      return this.$store.getters['dashboard/data'].intervieweeStatusByProvince.series
+      return this.$store.getters['dashboard/intervieweeStatusByProvinceSelected'].series
     },
     options(){
       return {
@@ -54,7 +60,7 @@ export default {
           show: true
         },
         xaxis: {
-          categories: this.$store.getters['dashboard/data'].intervieweeStatusByProvince.categories,
+          categories: this.$store.getters['dashboard/intervieweeStatusByProvinceSelected'].categories,
         },
         colors: chartPallet(),
         yaxis: {

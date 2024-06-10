@@ -25,14 +25,13 @@ export default {
     emits: ['emitChangeProvince'],
     computed:{
         provinces(){
-        return this.$store.getters['dashboard/data'].soldCommodityByProvince.provinces
+        return this.$store.getters['dashboard/data'].provinces
         },
     },
     methods: {
         changeprovince(province){
             alert(province)
             this.$emit('emitChangeProvince',province)
-            // emit here
         }
     },
 }
