@@ -6,23 +6,10 @@
       :clipped="clipped"
       fixed
       app
-      style="background-color: #3fb07c"
+      color="primary"
       class="px-5 py-1"
     >
       <the-logo />
-      <!-- <v-col
-				class="px-4"
-				style="
-					display: flex;
-					justify-content: space-between;
-					align-items: center;
-				"
-			>
-				<span id="logo-container">
-					<img id="logo" src="~assets/images/logo.png" />
-				</span>
-				<span id="title"> FARMVISTA </span>
-			</v-col> -->
       <v-divider />
       <v-list>
         <v-list-item

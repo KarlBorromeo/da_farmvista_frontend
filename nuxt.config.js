@@ -69,18 +69,18 @@ export default {
           primary: '#1a7358', // ex: drawer bg-color
           accent: '#d3e8d3', // ex: card bg-color
           secondary: '#d9d9d9', // ex: page bg-color
-          success: '#008000', // ex: btn
+          success: '#f55525', // ex: btn
           info: '#F7F5F2',
           warning: '#D9D9D9',
         },
       },
     },
+    // colors: ['#197358', '#fcb6c9', '#f55525', '#eddbd5', '#c0debf'],
   },
 
   // dotenv configuration
   env: {
-    baseUrlApi: process.env.API_BASE_URL || 'http://localhost:3000',
-    chartPallete: process.env.CHART_COLOR_PALLETE || 'pallete1'
+    baseUrlApi: process.env.API_BASE_URL || 'http://localhost:3000'
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build

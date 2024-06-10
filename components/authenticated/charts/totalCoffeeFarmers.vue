@@ -15,6 +15,7 @@
 
 <script>
 import VueApexCharts from 'vue-apexcharts'
+import { chartPallet } from '~/chart_config/chart'
 export default {
 	components: {
 		apexchart: VueApexCharts,
@@ -38,7 +39,7 @@ export default {
 					type: 'pie',
 					width: '90%',
 				},
-				colors: ['#1a7358', '#d3e8d3', '#d9d9d9', '#008000', '#F7F5F2'],
+				colors: chartPallet(),
 				labels: this.$store.getters['dashboard/data'].totalFarmerCountByProvince.labels,
 				stroke: {
 					width: 2,
@@ -100,7 +101,3 @@ export default {
 	},
 }
 </script>
-
-<style scoped>
-/* Add any custom styles for your chart here */
-</style>

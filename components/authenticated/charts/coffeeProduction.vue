@@ -32,6 +32,7 @@
 
 <script>
 import VueApexCharts from 'vue-apexcharts'
+import { chartPallet } from '~/chart_config/chart';
 export default {
 	components: {
 		apexchart: VueApexCharts,
@@ -91,7 +92,7 @@ export default {
 				xaxis: {
 					categories: this.$store.getters['dashboard/data'].timelineFrequencyOfHarvestPerYear.categories,
 				},
-        colors: ['#1a7358', '#d3e8d3', '#d9d9d9', '#008000', '#F7F5F2'],
+        colors: chartPallet(),
 			}
 		},
 	},

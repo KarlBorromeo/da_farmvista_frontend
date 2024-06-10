@@ -29,8 +29,7 @@
                     </template>
                     <upload-avatar @emitCloseModal="emitCloseModalUploadAvatar"/>
                 </v-dialog>   
-            </div>     
-            <p> {{avatar}}</p>
+            </div>
             <p class="text-uppercase py-0 my-0">{{fullName}}</p>    
             <p class="text-uppercase py-0 my-0 font-weight-bold">{{company}}</p>
             <div id="custom-divider-container">

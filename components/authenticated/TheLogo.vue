@@ -6,7 +6,7 @@
     <span id="logo-container">
       <img id="logo" src="~assets/images/logo.png" />
     </span>
-    <span id="title"> FARMVISTA </span>
+    <span id="title" class="white--text"> FARMVISTA </span>
   </v-col>
 </template>
 

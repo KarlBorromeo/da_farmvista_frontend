@@ -66,11 +66,11 @@ export default {
     return{
       fetching: true,
       styles: [
-        `background-image: linear-gradient( 135deg, #dcdfe3 10%, #1a7358 100%)`,
-        `background-image: linear-gradient( 135deg, #dcdfe3 10%, #d3e8d3 100%)`,
-        `background-image: linear-gradient( 135deg, #dcdfe3 10%, #d9d9d9 100%)`,
-        `background-image: linear-gradient( 135deg, #dcdfe3 10%, #008000 100%)`,
-        `background-image: linear-gradient( 135deg, #dcdfe3 10%, #F7F5F2 100%)`,
+        `background-color: #1a7358`,
+        `background-color: #1a7358`,
+        `background-color: #1a7358`,
+        `background-color: #1a7358`,
+        `background-color: #1a7358`,
       ],
     }
   },

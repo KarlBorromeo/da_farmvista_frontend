@@ -79,7 +79,7 @@ export default {
         xaxis: {
           categories: this.$store.getters['dashboard/soldCommodityByProvinceSelected'].categories,
         },
-        colors: ['#1a7358', '#d3e8d3', '#d9d9d9', '#008000', '#F7F5F2'],
+        colors: chartPallet(),
         yaxis: {
           title: {
             text: this.$store.getters['dashboard/data'].soldCommodityByProvince.yLabel,
@@ -107,10 +107,6 @@ export default {
           text: 'No Data Available!',
           align: 'center',
           verticalAlign: 'middle',
-        },
-        theme: {
-          mode: 'light', 
-          palette: chartPallet(), 
         }
       }
     }

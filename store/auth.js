@@ -41,8 +41,7 @@ export const mutations = {
     const token = localStorage.getItem('token')
     const type = localStorage.getItem('type')
     const firstname = localStorage.getItem('firstname')
-    if (!token || !type) {
-      
+    if (!token || !type) { 
       state.currentUserLoggedin = false
     } else {  
       state.currentUserLoggedin = true
@@ -56,7 +55,6 @@ export const actions = {
     try {
       const userData = await api.login(credentials)
       context.commit('saveUserDataToLocalStorage', userData)
-      // context.commit('saveUserDataToStore', userData)
     } catch (error) {
       throw error
     }
