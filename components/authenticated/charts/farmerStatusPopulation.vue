@@ -1,8 +1,8 @@
 <template>
   <v-col cols="12" lg="6" class="mt-2">
-    <v-card class="pa-3 rounded-lg" style="height:100%">
-      <menu-dropdown-provinces />
-      <apexchart :options="options" :series="series" style="height:100%"/>       
+    <v-card class="pa-3 rounded-lg" style="height: 100%; display:flex; flex-direction: column;">
+      <menu-dropdown-provinces/>
+      <apexchart :options="options" :series="series"/>    
     </v-card>
   </v-col>
 </template>

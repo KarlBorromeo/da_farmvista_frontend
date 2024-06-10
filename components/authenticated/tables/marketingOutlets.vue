@@ -2,7 +2,7 @@
   <v-col cols="12" lg="4" class="mt-5">
     <v-data-table
       style="min-height:600px; max-height:600px; overflow:auto"
-      class="pt-1 pb-3 elevation-2"
+      class="pt-1 pb-3 elevation-2 rounded-lg"
       :headers="headers"
       :items="items"
       item-key="id"
@@ -14,7 +14,10 @@
       :hide-default-footer='false'
     >
       <template v-slot:top>
-        <menu-dropdown-provinces class="mt-2"/>
+        <v-container>
+          <menu-dropdown-provinces/>
+        </v-container>
+        
         <h2 class="title text-center mt-3">Marketing Outlets</h2>
         <v-text-field
           v-model="search"
@@ -23,7 +26,6 @@
         ></v-text-field>
       </template>
     </v-data-table>
-    <v-divider />
   </v-col>
 
 </template>
@@ -31,7 +33,9 @@
 <script>
 import menuDropdownProvinces from '~/components/authenticated/menuDropdownProvinces.vue'
 export default {
-	components: { menuDropdownProvinces },
+  components: {
+    menuDropdownProvinces
+  },
   data() {
     return {
       dialog: false,

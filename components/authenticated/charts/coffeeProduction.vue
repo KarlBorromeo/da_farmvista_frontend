@@ -1,6 +1,6 @@
 <template>
 	<v-col cols="12" lg="4" class="mt-2">
-		<v-card class="pa-3" style="height: 100%;">
+		<v-card class="pa-3 rounded-lg" style="height: 100%;">
       <v-row justify="end">
         <v-col cols="1" id="year-dropdown">
           <v-menu offset-y left>
@@ -20,11 +20,16 @@
           </v-menu>
         </v-col>
       </v-row>
-			<apexchart
-				:options="options"
-				:series="series"
-        style="height: 100%;"
-			/>
+      <v-row>
+        <v-col cols="12">
+          <apexchart
+            :options="options"
+            :series="series"
+            style="height: 100%;"
+          />          
+        </v-col>
+      </v-row>
+
 		</v-card>
     
 	</v-col>
@@ -52,7 +57,6 @@ export default {
 		options() {
 			return {
 				chart: {
-					height: 350,
 					type: 'area',
 					toolbar: {
             show: false,

@@ -1,15 +1,19 @@
 <template>
-	<v-col cols="12" lg="6" class="mt-2">
+	<v-col cols="12" lg="6" class="mt-2" style="height:100%!important">
 		<v-card
-			class="pa-3 text-center"
-			style="height: 100%"
+			class="pa-3 text-center rounded-lg"
 		>
       <menu-dropdown-provinces />
-			<apexchart
-				:options="options"
-				:series="series"
-				style="display: flex; justify-content: center"
-			/>
+      <v-row justify="center">
+        <v-col cols="12" sm="10">
+          <apexchart
+            :options="options"
+            :series="series"
+            style=" height: 100%; display: flex; justify-content: center"
+          />          
+        </v-col>
+      </v-row>
+
 		</v-card>
 	</v-col>
 </template>
@@ -23,11 +27,6 @@ export default {
 		apexchart: VueApexCharts, 
     menuDropdownProvinces
 	},
-	data() {
-		return {
-			pallete: '',
-		}
-	},
 	computed: {
 		series() {
 			return this.$store.getters['dashboard/data'].totalFarmerCountByProvince.series
@@ -40,7 +39,7 @@ export default {
 				},
 				chart: {
 					type: 'pie',
-					width: '90%',
+					width: '40%',
 				},
 				colors: chartPallet(),
 				labels: this.$store.getters['dashboard/data'].totalFarmerCountByProvince.labels,
@@ -52,24 +51,30 @@ export default {
 				},
 				dataLabels: {
 					enabled: true,
+					offsetX: 15,
+  					offsetY: 20,
 					style: {
 						colors: ['black'],
-						fontWeight: 'normal',
+						fontWeight: 'bold',
+						fontSize: '14px'
 					},
+					dropShadow: {
+						enabled: false,
+					}
 				},
 				tooltip: {
 					enabled: true
 				},
 				subtitle: {
-      				text: 'Total of validated and non',
+          text: 'Total of validated and non', //TODO: add get store here
 					align: 'center'
 				},
 				responsive: [
 					{
-						breakpoint: 405,
+						breakpoint: 650,
 						options: {
 							chart: {
-								width: '120%',
+								width: '100%',
 							},
 							legend: {
 								position: 'bottom',
@@ -77,10 +82,10 @@ export default {
 						},
 					},
 					{
-						breakpoint: 650,
+						breakpoint: 960,
 						options: {
 							chart: {
-								width: '100%',
+								width: '80%',
 							},
 							legend: {
 								position: 'bottom',

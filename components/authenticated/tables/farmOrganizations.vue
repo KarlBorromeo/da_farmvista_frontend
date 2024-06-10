@@ -2,7 +2,7 @@
   <v-col cols="12" lg="8" class="mt-5">
     <v-data-table
       style="min-height:600px; max-height:600px; overflow:auto"
-      class="pt-1 pb-3 elevation-2"
+      class="pt-1 pb-3 elevation-2 rounded-lg"
       :headers="headers"
       :items="items"
       item-key="id"
@@ -23,7 +23,6 @@
         ></v-text-field>
       </template>
     </v-data-table>
-    <v-divider />
   </v-col>
 
 </template>

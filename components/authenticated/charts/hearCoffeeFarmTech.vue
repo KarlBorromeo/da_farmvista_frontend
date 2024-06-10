@@ -1,7 +1,7 @@
 <template>
 	<v-col cols="12" lg="4" class="mt-2">
 		<v-card
-			class="pa-3 text-center"
+			class="pa-3 text-center rounded-lg"
 			style="height: 100%"
 		>
       <menu-dropdown-provinces />

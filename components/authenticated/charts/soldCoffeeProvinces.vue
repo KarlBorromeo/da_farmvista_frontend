@@ -1,6 +1,6 @@
 <template>
   <v-col cols="12" class="mt-2">
-    <v-card class="pa-3">
+    <v-card class="pa-3 rounded-lg">
       <menu-dropdown-provinces @emitChangeProvince="changeprovince"/>
       <v-row justify="center">
          <v-col cols="12" lg="9" >
