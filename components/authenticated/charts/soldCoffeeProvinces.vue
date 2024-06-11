@@ -1,9 +1,9 @@
 <template>
   <v-col cols="12" class="mt-2">
     <v-card class="pa-3 rounded-lg">
-      <menu-dropdown-provinces @emitChangeProvince="changeprovince"/>
+      <!-- <menu-dropdown-provinces @emitChangeProvince="changeprovince"/> -->
       <v-row justify="center">
-         <v-col cols="12" lg="9" >
+         <v-col cols="12" lg="8">
           <apexchart :options="options" :series="series"/> 
         </v-col>
       </v-row>
@@ -30,6 +30,15 @@ export default {
       this.$store.commit('dashboard/changeProvince',obj)
     }
   },
+  data(){
+    return{
+      height: 300
+    }
+  },
+  async mounted(){
+    await new Promise(resolve => setTimeout(resolve, 100));
+    this.height= 500
+  },
   computed:{
     provinces(){
       return this.$store.getters['dashboard/data'].soldCommodityByProvince.provinces
@@ -44,6 +53,7 @@ export default {
           align: 'center'
         },
         chart: {
+          height: this.height,
           stacked: true,
           type: 'bar',
           toolbar: {
@@ -55,7 +65,7 @@ export default {
             horizontal: false,
             columnWidth: '65%',
             endingShape: 'rounded',
-          },
+          }
         },
         dataLabels: {
           enabled: false,
@@ -86,7 +96,7 @@ export default {
           },
         },
         responsive: [{
-            breakpoint: 960,
+            breakpoint: 1264,
             options: {
                 plotOptions: {
                     bar: {
