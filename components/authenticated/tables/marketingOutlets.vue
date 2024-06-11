@@ -2,7 +2,7 @@
   <v-col cols="12" lg="4" class="mt-5">
     <v-data-table
       style="min-height:600px; max-height:600px; overflow:auto"
-      class="pt-1 pb-3 elevation-2 rounded-lg"
+      class="pa-2 pt-1 pb-3 elevation-2 rounded-lg"
       :headers="headers"
       :items="items"
       item-key="id"
@@ -15,10 +15,10 @@
     >
       <template v-slot:top>
         <v-container>
-          <menu-dropdown-provinces/>
+          <menu-dropdown-provinces @emitChangeProvince="changeProvince"/>
         </v-container>
         
-        <h2 class="title text-center mt-3">Marketing Outlets</h2>
+        <h2 class="title text-center mt-1">Marketing Outlets - {{ province }}</h2>
         <v-text-field
           v-model="search"
           label="Search here the record"
@@ -48,12 +48,15 @@ export default {
     headers() {
       return [
         { text: 'Name', value: 'name' },
-        { text: 'Commonly Produced', value: 'qualityPreference' },
-        { text: 'Price Range', value: 'count' }
+        { text: 'Commonly Produced', value: 'commonlyProduced' },
+        { text: 'Price Range', value: 'priceRange' }
       ]
     },
+    province(){
+      return this.$store.getters['dashboard/marketingOutletInfoSelected'].province
+    },
     items(){
-      return this.$store.getters['dashboard/data'].marketingOutletFarmerCount
+      return this.$store.getters['dashboard/marketingOutletInfoSelected'].data
     }
   },
   methods: {
@@ -66,6 +69,15 @@ export default {
         value.toString().toLowerCase().indexOf(search) !== -1
       )
     },
+    changeProvince(province){
+      const obj = {
+        province,
+        stateName: 'marketingOutletInfo',
+        stateNameSelected: 'marketingOutletInfoSelected',
+        isTable: true
+      }
+      this.$store.commit('dashboard/changeProvince',obj)
+    }
   },
 }
 </script>

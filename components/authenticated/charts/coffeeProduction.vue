@@ -1,6 +1,6 @@
 <template>
 	<v-col cols="12" lg="4" class="mt-2">
-		<v-card class="pa-3 rounded-lg" style="height: 100%;">
+		<v-card class="pa-3 rounded-lg" style="height: 100%; display:flex; flex-direction: column">
       <v-row justify="end">
         <v-col cols="1" id="year-dropdown">
           <v-menu offset-y left>
@@ -20,7 +20,7 @@
           </v-menu>
         </v-col>
       </v-row>
-      <v-row>
+      <v-row style="height: 100%" align-content="center">
         <v-col cols="12">
           <apexchart
             :options="options"
@@ -29,9 +29,7 @@
           />          
         </v-col>
       </v-row>
-
-		</v-card>
-    
+		</v-card>  
 	</v-col>
 </template>
 

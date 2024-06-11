@@ -2,7 +2,7 @@
   <v-col cols="12" lg="8" class="mt-5">
     <v-data-table
       style="min-height:600px; max-height:600px; overflow:auto"
-      class="pt-1 pb-3 elevation-2 rounded-lg"
+      class="pa-2 pt-1 pb-3 elevation-2 rounded-lg"
       :headers="headers"
       :items="items"
       item-key="id"
@@ -14,8 +14,8 @@
       :hide-default-footer='false'
     >
       <template v-slot:top>
-        <menu-dropdown-provinces class="mt-2"/>
-        <h2 class="title text-center mt-3">Farm Organizations</h2>
+        <menu-dropdown-provinces class="mt-2" @emitChangeProvince="changeProvince"/>
+        <h2 class="title text-center mt-1">Farm Organizations - {{ province }}</h2>
         <v-text-field
           v-model="search"
           label="Search here the record"
@@ -53,7 +53,10 @@ export default {
       ]
     },
     items(){
-      return this.$store.getters['dashboard/data'].farmOrganizationFarmerCount
+      return this.$store.getters['dashboard/farmOrganizationFarmerCountSelected'].data
+    },
+    province(){
+      return this.$store.getters['dashboard/farmOrganizationFarmerCountSelected'].province
     }
   },
   methods: {
@@ -67,6 +70,15 @@ export default {
         value.toString().toLowerCase().indexOf(search) !== -1
       )
     },
+    changeProvince(province){
+      const obj = {
+        province,
+        stateName: 'farmOrganizationFarmerCount',
+        stateNameSelected: 'farmOrganizationFarmerCountSelected',
+        isTable: true
+      }
+      this.$store.commit('dashboard/changeProvince',obj)
+    }
   },
 }
 </script>

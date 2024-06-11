@@ -30,7 +30,6 @@ export default {
     },
     methods: {
         changeprovince(province){
-            alert(province)
             this.$emit('emitChangeProvince',province)
         }
     },

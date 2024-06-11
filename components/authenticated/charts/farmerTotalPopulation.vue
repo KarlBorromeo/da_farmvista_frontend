@@ -45,7 +45,7 @@ export default {
 		options() {
 			return {
 				title: {
-					text: this.$store.getters['dashboard/data'].totalFarmerCountByProvince.title +' ' + this.$store.getters['dashboard/data'].totalFarmerCountByProvince.total,
+					text: this.$store.getters['dashboard/data'].totalFarmerCountByProvince.title + ' - ' + this.$store.getters['dashboard/totalFarmerCountByProvinceSelected'].count,
 					align: 'center',
 				},
 				chart: {

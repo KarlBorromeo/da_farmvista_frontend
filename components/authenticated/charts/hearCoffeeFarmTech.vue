@@ -50,7 +50,7 @@ export default {
 				},
 				chart: {
 					type: 'radialBar',
-					width: '120%',
+					// width: '120%',
 				},
 				colors: ['#f55525'],
 				plotOptions: {

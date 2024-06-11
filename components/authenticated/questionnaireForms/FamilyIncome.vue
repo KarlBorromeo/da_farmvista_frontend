@@ -18,7 +18,7 @@
           <form-input-container>
             <v-text-field
               v-model="age[i - 1]"
-              :rules="requiredRule"
+              :rules="numberRule"
               label="* Age"
               type="number"
             ></v-text-field>
@@ -58,7 +58,7 @@
           <form-input-container>
             <v-text-field
               v-model="contributionAmount[i - 1]"
-              :rules="requiredRule"
+              :rules="numberRule"
               label="* Contributiong (PHP) income/month"
               type="number"
               min="0"
@@ -117,7 +117,8 @@ export default {
       { value: 'yes', label: 'Yes' },
       { value: 'no', label: 'No' },
     ],
-    requiredRule: [(v) => parseInt(v)>=0 || 'invalid value'],
+    requiredRule: [(v) => !!v || 'invalid value'],
+    numberRule: [(v) => parseInt(v)>=0 || 'invalid value'],
     tempValue: '',
   }),
   methods: {

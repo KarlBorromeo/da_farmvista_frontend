@@ -50,7 +50,6 @@
               v-model="plantingDistanceDetails"
               :rules="requiredRule"
               label="* Details"
-              type="number"
             ></v-text-field>
           </form-input-container>
           <form-radio-container title="Reason for Using">

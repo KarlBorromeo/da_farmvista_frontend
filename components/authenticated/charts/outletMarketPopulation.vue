@@ -4,7 +4,7 @@
 			class="pa-3 text-center rounded-lg"
             style="height: 100%"
 		>
-      <menu-dropdown-provinces />
+      <menu-dropdown-provinces @emitChangeProvince="changeProvince"/>
       <v-row justify="center">
         <v-col cols="9" lg="12">
           <apexchart
@@ -28,14 +28,24 @@ export default {
 		apexchart: VueApexCharts, 
     menuDropdownProvinces
 	},
+  methods: {
+    changeProvince(province){
+      const obj = {
+        province,
+        stateName: 'marketingOutletFarmerCount',
+        stateNameSelected: 'marketingOutletFarmerCountSelected' 
+      }
+      this.$store.commit('dashboard/changeProvince',obj)
+    }
+  },
 	computed: {
 		series() {
-			return [44, 55, 13, 33,12,123,12]
+			return this.$store.getters['dashboard/marketingOutletFarmerCountSelected'].series
 		},
 		options() {
 			return {
 				title: {
-					text: 'Outlet Market Population',
+					text: this.$store.getters['dashboard/data'].marketingOutletFarmerCount.title + ' - ' + this.$store.getters['dashboard/marketingOutletFarmerCountSelected'].province,
 					align: 'center',
 				},
 				chart: {
@@ -51,7 +61,7 @@ export default {
 					position: 'bottom',
 				},
 				dataLabels: {
-					enabled: false,
+					enabled: true,
 					offsetX: 15,
   					offsetY: 20,
 					style: {
@@ -130,6 +140,11 @@ export default {
 						},
 					},
 				],
+        noData: {
+          text: 'No Data Available!',
+          align: 'center',
+          verticalAlign: 'middle',
+        }
 			}
 		},
 	},

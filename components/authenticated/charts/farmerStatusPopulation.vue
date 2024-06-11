@@ -32,7 +32,7 @@ export default {
     options(){
       return {
         title: {
-          text: this.$store.getters['dashboard/data'].intervieweeStatusByProvince.title,
+          text: this.$store.getters['dashboard/data'].intervieweeStatusByProvince.title + ' - ' + this.$store.getters['dashboard/intervieweeStatusByProvinceSelected'].province,
           align: 'center'
         },
         chart: {

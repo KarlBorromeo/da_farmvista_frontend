@@ -1,9 +1,9 @@
 <template>
   <v-col cols="12" class="mt-2">
     <v-card class="pa-3 rounded-lg">
-      <!-- <menu-dropdown-provinces @emitChangeProvince="changeprovince"/> -->
+      <menu-dropdown-provinces @emitChangeProvince="changeprovince"/>
       <v-row justify="center">
-         <v-col cols="12" lg="8">
+         <v-col cols="12">
           <apexchart :options="options" :series="series"/> 
         </v-col>
       </v-row>
