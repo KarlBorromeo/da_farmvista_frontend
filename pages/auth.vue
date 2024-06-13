@@ -87,6 +87,13 @@ import snackbarVue from '~/components/snackbar.vue'
 export default {
   components: { authLogo, snackbarVue },
   layout: 'authentication',
+  beforeMount(){
+    this.$store.commit('auth/getUserDataFromLocalStorage')
+    const isLoggedin = this.$store.getters['auth/userLoggedin']
+    if(isLoggedin){
+      this.$router.replace('/dashboard')
+    }
+  },
   data: () => ({
     valid: false,
     username: 'karlito',
