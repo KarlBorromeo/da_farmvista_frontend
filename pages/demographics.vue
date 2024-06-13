@@ -1,5 +1,5 @@
 <template>
-  <h1 class="pa-5">HOME PAGE</h1>
+  <h1 class="pa-5">Demographics PAGE</h1>
 </template>
 
 <script>

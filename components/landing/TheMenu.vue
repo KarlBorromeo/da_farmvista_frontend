@@ -7,7 +7,13 @@
         </v-btn>
       </template>
       <v-list>
-        <v-list-item v-for="(item, index) in items" :key="index">
+        <v-list-item
+          v-for="(item, index) in items" 
+          :key="index"
+          :to="item.to"
+          router
+          class="text-center"
+        >
           <v-list-item-title>{{ item.title }}</v-list-item-title>
         </v-list-item>
       </v-list>
@@ -19,11 +25,23 @@
 export default {
   data: () => ({
     items: [
-      { title: 'Click Me' },
-      { title: 'Click Me' },
-      { title: 'Click Me' },
-      { title: 'Click Me 2' },
-    ],
+        {
+          title: 'Home',
+          to: '/'
+        },
+        {
+          title: 'About',
+          to: '/about'
+        },
+        {
+          title: 'Commodities',
+          to: '/commodities'
+        },
+        {
+          title: 'Demographics',
+          to: '/demographics'
+        },
+      ]
   }),
 }
 </script>

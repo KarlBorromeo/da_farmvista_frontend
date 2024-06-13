@@ -14,30 +14,38 @@
       <v-toolbar-title class="ml-2 hidden-xs-only">FarmVista</v-toolbar-title>
       <v-spacer class="hidden-sm-and-down"></v-spacer>
       <div class="hidden-sm-and-down">
-        <v-btn flat elevation="0" color="white" small>Home</v-btn>
-        <v-btn flat elevation="0" color="white" small>Home</v-btn>
-        <v-btn flat elevation="0" color="white" small>Home</v-btn>
-        <v-btn flat elevation="0" color="white" small>Home</v-btn>
+        <v-list class="d-flex">
+          <v-list-item
+            v-for="(item, i) in items"
+            :key="i"
+            :to="item.to"
+            router
+            exact
+            class="mb-2"
+          >
+            <v-list-item-title class="text-center">{{
+              item.title
+            }}</v-list-item-title>
+          </v-list-item>
+        </v-list>
       </div>
       <v-spacer></v-spacer>
-      <v-btn small to="/auth" elevation="1" color="primary">
+      <v-btn  to="/auth" elevation="1" color="primary" v-if="userLoggedin">
         Log In
         <v-icon>mdi-account-arrow-right</v-icon>
+      </v-btn>
+      <v-btn  to="/dashboard" elevation="1" color="success" v-else>
+        My Dashboard
+        <v-icon>mdi-view-dashboard-variant</v-icon>
       </v-btn>
 
       <the-menu class="hidden-md-and-up" />
 
       <v-spacer class="hidden-sm-and-down"></v-spacer>
     </v-app-bar>
-    <v-sheet
-      id="scrolling-techniques-7"
-      class="overflow-y-auto"
-      max-height="600"
-    >
-      <v-main style="height: 1500px">
-        <nuxt />
-      </v-main>
-    </v-sheet>
+    <v-main style="height: 1500px">
+      <nuxt />
+    </v-main>
   </v-app>
 </template>
 
@@ -47,6 +55,35 @@ import TheLogo from '~/components/landing/TheLogo.vue'
 
 export default {
   components: { TheMenu, TheLogo },
+  computed: {
+    userLoggedin(){
+      this.$store.commit('auth/getUserDataFromLocalStorage')
+      return !this.$store.getters['auth/userLoggedin']      
+    }
+
+  },
+  data(){
+    return{
+      items: [
+        {
+          title: 'Home',
+          to: '/'
+        },
+        {
+          title: 'About',
+          to: '/about'
+        },
+        {
+          title: 'Commodities',
+          to: '/commodities'
+        },
+        {
+          title: 'Demographics',
+          to: '/demographics'
+        },
+      ]
+    }
+  }
 }
 </script>
 <style scoped>
