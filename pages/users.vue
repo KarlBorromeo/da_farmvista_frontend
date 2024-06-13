@@ -1,6 +1,6 @@
 <template>
   <div>
-    <tab-description
+    <page-description
       icon="mdi-account-group"
       title="Users"
       :description="description"
@@ -20,23 +20,23 @@
           </v-col>
         </v-row>
       </v-container>
-    </tab-description>
-    <tab-contents>
+    </page-description>
+    <page-contents>
       <users-table ref="userTable"/>
-    </tab-contents>   
+    </page-contents>   
      <snackbar ref="snackbar" /> 
   </div>
 </template>
 
 <script>
 import CreateUser from '~/components/authenticated/modal/createUser.vue'
-import TabContents from '~/components/authenticated/tabContents.vue'
-import TabDescription from '~/components/authenticated/tabDescription.vue'
+import PageContents from '~/components/authenticated/pageContents.vue'
+import PageDescription from '~/components/authenticated/pageDescription.vue'
 import UsersTable from '~/components/authenticated/tables/usersTable.vue'
 import snackbar from '~/components/snackbar.vue'
 export default {
   middleware: 'authSuperadminAdmin',
-  components: { TabDescription, CreateUser, UsersTable, TabContents, snackbar },
+  components: { PageDescription, CreateUser, UsersTable, PageContents, snackbar },
   data() {
     return {
       dialog: false,
