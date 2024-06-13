@@ -1,24 +1,24 @@
 <template>
   <div>
-    <tab-description
+    <page-description
       icon="mdi-history"
       title="Logs"
       :description="description"
     />    
-    <tab-contents>
+    <page-contents>
       <logs-table />
-    </tab-contents>
+    </page-contents>
   </div>
 
 </template>
 
 <script>
 import LogsTable from '~/components/authenticated/tables/logsTable.vue'
-import TabContents from '~/components/authenticated/tabContents.vue'
-import TabDescription from '~/components/authenticated/tabDescription.vue'
+import PageContents from '~/components/authenticated/pageContents.vue'
+import PageDescription from '~/components/authenticated/pageDescription.vue'
 export default {
   middleware :'authSuperadmin',
-  components: { TabDescription, TabContents, LogsTable },
+  components: { PageDescription, PageContents, LogsTable },
   data() {
     return {
       description:

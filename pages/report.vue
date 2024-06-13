@@ -1,16 +1,16 @@
 <template>
-  <tab-description
+  <page-description
     icon="mdi-chart-box"
     title="Report"
     :description="description"
-  ></tab-description>
+  />
 </template>
 
 <script>
-import TabDescription from '~/components/authenticated/tabDescription.vue'
+import PageDescription from '~/components/authenticated/pageDescription.vue'
 export default {
     middleware: 'authSuperadminAdmin',
-    components: { TabDescription },
+    components: { PageDescription },
     data() {
         return {
         description:

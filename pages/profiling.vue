@@ -1,6 +1,6 @@
 <template>
   <div>
-    <tab-description
+    <page-description
       icon="mdi-account-arrow-up"
       title="Profiling"
       :description="description"
@@ -16,28 +16,28 @@
           </v-col>
         </v-row>
       </v-container> 
-    </tab-description>
+    </page-description>
 
-    <tab-contents>
+    <page-contents>
       <profiling-table />
-    </tab-contents>
+    </page-contents>
   </div>
 
 </template>
 
 <script>
-import TabDescription from '~/components/authenticated/tabDescription.vue'
+import PageDescription from '~/components/authenticated/pageDescription.vue'
 import UploadButton from '~/components/authenticated/buttons/uploadButton.vue'
 import ManualSurveyButton from '~/components/authenticated/buttons/manualSurveyButton.vue'
 import ProfilingTable from '~/components/authenticated/tables/profilingTable.vue'
-import TabContents from '~/components/authenticated/tabContents.vue'
+import PageContents from '~/components/authenticated/pageContents.vue'
 export default {
   components: {
-    TabDescription,
+    PageDescription,
     UploadButton,
     ManualSurveyButton,
     ProfilingTable,
-    TabContents
+    PageContents
   },
   data() {
     return {

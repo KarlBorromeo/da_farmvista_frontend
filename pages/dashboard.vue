@@ -1,5 +1,5 @@
 <template>
-    <tab-contents class="mt-3 elevation-0" style="background-color: transparent!important">
+    <page-contents class="mt-3 elevation-0" style="background-color: transparent!important">
       <div v-if="fetching">
         <v-skeleton-loader
           v-bind="attrs"
@@ -38,12 +38,12 @@
         </v-row>        
       </div>
 
-    </tab-contents>
+    </page-contents>
 </template>
 
 <script>
 import ActiveFarmers from '~/components/authenticated/charts/activeFarmers.vue'
-import TabContents from '~/components/authenticated/tabContents.vue'
+import PageContents from '~/components/authenticated/pageContents.vue'
 import FarmerStatusPopulation from '~/components/authenticated/charts/farmerStatusPopulation.vue'
 import FarmerTotalPopulation from '~/components/authenticated/charts/farmerTotalPopulation.vue'
 import coffeeProduction from '~/components/authenticated/charts/coffeeProduction.vue'
@@ -53,7 +53,7 @@ import farmOrganizations from '~/components/authenticated/tables/farmOrganizatio
 import marketingOutlets from '~/components/authenticated/tables/marketingOutlets.vue'
 import OutletMarketPopulation from '~/components/authenticated/charts/outletMarketPopulation.vue'
 export default {
-  components: {TabContents, ActiveFarmers, FarmerStatusPopulation, FarmerTotalPopulation, coffeeProduction, soldCoffeeProvinces, hearCoffeeFarmTech, farmOrganizations, marketingOutlets, OutletMarketPopulation},
+  components: {PageContents, ActiveFarmers, FarmerStatusPopulation, FarmerTotalPopulation, coffeeProduction, soldCoffeeProvinces, hearCoffeeFarmTech, farmOrganizations, marketingOutlets, OutletMarketPopulation},
   async beforeMount() {
     this.$store.commit('udpateHeaderTitle', 'DASHBOARD')
     try{

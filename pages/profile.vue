@@ -1,11 +1,11 @@
 <template>
   <div>
-    <tab-description
+    <page-description
       icon="mdi-account-circle-outline"
       title="My Profile"
       :description="description"
-    ></tab-description>
-    <tab-contents>
+    />
+    <page-contents>
       <v-row>
         <v-col
           cols="12" sm="7"
@@ -22,7 +22,7 @@
           </v-card>
         </v-col>
       </v-row>
-    </tab-contents>  
+    </page-contents>  
   </div>
 
 </template>
@@ -30,10 +30,10 @@
 <script>
 import EditProfileForm from '~/components/authenticated/form/editProfileForm.vue'
 import ProfileDetails from '~/components/authenticated/profileDetails.vue'
-import TabContents from '~/components/authenticated/tabContents.vue'
-import TabDescription from '~/components/authenticated/tabDescription.vue'
+import PageContents from '~/components/authenticated/pageContents.vue'
+import PageDescription from '~/components/authenticated/pageDescription.vue'
 export default {
-  components: { TabDescription, TabContents, EditProfileForm, ProfileDetails },
+  components: { PageDescription, PageContents, EditProfileForm, ProfileDetails },
   beforeMount() {
     this.$store.commit('udpateHeaderTitle', 'MY PROFILE')
   },
