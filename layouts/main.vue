@@ -45,16 +45,19 @@
     </v-app-bar>
     <v-main style="height: 1500px">
       <nuxt />
+      <the-footer />
     </v-main>
+    
   </v-app>
 </template>
 
 <script>
 import TheMenu from '~/components/landing/TheMenu.vue'
 import TheLogo from '~/components/landing/TheLogo.vue'
+import TheFooter from '~/components/landing/TheFooter.vue'
 
 export default {
-  components: { TheMenu, TheLogo },
+  components: { TheMenu, TheLogo, TheFooter },
   computed: {
     userLoggedin(){
       this.$store.commit('auth/getUserDataFromLocalStorage')
