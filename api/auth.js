@@ -13,3 +13,11 @@ export async function login(credentials) {
     throw error.response.data.message
   }
 }
+
+export async function checkTokenAlive(){
+  try{
+    await Axios.get('auth/check')
+  }catch(error){
+    throw error.response.data.code
+  }
+}

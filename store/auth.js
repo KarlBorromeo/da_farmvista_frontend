@@ -59,4 +59,11 @@ export const actions = {
       throw error
     }
   },
+  async checkTokenAlive(){
+    try{
+      await api.checkTokenAlive()
+    }catch(errCode){
+      throw errCode;
+    }
+  }
 }
