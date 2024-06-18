@@ -28,14 +28,17 @@
     <v-container>
       <v-row align="center" justify="center">
         <v-col cols="9" sm="6">
-          <section class="d-flex">
-            <img class="img-cropped" style="width: 40%" src="~/static/hand1.png">
-            <img class="img-cropped" style="width: 60%" src="~/static/hand2.png">
-          </section>
-          <section class="d-flex">
-            <img class="img-cropped" style="width: 60%" src="~/static/hand3.png">
-            <img class="img-cropped" style="width: 40%" src="~/static/hand4.png">
-          </section>
+          <v-container>
+            <section class="d-flex">
+              <img class="img-cropped" style="width: 40%" src="~/static/hand1.png">
+              <img class="img-cropped" style="width: 60%" src="~/static/hand2.png">
+            </section>
+            <section class="d-flex">
+              <img class="img-cropped" style="width: 60%" src="~/static/hand3.png">
+              <img class="img-cropped" style="width: 40%" src="~/static/hand4.png">
+            </section>            
+          </v-container>
+
         </v-col>
         <v-col cols="9" sm="6">
           <p class="font-weigth-light title text-capitalize">A data-centric web application designed to revolutionize farming</p>
@@ -68,22 +71,19 @@
           </v-expansion-panels>
           <v-btn large id="aw">More</v-btn>
         </v-col>
-        <v-col cols="9" sm="6" style="height: 400px;">
+        <v-col cols="5" style="height: 300px">
           <section style="position: relative; height: 100%">
-            <section id="farmer1" >
-              <img style="width: 100%" src="~/static/farmer2.jpg">
+            <section id="farmer1">
+              <img src="~/static/farmer2.jpg">
             </section>
             <section id="farmer2">
               <img style="width: 90%; height: 100%; object-fit:cover" src="~/static/farmerPortrait.jpg">
-            </section>
-            
+            </section>         
           </section>
-  
         </v-col>
       </v-row>    
     </v-container>
-            <section class="aw"/>
-    <v-container class="mt-4">
+    <v-container class="mt-6 pt-9">
       <h1 class="title text-center">Explore Projects</h1>
       <v-slide-group
         v-model="model"
@@ -154,37 +154,46 @@ export default {
 }
 #farmer1{
   position: absolute;
-  top: -10%;
+  top: 0;
   right: 0;
   width: 70%;
-  min-width: 200px;
-  max-width: 320px;
+  min-width: 180px;
+  max-width: 420px;
   min-height: 250px;
+  max-height: 350px;
   object-fit: cover;
   z-index: 5;
 }
+#farmer1 img{
+  object-fit: cover;
+  width: 100%;
+  min-height: 250px;
+  max-height: 350px;
+}
 #farmer1::before{
   content: '';
-  display: block;
-  width: 90%;
-  height: 90%; 
-  border: 2px solid #1a7358;
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  min-height: 250px;
+  max-height: 350px; 
+  border: 3px solid #1a7358;
   position: absolute;
   top: 40%;
-  left: 60%;
-  transform: translate(-50%,-50%);
+  left: 50%;
+  transform: translate(-45%,-45%);
   z-index: -2;
 }
 #farmer2{
   position: absolute;
   left: 0;
-  bottom: -5%;
-  height: 50%;
+  bottom: -35%;
+  height: 80%;
   width: 60%;
   min-width: 180px;
-  max-width: 200px;
+  max-width: 400px;
   min-height: 180px;
-  max-height: 200px!important;
+  max-height: 450px;
   object-fit: cover;
   z-index: 6;
 }
@@ -193,11 +202,11 @@ export default {
   display: block;
   width: 90%;
   height: 100%; 
-  border: 2px solid #1a7358;
+  border: 3px solid #1a7358;
   position: absolute;
   top: 40%;
   left: 50%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%,-45%);
   z-index: -1;
 }
 @media screen and (min-width: 601px) {
