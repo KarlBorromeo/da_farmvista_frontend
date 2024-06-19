@@ -35,11 +35,12 @@
           v-for="item in items"
           :key="item"
         >
-          <v-card
+          <!-- <v-card
             flat
-          >
+            class="elevation-0"
+          > -->
              <component :is="components[tab]"></component>
-          </v-card>
+          <!-- </v-card> -->
         </v-tab-item>
       </v-tabs-items>
     </page-contents>

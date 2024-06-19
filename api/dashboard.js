@@ -8,10 +8,9 @@ export async function dashboardFetch(){
         const res = await Axios.get('analytics/dashboard',{
             params
         })
-        
-        console.log('resulttttt!:',res.data.data)
         return res.data.data
     }catch(error){
         console.error(error)
+        throw error
     }
 }

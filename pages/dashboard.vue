@@ -2,7 +2,6 @@
     <page-contents class="mt-3 elevation-0" style="background-color: transparent!important">
       <div v-if="fetching">
         <v-skeleton-loader
-          v-bind="attrs"
           type="article, actions,image"
           v-for="i in 3"
           :key="i"     

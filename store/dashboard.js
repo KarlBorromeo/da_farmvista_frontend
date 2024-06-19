@@ -181,7 +181,6 @@ export const mutations = {
   inititializeIntervieweeStatusByProvince(state,data){
     if(data.intervieweeStatusByProvince.data.length>0){
       state.intervieweeStatusByProvinceSelected = data.intervieweeStatusByProvince.data[0]
-      console.log('inteview status selected: ',state.intervieweeStatusByProvinceSelected)
     }else{
       state.intervieweeStatusByProvinceSelected = {
         province: '',
