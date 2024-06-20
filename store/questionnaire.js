@@ -491,6 +491,7 @@ export const mutations = {
       tab.validity = false
       tab.tempValidity = false
     })
+    state.currentTab = 'BasicInformation'
   },
 
   /* display the next tab contents */
