@@ -1,14 +1,14 @@
 <template>
-	<v-col cols="10" lg="4" class="mt-2" style="display:flex; flex-direction: column; justify-content:center">
+	<v-col
+		cols="10"
+		lg="4"
+		class="mt-2"
+		style="display: flex; flex-direction: column; justify-content: center"
+	>
 		<div id="custom-card">
-			<apexchart
-			:options="options"
-			:series="series"
-			/>          
+			<apexchart :options="options" :series="series" />
 			<v-spacer />
-			<p>
-			Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius porro sit, at excepturi esse hic nulla ex eaque perferendis cupiditate!
-			</p>
+			<p>{{ recommendation }}</p>
 		</div>
 	</v-col>
 </template>
@@ -22,19 +22,22 @@ export default {
 	},
 	computed: {
 		series() {
-			return [44, 55, 13, 43, 22]
+			return this.$store.getters['analytics/demographics']
+				.genderDistribution.series
 		},
 		options() {
 			return {
 				title: {
-					text: 'Gender',
+					text: this.$store.getters['analytics/demographics']
+						.genderDistribution.title,
 					align: 'center',
 				},
 				chart: {
 					type: 'pie',
 				},
 				colors: chartPallet(),
-				labels: ['Team A', 'Team B', 'Team C', 'Team D', 'Team E'],
+				labels: this.$store.getters['analytics/demographics']
+					.genderDistribution.categories,
 				stroke: {
 					width: 2,
 				},
@@ -63,6 +66,10 @@ export default {
 					verticalAlign: 'middle',
 				},
 			}
+		},
+		recommendation() {
+			return this.$store.getters['analytics/demographics']
+				.genderDistribution.recommendation
 		},
 	},
 }

@@ -1,15 +1,15 @@
 <template>
-	<v-col cols="10" lg="4" class="mt-2" style="display:flex; flex-direction: column; justify-content:center">
-    <div id="custom-card">
-      <apexchart
-        :options="options"
-        :series="series"
-      />
-      <v-spacer />
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius porro sit, at excepturi esse hic nulla ex eaque perferendis cupiditate!
-      </p>
-    </div>
+	<v-col
+		cols="10"
+		lg="4"
+		class="mt-2"
+		style="display: flex; flex-direction: column; justify-content: center"
+	>
+		<div id="custom-card">
+			<apexchart :options="options" :series="series"/>
+			<v-spacer />
+			<p style="overflow:auto">{{ recommendation }}</p>
+		</div>
 	</v-col>
 </template>
 
@@ -22,52 +22,70 @@ export default {
 	},
 	computed: {
 		series() {
-			return [76, 67, 61, 90]
+			return this.$store.getters['analytics/demographics']
+				.educationalBackgroundDistribution.series
 		},
 		options() {
 			return {
-        title:{
-          text: 'Highest Education Attained',
-          align: 'center'
-        },
-        chart: {
-          type: 'radialBar',
-        },
-        plotOptions: {
-          radialBar: {
-            offsetY: 0,
-            startAngle: 0,
-            endAngle: 270,
-            hollow: {
-              margin: 5,
-              size: '30%',
-              background: 'transparent',
-              image: undefined,
-            },
-            dataLabels: {
+				title: {
+					text: this.$store.getters['analytics/demographics']
+						.educationalBackgroundDistribution.title,
+					align: 'center',
+				},
+				chart: {
+					type: 'radialBar',
+				},
+				plotOptions: {
+					radialBar: {
+						offsetY: 0,
+						startAngle: 0,
+						endAngle: 270,
+						hollow: {
+							margin: 5,
+							size: '10%',
+							background: 'transparent',
+							image: undefined,
+						},
+						dataLabels: {
               name: {
                 show: true,
               },
               value: {
                 show: true,
-              }
-            },
-            barLabels: {
-              enabled: true,
-              useSeriesColors: true,
-              margin: 8,
-              fontSize: '16px',
-              formatter: function(seriesName, opts) {
-                return seriesName + ":  " + opts.w.globals.series[opts.seriesIndex]
               },
-            },
-          }
-        },
-        colors: chartPallet(),
-        labels: ['Vimeo', 'Messenger', 'Facebook', 'LinkedIn'],
-		  }
-    }
-	}
+              total: {
+                show: true,
+                label: 'Total',
+                formatter: function (w) {
+                  return w.globals.seriesTotals.reduce((a, b) => a + b, 0);
+                },
+              },
+            }
+					},
+				},
+				colors: chartPallet(),
+				labels: this.$store.getters['analytics/demographics']
+					.educationalBackgroundDistribution.categories,
+        legend: {
+           show: false,
+           position: 'bottom',
+            horizontalAlign: 'center', 
+            floating: false,
+					formatter: function (val, opts) {
+						return (
+							val +
+							' - ' +
+							opts.w.globals.series[opts.seriesIndex]
+						)
+					},
+				},
+			}
+		},
+		recommendation() {
+			return this.$store.getters['analytics/demographics']
+				.educationalBackgroundDistribution.recommendation
+		},
+	},
 }
 </script>
 

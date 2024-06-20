@@ -80,6 +80,13 @@ export default {
   beforeMount() {
     this.$store.commit('udpateHeaderTitle', 'ANALYTICS')
   },
+  async mounted(){
+    try{
+      await this.$store.dispatch('analytics/fetchDemographics')
+    }catch(err){
+      console.err(err);
+    }
+  },
   watch:{
     tab(val){
       console.log(val);

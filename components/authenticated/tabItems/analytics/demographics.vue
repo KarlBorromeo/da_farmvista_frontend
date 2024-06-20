@@ -53,6 +53,6 @@ export default {
     areaCoffeeFarmDemographics,
     croppingSystem,
     commodity
-   }
+   },
 }
 </script>
