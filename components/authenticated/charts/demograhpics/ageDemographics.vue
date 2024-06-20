@@ -1,14 +1,15 @@
-
 <template>
-	<v-col cols="10" lg="4" class="mt-2">
-    <apexchart
-      :options="options"
-      :series="series"
-      style="height: 80%!important; border: 1px solid black; min-height: 250px!important"
-    />      
-    <v-card style="height: 20%!important; overflow: auto" >
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius porro sit, at excepturi esse hic nulla ex eaque perferendis cupiditate!
-    </v-card>    
+	<v-col cols="10" lg="4" class="mt-2" style="display:flex; flex-direction: column; justify-content:center">
+    <div id="custom-card">
+      <apexchart
+        :options="options"
+        :series="series"
+      />
+      <v-spacer />
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius porro sit, at excepturi esse hic nulla ex eaque perferendis cupiditate!
+      </p>
+    </div>
 	</v-col>
 </template>
 <script>
@@ -33,7 +34,7 @@ export default {
         },
         chart: {
           type: 'bar',
-          height: '250px',
+          height: 450,
           toolbar: {
             show: false,
           }
@@ -60,11 +61,6 @@ export default {
           categories:  ['range1','range2','range3','range4']
         },
         colors: chartPallet(),
-        yaxis: {
-          title: {
-            text: 'count',
-          },
-        },
         fill: {
           opacity: 1,
         },
@@ -73,16 +69,6 @@ export default {
             formatter: (val) => `${val} counts`,
           },
         },
-        // responsive: [{
-        //     breakpoint: 960,
-        //     options: {
-        //         plotOptions: {
-        //             bar: {
-        //                 horizontal: true
-        //             },
-        //         },
-        //     },
-        // }],
         noData: {
           text: 'No Data Available!',
           align: 'center',
@@ -95,7 +81,5 @@ export default {
 </script>
 
 <style scoped>
-*{
-  box-sizing: border-box!important;
-}
+@import url('~/assets/css/analytics.css');
 </style>

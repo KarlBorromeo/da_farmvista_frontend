@@ -1,11 +1,15 @@
 <template>
-	<v-col cols="10" lg="4" class="mt-2">
-    <apexchart
-      :options="options"
-      :series="series"
-      style="height: 80%!important; border: 1px solid black"
-    />
-     <v-card style="height: 20%!important; overflow: auto" class="text-center" >Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius porro sit, at excepturi esse hic nulla ex eaque perferendis cupiditate!</v-card>
+	<v-col cols="10" lg="4" class="mt-2" style="display:flex; flex-direction: column; justify-content:center">
+    <div id="custom-card">
+      <apexchart
+        :options="options"
+        :series="series"
+      />
+      <v-spacer />
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius porro sit, at excepturi esse hic nulla ex eaque perferendis cupiditate!
+      </p>
+    </div>
 	</v-col>
 </template>
 
@@ -66,3 +70,7 @@ export default {
 	}
 }
 </script>
+
+<style scoped>
+@import url('~/assets/css/analytics.css');
+</style>
