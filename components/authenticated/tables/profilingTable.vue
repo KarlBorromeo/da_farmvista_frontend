@@ -148,10 +148,6 @@ export default {
       if (!val) {
         this.id = ''
         this.$store.commit('questionnaire/resetTabsValidity')
-        this.$store.commit(
-          'questionnaire/displayCurrentTab',
-          'SurveyInformation'
-        )
       }
     },
     async search(){

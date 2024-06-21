@@ -143,14 +143,21 @@ export const state = () => ({
       tempValidity: false,
     },
   ],
-  currentTab: 'BasicInformation',
+  // currentTab: 'BasicInformation',
+  // currentTab: 'FarmWasteManagement',
+  currentTab: 'ParcelInformation',
+  // currentTab: 'DetailsCoffeeArea',
   isAllValid: false,
   commodity: '',
   isIntervieweeValidated: true,
-  isBasicInfoSurveyInfoValid: false
+  isBasicInfoSurveyInfoValid: false,
 })
 
 export const getters = {
+  /* return the parcel information details */
+  parcelInformationDetails(state){
+    return state.form.parcelInfo
+  },
   /* return boolean if the current interview is validated or not eg(diseased,declined,not-present, et.) */
   isIntervieweeValidated(state){
     return state.isIntervieweeValidated
@@ -491,7 +498,7 @@ export const mutations = {
       tab.validity = false
       tab.tempValidity = false
     })
-    state.currentTab = 'BasicInformation'
+    // state.currentTab = 'BasicInformation' TODO:
   },
 
   /* display the next tab contents */
@@ -546,7 +553,7 @@ export const mutations = {
 }
 
 export const actions = {
-  /* submit the form if all the tabs are validated or (basicInfo and surveyInfo only if interviewee is not validated) */
+  /* submit the form if all the tabs are validated or (basicInfo and surveyInfo forms only if interviewee status is not validated) */
   async submitAll(context) {
     if(context.state.isIntervieweeValidated){
       context.commit('checkValidityAll')
@@ -569,7 +576,7 @@ export const actions = {
     }
   },
 
-  /* submit and update the existing record or (basicInfo and surveyInfo only if interviewee is not validated) */
+  /* submit and update the existing record or (basicInfo and surveyInfo forms only if interviewee status is not validated) */
   async submitUpdate(context,id){
     if(context.state.isIntervieweeValidated){
       context.commit('checkValidityAll')
@@ -580,7 +587,6 @@ export const actions = {
       id: id,
       form: context.state.form,
     }
-    console.log('updated form: ',context.state.form)
     if (context.state.isAllValid || context.state.isBasicInfoSurveyInfoValid) {
       try {
         const response = await api.submitUpdate(payload)

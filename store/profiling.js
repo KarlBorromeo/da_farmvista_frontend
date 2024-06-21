@@ -112,7 +112,6 @@ export const mutations = {
 
   /* save the single record to the store to able the form questionnaire to access the existing values of the selected record */
   saveSelectedRecord(state, obj) {
-    console.log('selected record: ',obj)
     state.selectedRecord = obj
   },
 
@@ -146,7 +145,6 @@ export const actions = {
 
   /* fetch one survey record using id */
   async fetchSingleSurvey(context, payload) {
-    console.log('fetc;hing single record')
     try {
       const response = await api.fetchSingleSurvey(payload)
       context.commit('saveSelectedRecord', response)

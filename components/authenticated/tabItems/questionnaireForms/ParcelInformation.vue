@@ -5,13 +5,13 @@
       <form-card v-for="i in items" :key="i">
         <v-row>
           <v-col cols="12" class="mb-0 pb-0">
-            <p class="ma-0 pa-0 font-weight-black">{{ i }}</p>
           </v-col>
           <form-input-container>
             <v-text-field
               v-model="parcelNumber[i - 1]"
               :rules="requiredRule"
               label="* Parcel Number"
+              :disabled="true"
             ></v-text-field>
           </form-input-container>
 
@@ -161,6 +161,7 @@
               v-model="cropsPlanted[i - 1]"
               :rules="requiredRule"
               label="* Crops Planted (coffee,corn)"
+              hint="Separate with comma ' , ' if multiple crops"
             ></v-text-field>
           </form-input-container>
         </v-row>
@@ -224,6 +225,7 @@ export default {
   methods: {
     /* test if the form is valid, return boolean */
     validate() {
+      console.log('haah')
       if (this.items == 0) {
         this.$store.commit('questionnaire/toggleNextTab', {
           tabName: 'ParcelInformationValidated',
@@ -240,11 +242,15 @@ export default {
         tabName: 'ParcelInformationValidated',
         valid,
       })
+      console.log('valid:',valid)
       if (valid) {
         this.$store.commit('questionnaire/saveData', {
           keyName: 'parcelInfo',
           data: this.getData(),
         })
+        // console.log(this.items)
+        // console.log(this.cropsPlanted)
+        // console.log(this.$store.getters['questionnaire/parcelInformationDetails'])
       }
     },
     /* create an object that is an empty values */
@@ -289,7 +295,7 @@ export default {
     },
     // decrement the count of items
     decrement() {
-      if (this.items > 1) {
+      if (this.items > 0) {
         this.items--
         this.tenure.pop()
         this.topography.pop()
@@ -298,6 +304,7 @@ export default {
         this.sourceWater.pop()
         this.landUseStatus.pop()
         this.cropsPlanted.pop()
+        this.validate()
       }
     },
     increment() {
@@ -305,17 +312,19 @@ export default {
     },
     resetData() {
       this.items = 0
-      ;(this.parcelNumber = []), (this.area = []), (this.tenure = [])
+      this.parcelNumber = []
+      this.area = [] 
+      this.tenure = []
       this.topography = []
       this.soilFertility = []
       this.croppingSystem = []
       this.sourceWater = []
       this.landUseStatus = []
       this.cropsPlanted = []
-      ;(this.tenureOther = []),
-        (this.topographyOther = []),
-        (this.croppingSystemOther = []),
-        (this.sourceWaterOther = [])
+      this.tenureOther = []
+      this.topographyOther = []
+      this.croppingSystemOther = []
+      this.sourceWaterOther = []
       this.landUseStatusOther = []
     },
   },
@@ -458,6 +467,14 @@ export default {
     tempValue() {
       this.validate()
     },
+    items(value){
+      let arr = [];
+      for(let i=1; i<=value; i++){
+        arr.push(i)
+      }
+      this.parcelNumber = arr;
+      console.log(arr);
+    }
   },
 }
 </script>

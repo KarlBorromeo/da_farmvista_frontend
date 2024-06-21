@@ -131,7 +131,7 @@ export const state = () => ({
   intervieweeStatusByProvinceSelected: {},
   totalFarmerCountByProvinceSelected: {},
   soldCommodityByProvinceSelected: {},
-  marketingOutletFarmerCountSelected: {}, //TODO: this is for donut outlet farmer
+  marketingOutletFarmerCountSelected: {},
   timelineFrequencySelected: {},
   haveHeardFarmTechFarmerCountSelected: {},
   marketingOutletInfoSelected: [],

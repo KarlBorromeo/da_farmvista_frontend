@@ -120,7 +120,6 @@ export const getters = {
   Code27(state) {
     return generateArray(state.codes.Code27)
   },
-  // TODO:
   Rate(state) {},
   Sex(state) {},
   Agree(state) {},
