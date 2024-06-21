@@ -306,7 +306,6 @@ export default {
     },
     /* test if checbkoxes are not empty */
     validateCheckbox() {
-      console.log(this.january.includes('others'))
       if (
         this.january.includes('others')  && !this.januaryOther ||
         this.february.includes('others') && !this.februaryOther ||
@@ -354,6 +353,7 @@ export default {
     },
   },
   beforeMount() {
+    this.validate()
     this.activityItems = this.$store.getters['questionnaireCode/Code20']
 
     const data = this.$store.getters['profiling/selectedRecord']
@@ -455,18 +455,28 @@ export default {
         this.activityItems
       )
     } else {
-      ;(this.january = []), (this.januaryOther = '')
-      ;(this.february = []), (this.februaryOther = '')
-      ;(this.march = []), (this.marchOther = '')
-      ;(this.april = []), (this.aprilOther = '')
-      ;(this.may = []), (this.mayOther = '')
-      ;(this.june = []), (this.juneOther = '')
-      ;(this.july = []), (this.julyOther = '')
-      ;(this.august = []), (this.augustOther = '')
-      ;(this.september = []), (this.septemberOther = '')
-      ;(this.october = []), (this.octoberOther = '')
-      ;(this.november = []), (this.novemberOther = '')
-      ;(this.december = []), (this.decemberOther = '')
+      this.february = []
+      this.februaryOther = ''
+      this.march = []
+      this.marchOther = ''
+      this.april = []
+      this.aprilOther = ''
+      this.may = []
+      this.mayOther = ''
+      this.june = []
+      this.juneOther = ''
+      this.july = []
+      this.julyOther = ''
+      this.august = []
+      this.augustOther = ''
+      this.september = []
+      this.septemberOther = ''
+      this.october = []
+      this.octoberOther = ''
+      this.november = []
+      this.novemberOther = ''
+      this.december = []
+      this.decemberOther = ''
     }
     this.tempValue = 'tempValue'
   },
