@@ -306,19 +306,20 @@ export default {
     },
     /* test if checbkoxes are not empty */
     validateCheckbox() {
+      console.log(this.january.includes('others'))
       if (
-        this.january.length <= 0 ||
-        this.february.length <= 0 ||
-        this.march.length <= 0 ||
-        this.april.length <= 0 ||
-        this.may.length <= 0 ||
-        this.june.length <= 0 ||
-        this.july.length <= 0 ||
-        this.august.length <= 0 ||
-        this.september.length <= 0 ||
-        this.october.length <= 0 ||
-        this.november.length <= 0 ||
-        this.december.length <= 0
+        this.january.includes('others')  && !this.januaryOther ||
+        this.february.includes('others') && !this.februaryOther ||
+        this.march.includes('others') && !this.marchOther ||
+        this.april.includes('others') && !this.aprilOther ||
+        this.may.includes('others') && !this.mayOther ||
+        this.june.includes('others') && !this.juneOther ||
+        this.july.includes('others') && !this.julyOther ||
+        this.august.includes('others') && !this.augustOther ||
+        this.september.includes('others') && !this.septemberOther ||
+        this.october.includes('others') && !this.octoberOther ||
+        this.november.includes('others') && !this.novemberOther ||
+        this.december.includes('others') && !this.decemberOther
       ) {
         return false
       } else {
