@@ -10,8 +10,8 @@ Axios.interceptors.request.use((config) => {
   return config
 })
 
-Axios.defaults.headers.common['ngrok-skip-browser-warning'] = false
-Axios.defaults.withCredentials = true
+// Axios.defaults.headers.common['ngrok-skip-browser-warning'] = false
+// Axios.defaults.withCredentials = true
 
 /* interceptor, executes before the frontend application receives the response */
 Axios.interceptors.response.use(

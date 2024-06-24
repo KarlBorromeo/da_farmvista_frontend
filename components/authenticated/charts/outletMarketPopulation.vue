@@ -2,18 +2,18 @@
 	<v-col cols="12" lg="4" class="mt-2">
 		<v-card
 			class="pa-3 text-center rounded-lg"
-            style="height: 100%"
+            style="height: 100%; overflow: auto"
 		>
-      <menu-dropdown-provinces @emitChangeProvince="changeProvince"/>
-      <v-row justify="center">
-        <v-col cols="9" lg="12">
-          <apexchart
-            :options="options"
-            :series="series"
-            style="height:100%; display: flex; justify-content: center; align-items:center"
-          />          
-        </v-col>
-      </v-row>
+		<menu-dropdown-provinces @emitChangeProvince="changeProvince"/>
+		<v-row justify="center">
+			<v-col cols="12" >
+			<apexchart
+				:options="options"
+				:series="series"
+				style="height:100%; display: flex; justify-content: center; align-items:center"
+			/>          
+			</v-col>
+		</v-row>
 
 		</v-card>
 	</v-col>
@@ -50,10 +50,9 @@ export default {
 				},
 				chart: {
 					type: 'donut',
-					width: '100%'
 				},
 				colors: chartPallet(),
-                labels: ['Apple', 'Mango', 'Orange', 'Watermelon','Mango', 'Orange', 'Watermelon'],
+                labels: this.$store.getters['dashboard/marketingOutletFarmerCountSelected'].categories,
 				stroke: {
 					width: 2,
 				},
@@ -61,7 +60,7 @@ export default {
 					position: 'bottom',
 				},
 				dataLabels: {
-					enabled: true,
+					enabled: false,
 					offsetX: 15,
   					offsetY: 20,
 					style: {
@@ -124,7 +123,7 @@ export default {
 								width: '90%',
 							},
 							legend: {
-								position: 'right',
+								position: 'bottom',
 							},
 						},
 					},
@@ -135,7 +134,7 @@ export default {
 								width: '110%',
 							},
 							legend: {
-								position: 'right',
+								position: 'bottom',
 							},
 						},
 					},
