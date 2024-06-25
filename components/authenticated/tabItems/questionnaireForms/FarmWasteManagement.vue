@@ -104,6 +104,8 @@
 										:rules="requiredRule"
 										v-model="item.cropsWaste[j-1].kg"
                     label="waste volume in (kg)"
+                    type="number"
+                    min=0
 									>
 									</v-text-field>
 								</v-col>
@@ -137,10 +139,6 @@ import formCard from '~/components/authenticated/form/formCard.vue'
 import formCardButton from '~/components/authenticated/form/formCardButton.vue'
 import FormInputContainer from '~/components/authenticated/form/formInputContainer.vue'
 import FormRadioContainer from '~/components/authenticated/form/formRadioContainer.vue'
-import {
-	extractUnmatchedValueCheck,
-	convertNumbers,
-} from '~/reusableFunctions/questionnaireValidation'
 export default {
 	components: {
 		formCard,
@@ -185,18 +183,7 @@ export default {
 	methods: {
 		/* test if the form is valid, return boolean */
 		validate() {
-			if (this.items == 0) {
-				this.$store.commit('questionnaire/toggleNextTab', {
-					tabName: 'FarmWasteManagementValidated',
-					valid: true,
-				})
-				this.$store.commit('questionnaire/saveData', {
-					keyName: 'farmWasteManagement',
-					data: this.getEmptyData(),
-				})
-				return
-			}
-			const valid = this.$refs.form.validate()
+			const valid = this.checkNull()
 			this.$store.commit('questionnaire/toggleNextTab', {
 				tabName: 'FarmWasteManagementValidated',
 				valid,
@@ -208,25 +195,39 @@ export default {
 				})
 			}
 		},
-		/* create an object that is an empty values */
-		getEmptyData() {
-			return {
-				cropsGrown: [],
-				kindWasteProduced: [],
-				volumeWasteKg: [],
-				isUtilized: [],
-			}
-		},
 		/* get the data and convert it into expected key/value formats in BackEnd */
 		getData() {
+      let cropsGrown = []
+      let kindWasteProduced = []
+      let volumeWasteKg = []
+      let isUtilized = []
+      for(let i=0; i<this.parcelInfo.length; i++){
+        const cropsGrownByParcel = this.parcelInfo[i].cropsGrown
+        const cropsWasteByParcel = this.parcelInfo[i].cropsWaste
+        let tempCropsGrownArr = []
+        let tempIsUtilizedArr = []
+        for( let j=0; j<cropsGrownByParcel.length; j++){
+          tempCropsGrownArr.push(cropsGrownByParcel[j].crop)
+          tempIsUtilizedArr.push(cropsGrownByParcel[j].isUtilized)
+        }
+        let tempCropswasteArr = []
+        let tempWasteKg = []
+        for( let j=0; j<cropsWasteByParcel.length; j++){
+          tempCropswasteArr.push(cropsWasteByParcel[j].waste)
+          tempWasteKg.push(parseInt(cropsWasteByParcel[j].kg))
+        }
+        cropsGrown.push(tempCropsGrownArr)
+        isUtilized.push(tempIsUtilizedArr)
+        kindWasteProduced.push(tempCropswasteArr)
+        volumeWasteKg.push(tempWasteKg)
+      }
 			return {
-				cropsGrown: this.cropsGrown,
-				kindWasteProduced: this.kindsWasteProduced,
-				volumeWasteKg: convertNumbers(this.volumeWaste),
-				isUtilized: this.isUtilized,
+				cropsGrown,
+        isUtilized,
+				kindWasteProduced,
+				volumeWasteKg,
 			}
 		},
-		// decrement the count of items
 		decrement(index) {
 			if (this.parcelInfo[index].cropsWasteitems > 1) {
 				this.parcelInfo[index].cropsWasteitems--
@@ -241,40 +242,39 @@ export default {
         }
       )
       this.parcelInfo[index].cropsWasteitems++;
-			// this.items++
 		},
-		resetData(index) {
-			this.items = 0
-			this.cropsGrown = []
-			this.kindsWasteProduced = []
-			this.volumeWaste = []
-			this.isUtilized = []
-		},
+    checkNull(){
+      const data = this.getData();
+      const keyArrays = Object.keys(data);
+      for(let i=0; i<keyArrays.length; i++){
+        let keyValues = data[keyArrays[i]]
+        for(let j=0; j<keyValues.length; j++){
+          let arr = keyValues[j]
+          const index = arr.findIndex(item => !item)
+          if(index>=0){
+            console.log('empty at ',index)
+            return false;
+          }
+        }
+      }
+      return true;
+    }
 	},
 	watch: {
-		cropsGrown() {
-			this.validate()
-		},
-		kindsWasteProduced() {
-			this.validate()
-		},
-		volumeWaste() {
-			this.validate()
-		},
-		isUtilized() {
-			this.validate()
-		},
-		tempValue() {
-			this.validate()
-		},
+    parcelInfo: {
+      handler: function () {
+        this.validate()
+      },
+      deep: true,
+    },
 	},
   beforeMount() { 
     const isEditing = this.$store.getters['profiling/isEditingMode']
     if(!isEditing){
+	    // this is composed of single/mulitple parcels
       const cropsPlanted = this.$store.getters['questionnaire/parcelInformationDetails'].cropsPlanted
       for(let j=0; j<cropsPlanted.length; j++){
         const cropsPlantedArr = cropsPlanted[j].split(',')
-        console.log(cropsPlantedArr)
         let cropsGrown = [];
         for(let i = 0; i<cropsPlantedArr.length; i++){
           cropsGrown.push({
@@ -286,7 +286,7 @@ export default {
         let cropsWaste = []
         cropsWaste.push({
           waste: '',
-          kg: 0
+          kg: ''
         })
         this.parcelInfo.push({
           cropsGrown,
@@ -307,35 +307,6 @@ export default {
         ]
       })
     }
-    
-	// 	// this.machineNameItems =
-	// 	// 	this.$store.getters['questionnaireCode/Code5FarmMachinery']
-
-	// 	const data = this.$store.getters['profiling/selectedRecord']
-	// 	if (Object.keys(data).length > 0) {
-	// 		const length = data.farmWasteManagement.length
-	// 		if (length > 0) {
-	// 			this.items = length
-	// 			for (let i = 0; i < length; i++) {
-	// 				this.cropsGrown[i] = extractUnmatchedValueCheck(
-	// 					data.farmWasteManagement[i].cropsGrown,
-	// 					[]
-	// 				)
-	// 				this.kindsWasteProduced[i] = extractUnmatchedValueCheck(
-	// 					data.farmWasteManagement[i].kindWasteProduced,
-	// 					[]
-	// 				)
-	// 				this.volumeWaste[i] =
-	// 					data.farmWasteManagement[i].volumeWasteKg
-	// 				this.isUtilized[i] = data.farmWasteManagement[i].isUtilized
-	// 			}
-	// 		} else {
-	// 			this.resetData()
-	// 		}
-	// 	} else {
-	// 		this.resetData()
-	// 	}
-	// 	this.tempValue = 'tempvalue'
 	},
 }
 </script>
