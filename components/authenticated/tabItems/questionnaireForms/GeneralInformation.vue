@@ -80,11 +80,16 @@
           <v-checkbox
             v-for="item in nonMarginalizedSectorItems"
             v-model="nonMarginalizedSector"
-            :key="item.value"
-            :value="item.value"
-            :label="item.label"
+            :key="item"
+            :value="item"
+            :label="item"
             class="ma-0 pa-0"
           ></v-checkbox>
+          <v-text-field
+            v-if="isOtherTicked(nonMarginalizedSector)"
+            v-model="nonMarginalizedSectorOthers"
+            label="* please specify"
+          ></v-text-field>
         </form-checkbox-container>
 
         <form-input-container>
@@ -165,6 +170,7 @@ import FormInputContainer from '~/components/authenticated/form/formInputContain
 import FormRadioContainer from '~/components/authenticated/form/formRadioContainer.vue'
 import FormCheckboxContainer from '~/components/authenticated/form/formCheckboxContainer.vue'
 import FormSelectContainer from '../../form/formSelectContainer.vue'
+import { concatOtherValueToList, isOtherValueTickedCheckbox, extractUnmatchedValueCheck } from '~/reusableFunctions/questionnaireValidation'
 export default {
   components: {
     FormInputContainer,
@@ -211,18 +217,8 @@ export default {
       { value: 'no', label: 'No' },
     ],
     nonMarginalizedSector: ['indigenous people'],
-    nonMarginalizedSectorItems: [
-      { value: 'senior citizen', label: 'Senior Citizen' },
-      { value: 'indigenous people', label: 'Indigenous People' },
-      {
-        value: 'person with disability',
-        label: 'Person with Disability',
-      },
-      {
-        value: '4ps beneficiary (including household members)',
-        label: '4Ps Beneficiary',
-      },
-    ],
+    nonMarginalizedSectorOthers: '',
+    nonMarginalizedSectorItems: [],
     dialectSpoken: 'Bisaya',
     isMemberOrgranization: 'no',
     isMemberOrgranizationItems: [
@@ -271,7 +267,10 @@ export default {
         this.nonMarginalizedSector.length == 0
       ) {
         return false
-      } else {
+      }else if(this.nonMarginalizedSector.includes('others') && !this.nonMarginalizedSectorOthers){
+        return false
+      } 
+      else {
         return true
       }
     },
@@ -284,13 +283,22 @@ export default {
         religion: this.religion,
         highestEducationAttained: this.highestEducationAttained,
         isBelongMarginalizedSector: this.isBelongMarginalizedSector,
-        ifNoMarginalizedSectorName: this.nonMarginalizedSector,
+        ifNoMarginalizedSectorName: concatOtherValueToList(this.nonMarginalizedSector,this.nonMarginalizedSectorOthers),
         dialectSpoken: this.dialectSpoken,
         isMemberFarmerOrganization: this.isMemberOrgranization,
         organizationTypeMembership: this.typeMembership,
         organizationName: this.organizationName,
         isHouseMemberAffiliatedToOrg: this.isAnyHouseholdMemberOrg,
       }
+    },
+    /* check if 'other' checkbox is ticked */
+    isOtherTicked(list) {
+      for (let i = 0; i < list.length; i++) {
+        if (list[i] == 'others') {
+          return true
+        }
+      }
+      return false
     },
   },
   computed: {
@@ -349,6 +357,7 @@ export default {
     },
   },
   beforeMount() {
+    this.nonMarginalizedSectorItems = this.$store.getters['questionnaireCode/MarginalizedSector']
     this.highestEducationAttainedItems = this.$store.getters['questionnaireCode/HighestEducationalAttainment']
     const data = this.$store.getters['profiling/selectedRecord']
     if (Object.keys(data).length > 0) {
@@ -360,8 +369,9 @@ export default {
         data.profileGeneralInfo.highestEducationAttained
       this.isBelongMarginalizedSector =
         data.profileGeneralInfo.isBelongMarginalizedSector
-      this.nonMarginalizedSector =
-        data.profileGeneralInfo.ifNoMarginalizedSectorName
+      this.nonMarginalizedSector = isOtherValueTickedCheckbox( data.profileGeneralInfo.ifNoMarginalizedSectorName,this.nonMarginalizedSectorItems)
+      this.nonMarginalizedSectorOthers = extractUnmatchedValueCheck(data.profileGeneralInfo.ifNoMarginalizedSectorName,this.nonMarginalizedSectorItems)
+
       this.dialectSpoken = data.profileGeneralInfo.dialectSpoken
       this.isMemberOrgranization =
         data.profileGeneralInfo.isMemberFarmerOrganization
