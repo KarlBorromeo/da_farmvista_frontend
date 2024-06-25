@@ -153,27 +153,23 @@
       <form-card>
         <p class="my-2 pb-0 font-weight-medium">Seed Source</p>
         <v-row>
-          <form-radio-container title="Details">
-            <v-radio-group
-              :rules="requiredRule"
+          <form-checkbox-container title="Details">
+            <v-checkbox
+              v-for="item in seedSourceItems"
               v-model="seedSourceDetails"
-              class="pa-0 ma-0"
-            >
-              <v-radio
-                v-for="item in seedSourceItems"
-                :key="item"
-                :label="item"
-                :value="item"
-              ></v-radio>
-              <v-text-field
-                v-if="seedSourceDetails == 'others'"
-                v-model="seedSourceDetailsOther"
-                :rules="requiredRule"
-                label="* Please Specify"
-                class="my-0 py-0 pt-1"
-              ></v-text-field>
-            </v-radio-group>
-          </form-radio-container>
+              :key="item"
+              :value="item"
+              :label="item"
+              dense
+              class="ma-0 pa-0 ml-6"
+              style="display: inline-block"
+            ></v-checkbox>
+            <v-text-field
+              v-if="isOtherTicked(seedSourceDetails)"
+              v-model="seedSourceDetailsOther"
+              label="* please specify"
+            ></v-text-field>
+          </form-checkbox-container>
 
           <form-radio-container title="Reason for Using">
             <v-radio-group
@@ -210,12 +206,16 @@ import FormRadioContainer from '~/components/authenticated/form/formRadioContain
 import {
   isOtherValueDefinedRadio,
   extractUnmatchedValueRadio,
+  isOtherValueTickedCheckbox,
+  concatOtherValueToList
 } from '~/reusableFunctions/questionnaireValidation'
+import FormCheckboxContainer from '../../form/formCheckboxContainer.vue'
 export default {
   components: {
     formCard,
     FormInputContainer,
     FormRadioContainer,
+    FormCheckboxContainer
   },
   data: () => ({
     valid: false,
@@ -233,7 +233,7 @@ export default {
     intercropVarietyReasonsOther: 'sample Data Other',
     totalAreaDetails: 2,
     totalAreaReasons: 'sampleData',
-    seedSourceDetails: 'purchased from a certified mother plant garden',
+    seedSourceDetails: [],
     seedSourceDetailsOther: '',
     seedSourceReasons: 'recommended by other farmer',
     seedSourceReasonsOther: '',
@@ -260,7 +260,13 @@ export default {
   methods: {
     /* test if the form is valid, return boolean */
     validate() {
-      const valid = this.$refs.form.validate()
+      let valid = false;
+      const validTextRadio = this.$refs.form.validate()
+      const validCheckbox = this.validateCheckbox()
+      console.log(validTextRadio,validCheckbox)
+      if(validTextRadio && validCheckbox){
+        valid = true;
+      }
       this.$store.commit('questionnaire/toggleNextTab', {
         tabName: 'DetailsCoffeeAreaValidated',
         valid,
@@ -270,6 +276,19 @@ export default {
           keyName: 'detailCoffeeArea',
           data: this.getData(),
         })
+        console.log('data:',this.getData())
+      }
+    },
+    /* test if the checkbox are not empty */
+    validateCheckbox(){
+      console.log(this.seedSourceDetails.length)
+      if(this.seedSourceDetails.length < 1){
+        return false
+      }else if(this.seedSourceDetails.includes('others') && !this.seedSourceDetailsOther){
+        return false
+      }else{
+        console.log('hahahh:',this.seedSourceDetails)
+        return true
       }
     },
     /* concatenate two value holders for field that has others (ex: variable, variableOther)*/
@@ -314,7 +333,7 @@ export default {
           reasonUsing: this.totalAreaReasons,
         },
         seedSource: {
-          details: this.concatinateValues(
+          details: concatOtherValueToList(
             this.seedSourceDetails,
             this.seedSourceDetailsOther
           ),
@@ -324,6 +343,15 @@ export default {
           ),
         },
       }
+    },
+    /* check if 'other' checkbox is ticked */
+    isOtherTicked(list) {
+      for (let i = 0; i < list.length; i++) {
+        if (list[i] == 'others') {
+          return true
+        }
+      }
+      return false
     },
   },
   beforeMount() {
@@ -364,11 +392,11 @@ export default {
       )
       this.totalAreaDetails = data.detailCoffeeArea.totalArea.details
       this.totalAreaReasons = data.detailCoffeeArea.totalArea.reasonUsing
-      this.seedSourceDetails = isOtherValueDefinedRadio(
+      this.seedSourceDetails = isOtherValueTickedCheckbox(
         data.detailCoffeeArea.seedSource.details,
         this.seedSourceItems
       )
-      this.seedSourceDetailsOther = extractUnmatchedValueRadio(
+      this.seedSourceDetailsOther = extractUnmatchedValueCheck(
         data.detailCoffeeArea.seedSource.details,
         this.seedSourceItems
       )
@@ -395,7 +423,7 @@ export default {
       this.intercropVarietyReasonsOther = ''
       this.totalAreaDetails = ''
       this.totalAreaReasons = ''
-      this.seedSourceDetails = ''
+      this.seedSourceDetails = []
       this.seedSourceDetailsOther = ''
       this.seedSourceReasons = ''
       this.seedSourceReasonsOther = ''
@@ -417,7 +445,7 @@ export default {
     },
     seedSourceDetails(value) {
       this.validate()
-      if (value !== 'others') {
+      if (!value.includes('others')) {
         this.seedSourceDetailsOther = ''
       }
     },
