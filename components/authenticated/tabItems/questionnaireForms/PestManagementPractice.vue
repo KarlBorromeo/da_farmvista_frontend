@@ -26,7 +26,7 @@
           />
         </form-input-container>
 
-        <form-input-container>
+        <form-input-container v-if="didUsePesticide == 'yes'">
           <v-text-field
             v-model="whomIdeaApplyPesticide"
             :rules="requiredRule"
@@ -35,16 +35,17 @@
           />
         </form-input-container>
 
-        <form-input-container>
+        <form-input-container v-if="didUsePesticide == 'yes'">
           <v-text-field
             v-model="timesAppliedPesticide"
             :rules="numberRule"
+            type="number"
             label="how many times apply pesticides"
             required
           />
         </form-input-container>
 
-        <form-radio-container title="Did you spary pesticided yourself?">
+        <form-radio-container title="Did you spary pesticided yourself?" v-if="didUsePesticide == 'yes'">
           <v-radio-group
             :rules="requiredRule"
             v-model="didSprayYourself"
@@ -59,10 +60,11 @@
           </v-radio-group>
         </form-radio-container>
 
-        <form-input-container v-if="didSprayYourself == 'no'">
+        <form-input-container v-if="didSprayYourself == 'no' && didUsePesticide == 'yes'">
           <v-text-field
             v-model="payLaborSpraying"
             :rules="numberRule"
+            type="number"
             label="how much pay labor of spraying"
             required
           />
@@ -114,7 +116,7 @@
           />
         </form-input-container>
 
-        <form-radio-container title="first hear about using pesticide">
+        <form-radio-container title="first hear about using pesticide" v-if="didUsePesticide == 'yes'">
           <v-radio-group
             :rules="requiredRule"
             v-model="hearAboutPesticideUsed"
@@ -164,7 +166,7 @@
           </v-radio-group>
         </form-radio-container>
 
-        <form-checkbox-container title="Whom get pest control advice">
+        <form-checkbox-container title="Whom get pest control advice" v-if="didUsePesticide == 'yes'">
           <v-checkbox
             v-for="item in whomPestControlAdviceItems"
             v-model="whomPestControlAdvice"
@@ -192,7 +194,7 @@
         </form-checkbox-container>
 
         <form-radio-container
-          v-if="whomPestControlAdvice.length > 1"
+          v-if="whomPestControlAdvice.length > 1 && didUsePesticide == 'yes'"
           title="which of these the most credible advice to you?"
         >
           <v-radio-group
@@ -209,7 +211,7 @@
           </v-radio-group>
         </form-radio-container>
 
-        <form-input-container v-if="whichAdviceCredible">
+        <form-input-container v-if="whichAdviceCredible && didUsePesticide == 'yes'" >
           <v-text-field
             v-model="why"
             :rules="requiredRule"
@@ -342,8 +344,8 @@ export default {
     /* validate checkbox if empty or not */
     validateCheckbox() {
       if (
-        this.kindSprayerHave.length == 0 ||
-        this.whomPestControlAdvice.length == 0
+        this.kindSprayerHave.length == 0 && this.haveSprayer == 'yes' ||
+        this.whomPestControlAdvice.length == 0 && this.didUsePesticide == 'yes'
       ) {
         return false
       } else {
@@ -425,6 +427,18 @@ export default {
       this.validate()
       if (value !== 'yes') {
         this.typeOfPesticide = ''
+        this.whomIdeaApplyPesticide = ''
+        this.timesAppliedPesticide = ''
+        this.didSprayYourself = ''
+        this.payLaborSpraying = ''
+        this.hearAboutPesticideUsed = ''
+        this.pesticideUsedGroup = ''
+        this.pesticideUsedMassMedia = ''
+        this.whomPestControlAdvice = []
+        this.controlAdviceMassMedia = ''
+        this.controlAdviceOther = ''
+        this.whichAdviceCredible = ''
+        this.why = ''
       }
     },
     didSprayYourself(value) {
