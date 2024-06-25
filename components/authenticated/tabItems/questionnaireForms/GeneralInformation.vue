@@ -47,13 +47,16 @@
           ></v-text-field>
         </form-input-container>
 
-        <form-input-container>
-          <v-text-field
+        <form-select-container>
+          <v-select
+            :items="highestEducationAttainedItems"
             v-model="highestEducationAttained"
             :rules="requiredRule"
-            label="* Highest Educational Attainment"
-          ></v-text-field>
-        </form-input-container>
+            label="Highest Educational Attainment"
+            required
+            class="text-capitalize"
+          ></v-select>
+        </form-select-container>
 
         <form-radio-container title="Belongs to the Marginalized Sector">
           <v-radio-group
@@ -161,11 +164,13 @@
 import FormInputContainer from '~/components/authenticated/form/formInputContainer.vue'
 import FormRadioContainer from '~/components/authenticated/form/formRadioContainer.vue'
 import FormCheckboxContainer from '~/components/authenticated/form/formCheckboxContainer.vue'
+import FormSelectContainer from '../../form/formSelectContainer.vue'
 export default {
   components: {
     FormInputContainer,
     FormRadioContainer,
     FormCheckboxContainer,
+    FormSelectContainer
   },
   data: () => ({
     valid: false,
@@ -199,6 +204,7 @@ export default {
     ],
     religion: 'catholic',
     highestEducationAttained: 'college grad',
+    highestEducationAttainedItems: [],
     isBelongMarginalizedSector: 'no',
     isBelongMarginalizedSectorItems: [
       { value: 'yes', label: 'Yes' },
@@ -343,6 +349,7 @@ export default {
     },
   },
   beforeMount() {
+    this.highestEducationAttainedItems = this.$store.getters['questionnaireCode/HighestEducationalAttainment']
     const data = this.$store.getters['profiling/selectedRecord']
     if (Object.keys(data).length > 0) {
       this.age = data.profileGeneralInfo.age

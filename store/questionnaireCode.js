@@ -123,6 +123,9 @@ export const getters = {
   Rate(state) {},
   Sex(state) {},
   Agree(state) {},
+  HighestEducationalAttainment(state){
+    return generateArray(state.codes.HighestEducationalAttainment)
+  },
   PrintMaterials(state) {
     return generateArray(state.codes.PrintMaterials)
   },
