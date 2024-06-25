@@ -126,6 +126,9 @@ export const getters = {
   HighestEducationalAttainment(state){
     return generateArray(state.codes.HighestEducationalAttainment)
   },
+  MarginalizedSector(state){
+    return generateArray(state.codes.MarginalizedSector)
+  },
   PrintMaterials(state) {
     return generateArray(state.codes.PrintMaterials)
   },

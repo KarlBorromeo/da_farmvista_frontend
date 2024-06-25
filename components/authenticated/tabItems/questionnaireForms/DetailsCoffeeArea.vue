@@ -207,7 +207,8 @@ import {
   isOtherValueDefinedRadio,
   extractUnmatchedValueRadio,
   isOtherValueTickedCheckbox,
-  concatOtherValueToList
+  concatOtherValueToList,
+  extractUnmatchedValueCheck
 } from '~/reusableFunctions/questionnaireValidation'
 import FormCheckboxContainer from '../../form/formCheckboxContainer.vue'
 export default {
