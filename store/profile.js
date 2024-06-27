@@ -1,25 +1,18 @@
 import * as api from '../api/profile'
 export const state = () => ({
     myProfileDetails: {},
-    myAvatarUrl: ''
   })
   
 export const getters = {
     myProfileDetails(state){
         return state.myProfileDetails
     },
-    myAvatarUrl(state){
-        return state.myAvatarUrl
-    }
 }
 
 export const mutations = {
     setMyProfileDetails(state,details){
         state.myProfileDetails = details;
     },
-    saveUrl(state,blob){
-        state.myAvatarUrl = blob
-    }
 }
 
 export const actions = {
@@ -47,14 +40,6 @@ export const actions = {
         try{
             let res = await api.updatePassword(payload)
             return res
-        }catch(error){
-            throw error
-        }
-    },
-    async getAvatarUrl(context){
-        try{
-            let res = await api.getAvatarUrl()
-            context.commit('saveUrl',res)
         }catch(error){
             throw error
         }

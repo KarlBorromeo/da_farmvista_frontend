@@ -46,9 +46,19 @@
       <h4 style="font-weight: 500">{{ currentPageTitle }}</h4>
       <v-spacer />
       <v-list-item-avatar class="hidden-sm-and-down">
-        <img src="https://randomuser.me/api/portraits/women/81.jpg" />
+        <!-- <img id="avatar" :src="avatarURL" /> -->
+        <v-img 
+            alt=""
+            :src="avatarURL"
+            :contain="false"
+            position="center"
+            :aspect-ratio="1"
+            width="80"
+            class="rounded-pill elevation-4"
+        />
       </v-list-item-avatar>
       <the-menu />
+    
     </v-app-bar>
     <v-main style="background-color: #dcdfe3">
       <Nuxt />
@@ -111,6 +121,10 @@ export default {
     currentPageTitle() {
       return this.$store.getters['pageNameGetter']
     },
+    avatarURL(){
+      // return localStorage.getItem('avatarUrl')
+      return this.$store.getters['auth/avatarURL']
+    }
   },
   beforeMount(){
     const currentUserType = localStorage.getItem('type')
@@ -123,6 +137,10 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 @import url('~/assets/css/fonts.css');
+#avatarURL{
+  object-fit: contain!important;
+  object-position: center;
+}
 </style>

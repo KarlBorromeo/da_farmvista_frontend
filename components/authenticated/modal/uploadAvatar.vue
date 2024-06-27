@@ -15,7 +15,6 @@
           label="Avatar"
         ></v-file-input>        
       </v-form>
-
 		</v-container>
 		<v-btn class="success" @click="upload">Upload</v-btn>
 		<snackbar ref="snackbar" />
@@ -37,7 +36,7 @@ export default {
           !value ||
 					value.size < 2000000 ||
 					'Avatar size should be less than 2 MB!',
-			],
+			]
 		}
 	},
   methods:{

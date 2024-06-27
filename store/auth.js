@@ -5,9 +5,14 @@ export const state = () => ({
     firstName: '',
     type: '',
   },
+  avatarURL: ''
 })
 
 export const getters = {
+  /* return avatar urll of current user logged in */
+  avatarURL(state){
+    return state.avatarURL
+  },
   /* return first name of current user logged in */
   currentFirstName(state) {
     return state.currentUser.firstName
@@ -22,15 +27,23 @@ export const getters = {
 export const mutations = {
   /* save the user data to the local storage which will not be deleted after hard refresh*/
   saveUserDataToLocalStorage(state, userData) {
+    console.log(userData)
     state.currentUser.firstName = userData.firstName
+    state.avatarURL = userData.avatarURL
     localStorage.setItem('token', userData.accessToken)
     localStorage.setItem('type', userData.type)
     localStorage.setItem('firstname', userData.firstName)
+    localStorage.setItem('avatarUrl', userData.avatarURL)
   },
   /* save the user data to the store which will be deleted if hard refresh */
   updateFirstname(state, firstname) {
     localStorage.setItem('firstname', firstname)
     state.currentUser.firstName = firstname
+  },
+  /* save the user profile url to the store which will be deleted if hard refresh */
+  updateAvatarURL(state, avatar) {
+    localStorage.setItem('avatarUrl', avatar)
+    state.avatarURL = avatar
   },
   /* delete the local storage details when logged out */
   logout() {
@@ -41,11 +54,13 @@ export const mutations = {
     const token = localStorage.getItem('token')
     const type = localStorage.getItem('type')
     const firstname = localStorage.getItem('firstname')
+    const avatarURL = localStorage.getItem('avatarUrl')
     if (!token || !type) { 
       state.currentUserLoggedin = false
     } else {  
       state.currentUserLoggedin = true
       state.currentUser.firstName = firstname
+      state.avatarURL = avatarURL
     }
   },
 }

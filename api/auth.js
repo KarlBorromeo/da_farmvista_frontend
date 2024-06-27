@@ -7,6 +7,7 @@ export async function login(credentials) {
       accessToken: response.data.accessToken,
       type: response.data.type,
       firstName: response.data.firstName,
+      avatarURL: response.data.avatarURL
     }
   } catch (error) {
     console.error(error)

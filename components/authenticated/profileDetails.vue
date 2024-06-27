@@ -95,7 +95,6 @@ export default {
             return this.$store.getters['profile/myProfileDetails'].passwordLastUpdated
         },
         avatar(){
-            // return 'https://4.img-dpreview.com/files/p/E~TS590x0~articles/3925134721/0266554465.jpeg'
            return this.$store.getters['profile/myProfileDetails'].avatarURL
         },
     },
@@ -104,6 +103,7 @@ export default {
             this.uploadAvatarModal = false;
             this.$refs.snackbar.showBar(res,'success')
             await this.$store.dispatch('profile/fetchCurrenUserDetails')
+            this.$store.commit('auth/updateAvatarURL',this.$store.getters['profile/myProfileDetails'].avatarURL)
         },
         async emitCloseModalPassword(res){
             this.uploadAvatarModal = false;
