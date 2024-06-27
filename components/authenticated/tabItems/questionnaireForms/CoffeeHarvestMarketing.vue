@@ -1,55 +1,74 @@
 <template>
-  <v-form ref="form" v-model="valid" lazy-validation>
-    <v-container>
-      <form-card v-for="item in list" :key="item.key">
-        <p class="my-2 pb-0 font-weight-medium" v-if="!item.radio">
-          {{ item.title }}
-        </p>
-        <v-row>
-          <form-input-container v-if="!item.radio">
-            <v-text-field
-              v-model="formData[item.key].variable"
-              :rules="numberRule"
-              label="* Details"
-              :type="item.type"
-            ></v-text-field>
-          </form-input-container>
-          <form-radio-container v-else :title="item.title">
-            <v-text-field
-              v-model="formData[item.key].variable"
-              :rules="requiredRule"
-              class="requiredFieldHidden"
-            />
-            <v-radio-group
-              v-model="formData[item.key].variable"
-              class="pa-0 ma-0"
-            >
-              <v-radio
-                v-for="item in farmFinancingItems"
-                :key="item"
-                :label="item"
-                :value="item"
-              ></v-radio>
-              <div
-                v-if="!formData[item.key].variable"
-                class="red--text caption"
-              >
-                You must select an option!
-              </div>
-            </v-radio-group>
-          </form-radio-container>
-          <form-input-container>
-            <v-text-field
-              v-model="formData[item.key].remarks"
-              :rules="requiredRule"
-              label="* Reason for using"
-            ></v-text-field>
-          </form-input-container>
-        </v-row>
-      </form-card>
+  <div>
+    <v-container class="my-0 py-0">
+      <v-row class="my-0 mt-3">
+        <form-radio-container title="Harvested already?">
+          <v-radio-group
+            v-model="isHarvested"
+            class="pa-0 ma-0"
+          >
+            <v-radio
+              v-for="item in isHarvestedItems"
+              :key="item"
+              :label="item"
+              :value="item"
+            ></v-radio>
+          </v-radio-group>
+        </form-radio-container>
+      </v-row>
     </v-container>
-    <v-btn @click="validate">Validate</v-btn>
-  </v-form>
+    <v-form ref="form" v-model="valid" lazy-validation v-if="isHarvested=='yes'">
+      <v-container class="mt-0 pt-0">
+        <form-card v-for="item in list" :key="item.key">
+          <p class="my-2 mt-0 pb-0 font-weight-medium" v-if="!item.radio">
+            {{ item.title }}
+          </p>
+          <v-row>
+            <form-input-container v-if="!item.radio">
+              <v-text-field
+                v-model="formData[item.key].variable"
+                :rules="numberRule"
+                label="* Details"
+                :type="item.type"
+              ></v-text-field>
+            </form-input-container>
+            <form-radio-container v-else :title="item.title">
+              <v-text-field
+                v-model="formData[item.key].variable"
+                :rules="requiredRule"
+                class="requiredFieldHidden"
+              />
+              <v-radio-group
+                v-model="formData[item.key].variable"
+                class="pa-0 ma-0"
+              >
+                <v-radio
+                  v-for="item in farmFinancingItems"
+                  :key="item"
+                  :label="item"
+                  :value="item"
+                ></v-radio>
+                <div
+                  v-if="!formData[item.key].variable"
+                  class="red--text caption"
+                >
+                  You must select an option!
+                </div>
+              </v-radio-group>
+            </form-radio-container>
+            <form-input-container>
+              <v-text-field
+                v-model="formData[item.key].remarks"
+                :rules="requiredRule"
+                label="* Reason for using"
+              ></v-text-field>
+            </form-input-container>
+          </v-row>
+        </form-card>
+      </v-container>
+      <v-btn @click="validate">Validate</v-btn>
+    </v-form>
+  </div>
 </template>
 
 <script>
@@ -64,6 +83,8 @@ export default {
   },
   data: () => ({
     valid: false,
+    isHarvested: '',
+    isHarvestedItems: ['yes','no'],
     formData: {
       costProductSortingClassification: {
         variable: '100',
@@ -222,7 +243,7 @@ export default {
           }
         } else {
           data[keyName] = {
-            variable: parseFloat(this.formData[keyName].variable),
+            variable: this.formData[keyName].variable?parseFloat(this.formData[keyName].variable):0,
             remarks: this.formData[keyName].remarks,
           }
         }
@@ -232,7 +253,7 @@ export default {
   },
   beforeMount() {
     this.farmFinancingItems = this.$store.getters['questionnaireCode/Code27']
-
+    this.isHarvested = 'yes'
     const data = this.$store.getters['profiling/selectedRecord']
     if (Object.keys(data).length > 0) {
       for (let i = 0; i < this.list.length; i++) {
@@ -253,10 +274,25 @@ export default {
   watch: {
     formData: {
       handler: function () {
-        this.validate()
+        if(this.isHarvested == 'yes'){
+          this.validate()
+        }
+        
       },
       deep: true,
     },
+    isHarvested(val){
+      if(val == 'no'){
+       this.$store.commit('questionnaire/toggleNextTab', {
+        tabName: 'CoffeeHarvestMarketingValidated',
+        valid: true,
+      })
+      this.$store.commit('questionnaire/saveData', {
+        keyName: 'coffeeHarvestMarketing',
+        data: this.getData(),
+      })
+      }
+    }
   },
 }
 </script>

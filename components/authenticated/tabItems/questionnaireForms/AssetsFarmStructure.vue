@@ -31,6 +31,7 @@
               :rules="numberRule"
               label="* How many currently own"
               type="number"
+              min="0"
             ></v-text-field>
           </form-input-container>
 

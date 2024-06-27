@@ -8,6 +8,7 @@
             :rules="numberRule"
             label="* Food in a week"
             type="number"
+            min="0"
           ></v-text-field>
         </form-input-container>
 
@@ -17,6 +18,7 @@
             :rules="numberRule"
             label="* Clothing in a year"
             type="number"
+            min="0"
           ></v-text-field>
         </form-input-container>
 
@@ -26,6 +28,7 @@
             :rules="numberRule"
             label="* Utilities in a month"
             type="number"
+            min="0"
           ></v-text-field>
         </form-input-container>
 
@@ -35,6 +38,7 @@
             :rules="numberRule"
             label="* Household Facilities in a year"
             type="number"
+            min="0"
           ></v-text-field>
         </form-input-container>
 
@@ -44,6 +48,7 @@
             :rules="numberRule"
             label="* Non-Food Items in a month"
             type="number"
+            min="0"
           ></v-text-field>
         </form-input-container>
 
@@ -53,6 +58,7 @@
             :rules="numberRule"
             label="* Health Expenses in a year"
             type="number"
+            min="0"
           ></v-text-field>
         </form-input-container>
 
@@ -62,6 +68,7 @@
             :rules="numberRule"
             label="* Transportation in a month"
             type="number"
+            min="0"
           ></v-text-field>
         </form-input-container>
 
@@ -71,6 +78,7 @@
             :rules="numberRule"
             label="* Communication in a month"
             type="number"
+            min="0"
           ></v-text-field>
         </form-input-container>
 
@@ -80,6 +88,7 @@
             :rules="numberRule"
             label="* Recreation in a month"
             type="number"
+            min="0"
           ></v-text-field>
         </form-input-container>
 
@@ -89,6 +98,7 @@
             :rules="numberRule"
             label="* Education in a semester"
             type="number"
+            min="0"
           ></v-text-field>
         </form-input-container>
 
@@ -98,6 +108,7 @@
             :rules="numberRule"
             label="* Special Occasions in a year"
             type="number"
+            min="0"
           ></v-text-field>
         </form-input-container>
 
@@ -107,6 +118,7 @@
             :rules="numberRule"
             label="* Other expenses in a week"
             type="number"
+            min="0"
           ></v-text-field>
         </form-input-container>
         <form-input-container>
@@ -240,18 +252,18 @@ export default {
       this.otherExpenses = data.householdExpense.others
       this.otherExpensesSpecify = data.householdExpense.otherSpecified
     } else {
-      this.food = 0
-      this.clothing = 0
-      this.utilities = 0
-      this.householdFacilities = 0
-      this.nonFoodItems = 0
-      this.healthExpenses = 0
-      this.transportation = 0
-      this.communication = 0
-      this.recreation = 0
-      this.education = 0
-      this.specialOccasions = 0
-      this.otherExpenses = 0
+      this.food = ''
+      this.clothing = ''
+      this.utilities = ''
+      this.householdFacilities = ''
+      this.nonFoodItems = ''
+      this.healthExpenses = ''
+      this.transportation = ''
+      this.communication = ''
+      this.recreation = ''
+      this.education = ''
+      this.specialOccasions = ''
+      this.otherExpenses = ''
     }
   },
 }

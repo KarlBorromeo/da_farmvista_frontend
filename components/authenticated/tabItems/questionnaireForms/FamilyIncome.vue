@@ -47,13 +47,16 @@
             ></v-text-field>
           </form-input-container>
 
-          <form-input-container>
-            <v-text-field
+          <form-select-container>
+            <v-select
+              :items="educationsAttainmentItems"
               v-model="educationsAttainment[i - 1]"
               :rules="requiredRule"
-              label="* Educational Attainment"
-            ></v-text-field>
-          </form-input-container>
+              label="Highest Educational Attainment"
+              required
+              class="text-capitalize"
+            ></v-select>
+          </form-select-container>
 
           <form-input-container>
             <v-text-field
@@ -92,12 +95,14 @@ import formCardButton from '~/components/authenticated/form/formCardButton.vue'
 import FormInputContainer from '~/components/authenticated/form/formInputContainer.vue'
 import FormRadioContainer from '~/components/authenticated/form/formRadioContainer.vue'
 import { convertNumbers } from '~/reusableFunctions/questionnaireValidation'
+import FormSelectContainer from '../../form/formSelectContainer.vue'
 export default {
   components: {
     formCard,
     formCardButton,
     FormInputContainer,
     FormRadioContainer,
+    FormSelectContainer
   },
   data: () => ({
     valid: false,
@@ -111,6 +116,7 @@ export default {
     ],
     roleFamily: ['father'],
     educationsAttainment: ['college grad'],
+    educationsAttainmentItems: [],
     contributionAmount: [20000],
     involveCoffeefarm: ['yes'],
     involveCoffeefarmItems: [
@@ -227,6 +233,7 @@ export default {
     },
   },
   beforeMount() {
+    this.educationsAttainmentItems = this.$store.getters['questionnaireCode/HighestEducationalAttainment']
     const data = this.$store.getters['profiling/selectedRecord']
     if (Object.keys(data).length > 0) {
       const length = data.familySourceIncome.length

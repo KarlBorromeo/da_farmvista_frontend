@@ -17,7 +17,7 @@
           </v-radio-group>
         </form-radio-container>
 
-        <form-input-container>
+        <form-input-container v-if="formData.haveFunctionalRadio == 'yes'">
           <v-text-field
             v-model="formData.radioStationUsuallyTune"
             :rules="requiredRule"
@@ -26,7 +26,7 @@
           />
         </form-input-container>
 
-        <form-menu-container>
+        <form-menu-container v-if="formData.haveFunctionalRadio == 'yes'">
           <v-dialog
             ref="radioStart"
             v-model="timeDialogRadioStart"
@@ -65,7 +65,7 @@
           </v-dialog>
         </form-menu-container>
 
-        <form-menu-container>
+        <form-menu-container v-if="formData.haveFunctionalRadio == 'yes'">
           <v-dialog
             ref="radioEnd"
             v-model="timeDialogRadioEnd"
@@ -104,7 +104,7 @@
           </v-dialog>
         </form-menu-container>
 
-        <form-input-container>
+        <form-input-container v-if="formData.haveFunctionalRadio == 'yes'">
           <v-text-field
             v-model="formData.radioProgramsListens"
             :rules="requiredRule"
@@ -166,7 +166,7 @@
           </v-radio-group>
         </form-radio-container>
 
-        <form-input-container>
+        <form-input-container v-if="formData.haveTelevision == 'yes'">
           <v-text-field
             v-model="formData.tvStationWatches"
             :rules="requiredRule"
@@ -175,7 +175,7 @@
           />
         </form-input-container>
 
-        <form-menu-container>
+        <form-menu-container v-if="formData.haveTelevision == 'yes'">
           <v-dialog
             ref="tvStart"
             v-model="timeDialogTVStart"
@@ -213,7 +213,7 @@
           </v-dialog>
         </form-menu-container>
 
-        <form-menu-container>
+        <form-menu-container v-if="formData.haveTelevision == 'yes'">
           <v-dialog
             ref="tvEnd"
             v-model="timeDialogTVEnd"
@@ -266,7 +266,7 @@
           </v-radio-group>
         </form-radio-container>
 
-        <form-input-container>
+        <form-input-container v-if="formData.haveSocmedAccount == 'yes'">
           <v-text-field
             v-model="formData.howOftenUsedSocmed"
             :rules="numberRule"
@@ -388,10 +388,8 @@ export default {
         data.infoKnowledgeSource.haveFunctionalRadio
       this.formData.radioStationUsuallyTune =
         data.infoKnowledgeSource.radioStationUsuallyTune
-      this.formData.startTimeListeningRadio =
-        data.infoKnowledgeSource.timeListeningRadio[0]
-      this.formData.endTimeListeningRadio =
-        data.infoKnowledgeSource.timeListeningRadio?.[1] ?? ''
+      this.formData.startTimeListeningRadio = data.infoKnowledgeSource.timeListeningRadio?data.infoKnowledgeSource.timeListeningRadio[0]:''
+      this.formData.endTimeListeningRadio = data.infoKnowledgeSource.timeListeningRadio?data.infoKnowledgeSource.timeListeningRadio[1]:''
       this.formData.radioProgramsListens =
         data.infoKnowledgeSource.radioProgramsListens
       this.formData.printMaterialsRead = isOtherValueDefinedRadio(
@@ -404,10 +402,8 @@ export default {
       )
       this.formData.haveTelevision = data.infoKnowledgeSource.haveTelevision
       this.formData.tvStationWatches = data.infoKnowledgeSource.tvStationWatches
-      this.formData.startTimeWatchingTv =
-        data.infoKnowledgeSource.timeWatchingTv[0]
-      this.formData.endTimeWatchingTv =
-        data.infoKnowledgeSource.timeWatchingTv?.[1] ?? ''
+      this.formData.startTimeWatchingTv =  data.infoKnowledgeSource.timeWatchingTv? data.infoKnowledgeSource.timeWatchingTv[0]:''
+      this.formData.endTimeWatchingTv = data.infoKnowledgeSource.timeWatchingTv? data.infoKnowledgeSource.timeWatchingTv[1]:''
       this.formData.haveSocmedAccount =
         data.infoKnowledgeSource.haveSocmedAccount
       this.formData.howOftenUsedSocmed =

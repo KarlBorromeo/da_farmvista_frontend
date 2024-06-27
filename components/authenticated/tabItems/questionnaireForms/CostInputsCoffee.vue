@@ -249,7 +249,6 @@ export default {
     cashCreditItems: ['cash', 'credit', 'n/a'],
     requiredRule: [(v) => !!v || 'this field is required'],
     numberRule: [
-      (v) => !!v || 'this field is required',
       (v) => parseInt(v) >= 0 || 'invalid value',
     ],
   }),

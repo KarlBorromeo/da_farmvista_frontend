@@ -101,7 +101,7 @@
 									"
 								>
 									<v-text-field
-										:rules="requiredRule"
+										:rules="numberRule"
 										v-model="item.cropsWaste[j-1].kg"
                     label="waste volume in (kg)"
                     type="number"
@@ -197,33 +197,33 @@ export default {
 		},
 		/* get the data and convert it into expected key/value formats in BackEnd */
 		getData() {
-      let cropsGrown = []
-      let kindWasteProduced = []
-      let volumeWasteKg = []
-      let isUtilized = []
-      for(let i=0; i<this.parcelInfo.length; i++){
-        const cropsGrownByParcel = this.parcelInfo[i].cropsGrown
-        const cropsWasteByParcel = this.parcelInfo[i].cropsWaste
-        let tempCropsGrownArr = []
-        let tempIsUtilizedArr = []
-        for( let j=0; j<cropsGrownByParcel.length; j++){
-          tempCropsGrownArr.push(cropsGrownByParcel[j].crop)
-          tempIsUtilizedArr.push(cropsGrownByParcel[j].isUtilized)
-        }
-        let tempCropswasteArr = []
-        let tempWasteKg = []
-        for( let j=0; j<cropsWasteByParcel.length; j++){
-          tempCropswasteArr.push(cropsWasteByParcel[j].waste)
-          tempWasteKg.push(parseInt(cropsWasteByParcel[j].kg))
-        }
-        cropsGrown.push(tempCropsGrownArr)
-        isUtilized.push(tempIsUtilizedArr)
-        kindWasteProduced.push(tempCropswasteArr)
-        volumeWasteKg.push(tempWasteKg)
-      }
+			let cropsGrown = []
+			let kindWasteProduced = []
+			let volumeWasteKg = []
+			let isUtilized = []
+			for(let i=0; i<this.parcelInfo.length; i++){
+				const cropsGrownByParcel = this.parcelInfo[i].cropsGrown
+				const cropsWasteByParcel = this.parcelInfo[i].cropsWaste
+				let tempCropsGrownArr = []
+				let tempIsUtilizedArr = []
+				for( let j=0; j<cropsGrownByParcel.length; j++){
+				tempCropsGrownArr.push(cropsGrownByParcel[j].crop)
+				tempIsUtilizedArr.push(cropsGrownByParcel[j].isUtilized)
+				}
+				let tempCropswasteArr = []
+				let tempWasteKg = []
+				for( let j=0; j<cropsWasteByParcel.length; j++){
+				tempCropswasteArr.push(cropsWasteByParcel[j].waste)
+				tempWasteKg.push(parseInt(cropsWasteByParcel[j].kg))
+				}
+				cropsGrown.push(tempCropsGrownArr)
+				isUtilized.push(tempIsUtilizedArr)
+				kindWasteProduced.push(tempCropswasteArr)
+				volumeWasteKg.push(tempWasteKg)
+			}
 			return {
 				cropsGrown,
-        isUtilized,
+				isUtilized,
 				kindWasteProduced,
 				volumeWasteKg,
 			}
@@ -302,7 +302,7 @@ export default {
         cropsWaste: [
           {
             waste: '',
-            kg: 0
+            kg: ''
           }
         ]
       })

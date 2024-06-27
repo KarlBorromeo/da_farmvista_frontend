@@ -8,6 +8,7 @@
             :rules="numberRules"
             label="* years resided in current residence"
             type="number"
+            min="0"
           ></v-text-field>
         </form-input-container>
 
@@ -39,6 +40,7 @@
             :rules="numberRules"
             label="* Number of rooms"
             type="number"
+            min="0"
           ></v-text-field>
         </form-input-container>
 
@@ -345,7 +347,7 @@ export default {
         this.sourceWaterDrinkItems
       )
     } else {
-      this.yearsResidence = 0
+      this.yearsResidence = ''
       this.houseOwernship = ''
       this.houseOwernshipOther = ''
       this.numberRooms = ''

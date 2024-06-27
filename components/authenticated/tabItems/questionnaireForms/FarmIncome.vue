@@ -8,6 +8,7 @@
             :rules="requiredRule"
             label="* Coffee"
             type="number"
+            min="0"
           ></v-text-field>
         </form-input-container>
 
@@ -17,6 +18,7 @@
             :rules="requiredRule"
             label="* Crops (other than coffee such as cacao, etc.)"
             type="number"
+            min="0"
           ></v-text-field>
         </form-input-container>
 
@@ -26,6 +28,7 @@
             :rules="requiredRule"
             label="* Livestock (pigs, cattle, chicken)"
             type="number"
+            min="0"
           ></v-text-field>
         </form-input-container>
 
@@ -35,6 +38,7 @@
             :rules="requiredRule"
             label="* Agroforestry (falcata, rubber, coconut)"
             type="number"
+            min="0"
           ></v-text-field>
         </form-input-container>
 
@@ -44,6 +48,7 @@
             :rules="requiredRule"
             label="* Other Livelihood (vermicomposting, organic fertilizer)"
             type="number"
+            min="0"
           ></v-text-field>
         </form-input-container>
 
@@ -53,6 +58,7 @@
             :rules="requiredRule"
             label="* Non-farm Income (Salaries, Business)"
             type="number"
+            min="0"
           ></v-text-field>
         </form-input-container>
 
@@ -62,6 +68,7 @@
             :rules="requiredRule"
             label="* Other Sources (Remittance, Pension, 4Ps)"
             type="number"
+            min="0"
           ></v-text-field>
         </form-input-container>
       </v-row>
@@ -151,13 +158,13 @@ export default {
       this.nonFarmIncome = data.farmSourceIncome.nonFarm
       this.otherSources = data.farmSourceIncome.otherSource
     } else {
-      this.coffee = 0
-      this.crops = 0
-      this.livestock = 0
-      this.agroforestry = 0
-      this.otherLivelihood = 0
-      this.nonFarmIncome = 0
-      this.otherSources = 0
+      this.coffee = ''
+      this.crops = ''
+      this.livestock = ''
+      this.agroforestry = ''
+      this.otherLivelihood = ''
+      this.nonFarmIncome = ''
+      this.otherSources = ''
     }
   },
 }

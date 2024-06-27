@@ -8,6 +8,7 @@
             :rules="numberRule"
             label="* Average years in general farming"
             type="number"
+            min="0"
           ></v-text-field>
         </form-input-container>
 
@@ -17,6 +18,7 @@
             :rules="numberRule"
             label="* Average years in contour farming/agroforestry"
             type="number"
+            min="0"
           ></v-text-field>
         </form-input-container>
 
@@ -41,6 +43,7 @@
             :rules="yearRule"
             label="* Specify year stopped"
             type="number"
+            min="0"
           ></v-text-field>
         </form-input-container>
 
@@ -50,6 +53,7 @@
             :rules="yearRule"
             label="* Specify year resumed"
             type="number"
+            min="0"
           ></v-text-field>
         </form-input-container>
 
@@ -178,8 +182,8 @@ export default {
       this.yearResumed = data.generalFarmingInfo.yearResumedFarming
       this.reasonStopping = data.generalFarmingInfo.reasonStopping
     } else {
-      this.avgYearsGeneralFarming = 0
-      this.avgYearsContourFarming = 0
+      this.avgYearsGeneralFarming = ''
+      this.avgYearsContourFarming = ''
       this.isThereStoppedFarming = ''
       this.yearStopped = ''
       this.yearResumed = ''
