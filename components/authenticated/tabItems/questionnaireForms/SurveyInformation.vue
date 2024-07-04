@@ -74,13 +74,7 @@
               <v-btn text color="primary" @click="timeStartPicker = false">
                 Cancel
               </v-btn>
-              <v-btn
-                text
-                color="primary"
-                @click="saveTimeStart"
-              >
-                OK
-              </v-btn>
+              <v-btn text color="primary" @click="saveTimeStart"> OK </v-btn>
             </v-time-picker>
           </v-dialog>
         </form-menu-container>
@@ -113,17 +107,11 @@
               <v-btn text color="primary" @click="timeEndPicker = false">
                 Cancel
               </v-btn>
-              <v-btn
-                text
-                color="primary"
-                @click="saveTimeEnd"
-              >
-                OK
-              </v-btn>
+              <v-btn text color="primary" @click="saveTimeEnd"> OK </v-btn>
             </v-time-picker>
           </v-dialog>
         </form-menu-container>
-        
+
         <form-select-container>
           <v-select
             v-model="regionProvince"
@@ -217,32 +205,32 @@ export default {
       }
 
       // this is the basis to enable the submission tab, it is not really related to this form, it just to toggle the submission tab if the interviewee status is !validated <3
-      if(this.intervieweeStatus !== 'validated'){
+      if (this.intervieweeStatus !== 'validated') {
         this.$store.commit('questionnaire/toggleNextTab', {
-          tabName: 'OpenEndedQuestionRatingValidated',   
+          tabName: 'OpenEndedQuestionRatingValidated',
           valid,
-        })      
+        })
       }
     },
     /* converts into hh:mm format*/
     convertTimeToHHMM(timeStr) {
-      if(!timeStr){
+      if (!timeStr) {
         return ''
       }
       // Split the time string by colon
-      let timeParts = timeStr.split(':');
+      let timeParts = timeStr.split(':')
       // Extract hours and minutes
-      let hours = timeParts[0];
-      let minutes = timeParts[1];
+      let hours = timeParts[0]
+      let minutes = timeParts[1]
       // Format the result as hh:mm
-      return `${hours}:${minutes}`;
+      return `${hours}:${minutes}`
     },
     /* return the data of this form as an object */
     getData() {
       return {
         intervieweeStatus: this.intervieweeStatus,
         dateOfInterview: this.date,
-        surveyNo: this.surveyNumber?parseInt(this.surveyNumber):'',
+        surveyNo: this.surveyNumber ? parseInt(this.surveyNumber) : '',
         validatorName: this.interviewer,
         interviewStart: this.convertTimeToHHMM(this.interviewStart),
         interviewEnd: this.convertTimeToHHMM(this.interviewEnd),
@@ -252,31 +240,30 @@ export default {
       }
     },
     /* ensure to execute the method validate() if saving time, sometimes the watch is not working well on this part*/
-    saveTimeStart(){
+    saveTimeStart() {
       this.$refs.timeStartPicker.save(this.interviewStart)
       this.validate()
     },
     /* ensure to execute the method validate() if saving time, sometimes the watch is not working well on this part*/
-    saveTimeEnd(){
+    saveTimeEnd() {
       this.$refs.timeEndPicker.save(this.interviewEnd)
       this.validate()
-    }
+    },
   },
   watch: {
-    intervieweeStatus(val){
-      if(val !== 'validated'){
+    intervieweeStatus(val) {
+      if (val !== 'validated') {
         this.surveyNumber = ''
         this.interviewStart = ''
         this.interviewEnd = ''
         this.validate()
-        this.$store.commit('questionnaire/toggleIsIntervieweeValidated',false)
-      }else{
-        this.$store.commit('questionnaire/toggleIsIntervieweeValidated',true)
+        this.$store.commit('questionnaire/toggleIsIntervieweeValidated', false)
+      } else {
+        this.$store.commit('questionnaire/toggleIsIntervieweeValidated', true)
         this.$store.commit('questionnaire/toggleNextTab', {
           tabName: 'SurveyInformationValidated',
           valid: false,
         })
-        
       }
     },
     date() {
@@ -305,9 +292,12 @@ export default {
     },
   },
   beforeMount() {
-    this.intervieweeStatusItems = this.$store.getters['questionnaireCode/IntervieweeStatus']
-    this.regionProvinceItems = this.$store.getters['questionnaireCode/RegionProvince']
-    this.municipalityItems = this.$store.getters['questionnaireCode/CityMunicipality']
+    this.intervieweeStatusItems =
+      this.$store.getters['questionnaireCode/IntervieweeStatus']
+    this.regionProvinceItems =
+      this.$store.getters['questionnaireCode/RegionProvince']
+    this.municipalityItems =
+      this.$store.getters['questionnaireCode/CityMunicipality']
     const data = this.$store.getters['profiling/selectedRecord']
     if (Object.keys(data).length > 0) {
       this.intervieweeStatus = data.interview.intervieweeStatus

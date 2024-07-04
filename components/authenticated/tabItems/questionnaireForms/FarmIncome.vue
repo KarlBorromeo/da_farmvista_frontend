@@ -91,9 +91,7 @@ export default {
     otherLivelihood: 100,
     nonFarmIncome: 100,
     otherSources: 100,
-    requiredRule: [
-      (v) => parseFloat(v) >= 0 || 'invalid value',
-    ],
+    requiredRule: [(v) => parseFloat(v) >= 0 || 'invalid value'],
   }),
   methods: {
     /* test if the form is valid, return boolean */

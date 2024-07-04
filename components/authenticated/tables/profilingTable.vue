@@ -21,7 +21,12 @@
         ></v-text-field>
       </template>
       <template v-slot:[`item.validated`]="{ item }">
-        <p class="text-center" :class="item.status!='validated'?'red--text':''">{{item.status}}</p>
+        <p
+          class="text-center"
+          :class="item.status != 'validated' ? 'red--text' : ''"
+        >
+          {{ item.status }}
+        </p>
       </template>
       <template v-slot:[`item.actions`]="{ item }">
         <v-icon small class="mr-2" @click="editItem(item.id)">
@@ -76,7 +81,7 @@ export default {
         { text: 'City/Municipality', value: 'cityMunicipality' },
         { text: 'Barangay', value: 'barangay' },
         { text: 'Organization/Institution', value: 'nameOrganization' },
-        { text: 'Status', value: 'validated',align: 'center' },
+        { text: 'Status', value: 'validated', align: 'center' },
         { text: 'Actions', value: 'actions', sortable: false },
       ]
     },
@@ -88,7 +93,7 @@ export default {
     /* when edit button is clicked, open the modal for the whole record of this specific id, and enable editing mode and disabling create mode*/
     editItem(id) {
       this.$store.commit('profiling/toggleEditingMode', true)
-      this.$store.commit('questionnaire/toggleIsIntervieweeValidated',false)
+      this.$store.commit('questionnaire/toggleIsIntervieweeValidated', false)
       this.dialog = true
       this.id = id
     },
@@ -124,7 +129,6 @@ export default {
       this.loading = false
     },
 
-
     /* this method will be triggered when switching the commodity, via emits */
     async switchCommodity(commodity) {
       this.commodity = commodity
@@ -151,11 +155,11 @@ export default {
         this.$store.commit('questionnaire/resetTabsValidity')
       }
     },
-    async search(){
-      await new Promise(resolve=>setTimeout(resolve,500))
-      this.page = 1;
-      await this.fetchAllSurvey();  // fetch the all list with filter search value
-    }
+    async search() {
+      await new Promise((resolve) => setTimeout(resolve, 500))
+      this.page = 1
+      await this.fetchAllSurvey() // fetch the all list with filter search value
+    },
   },
 }
 </script>

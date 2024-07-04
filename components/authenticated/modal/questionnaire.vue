@@ -19,14 +19,13 @@
           <v-tab
             class="caption font-weight-black"
             @click="selectTab('BasicInformation')"
-         
           >
             I. Farmer's Basic Information
           </v-tab>
           <v-tab
             @click="selectTab('SurveyInformation')"
             class="caption font-weight-black"
-             :disabled="BasicInformationValidated"
+            :disabled="BasicInformationValidated"
           >
             Survey Information
           </v-tab>
@@ -35,10 +34,10 @@
             v-if="isIntervieweeValidated"
             class="caption font-weight-black"
             @click="selectTab('GeneralInformation')"
-              :disabled="SurveyInformationValidated"
+            :disabled="SurveyInformationValidated"
           >
             II. General Information
-          </v-tab>            
+          </v-tab>
 
           <v-tab
             v-if="isIntervieweeValidated"
@@ -257,7 +256,6 @@
             XV Open EndedQuestion Rating
           </v-tab>
           <v-tab
-
             class="caption font-weight-black"
             @click="selectTab('SubmissionPage')"
             :disabled="OpenEndedQuestionRatingValidated"
@@ -406,8 +404,8 @@ export default {
     },
   },
   computed: {
-    isIntervieweeValidated(){
-      return this.$store.getters['questionnaire/isIntervieweeValidated'] 
+    isIntervieweeValidated() {
+      return this.$store.getters['questionnaire/isIntervieweeValidated']
     },
     currentTab() {
       return this.$store.getters['questionnaire/currentTab']
@@ -536,9 +534,9 @@ export default {
   },
   watch: {
     /* watch the current tab, move to the intial tab when the current tab is BasicInformation */
-    currentTab(tabName){
-      if(tabName == 'BasicInformation'){
-        this.initialTab = 0;
+    currentTab(tabName) {
+      if (tabName == 'BasicInformation') {
+        this.initialTab = 0
       }
     },
     /* fetch codes if the commodity changed*/

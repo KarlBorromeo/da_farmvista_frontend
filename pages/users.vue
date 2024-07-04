@@ -15,16 +15,16 @@
                   Create an Account
                 </v-btn>
               </template>
-              <create-user @emitCloseModal="closeModal"/>
+              <create-user @emitCloseModal="closeModal" />
             </v-dialog>
           </v-col>
         </v-row>
       </v-container>
     </page-description>
     <page-contents>
-      <users-table ref="userTable"/>
-    </page-contents>   
-     <snackbar ref="snackbar" /> 
+      <users-table ref="userTable" />
+    </page-contents>
+    <snackbar ref="snackbar" />
   </div>
 </template>
 
@@ -36,7 +36,13 @@ import UsersTable from '~/components/authenticated/tables/usersTable.vue'
 import snackbar from '~/components/snackbar.vue'
 export default {
   middleware: 'authSuperadminAdmin',
-  components: { PageDescription, CreateUser, UsersTable, PageContents, snackbar },
+  components: {
+    PageDescription,
+    CreateUser,
+    UsersTable,
+    PageContents,
+    snackbar,
+  },
   data() {
     return {
       dialog: false,
@@ -44,12 +50,12 @@ export default {
         'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Facilis corporis natus nostrum magnam nesciunt quos accusamus, nisi libero nemo delectus sint sequi, debitis nam saepe culpa velit voluptatem veritatis accusantium!',
     }
   },
-  methods:{
-    closeModal(res){
+  methods: {
+    closeModal(res) {
       this.dialog = false
       this.$refs.snackbar.showBar(res, 'success')
       this.$refs.userTable.fetchAllUsers()
-    }
+    },
   },
   beforeMount() {
     this.$store.commit('udpateHeaderTitle', 'USERS')

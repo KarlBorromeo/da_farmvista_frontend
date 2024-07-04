@@ -498,9 +498,7 @@ export default {
     transportationItems: [],
     roadItems: [],
     requiredRule: [(v) => !!v || 'This field is required'],
-    numberRule: [
-      (v) => parseFloat(v) >= 0 || 'invalid value',
-    ],
+    numberRule: [(v) => parseFloat(v) >= 0 || 'invalid value'],
     tempValue: '',
   }),
   methods: {
@@ -668,7 +666,7 @@ export default {
       rootKeyNames.forEach((rootKey) => {
         localNestedKeyNames.forEach((nestedKey, i) => {
           this[rootKey][nestedKey] = ''
-          console.log(rootKey,nestedKey)
+          console.log(rootKey, nestedKey)
         })
       })
     }

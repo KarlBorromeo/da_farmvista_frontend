@@ -5,12 +5,12 @@ export const state = () => ({
     firstName: '',
     type: '',
   },
-  avatarURL: ''
+  avatarURL: '',
 })
 
 export const getters = {
   /* return avatar urll of current user logged in */
-  avatarURL(state){
+  avatarURL(state) {
     return state.avatarURL
   },
   /* return first name of current user logged in */
@@ -55,9 +55,9 @@ export const mutations = {
     const type = localStorage.getItem('type')
     const firstname = localStorage.getItem('firstname')
     const avatarURL = localStorage.getItem('avatarUrl')
-    if (!token || !type) { 
+    if (!token || !type) {
       state.currentUserLoggedin = false
-    } else {  
+    } else {
       state.currentUserLoggedin = true
       state.currentUser.firstName = firstname
       state.avatarURL = avatarURL
@@ -74,11 +74,11 @@ export const actions = {
       throw error
     }
   },
-  async checkTokenAlive(){
-    try{
+  async checkTokenAlive() {
+    try {
       await api.checkTokenAlive()
-    }catch(errCode){
-      throw errCode;
+    } catch (errCode) {
+      throw errCode
     }
-  }
+  },
 }

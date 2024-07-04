@@ -7,7 +7,7 @@ export async function login(credentials) {
       accessToken: response.data.accessToken,
       type: response.data.type,
       firstName: response.data.firstName,
-      avatarURL: response.data.avatarURL
+      avatarURL: response.data.avatarURL,
     }
   } catch (error) {
     console.error(error)
@@ -15,10 +15,10 @@ export async function login(credentials) {
   }
 }
 
-export async function checkTokenAlive(){
-  try{
+export async function checkTokenAlive() {
+  try {
     await Axios.get('auth/check')
-  }catch(error){
+  } catch (error) {
     throw error.response.data.code
   }
 }

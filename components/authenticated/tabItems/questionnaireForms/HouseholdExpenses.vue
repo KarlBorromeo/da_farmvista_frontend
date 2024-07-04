@@ -155,9 +155,7 @@ export default {
     specialOccasions: 100,
     otherExpenses: 100,
     otherExpensesSpecify: 'sample other',
-    numberRule: [
-      (v) => parseInt(v) >= 0 || 'invalid value',
-    ],
+    numberRule: [(v) => parseInt(v) >= 0 || 'invalid value'],
     requiredRule: [(v) => !!v || 'This field is required'],
   }),
   methods: {

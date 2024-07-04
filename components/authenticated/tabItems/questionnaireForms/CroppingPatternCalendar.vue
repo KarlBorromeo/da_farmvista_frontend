@@ -307,18 +307,18 @@ export default {
     /* test if checbkoxes are not empty */
     validateCheckbox() {
       if (
-        this.january.includes('others')  && !this.januaryOther ||
-        this.february.includes('others') && !this.februaryOther ||
-        this.march.includes('others') && !this.marchOther ||
-        this.april.includes('others') && !this.aprilOther ||
-        this.may.includes('others') && !this.mayOther ||
-        this.june.includes('others') && !this.juneOther ||
-        this.july.includes('others') && !this.julyOther ||
-        this.august.includes('others') && !this.augustOther ||
-        this.september.includes('others') && !this.septemberOther ||
-        this.october.includes('others') && !this.octoberOther ||
-        this.november.includes('others') && !this.novemberOther ||
-        this.december.includes('others') && !this.decemberOther
+        (this.january.includes('others') && !this.januaryOther) ||
+        (this.february.includes('others') && !this.februaryOther) ||
+        (this.march.includes('others') && !this.marchOther) ||
+        (this.april.includes('others') && !this.aprilOther) ||
+        (this.may.includes('others') && !this.mayOther) ||
+        (this.june.includes('others') && !this.juneOther) ||
+        (this.july.includes('others') && !this.julyOther) ||
+        (this.august.includes('others') && !this.augustOther) ||
+        (this.september.includes('others') && !this.septemberOther) ||
+        (this.october.includes('others') && !this.octoberOther) ||
+        (this.november.includes('others') && !this.novemberOther) ||
+        (this.december.includes('others') && !this.decemberOther)
       ) {
         return false
       } else {

@@ -15,14 +15,13 @@
             <manual-survey-button />
           </v-col>
         </v-row>
-      </v-container> 
+      </v-container>
     </page-description>
 
     <page-contents>
       <profiling-table />
     </page-contents>
   </div>
-
 </template>
 
 <script>
@@ -37,7 +36,7 @@ export default {
     UploadButton,
     ManualSurveyButton,
     ProfilingTable,
-    PageContents
+    PageContents,
   },
   data() {
     return {

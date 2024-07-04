@@ -3,10 +3,7 @@
     <v-container class="my-0 py-0">
       <v-row class="my-0 mt-3">
         <form-radio-container title="Harvested already?">
-          <v-radio-group
-            v-model="isHarvested"
-            class="pa-0 ma-0"
-          >
+          <v-radio-group v-model="isHarvested" class="pa-0 ma-0">
             <v-radio
               v-for="item in isHarvestedItems"
               :key="item"
@@ -17,7 +14,12 @@
         </form-radio-container>
       </v-row>
     </v-container>
-    <v-form ref="form" v-model="valid" lazy-validation v-if="isHarvested=='yes'">
+    <v-form
+      ref="form"
+      v-model="valid"
+      lazy-validation
+      v-if="isHarvested == 'yes'"
+    >
       <v-container class="mt-0 pt-0">
         <form-card v-for="item in list" :key="item.key">
           <p class="my-2 mt-0 pb-0 font-weight-medium" v-if="!item.radio">
@@ -84,7 +86,7 @@ export default {
   data: () => ({
     valid: false,
     isHarvested: '',
-    isHarvestedItems: ['yes','no'],
+    isHarvestedItems: ['yes', 'no'],
     formData: {
       costProductSortingClassification: {
         variable: '100',
@@ -206,7 +208,7 @@ export default {
   methods: {
     /* test if the form is valid, return boolean */
     validate() {
-      console.log('validating',this.getData())
+      console.log('validating', this.getData())
       const valid = this.$refs.form.validate()
       this.$store.commit('questionnaire/toggleNextTab', {
         tabName: 'CoffeeHarvestMarketingValidated',
@@ -243,7 +245,9 @@ export default {
           }
         } else {
           data[keyName] = {
-            variable: this.formData[keyName].variable?parseFloat(this.formData[keyName].variable):0,
+            variable: this.formData[keyName].variable
+              ? parseFloat(this.formData[keyName].variable)
+              : 0,
             remarks: this.formData[keyName].remarks,
           }
         }
@@ -274,25 +278,24 @@ export default {
   watch: {
     formData: {
       handler: function () {
-        if(this.isHarvested == 'yes'){
+        if (this.isHarvested == 'yes') {
           this.validate()
         }
-        
       },
       deep: true,
     },
-    isHarvested(val){
-      if(val == 'no'){
-       this.$store.commit('questionnaire/toggleNextTab', {
-        tabName: 'CoffeeHarvestMarketingValidated',
-        valid: true,
-      })
-      this.$store.commit('questionnaire/saveData', {
-        keyName: 'coffeeHarvestMarketing',
-        data: this.getData(),
-      })
+    isHarvested(val) {
+      if (val == 'no') {
+        this.$store.commit('questionnaire/toggleNextTab', {
+          tabName: 'CoffeeHarvestMarketingValidated',
+          valid: true,
+        })
+        this.$store.commit('questionnaire/saveData', {
+          keyName: 'coffeeHarvestMarketing',
+          data: this.getData(),
+        })
       }
-    }
+    },
   },
 }
 </script>

@@ -47,18 +47,17 @@
       <v-spacer />
       <v-list-item-avatar class="hidden-sm-and-down">
         <!-- <img id="avatar" :src="avatarURL" /> -->
-        <v-img 
-            alt=""
-            :src="avatarURL"
-            :contain="false"
-            position="center"
-            :aspect-ratio="1"
-            width="80"
-            class="rounded-pill elevation-4"
+        <v-img
+          alt=""
+          :src="avatarURL"
+          :contain="false"
+          position="center"
+          :aspect-ratio="1"
+          width="80"
+          class="rounded-pill elevation-4"
         />
       </v-list-item-avatar>
       <the-menu />
-    
     </v-app-bar>
     <v-main style="background-color: #dcdfe3">
       <Nuxt />
@@ -109,7 +108,7 @@ export default {
           icon: 'mdi-chart-box',
           title: 'Report',
           to: '/report',
-        }
+        },
       ],
       miniVariant: false,
       right: true,
@@ -121,26 +120,26 @@ export default {
     currentPageTitle() {
       return this.$store.getters['pageNameGetter']
     },
-    avatarURL(){
+    avatarURL() {
       // return localStorage.getItem('avatarUrl')
       return this.$store.getters['auth/avatarURL']
-    }
+    },
   },
-  beforeMount(){
+  beforeMount() {
     const currentUserType = localStorage.getItem('type')
     /* removes other tabs if the current user is enumerator */
-    if(currentUserType !== 'admin' && currentUserType !== 'superadmin'){
+    if (currentUserType !== 'admin' && currentUserType !== 'superadmin') {
       const length = this.items.length
-      this.items.splice(2,length)
+      this.items.splice(2, length)
     }
-  }
+  },
 }
 </script>
 
 <style scoped>
 @import url('~/assets/css/fonts.css');
-#avatarURL{
-  object-fit: contain!important;
+#avatarURL {
+  object-fit: contain !important;
   object-position: center;
 }
 </style>

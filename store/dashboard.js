@@ -27,20 +27,20 @@ export const state = () => ({
     intervieweeStatusByProvince: {
       title: '',
       yLabel: '',
-      data: []
+      data: [],
     },
     totalFarmerCountByProvince: {
       title: '',
       subtitle: '',
       total: 40,
-      data: []
+      data: [],
     },
     soldCommodityByProvince: {
       title: '',
       yLabel: '',
       provinces: [],
       data: [],
-    },    
+    },
     marketingOutletFarmerCount: {},
     timelineFrequencyOfHarvestPerYear: {
       yLabel: '',
@@ -51,83 +51,74 @@ export const state = () => ({
     },
     haveHeardFarmTechFarmerCount: {
       title: '',
-      data: []
-    },    
+      data: [],
+    },
     marketingOutletInfo: [
       {
-        name: "Local/ Ambulant Buyer",
-        qualityPreference: [
-            "Grade 3"
-        ],
-        howBringToOutlet: "Own Funds",
-        count: 1
+        name: 'Local/ Ambulant Buyer',
+        qualityPreference: ['Grade 3'],
+        howBringToOutlet: 'Own Funds',
+        count: 1,
       },
       {
-        name: "Tagbina",
-        qualityPreference: [
-              "Grade 1",
-              "Grade 1 And 2",
-              "Grade 2",
-              "Grading 2"
-          ],
-        howBringToOutlet: "Own Funds",
-        count: 14
+        name: 'Tagbina',
+        qualityPreference: ['Grade 1', 'Grade 1 And 2', 'Grade 2', 'Grading 2'],
+        howBringToOutlet: 'Own Funds',
+        count: 14,
       },
     ],
     farmOrganizationFarmerCount: [
       {
-        name: "Adisffamco",
+        name: 'Adisffamco',
         activeFarmerCount: 1,
         inactiveFarmerCount: 0,
         allFarmerCount: 1,
-        status: "active",
-        type: "Aubrey"
+        status: 'active',
+        type: 'Aubrey',
       },
       {
-        name: "Adisffamco",
+        name: 'Adisffamco',
         activeFarmerCount: 1,
         inactiveFarmerCount: 0,
         allFarmerCount: 1,
-        status: "active",
-        type: "Cooperative"
+        status: 'active',
+        type: 'Cooperative',
       },
       {
-        name: "Agricultural Upland Farmers Association",
+        name: 'Agricultural Upland Farmers Association',
         activeFarmerCount: 1,
         inactiveFarmerCount: 0,
         allFarmerCount: 1,
-        status: "active",
-        type: "Association"
+        status: 'active',
+        type: 'Association',
       },
       {
-        name: "Agricultural Upland Farmers Association",
+        name: 'Agricultural Upland Farmers Association',
         activeFarmerCount: 1,
         inactiveFarmerCount: 0,
         allFarmerCount: 1,
-        status: "active",
-        type: "Aubrey"
+        status: 'active',
+        type: 'Aubrey',
       },
       {
-        name: "Babuyan Farmers Developers Core Group Incorporated (Bafamdcgi)",
+        name: 'Babuyan Farmers Developers Core Group Incorporated (Bafamdcgi)',
         activeFarmerCount: 1,
         inactiveFarmerCount: 0,
         allFarmerCount: 1,
-        status: "active",
-        type: "Cooperative"
+        status: 'active',
+        type: 'Cooperative',
       },
       {
-        name: "Barcapa",
+        name: 'Barcapa',
         activeFarmerCount: 1,
         inactiveFarmerCount: 0,
         allFarmerCount: 1,
-        status: "active",
-        type: "Association"
-      }
-    ]
-
+        status: 'active',
+        type: 'Association',
+      },
+    ],
   },
- 
-  
+
   intervieweeStatusByProvinceSelected: {},
   totalFarmerCountByProvinceSelected: {},
   soldCommodityByProvinceSelected: {},
@@ -136,8 +127,6 @@ export const state = () => ({
   haveHeardFarmTechFarmerCountSelected: {},
   marketingOutletInfoSelected: [],
   farmOrganizationFarmerCountSelected: [],
-
-  
 })
 
 export const getters = {
@@ -150,27 +139,27 @@ export const getters = {
   intervieweeStatusByProvinceSelected(state) {
     return state.intervieweeStatusByProvinceSelected
   },
-  totalFarmerCountByProvinceSelected(state){
+  totalFarmerCountByProvinceSelected(state) {
     return state.totalFarmerCountByProvinceSelected
   },
-  soldCommodityByProvinceSelected(state){
+  soldCommodityByProvinceSelected(state) {
     return state.soldCommodityByProvinceSelected
   },
-  marketingOutletFarmerCountSelected(state){
+  marketingOutletFarmerCountSelected(state) {
     return state.marketingOutletFarmerCountSelected
   },
-  timelineFrequencySelected(state){
+  timelineFrequencySelected(state) {
     return state.timelineFrequencySelected
   },
-  haveHeardFarmTechFarmerCountSelected(state){
+  haveHeardFarmTechFarmerCountSelected(state) {
     return state.haveHeardFarmTechFarmerCountSelected
   },
-  marketingOutletInfoSelected(state){
+  marketingOutletInfoSelected(state) {
     return state.marketingOutletInfoSelected
   },
-  farmOrganizationFarmerCountSelected(state){
+  farmOrganizationFarmerCountSelected(state) {
     return state.farmOrganizationFarmerCountSelected
-  }
+  },
 }
 
 export const mutations = {
@@ -178,90 +167,97 @@ export const mutations = {
     state.data = { ...data }
   },
   /* intialize the intervieweeStatusByProvinceSelected Data */
-  inititializeIntervieweeStatusByProvince(state,data){
-    if(data.intervieweeStatusByProvince.data.length>0){
-      state.intervieweeStatusByProvinceSelected = data.intervieweeStatusByProvince.data[0]
-    }else{
+  inititializeIntervieweeStatusByProvince(state, data) {
+    if (data.intervieweeStatusByProvince.data.length > 0) {
+      state.intervieweeStatusByProvinceSelected =
+        data.intervieweeStatusByProvince.data[0]
+    } else {
       state.intervieweeStatusByProvinceSelected = {
         province: '',
         series: [],
-        categories: []
+        categories: [],
       }
     }
   },
   /* intialize the totalFarmerCountByProvinceSelected Data */
-  inititializeTotalFarmerCountByProvince(state,data){
-    if(data.totalFarmerCountByProvince.data.length>0){
-      state.totalFarmerCountByProvinceSelected = data.totalFarmerCountByProvince.data[0]
-    }else{
+  inititializeTotalFarmerCountByProvince(state, data) {
+    if (data.totalFarmerCountByProvince.data.length > 0) {
+      state.totalFarmerCountByProvinceSelected =
+        data.totalFarmerCountByProvince.data[0]
+    } else {
       state.totalFarmerCountByProvinceSelected = {
         province: '',
         series: [],
-        categories: []
+        categories: [],
       }
     }
   },
   /* initialize the Coffee Harvest Data */
-  initializeSoldCommodityByProvinceSelected(state,data){
-    if(data.soldCommodityByProvince.data.length>0){
-      state.soldCommodityByProvinceSelected = data.soldCommodityByProvince.data[0]
-    }else{
+  initializeSoldCommodityByProvinceSelected(state, data) {
+    if (data.soldCommodityByProvince.data.length > 0) {
+      state.soldCommodityByProvinceSelected =
+        data.soldCommodityByProvince.data[0]
+    } else {
       state.soldCommodityByProvinceSelected = {
         province: '',
         series: [],
-        categories: []
+        categories: [],
       }
     }
   },
   /* intialize the marketingOutletFarmerCountSelected Data */
-  inititializeMarketingOutletFarmerCount(state,data){
-    if(data.marketingOutletFarmerCount.data.length>0){
-      state.marketingOutletFarmerCountSelected = data.marketingOutletFarmerCount.data[0]
-    }else{
+  inititializeMarketingOutletFarmerCount(state, data) {
+    if (data.marketingOutletFarmerCount.data.length > 0) {
+      state.marketingOutletFarmerCountSelected =
+        data.marketingOutletFarmerCount.data[0]
+    } else {
       state.marketingOutletFarmerCountSelected = {
         title: '',
-        data: []
+        data: [],
       }
     }
   },
   /* initialize the chart data of Coffee Production */
-  initializeTimelineFrequencySelected(state,data){
-    if(data.timelineFrequencyOfHarvestPerYear.data.length>0){
-      state.timelineFrequencySelected = data.timelineFrequencyOfHarvestPerYear.data[0]
-    }else{
+  initializeTimelineFrequencySelected(state, data) {
+    if (data.timelineFrequencyOfHarvestPerYear.data.length > 0) {
+      state.timelineFrequencySelected =
+        data.timelineFrequencyOfHarvestPerYear.data[0]
+    } else {
       state.timelineFrequencySelected = {
         year: '',
-        series: []
+        series: [],
       }
     }
   },
   /* intialize the haveHeardFarmTechFarmerCountSelected Data */
-  inititializeHaveHeardFarmTechFarmerCount(state,data){
-    if(data.haveHeardFarmTechFarmerCount.data.length>0){
-      state.haveHeardFarmTechFarmerCountSelected = data.haveHeardFarmTechFarmerCount.data[0]
-    }else{
+  inititializeHaveHeardFarmTechFarmerCount(state, data) {
+    if (data.haveHeardFarmTechFarmerCount.data.length > 0) {
+      state.haveHeardFarmTechFarmerCountSelected =
+        data.haveHeardFarmTechFarmerCount.data[0]
+    } else {
       state.haveHeardFarmTechFarmerCountSelected = {
         province: '',
-        percentage: 0
+        percentage: 0,
       }
     }
   },
   /* initialize the marketingOutletInfoSelected Data */
-  initializeMarketingOutletInfoSelected(state,data){
-    if(data.marketingOutletInfo.length>0){
+  initializeMarketingOutletInfoSelected(state, data) {
+    if (data.marketingOutletInfo.length > 0) {
       state.marketingOutletInfoSelected = data.marketingOutletInfo[0]
-    }else{
+    } else {
       state.marketingOutletInfoSelected = {
         province: '',
-        data: []
+        data: [],
       }
     }
   },
   /* intialize the farmOrganizationFarmerCountSelected Data */
-  inititializeFarmOrganizationFarmerCount(state,data){
-    if(data.farmOrganizationFarmerCount.length>0){
-      state.farmOrganizationFarmerCountSelected = data.farmOrganizationFarmerCount[0]
-    }else{
+  inititializeFarmOrganizationFarmerCount(state, data) {
+    if (data.farmOrganizationFarmerCount.length > 0) {
+      state.farmOrganizationFarmerCountSelected =
+        data.farmOrganizationFarmerCount[0]
+    } else {
       state.farmOrganizationFarmerCountSelected = []
     }
   },
@@ -274,24 +270,34 @@ export const mutations = {
       stateNameSelected: '' #dynamic state key selected
     } 
   */
-  changeProvince(state,obj){
-    let index;
-    if(!!obj.isTable){
-      index = state.data[obj.stateName].findIndex(item => item.province === obj.province)
+  changeProvince(state, obj) {
+    let index
+    if (!!obj.isTable) {
+      index = state.data[obj.stateName].findIndex(
+        (item) => item.province === obj.province
+      )
       let tempArr = [...state.data[obj.stateName]]
       state[obj.stateNameSelected] = tempArr[index]
-    }else{
-      index = state.data[obj.stateName].data.findIndex(item => item.province === obj.province)
-      state[obj.stateNameSelected] = {...state.data[obj.stateName].data[index]}
+    } else {
+      index = state.data[obj.stateName].data.findIndex(
+        (item) => item.province === obj.province
+      )
+      state[obj.stateNameSelected] = {
+        ...state.data[obj.stateName].data[index],
+      }
     }
   },
   /* update the chart data of Coffee Production when year is changed */
-  changeTimelineFrequencySelected(state,year){
-    const index = state.data.timelineFrequencyOfHarvestPerYear.data.findIndex(item => item.year === year)
-    if(index>=0){
-      state.timelineFrequencySelected = {...state.data.timelineFrequencyOfHarvestPerYear.data[index]}
+  changeTimelineFrequencySelected(state, year) {
+    const index = state.data.timelineFrequencyOfHarvestPerYear.data.findIndex(
+      (item) => item.year === year
+    )
+    if (index >= 0) {
+      state.timelineFrequencySelected = {
+        ...state.data.timelineFrequencyOfHarvestPerYear.data[index],
+      }
     }
-  }
+  },
 }
 
 export const actions = {
@@ -299,14 +305,14 @@ export const actions = {
     try {
       const data = await api.dashboardFetch()
       context.commit('saveData', data)
-      context.commit('inititializeIntervieweeStatusByProvince',data)
-      context.commit('inititializeTotalFarmerCountByProvince',data)
-      context.commit('initializeSoldCommodityByProvinceSelected',data)
-      context.commit('inititializeMarketingOutletFarmerCount',data)
-      context.commit('initializeTimelineFrequencySelected',data)
-      context.commit('inititializeHaveHeardFarmTechFarmerCount',data)
-      context.commit('initializeMarketingOutletInfoSelected',data)
-      context.commit('inititializeFarmOrganizationFarmerCount',data)
+      context.commit('inititializeIntervieweeStatusByProvince', data)
+      context.commit('inititializeTotalFarmerCountByProvince', data)
+      context.commit('initializeSoldCommodityByProvinceSelected', data)
+      context.commit('inititializeMarketingOutletFarmerCount', data)
+      context.commit('initializeTimelineFrequencySelected', data)
+      context.commit('inititializeHaveHeardFarmTechFarmerCount', data)
+      context.commit('initializeMarketingOutletInfoSelected', data)
+      context.commit('inititializeFarmOrganizationFarmerCount', data)
     } catch (err) {
       throw err
     }

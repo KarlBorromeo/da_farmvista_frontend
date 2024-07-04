@@ -1,56 +1,63 @@
 <template>
   <v-col cols="12" class="mt-2">
     <v-card class="pa-3 rounded-lg">
-      <menu-dropdown-provinces @emitChangeProvince="changeprovince"/>
+      <menu-dropdown-provinces @emitChangeProvince="changeprovince" />
       <v-row justify="center">
-         <v-col cols="12">
-          <apexchart :options="options" :series="series"/> 
+        <v-col cols="12">
+          <apexchart :options="options" :series="series" />
         </v-col>
       </v-row>
     </v-card>
   </v-col>
-  </template>
+</template>
 
 <script>
-import {chartPallet} from '~/chart_config/chart'
-import VueApexCharts from 'vue-apexcharts';
-import MenuDropdownProvinces from '../menuDropdownProvinces.vue';
+import { chartPallet } from '~/chart_config/chart'
+import VueApexCharts from 'vue-apexcharts'
+import MenuDropdownProvinces from '../menuDropdownProvinces.vue'
 export default {
   components: {
     apexchart: VueApexCharts,
     MenuDropdownProvinces,
   },
   methods: {
-    changeprovince(province){
+    changeprovince(province) {
       const obj = {
         province,
         stateName: 'soldCommodityByProvince',
-        stateNameSelected: 'soldCommodityByProvinceSelected' 
+        stateNameSelected: 'soldCommodityByProvinceSelected',
       }
-      this.$store.commit('dashboard/changeProvince',obj)
+      this.$store.commit('dashboard/changeProvince', obj)
+    },
+  },
+  data() {
+    return {
+      height: 300,
     }
   },
-  data(){
-    return{
-      height: 300
-    }
+  async mounted() {
+    await new Promise((resolve) => setTimeout(resolve, 100))
+    this.height = 500
   },
-  async mounted(){
-    await new Promise(resolve => setTimeout(resolve, 100));
-    this.height= 500
-  },
-  computed:{
-    provinces(){
-      return this.$store.getters['dashboard/data'].soldCommodityByProvince.provinces
+  computed: {
+    provinces() {
+      return this.$store.getters['dashboard/data'].soldCommodityByProvince
+        .provinces
     },
-    series(){
-      return this.$store.getters['dashboard/soldCommodityByProvinceSelected'].series
+    series() {
+      return this.$store.getters['dashboard/soldCommodityByProvinceSelected']
+        .series
     },
-    options(){
+    options() {
       return {
         title: {
-          text: this.$store.getters['dashboard/data'].soldCommodityByProvince.title + ' - ' + this.$store.getters['dashboard/soldCommodityByProvinceSelected'].province,
-          align: 'center'
+          text:
+            this.$store.getters['dashboard/data'].soldCommodityByProvince
+              .title +
+            ' - ' +
+            this.$store.getters['dashboard/soldCommodityByProvinceSelected']
+              .province,
+          align: 'center',
         },
         chart: {
           height: this.height,
@@ -58,14 +65,14 @@ export default {
           type: 'bar',
           toolbar: {
             show: false,
-          }
+          },
         },
         plotOptions: {
           bar: {
             horizontal: false,
             columnWidth: '65%',
             endingShape: 'rounded',
-          }
+          },
         },
         dataLabels: {
           enabled: false,
@@ -76,15 +83,18 @@ export default {
           colors: ['white'],
         },
         legend: {
-          show: true
+          show: true,
         },
         xaxis: {
-          categories: this.$store.getters['dashboard/soldCommodityByProvinceSelected'].categories,
+          categories:
+            this.$store.getters['dashboard/soldCommodityByProvinceSelected']
+              .categories,
         },
         colors: chartPallet(),
         yaxis: {
           title: {
-            text: this.$store.getters['dashboard/data'].soldCommodityByProvince.yLabel,
+            text: this.$store.getters['dashboard/data'].soldCommodityByProvince
+              .yLabel,
           },
         },
         fill: {
@@ -95,30 +105,32 @@ export default {
             formatter: (val) => `${val} kg`,
           },
         },
-        responsive: [{
+        responsive: [
+          {
             breakpoint: 1264,
             options: {
-                plotOptions: {
-                    bar: {
-                        horizontal: true
-                    },
+              plotOptions: {
+                bar: {
+                  horizontal: true,
                 },
+              },
             },
-        }],
+          },
+        ],
         noData: {
           text: 'No Data Available!',
           align: 'center',
           verticalAlign: 'middle',
-        }
+        },
       }
-    }
-  }
+    },
+  },
 }
 </script>
 
 <style scoped>
-#year-dropdown{
-  z-index: 20!important;
+#year-dropdown {
+  z-index: 20 !important;
   display: flex;
   justify-content: center;
 }

@@ -4,9 +4,9 @@ export const concatOtherValueToList = (list, other) => {
   if (!!other) {
     for (let i = 0; i < listCopy.length; i++) {
       if (listCopy[i] == 'others' || listCopy[i] == 'other') {
-        if(!other){
+        if (!other) {
           listCopy[i] = 'others - ' + 'empty'
-        }else{
+        } else {
           listCopy[i] = 'others - ' + other
         }
         break
@@ -44,7 +44,7 @@ export const concatinateEachIndexes = (
 export const convertNumbers = (value) => {
   if (Array.isArray(value)) {
     let arr = [...value]
-    let newArr;
+    let newArr
     newArr = arr.map((num) => parseInt(num))
     return newArr
   } else {
@@ -118,7 +118,7 @@ export const extractUnmatchedValueCheck = (value, items) => {
 }
 /* look for the specific index that is not matched on the item. return a list, for checkboxes property */
 export const isOtherValueTickedCheckbox = (values, items) => {
-  if(values){
+  if (values) {
     let arr = [...values]
     arr.forEach((val, i) => {
       let countMatches = 0
@@ -131,9 +131,8 @@ export const isOtherValueTickedCheckbox = (values, items) => {
         arr[i] = 'others'
       }
     })
-    return arr    
-  }else{
+    return arr
+  } else {
     return []
   }
-
 }

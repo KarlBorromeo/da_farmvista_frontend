@@ -9,17 +9,16 @@
 <script>
 import PageDescription from '~/components/authenticated/pageDescription.vue'
 export default {
-    middleware: 'authSuperadminAdmin',
-    components: { PageDescription },
-    data() {
-        return {
-        description:
-            'This module is for reporting chuchcuchcuchcuc.',
-        }
-    },
-    beforeMount() {
-        this.$store.commit('udpateHeaderTitle', 'REPORT')
-    },
+  middleware: 'authSuperadminAdmin',
+  components: { PageDescription },
+  data() {
+    return {
+      description: 'This module is for reporting chuchcuchcuchcuc.',
+    }
+  },
+  beforeMount() {
+    this.$store.commit('udpateHeaderTitle', 'REPORT')
+  },
 }
 </script>
 

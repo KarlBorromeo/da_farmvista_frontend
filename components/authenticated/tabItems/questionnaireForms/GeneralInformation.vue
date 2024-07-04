@@ -170,13 +170,17 @@ import FormInputContainer from '~/components/authenticated/form/formInputContain
 import FormRadioContainer from '~/components/authenticated/form/formRadioContainer.vue'
 import FormCheckboxContainer from '~/components/authenticated/form/formCheckboxContainer.vue'
 import FormSelectContainer from '../../form/formSelectContainer.vue'
-import { concatOtherValueToList, isOtherValueTickedCheckbox, extractUnmatchedValueCheck } from '~/reusableFunctions/questionnaireValidation'
+import {
+  concatOtherValueToList,
+  isOtherValueTickedCheckbox,
+  extractUnmatchedValueCheck,
+} from '~/reusableFunctions/questionnaireValidation'
 export default {
   components: {
     FormInputContainer,
     FormRadioContainer,
     FormCheckboxContainer,
-    FormSelectContainer
+    FormSelectContainer,
   },
   data: () => ({
     valid: false,
@@ -267,10 +271,12 @@ export default {
         this.nonMarginalizedSector.length == 0
       ) {
         return false
-      }else if(this.nonMarginalizedSector.includes('others') && !this.nonMarginalizedSectorOthers){
+      } else if (
+        this.nonMarginalizedSector.includes('others') &&
+        !this.nonMarginalizedSectorOthers
+      ) {
         return false
-      } 
-      else {
+      } else {
         return true
       }
     },
@@ -283,7 +289,10 @@ export default {
         religion: this.religion,
         highestEducationAttained: this.highestEducationAttained,
         isBelongMarginalizedSector: this.isBelongMarginalizedSector,
-        ifNoMarginalizedSectorName: concatOtherValueToList(this.nonMarginalizedSector,this.nonMarginalizedSectorOthers),
+        ifNoMarginalizedSectorName: concatOtherValueToList(
+          this.nonMarginalizedSector,
+          this.nonMarginalizedSectorOthers
+        ),
         dialectSpoken: this.dialectSpoken,
         isMemberFarmerOrganization: this.isMemberOrgranization,
         organizationTypeMembership: this.typeMembership,
@@ -357,8 +366,10 @@ export default {
     },
   },
   beforeMount() {
-    this.nonMarginalizedSectorItems = this.$store.getters['questionnaireCode/MarginalizedSector']
-    this.highestEducationAttainedItems = this.$store.getters['questionnaireCode/HighestEducationalAttainment']
+    this.nonMarginalizedSectorItems =
+      this.$store.getters['questionnaireCode/MarginalizedSector']
+    this.highestEducationAttainedItems =
+      this.$store.getters['questionnaireCode/HighestEducationalAttainment']
     const data = this.$store.getters['profiling/selectedRecord']
     if (Object.keys(data).length > 0) {
       this.age = data.profileGeneralInfo.age
@@ -369,8 +380,14 @@ export default {
         data.profileGeneralInfo.highestEducationAttained
       this.isBelongMarginalizedSector =
         data.profileGeneralInfo.isBelongMarginalizedSector
-      this.nonMarginalizedSector = isOtherValueTickedCheckbox( data.profileGeneralInfo.ifNoMarginalizedSectorName,this.nonMarginalizedSectorItems)
-      this.nonMarginalizedSectorOthers = extractUnmatchedValueCheck(data.profileGeneralInfo.ifNoMarginalizedSectorName,this.nonMarginalizedSectorItems)
+      this.nonMarginalizedSector = isOtherValueTickedCheckbox(
+        data.profileGeneralInfo.ifNoMarginalizedSectorName,
+        this.nonMarginalizedSectorItems
+      )
+      this.nonMarginalizedSectorOthers = extractUnmatchedValueCheck(
+        data.profileGeneralInfo.ifNoMarginalizedSectorName,
+        this.nonMarginalizedSectorItems
+      )
 
       this.dialectSpoken = data.profileGeneralInfo.dialectSpoken
       this.isMemberOrgranization =

@@ -1,52 +1,52 @@
 <template>
-	<v-col
-		cols="10"
-		lg="4"
-		class="mt-2"
-		style="display: flex; flex-direction: column; justify-content: center"
-	>
-		<div id="custom-card">
-			<apexchart :options="options" :series="series"/>
-			<v-spacer />
-			<p style="overflow:auto">{{ recommendation }}</p>
-		</div>
-	</v-col>
+  <v-col
+    cols="10"
+    lg="4"
+    class="mt-2"
+    style="display: flex; flex-direction: column; justify-content: center"
+  >
+    <div id="custom-card">
+      <apexchart :options="options" :series="series" />
+      <v-spacer />
+      <p style="overflow: auto">{{ recommendation }}</p>
+    </div>
+  </v-col>
 </template>
 
 <script>
 import VueApexCharts from 'vue-apexcharts'
 import { chartPallet } from '~/chart_config/chart'
 export default {
-	components: {
-		apexchart: VueApexCharts,
-	},
-	computed: {
-		series() {
-			return this.$store.getters['analytics/demographics']
-				.educationalBackgroundDistribution.series
-		},
-		options() {
-			return {
-				title: {
-					text: this.$store.getters['analytics/demographics']
-						.educationalBackgroundDistribution.title,
-					align: 'center',
-				},
-				chart: {
-					type: 'radialBar',
-				},
-				plotOptions: {
-					radialBar: {
-						offsetY: 0,
-						startAngle: 0,
-						endAngle: 270,
-						hollow: {
-							margin: 5,
-							size: '10%',
-							background: 'transparent',
-							image: undefined,
-						},
-						dataLabels: {
+  components: {
+    apexchart: VueApexCharts,
+  },
+  computed: {
+    series() {
+      return this.$store.getters['analytics/demographics']
+        .educationalBackgroundDistribution.series
+    },
+    options() {
+      return {
+        title: {
+          text: this.$store.getters['analytics/demographics']
+            .educationalBackgroundDistribution.title,
+          align: 'center',
+        },
+        chart: {
+          type: 'radialBar',
+        },
+        plotOptions: {
+          radialBar: {
+            offsetY: 0,
+            startAngle: 0,
+            endAngle: 270,
+            hollow: {
+              margin: 5,
+              size: '10%',
+              background: 'transparent',
+              image: undefined,
+            },
+            dataLabels: {
               name: {
                 show: true,
               },
@@ -57,35 +57,32 @@ export default {
                 show: true,
                 label: 'Total',
                 formatter: function (w) {
-                  return w.globals.seriesTotals.reduce((a, b) => a + b, 0);
+                  return w.globals.seriesTotals.reduce((a, b) => a + b, 0)
                 },
               },
-            }
-					},
-				},
-				colors: chartPallet(),
-				labels: this.$store.getters['analytics/demographics']
-					.educationalBackgroundDistribution.categories,
+            },
+          },
+        },
+        colors: chartPallet(),
+        labels:
+          this.$store.getters['analytics/demographics']
+            .educationalBackgroundDistribution.categories,
         legend: {
-           show: false,
-           position: 'bottom',
-            horizontalAlign: 'center', 
-            floating: false,
-					formatter: function (val, opts) {
-						return (
-							val +
-							' - ' +
-							opts.w.globals.series[opts.seriesIndex]
-						)
-					},
-				},
-			}
-		},
-		recommendation() {
-			return this.$store.getters['analytics/demographics']
-				.educationalBackgroundDistribution.recommendation
-		},
-	},
+          show: false,
+          position: 'bottom',
+          horizontalAlign: 'center',
+          floating: false,
+          formatter: function (val, opts) {
+            return val + ' - ' + opts.w.globals.series[opts.seriesIndex]
+          },
+        },
+      }
+    },
+    recommendation() {
+      return this.$store.getters['analytics/demographics']
+        .educationalBackgroundDistribution.recommendation
+    },
+  },
 }
 </script>
 

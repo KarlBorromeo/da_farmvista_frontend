@@ -1,5 +1,3 @@
-
-
 <template>
   <div class="mt-5">
     <v-data-table
@@ -20,16 +18,25 @@
         ></v-text-field>
       </template>
       <template v-slot:[`item.affectedData`]="{ item }">
-        <div v-if="isAffectedDataNull(item.affectedData)"> 
-          <ul v-if="item.affectedData.survey" class="my-0 py-0 caption text-capitalize">
+        <div v-if="isAffectedDataNull(item.affectedData)">
+          <ul
+            v-if="item.affectedData.survey"
+            class="my-0 py-0 caption text-capitalize"
+          >
             <p class="my-0 py-0 font-weight-bold">Survey IDs modified</p>
             <li v-for="id in item.affectedData.survey.id" :key="id">
-              {{id}}
+              {{ id }}
             </li>
           </ul>
           <section v-else>
-            <p class="my-0 py-0 caption text-capitalize"><span class="font-weight-bold">Position:</span> {{ item.affectedData.user.type }}</p>
-            <p class="my-0 py-0 caption text-capitalize"><span class="font-weight-bold">Fullname:</span> {{ item.affectedData.user.fullName }}</p>
+            <p class="my-0 py-0 caption text-capitalize">
+              <span class="font-weight-bold">Position:</span>
+              {{ item.affectedData.user.type }}
+            </p>
+            <p class="my-0 py-0 caption text-capitalize">
+              <span class="font-weight-bold">Fullname:</span>
+              {{ item.affectedData.user.fullName }}
+            </p>
           </section>
         </div>
       </template>
@@ -53,14 +60,13 @@
     </v-dialog>
     <snackbar ref="snackbar" />
   </div>
-
 </template>
 
 <script>
 import snackbar from '../../snackbar.vue'
 export default {
   emits: ['switchCommodity'],
-  components: { snackbar,},
+  components: { snackbar },
   data() {
     return {
       dialog: false,
@@ -74,20 +80,19 @@ export default {
     headers() {
       return [
         { text: 'Performer', value: 'performerName' },
-        { text: `Details`, value: 'details'},
-        { text: `Date`, value: 'date'},
-        { text: `Time`, value: 'time'},
-        { text: 'Affected Data', value: 'affectedData', align:'center'},
-        { text: 'Status', value: 'status', sortable: false, align:'center'},
+        { text: `Details`, value: 'details' },
+        { text: `Date`, value: 'date' },
+        { text: `Time`, value: 'time' },
+        { text: 'Affected Data', value: 'affectedData', align: 'center' },
+        { text: 'Status', value: 'status', sortable: false, align: 'center' },
       ]
     },
     pageCount() {
       return this.$store.getters['logs/countPages']
     },
-    items(){
+    items() {
       return this.$store.getters['logs/logs']
     },
-
   },
   methods: {
     /* fetch the survey records */
@@ -103,43 +108,43 @@ export default {
         this.$refs.snackbar.showBar(error, 'red')
       }
       this.loading = false
-      },
+    },
 
     /* dynamic text format for affected data column */
-    generateText(obj){
-      if(!obj){
+    generateText(obj) {
+      if (!obj) {
         return ''
       }
       const keys = Object.keys(obj)
       const affectedDataType = keys[0]
-      if(affectedDataType){
-        if(affectedDataType === 'survey'){
+      if (affectedDataType) {
+        if (affectedDataType === 'survey') {
           const ids = obj[affectedDataType].id
-          let str = '';
+          let str = ''
           // concatinate all ids
-          ids.forEach(element => {
+          ids.forEach((element) => {
             str += element + ', '
-          });
+          })
           // removes the last ', ' in the string
           if (str.endsWith(', ')) {
             str = str.slice(0, -2)
           }
           return str
-        }else if(affectedDataType === 'user'){
+        } else if (affectedDataType === 'user') {
           return `Position: ${obj[affectedDataType].type}, Fullname: ${obj[affectedDataType].fullName}`
-        }else{
+        } else {
           return 'not found affected data type'
         }
       }
       return ''
     },
     /* bool return if null or not */
-    isAffectedDataNull(obj){
-      if(!obj){
+    isAffectedDataNull(obj) {
+      if (!obj) {
         return false
       }
       return true
-    }
+    },
   },
 
   /* before mounting the component first http request to fetch the records */
@@ -154,11 +159,11 @@ export default {
         await this.fetchAllLogs()
       }
     },
-    async search(){
-      await new Promise(resolve=>setTimeout(resolve,500))
-      this.page = 1;
-      await this.fetchAllLogs();  // fetch the all list with filter search value
-    }
+    async search() {
+      await new Promise((resolve) => setTimeout(resolve, 500))
+      this.page = 1
+      await this.fetchAllLogs() // fetch the all list with filter search value
+    },
   },
 }
 </script>

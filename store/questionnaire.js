@@ -3,9 +3,9 @@ export const state = () => ({
   form: {
     farmHouseholdAsset: {},
     parcelInfo: {
-      parcelNumber: [1,2],
-      cropsPlanted: ['haha,hehe','aww']
-    }
+      parcelNumber: [1, 2],
+      cropsPlanted: ['haha,hehe', 'aww'],
+    },
   },
   tabs: [
     {
@@ -159,11 +159,11 @@ export const state = () => ({
 
 export const getters = {
   /* return the parcel information details */
-  parcelInformationDetails(state){
+  parcelInformationDetails(state) {
     return state.form.parcelInfo
   },
   /* return boolean if the current interview is validated or not eg(diseased,declined,not-present, et.) */
-  isIntervieweeValidated(state){
+  isIntervieweeValidated(state) {
     return state.isIntervieweeValidated
   },
   /* return the updated tab selected */
@@ -532,9 +532,9 @@ export const mutations = {
   },
 
   /* test if the basic information and survey information form are valid before submission */
-  checkBasicInfoSurveyInfoValdity(state){
+  checkBasicInfoSurveyInfoValdity(state) {
     state.isBasicInfoSurveyInfoValid = false
-    if(state.tabs[0].validity && state.tabs[1].validity){
+    if (state.tabs[0].validity && state.tabs[1].validity) {
       state.isBasicInfoSurveyInfoValid = true
     }
   },
@@ -545,23 +545,23 @@ export const mutations = {
   },
 
   /* toggle the isIntervieweeValidated */
-  toggleIsIntervieweeValidated(state,bool){
+  toggleIsIntervieweeValidated(state, bool) {
     state.isIntervieweeValidated = bool
     // this will remove or add the 'farmHouseholdAsset' key in the form to just remove it when the interviewee is not validated, the default form has an existing 'farmHouseholdAsset' already
-    if(!bool){
+    if (!bool) {
       delete state.form.farmHouseholdAsset
-    }else{
+    } else {
       state.form.farmHouseholdAsset = {}
     }
-  }
+  },
 }
 
 export const actions = {
   /* submit the form if all the tabs are validated or (basicInfo and surveyInfo forms only if interviewee status is not validated) */
   async submitAll(context) {
-    if(context.state.isIntervieweeValidated){
+    if (context.state.isIntervieweeValidated) {
       context.commit('checkValidityAll')
-    }else{
+    } else {
       context.commit('checkBasicInfoSurveyInfoValdity')
     }
     const payload = {
@@ -581,10 +581,10 @@ export const actions = {
   },
 
   /* submit and update the existing record or (basicInfo and surveyInfo forms only if interviewee status is not validated) */
-  async submitUpdate(context,id){
-    if(context.state.isIntervieweeValidated){
+  async submitUpdate(context, id) {
+    if (context.state.isIntervieweeValidated) {
       context.commit('checkValidityAll')
-    }else{
+    } else {
       context.commit('checkBasicInfoSurveyInfoValdity')
     }
     const payload = {

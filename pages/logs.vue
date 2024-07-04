@@ -4,12 +4,11 @@
       icon="mdi-history"
       title="Logs"
       :description="description"
-    />    
+    />
     <page-contents>
       <logs-table />
     </page-contents>
   </div>
-
 </template>
 
 <script>
@@ -17,7 +16,7 @@ import LogsTable from '~/components/authenticated/tables/logsTable.vue'
 import PageContents from '~/components/authenticated/pageContents.vue'
 import PageDescription from '~/components/authenticated/pageDescription.vue'
 export default {
-  middleware :'authSuperadmin',
+  middleware: 'authSuperadmin',
   components: { PageDescription, PageContents, LogsTable },
   data() {
     return {

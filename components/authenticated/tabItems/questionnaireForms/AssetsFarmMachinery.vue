@@ -17,7 +17,7 @@
               dense
             ></v-select>
             <v-text-field
-              v-if="machineName[i - 1]=='others'"
+              v-if="machineName[i - 1] == 'others'"
               v-model="machineNameOther[i - 1]"
               :rules="requiredRule"
               label="* Specify other machinery"
@@ -74,7 +74,12 @@ import formCardButton from '~/components/authenticated/form/formCardButton.vue'
 import FormInputContainer from '~/components/authenticated/form/formInputContainer.vue'
 import FormRadioContainer from '~/components/authenticated/form/formRadioContainer.vue'
 import FormSelectContainer from '~/components/authenticated/form/formSelectContainer.vue'
-import { convertNumbers, concatinateEachIndexes, isOtherValueDefinedRadio, extractUnmatchedValueRadio } from '~/reusableFunctions/questionnaireValidation'
+import {
+  convertNumbers,
+  concatinateEachIndexes,
+  isOtherValueDefinedRadio,
+  extractUnmatchedValueRadio,
+} from '~/reusableFunctions/questionnaireValidation'
 export default {
   components: {
     formCard,
@@ -141,7 +146,11 @@ export default {
     /* get the data and convert it into expected key/value formats in BackEnd */
     getData() {
       return {
-        farmMachineryName: concatinateEachIndexes(this.machineName,this.machineNameOther,this.items),
+        farmMachineryName: concatinateEachIndexes(
+          this.machineName,
+          this.machineNameOther,
+          this.items
+        ),
         farmMachineryQuantity: convertNumbers(this.machineQuantity),
         isAcquiredGovtProgram: this.ismachineAquiredGovtProg,
         farmMachineryAge: convertNumbers(this.machineAge),
@@ -200,9 +209,15 @@ export default {
       if (length > 0) {
         this.items = length
         for (let i = 0; i < length; i++) {
-          this.machineName[i] = isOtherValueDefinedRadio(data.farmHouseholdAsset.farmMachinery[i].farmMachineryName,this.machineNameItems)
-            data.farmHouseholdAsset.farmMachinery[i].farmMachineryName
-          this.machineNameOther[i] = extractUnmatchedValueRadio(data.farmHouseholdAsset.farmMachinery[i].farmMachineryName,this.machineNameItems)
+          this.machineName[i] = isOtherValueDefinedRadio(
+            data.farmHouseholdAsset.farmMachinery[i].farmMachineryName,
+            this.machineNameItems
+          )
+          data.farmHouseholdAsset.farmMachinery[i].farmMachineryName
+          this.machineNameOther[i] = extractUnmatchedValueRadio(
+            data.farmHouseholdAsset.farmMachinery[i].farmMachineryName,
+            this.machineNameItems
+          )
           this.machineQuantity[i] =
             data.farmHouseholdAsset.farmMachinery[i].farmMachineryQuantity
           this.ismachineAquiredGovtProg[i] =
