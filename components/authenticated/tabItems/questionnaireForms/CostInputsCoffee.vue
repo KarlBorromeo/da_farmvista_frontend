@@ -19,14 +19,26 @@
               type="number"
             ></v-text-field>
           </form-input-container>
-          <form-input-container>
+          <v-col cols="6">
             <v-text-field
               v-model="formData[item.key].quantity"
               :rules="numberRule"
               label="* Qty. Used"
               type="number"
             ></v-text-field>
-          </form-input-container>
+          </v-col>
+          <!-- TODO: -->
+          <v-col cols="6">
+            <v-select
+              :items="unitItems"
+              v-model="formData[item.key].unit"
+              :rules="requiredRule"
+              label="Unit"
+              required
+              class="text-capitalize"
+            ></v-select>
+         </v-col>
+           <!-- TODO: -->
           <form-input-container>
             <v-text-field
               v-model="formData[item.key].totalTransportCost"
@@ -67,7 +79,7 @@
         </v-row>
       </form-card>
     </v-container>
-    <v-btn @click="validate">Validate</v-btn>
+    <!-- <v-btn @click="validate">Validate</v-btn> -->
   </v-form>
 </template>
 
@@ -83,10 +95,14 @@ export default {
   },
   data: () => ({
     valid: false,
+    unitItems: [
+      'kg','L','m','gal','pcs','sack'
+    ],
     formData: {
       plantingMaterials: {
         price: '100',
         quantity: '100',
+        unit: '',
         totalTransportCost: '100',
         totalCost: '100',
         cashCredit: 'cash',
@@ -95,6 +111,7 @@ export default {
       fertilizerUrea: {
         price: '100',
         quantity: '100',
+        unit: '',
         totalTransportCost: '100',
         totalCost: '100',
         cashCredit: 'cash',
@@ -103,6 +120,7 @@ export default {
       fertilizerComplete: {
         price: '100',
         quantity: '100',
+        unit: '',
         totalTransportCost: '100',
         totalCost: '100',
         cashCredit: 'cash',
@@ -111,6 +129,7 @@ export default {
       fertilizerAmmosul: {
         price: '100',
         quantity: '100',
+        unit: '',
         totalTransportCost: '100',
         totalCost: '100',
         cashCredit: 'cash',
@@ -119,6 +138,7 @@ export default {
       fertilizerAmmophos: {
         price: '100',
         quantity: '100',
+        unit: '',
         totalTransportCost: '100',
         totalCost: '100',
         cashCredit: 'cash',
@@ -127,6 +147,7 @@ export default {
       fertilizerSolophos: {
         price: '100',
         quantity: '100',
+        unit: '',
         totalTransportCost: '100',
         totalCost: '100',
         cashCredit: 'cash',
@@ -135,6 +156,7 @@ export default {
       fertilizerMop: {
         price: '100',
         quantity: '100',
+        unit: '',
         totalTransportCost: '100',
         totalCost: '100',
         cashCredit: 'cash',
@@ -143,6 +165,7 @@ export default {
       fertilizerAnimalManure: {
         price: '100',
         quantity: '100',
+        unit: '',
         totalTransportCost: '100',
         totalCost: '100',
         cashCredit: 'cash',
@@ -152,6 +175,7 @@ export default {
         name: 'sample specified',
         price: '100',
         quantity: '100',
+        unit: '',
         totalTransportCost: '100',
         totalCost: '100',
         cashCredit: 'cash',
@@ -160,6 +184,7 @@ export default {
       lime: {
         price: '100',
         quantity: '100',
+        unit: '',
         totalTransportCost: '100',
         totalCost: '100',
         cashCredit: 'cash',
@@ -169,6 +194,7 @@ export default {
         name: 'sample specified',
         price: '100',
         quantity: '100',
+        unit: '',
         totalTransportCost: '100',
         totalCost: '100',
         cashCredit: 'cash',
@@ -178,6 +204,7 @@ export default {
         name: 'sample specified',
         price: '100',
         quantity: '100',
+        unit: '',
         totalTransportCost: '100',
         totalCost: '100',
         cashCredit: 'cash',
@@ -187,6 +214,7 @@ export default {
         name: 'sample specified',
         price: '100',
         quantity: '100',
+        unit: '',
         totalTransportCost: '100',
         totalCost: '100',
         cashCredit: 'cash',
@@ -196,6 +224,7 @@ export default {
         name: 'sample fertilizer other',
         price: '100',
         quantity: '100',
+        unit: '',
         totalTransportCost: '100',
         totalCost: '100',
         cashCredit: 'cash',
@@ -322,6 +351,7 @@ export default {
         const keyName = this.list[i].key
         this.formData[keyName].price = ''
         this.formData[keyName].quantity = ''
+        this.formData[keyName].unit = 'kg'
         this.formData[keyName].totalTransportCost = ''
         this.formData[keyName].totalCost = ''
         this.formData[keyName].cashCredit = ''

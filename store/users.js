@@ -1,19 +1,7 @@
 import * as api from '../api/users'
 
 export const state = () => ({
-  users:[
-    // {
-    //   id: `Karl Borromeo',`,
-    //   fullname: 'Karl Borromeo',
-    //   gender: 'Male',
-    //   type: 'Admin',
-    //   email: 'aw@gmail.com',
-    //   mobileNumber: '09123456789',
-    //   company: 'CSU',
-    //   companyPosition: 'Dev',
-    //   active: true
-    // },
-  ],
+  users:[],
   countPages: 1
 })
 

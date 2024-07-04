@@ -58,7 +58,7 @@
         </v-row>
       </form-card>
     </v-container>
-    <v-btn @click="validate">Validate</v-btn>
+    <!-- <v-btn @click="validate">Validate</v-btn> -->
   </v-form>
 </template>
 
@@ -133,10 +133,10 @@ export default {
     /* get the data and convert it into expected key/value formats in BackEnd */
     getData() {
       return {
-        farmtoolName: this.toolName,
-        farmtoolQuantity: convertNumbers(this.toolQuantity),
+        farmToolName: this.toolName,
+        farmToolQuantity: convertNumbers(this.toolQuantity),
         isAcquiredGovtProgram: this.isToolAquiredGovtProg,
-        farmtoolAge: convertNumbers(this.toolAge)
+        farmToolAge: convertNumbers(this.toolAge)
       }
     },
     // decrement the count of items

@@ -1,8 +1,7 @@
 <template>
 	<v-form ref="form" v-model="valid" lazy-validation>
 		<v-container>
-			<!-- <form-card-button @emitIncrement="increment" @emitDecrement="decrement" /> -->
-			<form-card v-for="(item, i) in parcelInfo" :key="i" >
+			<form-card v-for="(item, i) in parcelInfo" :key="i">
 				<v-row justify="center" style="overflow: hidden" class="pb-6">
 					<v-col cols="12" class="mb-0 pb-0">
 						<p
@@ -17,26 +16,28 @@
 						>
 							Crops Grown
 						</p>
-							<v-row
-								justify="center"
-                v-for="(cropGrown, j) in item.cropsGrown"
-                :key="j"
-                class="custom-card"
-							>
-                <v-spacer />
-								<v-col cols="10" class="pa-0" sm="5">
+						<div 
+							v-for="(singleParcelInfo, j) in item"
+							:key="j"
+							class="custom-card"
+						>
+							<v-row justify="center">
+								<v-spacer />
+								<v-col cols="10" class="pb-0" sm="5">
 									<v-text-field
-										v-model="cropGrown.crop"
+										v-model="singleParcelInfo.crop"
 										:rules="specialCharactersRule"
 										label="crop name grown"
-                    :disabled="true"
+										:disabled="true"
 									></v-text-field>
 								</v-col>
 								<v-spacer />
-								<v-col cols="5" sm="3" class="alignHorizontalVertical">
-									<p class="body-2">
-										is utilized?
-									</p>
+								<v-col
+									cols="5"
+									sm="3"
+									class="alignHorizontalVertical"
+								>
+									<p class="body-2">is utilized?</p>
 								</v-col>
 
 								<v-col
@@ -52,7 +53,7 @@
 								>
 									<v-radio-group
 										:rules="requiredRule"
-										v-model="cropGrown.isUtilized"
+										v-model="singleParcelInfo.isUtilized"
 										class="pa-0 ma-0"
 										row
 									>
@@ -64,35 +65,22 @@
 										></v-radio>
 									</v-radio-group>
 								</v-col>
+								<v-spacer />
 							</v-row>
-					</v-col>
-
-          <v-col cols="11" class="mb-0 pa-0 mt-4">
-						<p
-							class="ma-0 mb-4 pa-0 text-center subheading font-weight-medium"
-						>
-							Crops Waste
-						</p>
-							<v-row
-								justify="center"
-                v-for="j in item.cropsWasteitems"
-                :key="j"
-                class="custom-card"
-							>
-              {{j}}
-                <v-spacer />
-								<v-col cols="10" class="pa-0" sm="5">
+							<v-row justify="center">
+								<v-spacer />
+								<v-col cols="7" class="pt-0">
 									<v-text-field
-										v-model="item.cropsWaste[j-1].waste"
+										v-model="singleParcelInfo.waste"
 										:rules="specialCharactersRule"
-										label="waste name"
+										label="wastes"
+										hint="Separate with comma ' , ' if multiple wastes"
 									></v-text-field>
 								</v-col>
 								<v-spacer />
 								<v-col
 									class="pa-0"
-									cols="6"
-									sm="3"
+									cols="4"
 									style="
 										display: flex;
 										flex-direction: column;
@@ -102,35 +90,21 @@
 								>
 									<v-text-field
 										:rules="numberRule"
-										v-model="item.cropsWaste[j-1].kg"
-                    label="waste volume in (kg)"
-                    type="number"
-                    min=0
+										v-model="singleParcelInfo.kg"
+										label="waste volume in (kg)"
+										type="number"
+										min="0"
 									>
 									</v-text-field>
 								</v-col>
-								<v-col
-                  
-									class="pa-0"
-									cols="4"
-									sm="3"
-									style="
-										display: flex;
-										justify-content: center;
-										align-items: center"
-								>
-                  <section v-if="j== item.cropsWasteitems">
-                    <v-btn small icon @click="decrement(i)"><v-icon>mdi-minus</v-icon></v-btn>
-                    <v-btn small icon @click="increment(i)"><v-icon>mdi-plus</v-icon></v-btn>                    
-                  </section>
-
-								</v-col>
+								<v-spacer />
 							</v-row>
+						</div>
 					</v-col>
 				</v-row>
 			</form-card>
 		</v-container>
-		<v-btn @click="validate">Validate</v-btn>
+		<!-- <v-btn @click="validate">Validate</v-btn> -->
 	</v-form>
 </template>
 
@@ -152,6 +126,7 @@ export default {
 		},
 	},
 	data: () => ({
+		parcelNumbers: [],
 		parcelInfo: [],
 		valid: false,
 		items: 1,
@@ -165,13 +140,12 @@ export default {
 		],
 		requiredRule: [(v) => !!v || 'This field is required'],
 		numberRule: [
-			(v) => !!v || 'This field is required',
 			(v) => parseFloat(v) >= 0 || 'invalid value',
 		],
 		specialCharactersRule: [
 			(v) => !!v || 'This field is required',
 			(v) => {
-				const regex = /^[a-zA-Z0-9,\/]*$/
+				const regex = /^[a-zA-Z0-9,\/ ]*$/
 				if (regex.test(v)) {
 					return true
 				}
@@ -183,12 +157,13 @@ export default {
 	methods: {
 		/* test if the form is valid, return boolean */
 		validate() {
-			const valid = this.checkNull()
+			const valid = this.$refs.form.validate();
 			this.$store.commit('questionnaire/toggleNextTab', {
 				tabName: 'FarmWasteManagementValidated',
 				valid,
 			})
 			if (valid) {
+				console.log(this.getData())
 				this.$store.commit('questionnaire/saveData', {
 					keyName: 'farmWasteManagement',
 					data: this.getData(),
@@ -197,116 +172,68 @@ export default {
 		},
 		/* get the data and convert it into expected key/value formats in BackEnd */
 		getData() {
-			let cropsGrown = []
+			let isUtilized = []
 			let kindWasteProduced = []
 			let volumeWasteKg = []
-			let isUtilized = []
-			for(let i=0; i<this.parcelInfo.length; i++){
-				const cropsGrownByParcel = this.parcelInfo[i].cropsGrown
-				const cropsWasteByParcel = this.parcelInfo[i].cropsWaste
-				let tempCropsGrownArr = []
+			for (let i = 0; i < this.parcelInfo.length; i++) {
+				const singleParcelInfo = this.parcelInfo[i]
 				let tempIsUtilizedArr = []
-				for( let j=0; j<cropsGrownByParcel.length; j++){
-				tempCropsGrownArr.push(cropsGrownByParcel[j].crop)
-				tempIsUtilizedArr.push(cropsGrownByParcel[j].isUtilized)
+				let tempKindWasteProducedArr = []
+				let tempVolumeWasteKgArr = []
+				for (let j = 0; j < singleParcelInfo.length; j++) {
+					tempIsUtilizedArr.push(singleParcelInfo[j].isUtilized)
+					tempKindWasteProducedArr.push(singleParcelInfo[j].waste)
+					tempVolumeWasteKgArr.push(parseFloat(singleParcelInfo[j].kg))
 				}
-				let tempCropswasteArr = []
-				let tempWasteKg = []
-				for( let j=0; j<cropsWasteByParcel.length; j++){
-				tempCropswasteArr.push(cropsWasteByParcel[j].waste)
-				tempWasteKg.push(parseInt(cropsWasteByParcel[j].kg))
-				}
-				cropsGrown.push(tempCropsGrownArr)
 				isUtilized.push(tempIsUtilizedArr)
-				kindWasteProduced.push(tempCropswasteArr)
-				volumeWasteKg.push(tempWasteKg)
+				kindWasteProduced.push(tempKindWasteProducedArr)
+				volumeWasteKg.push(tempVolumeWasteKgArr)
 			}
 			return {
-				cropsGrown,
+				parcelNumbers: this.parcelNumbers,
 				isUtilized,
 				kindWasteProduced,
 				volumeWasteKg,
 			}
 		},
-		decrement(index) {
-			if (this.parcelInfo[index].cropsWasteitems > 1) {
-				this.parcelInfo[index].cropsWasteitems--
-				this.parcelInfo[index].cropsWaste.pop()
-			}
-		},
-		increment(index) {
-      this.parcelInfo[index].cropsWaste.push(
-        {
-          waste: 'hahahaa',
-          kg: 22222222222222,
-        }
-      )
-      this.parcelInfo[index].cropsWasteitems++;
-		},
-    checkNull(){
-      const data = this.getData();
-      const keyArrays = Object.keys(data);
-      for(let i=0; i<keyArrays.length; i++){
-        let keyValues = data[keyArrays[i]]
-        for(let j=0; j<keyValues.length; j++){
-          let arr = keyValues[j]
-          const index = arr.findIndex(item => !item)
-          if(index>=0){
-            console.log('empty at ',index)
-            return false;
-          }
-        }
-      }
-      return true;
-    }
 	},
 	watch: {
-    parcelInfo: {
-      handler: function () {
-        this.validate()
-      },
-      deep: true,
-    },
+		parcelInfo: {
+			handler: function () {
+				this.validate()
+			},
+			deep: true,
+		},
 	},
-  beforeMount() { 
-    const isEditing = this.$store.getters['profiling/isEditingMode']
-    if(!isEditing){
-	    // this is composed of single/mulitple parcels
-      const cropsPlanted = this.$store.getters['questionnaire/parcelInformationDetails'].cropsPlanted
-      for(let j=0; j<cropsPlanted.length; j++){
-        const cropsPlantedArr = cropsPlanted[j].split(',')
-        let cropsGrown = [];
-        for(let i = 0; i<cropsPlantedArr.length; i++){
-          cropsGrown.push({
-            crop: cropsPlantedArr[i],
-            isUtilized: ''
-          })
-        }
-        const cropsWasteitems = 1
-        let cropsWaste = []
-        cropsWaste.push({
-          waste: '',
-          kg: ''
-        })
-        this.parcelInfo.push({
-          cropsGrown,
-          cropsWasteitems,
-          cropsWaste
-        })       
-      }
-    }else{
-      // TODO: do the fetch of existing data here and process it into make it parcelInfo
-      this.parcelInfo.push({
-        cropsGrown:[],
-        cropsWasteitems: 1,
-        cropsWaste: [
-          {
-            waste: '',
-            kg: ''
-          }
-        ]
-      })
-    }
+	beforeMount() {
+		const isEditing = this.$store.getters['profiling/isEditingMode']
+		if (!isEditing) {
+			// this is composed of single/mulitple parcels
+			const cropsPlanted = this.$store.getters['questionnaire/parcelInformationDetails'].cropsPlanted
+			this.parcelNumbers = this.$store.getters['questionnaire/parcelInformationDetails'].parcelNumber
+			for (let j = 0; j < cropsPlanted.length; j++) {
+				const cropsPlantedArr = cropsPlanted[j].split(',')
+				let singleParcelInfo = []
+				for (let i = 0; i < cropsPlantedArr.length; i++) {
+					singleParcelInfo.push({
+						crop: cropsPlantedArr[i],
+						isUtilized: '',
+						waste: '',
+						kg: '',
+					})
+				}
+				this.parcelInfo.push(singleParcelInfo)
+			}
+		} else {
+			// const existingRecord = this.$store.getters['profiling/selectedRecord'].parcelInfo
+			// do the fetch of existing data here and process it into make it parcelInfo
+			this.parcelInfo.push({
+				crop: '',
+				isUtilized: '',
+				waste: '',
+				kg: '',
+			})
+		}
 	},
 }
 </script>
@@ -314,10 +241,11 @@ export default {
 <style scoped>
 .custom-card {
 	box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+	margin-bottom: 2rem;
 }
 .alignHorizontalVertical {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 </style>

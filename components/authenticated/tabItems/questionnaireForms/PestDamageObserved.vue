@@ -75,7 +75,7 @@
         </v-row>
       </form-card>
     </v-container>
-    <v-btn @click="validate">Validate</v-btn>
+    <!-- <v-btn @click="validate">Validate</v-btn> -->
   </v-form>
 </template>
 

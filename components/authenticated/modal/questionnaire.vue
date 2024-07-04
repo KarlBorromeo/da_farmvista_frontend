@@ -535,6 +535,12 @@ export default {
     }
   },
   watch: {
+    /* watch the current tab, move to the intial tab when the current tab is BasicInformation */
+    currentTab(tabName){
+      if(tabName == 'BasicInformation'){
+        this.initialTab = 0;
+      }
+    },
     /* fetch codes if the commodity changed*/
     async currentCommodity(newVal, oldVal) {
       if (newVal != oldVal) {
