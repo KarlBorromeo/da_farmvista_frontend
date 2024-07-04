@@ -53,7 +53,6 @@
                   <v-text-field
                     v-model="username"
                     :rules="usernameRules"
-                    :counter="10"
                     label="Username"
                     required
                     placeholder="Your Username"
@@ -64,10 +63,12 @@
                   <v-text-field
                     v-model="password"
                     :rules="passwordRules"
+                    :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
                     label="Password"
                     required
                     placeholder="Your Password"
-                    type="password"
+                    :type="showPassword ? 'text' : 'password'"
+                    @click:append="showPassword = !showPassword"
                   ></v-text-field>
                 </v-col>
                 <v-btn dark color="primary" block @click="login">Log In</v-btn>
@@ -95,6 +96,8 @@ export default {
     }
   },
   data: () => ({
+    show1: false,
+    showPassword: false,
     valid: false,
     username: 'karlito',
     usernameRules: [

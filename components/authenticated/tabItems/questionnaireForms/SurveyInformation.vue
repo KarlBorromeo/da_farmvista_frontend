@@ -158,7 +158,7 @@
         </form-input-container>
       </v-row>
     </v-container>
-    <v-btn @click="validate">Validate</v-btn>
+    <!-- <v-btn @click="validate">Validate</v-btn> -->
   </v-form>
 </template>
 
@@ -179,22 +179,22 @@ export default {
       valid: false,
       intervieweeStatus: '',
       intervieweeStatusItems: [],
-      surveyNumber: '555',
+      surveyNumber: '',
       surveyNumberRule: [(v) => !!v || 'survey number is required'],
-      interviewer: 'Karl Borromeo',
-      date: '2024-05-17',
+      interviewer: '',
+      date: '',
       dateRule: [(v) => !!v || 'date is required'],
-      interviewStart: '08:00',
+      interviewStart: '',
       timeStartPicker: false,
       interviewStartRule: [(v) => !!v || 'time start is required'],
-      interviewEnd: '12:00',
+      interviewEnd: '',
       timeEndPicker: false,
       interviewEndRule: [(v) => !!v || 'time end is required'],
-      regionProvince: 'AGUSAN DEL NORTE',
+      regionProvince: '',
       regionProvinceItems: [],
-      municipality: 'ALEGRIA',
+      municipality: '',
       municipalityItems: [],
-      barangay: 'Brgy. Binutbut',
+      barangay: '',
       barangayRule: [(v) => !!v || 'Barangay is required'],
       requiredRule: [(v) => !!v || 'This field is required'],
     }
@@ -271,11 +271,12 @@ export default {
         this.validate()
         this.$store.commit('questionnaire/toggleIsIntervieweeValidated',false)
       }else{
+        this.$store.commit('questionnaire/toggleIsIntervieweeValidated',true)
         this.$store.commit('questionnaire/toggleNextTab', {
           tabName: 'SurveyInformationValidated',
           valid: false,
         })
-        this.$store.commit('questionnaire/toggleIsIntervieweeValidated',true)
+        
       }
     },
     date() {

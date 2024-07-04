@@ -2,6 +2,10 @@ import * as api from '../api/questionnaire'
 export const state = () => ({
   form: {
     farmHouseholdAsset: {},
+    parcelInfo: {
+      parcelNumber: [1,2],
+      cropsPlanted: ['haha,hehe','aww']
+    }
   },
   tabs: [
     {
@@ -143,10 +147,10 @@ export const state = () => ({
       tempValidity: false,
     },
   ],
-  // currentTab: 'BasicInformation',
+  currentTab: 'BasicInformation',
   // currentTab: 'ParcelInformation',
-  // currentTab: 'TechAwareness',
-  currentTab: 'InformationKnowledgeSources',
+  // currentTab: 'FarmWasteManagement',
+  // currentTab: 'CostInputsCoffee',
   isAllValid: false,
   commodity: '',
   isIntervieweeValidated: true,
@@ -498,7 +502,7 @@ export const mutations = {
       tab.validity = false
       tab.tempValidity = false
     })
-    // state.currentTab = 'BasicInformation' TODO:
+    state.currentTab = 'BasicInformation' //TODO:
   },
 
   /* display the next tab contents */

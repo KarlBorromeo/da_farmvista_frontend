@@ -43,7 +43,7 @@
         </form-input-container>
       </v-row>
     </v-container>
-    <v-btn @click="validate">Validate</v-btn>
+    <!-- <v-btn @click="validate">Validate</v-btn> -->
   </v-form>
 </template>
 
@@ -53,12 +53,12 @@ export default {
   components: { formInputContainer },
   data: () => ({
     valid: false,
-    surename: 'a',
-    firstname: 'a',
+    surename: '',
+    firstname: '',
     requiredRules: [(v) => !!v || 'This field is required'],
-    middleInitial: 'a',
-    contactNumber: '09277494592',
-    farmerCode: '00004ZuIp',
+    middleInitial: '',
+    contactNumber: '',
+    farmerCode: '',
     contactNumberRule: [
       (v) => {
         if(v){
@@ -77,7 +77,6 @@ export default {
     /* test if the form is valid, return boolean */
     async validate() {
       const valid = this.$refs.form.validate()
-      console.log('validated', valid)
       this.$store.commit('questionnaire/toggleNextTab', {
         tabName: 'BasicInformationValidated',
         valid,
