@@ -118,7 +118,7 @@ export default {
     },
   },
   data: () => ({
-    parcelNumbers: [],
+    parcelNumber: [],
     parcelInfo: [],
     valid: false,
     items: 1,
@@ -180,7 +180,7 @@ export default {
         volumeWasteKg.push(tempVolumeWasteKgArr)
       }
       return {
-        parcelNumbers: this.parcelNumbers,
+        parcelNumber: this.parcelNumber,
         isUtilized,
         kindWasteProduced,
         volumeWasteKg,
@@ -202,7 +202,7 @@ export default {
       const cropsPlanted =
         this.$store.getters['questionnaire/parcelInformationDetails']
           .cropsPlanted
-      this.parcelNumbers =
+      this.parcelNumber =
         this.$store.getters[
           'questionnaire/parcelInformationDetails'
         ].parcelNumber
@@ -220,14 +220,23 @@ export default {
         this.parcelInfo.push(singleParcelInfo)
       }
     } else {
-      // const existingRecord = this.$store.getters['profiling/selectedRecord'].parcelInfo
-      // do the fetch of existing data here and process it into make it parcelInfo
-      this.parcelInfo.push({
-        crop: '',
-        isUtilized: '',
-        waste: '',
-        kg: '',
-      })
+      const existingParcelInfo = this.$store.getters['profiling/selectedRecord'].parcelInfo
+      if(existingParcelInfo){
+        for(let k=0; k<existingParcelInfo.length; k++){
+          this.parcelNumber.push(existingParcelInfo[k].parcelNumber)
+          let singleParcelFarmWaste  = existingParcelInfo[k].farmWaste
+          let singleParcelInfo = []
+          for (let i = 0; i < singleParcelFarmWaste.length; i++) {
+            singleParcelInfo.push({
+              crop: singleParcelFarmWaste[i].cropsGrown,
+              isUtilized: singleParcelFarmWaste[i].isUtilized,
+              waste: singleParcelFarmWaste[i].kindWasteProduced,
+              kg: singleParcelFarmWaste[i].volumeWasteKg
+            })
+          }
+          this.parcelInfo.push(singleParcelInfo)
+        }     
+      }
     }
   },
 }

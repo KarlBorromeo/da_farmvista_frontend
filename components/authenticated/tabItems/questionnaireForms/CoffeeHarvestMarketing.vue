@@ -26,10 +26,18 @@
             {{ item.title }}
           </p>
           <v-row>
-            <form-input-container v-if="!item.radio">
+            <form-input-container v-if="!item.radio && item.type == 'number'">
               <v-text-field
                 v-model="formData[item.key].variable"
                 :rules="numberRule"
+                label="* Details"
+                :type="item.type"
+              ></v-text-field>
+            </form-input-container>
+            <form-input-container v-else-if="!item.radio && item.type == 'text'">
+              <v-text-field
+                v-model="formData[item.key].variable"
+                :rules="requiredRule"
                 label="* Details"
                 :type="item.type"
               ></v-text-field>
