@@ -620,7 +620,7 @@ export default {
         this.methodInorganicApplicationOther = ''
       }
     },
-    methodInorganicApplicationOther(){
+    methodInorganicApplicationOther() {
       this.validate()
     },
     isUseOrganicFertilizer(value) {
@@ -631,7 +631,7 @@ export default {
         this.methodOrganicApplicationOther = ''
       }
     },
-    methodOrganicApplicationOther(){
+    methodOrganicApplicationOther() {
       this.validate()
     },
     sourcePlantingMaterial(value) {
@@ -641,7 +641,7 @@ export default {
         this.sourcePlantingMaterialOther = ''
       }
     },
-    sourcePlantingMaterialOther(){
+    sourcePlantingMaterialOther() {
       this.validate()
     },
     coffeeVariety(value) {
@@ -651,7 +651,7 @@ export default {
         this.coffeeVarietyOther = ''
       }
     },
-    coffeeVarietyOther(){
+    coffeeVarietyOther() {
       this.validate()
     },
     methodLandPreparation(value) {
@@ -661,7 +661,7 @@ export default {
         this.methodLandPreparationOther = ''
       }
     },
-    methodLandPreparationOther(){
+    methodLandPreparationOther() {
       this.validate()
     },
     rowOrientation(value) {
@@ -672,13 +672,13 @@ export default {
       }
       this.validate()
     },
-    rowOrientationOther(){
+    rowOrientationOther() {
       this.validate()
     },
-    plantingDepth(){
+    plantingDepth() {
       this.validate()
     },
-    soilType(){
+    soilType() {
       this.validate()
     },
     weedControl(value) {

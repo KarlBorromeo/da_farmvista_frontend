@@ -23,9 +23,9 @@ export const getters = {
   isEditingMode(state) {
     return state.isEditingMode
   },
-  pageArraysSearch(state){
+  pageArraysSearch(state) {
     return state.pageArraysSearch
-  }
+  },
 }
 
 /* function for capitalizing the first index of the word and also */
@@ -61,15 +61,19 @@ export const mutations = {
 
       const object = {
         id: element.interview.id,
-        surveyNo: surveyNumber?surveyNumber.toString():'N/A',
+        surveyNo: surveyNumber ? surveyNumber.toString() : 'N/A',
         dateInterview: formattedDate,
         farmerName: name,
-        farmerCode: element.profile.farmerCode?element.profile.farmerCode:'',
+        farmerCode: element.profile.farmerCode
+          ? element.profile.farmerCode
+          : '',
         regionProvince: element.interview.regionProvince,
         cityMunicipality: element.interview.cityMunicipality,
         barangay: element.interview.barangay,
-        nameOrganization: element.profileGeneralInfo?element.profileGeneralInfo.organizationName:'',
-        status: element.interview.intervieweeStatus
+        nameOrganization: element.profileGeneralInfo
+          ? element.profileGeneralInfo.organizationName
+          : '',
+        status: element.interview.intervieweeStatus,
       }
       state.itemsCurrentPage.push(object)
     })
@@ -90,14 +94,14 @@ export const mutations = {
   },
 
   /* create an array of pages for search results */
-  generateArrayPages(state,obj){
-    let arr = [];
-    const indexes = obj.length/obj.limit;
-    for(let i=1; i<=indexes; i++){
-      arr.push(obj.limit*i)
+  generateArrayPages(state, obj) {
+    let arr = []
+    const indexes = obj.length / obj.limit
+    for (let i = 1; i <= indexes; i++) {
+      arr.push(obj.limit * i)
     }
     arr.push(obj.length)
-    state.pageArraysSearch = arr;
+    state.pageArraysSearch = arr
   },
 
   /* 

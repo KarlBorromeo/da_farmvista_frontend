@@ -102,7 +102,7 @@ export default {
     formCardButton,
     FormInputContainer,
     FormRadioContainer,
-    FormSelectContainer
+    FormSelectContainer,
   },
   data: () => ({
     valid: false,
@@ -124,7 +124,7 @@ export default {
       { value: 'no', label: 'No' },
     ],
     requiredRule: [(v) => !!v || 'invalid value'],
-    numberRule: [(v) => parseInt(v)>=0 || 'invalid value'],
+    numberRule: [(v) => parseInt(v) >= 0 || 'invalid value'],
     tempValue: '',
   }),
   methods: {
@@ -233,7 +233,8 @@ export default {
     },
   },
   beforeMount() {
-    this.educationsAttainmentItems = this.$store.getters['questionnaireCode/HighestEducationalAttainment']
+    this.educationsAttainmentItems =
+      this.$store.getters['questionnaireCode/HighestEducationalAttainment']
     const data = this.$store.getters['profiling/selectedRecord']
     if (Object.keys(data).length > 0) {
       const length = data.familySourceIncome.length

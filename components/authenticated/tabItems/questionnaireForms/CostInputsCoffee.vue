@@ -37,8 +37,8 @@
               required
               class="text-capitalize"
             ></v-select>
-         </v-col>
-           <!-- TODO: -->
+          </v-col>
+          <!-- TODO: -->
           <form-input-container>
             <v-text-field
               v-model="formData[item.key].totalTransportCost"
@@ -95,9 +95,7 @@ export default {
   },
   data: () => ({
     valid: false,
-    unitItems: [
-      'kg','L','m','gal','pcs','sack'
-    ],
+    unitItems: ['kg', 'L', 'm', 'gal', 'pcs', 'sack'],
     formData: {
       plantingMaterials: {
         price: '100',
@@ -277,9 +275,7 @@ export default {
     ],
     cashCreditItems: ['cash', 'credit', 'n/a'],
     requiredRule: [(v) => !!v || 'this field is required'],
-    numberRule: [
-      (v) => parseInt(v) >= 0 || 'invalid value',
-    ],
+    numberRule: [(v) => parseInt(v) >= 0 || 'invalid value'],
   }),
   methods: {
     /* test if the form is valid, return boolean */

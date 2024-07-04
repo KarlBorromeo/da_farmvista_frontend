@@ -1,4 +1,3 @@
-
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
@@ -25,9 +24,7 @@ export default {
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [
-    { src: '~/plugins/vue-apexcharts.js', ssr: false }
-  ],
+  plugins: [{ src: '~/plugins/vue-apexcharts.js', ssr: false }],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -80,7 +77,7 @@ export default {
 
   // dotenv configuration
   env: {
-    baseUrlApi: process.env.API_BASE_URL || 'http://localhost:3000'
+    baseUrlApi: process.env.API_BASE_URL || 'http://localhost:3000',
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build

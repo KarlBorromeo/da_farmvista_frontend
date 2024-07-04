@@ -123,7 +123,9 @@
             ></v-text-field>
           </form-input-container>
         </v-row>
-        <v-btn color="success" @click="createAccount" :disabled="isLoading">Create</v-btn>
+        <v-btn color="success" @click="createAccount" :disabled="isLoading"
+          >Create</v-btn
+        >
       </v-container>
     </v-form>
     <snackbar ref="snackbar" />
@@ -157,13 +159,13 @@ export default {
     }
   },
   computed: {
-    typeItems(){
+    typeItems() {
       const currentUserType = localStorage.getItem('type')
-      if(currentUserType !== 'superadmin'){
+      if (currentUserType !== 'superadmin') {
         return ['admin', 'enumerator']
       }
       return ['superadmin', 'admin', 'enumerator']
-    }
+    },
   },
   methods: {
     validate() {
@@ -176,8 +178,11 @@ export default {
         try {
           this.isLoading = true
           const credentials = this.getData()
-          let res = await this.$store.dispatch('users/createAccount', credentials)
-          this.$emit('emitCloseModal',res);
+          let res = await this.$store.dispatch(
+            'users/createAccount',
+            credentials
+          )
+          this.$emit('emitCloseModal', res)
         } catch (error) {
           this.$refs.snackbar.showBar(error, 'red')
         }
@@ -200,11 +205,11 @@ export default {
       }
     },
   },
-  beforeMount(){
-    if(this.isUpdateProps){
+  beforeMount() {
+    if (this.isUpdateProps) {
       alert('fetch record of current user')
     }
-  }
+  },
 }
 </script>
 

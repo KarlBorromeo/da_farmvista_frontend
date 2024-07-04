@@ -388,8 +388,14 @@ export default {
         data.infoKnowledgeSource.haveFunctionalRadio
       this.formData.radioStationUsuallyTune =
         data.infoKnowledgeSource.radioStationUsuallyTune
-      this.formData.startTimeListeningRadio = data.infoKnowledgeSource.timeListeningRadio?data.infoKnowledgeSource.timeListeningRadio[0]:''
-      this.formData.endTimeListeningRadio = data.infoKnowledgeSource.timeListeningRadio?data.infoKnowledgeSource.timeListeningRadio[1]:''
+      this.formData.startTimeListeningRadio = data.infoKnowledgeSource
+        .timeListeningRadio
+        ? data.infoKnowledgeSource.timeListeningRadio[0]
+        : ''
+      this.formData.endTimeListeningRadio = data.infoKnowledgeSource
+        .timeListeningRadio
+        ? data.infoKnowledgeSource.timeListeningRadio[1]
+        : ''
       this.formData.radioProgramsListens =
         data.infoKnowledgeSource.radioProgramsListens
       this.formData.printMaterialsRead = isOtherValueDefinedRadio(
@@ -402,8 +408,13 @@ export default {
       )
       this.formData.haveTelevision = data.infoKnowledgeSource.haveTelevision
       this.formData.tvStationWatches = data.infoKnowledgeSource.tvStationWatches
-      this.formData.startTimeWatchingTv =  data.infoKnowledgeSource.timeWatchingTv? data.infoKnowledgeSource.timeWatchingTv[0]:''
-      this.formData.endTimeWatchingTv = data.infoKnowledgeSource.timeWatchingTv? data.infoKnowledgeSource.timeWatchingTv[1]:''
+      this.formData.startTimeWatchingTv = data.infoKnowledgeSource
+        .timeWatchingTv
+        ? data.infoKnowledgeSource.timeWatchingTv[0]
+        : ''
+      this.formData.endTimeWatchingTv = data.infoKnowledgeSource.timeWatchingTv
+        ? data.infoKnowledgeSource.timeWatchingTv[1]
+        : ''
       this.formData.haveSocmedAccount =
         data.infoKnowledgeSource.haveSocmedAccount
       this.formData.howOftenUsedSocmed =

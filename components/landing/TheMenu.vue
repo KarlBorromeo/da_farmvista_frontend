@@ -8,7 +8,7 @@
       </template>
       <v-list>
         <v-list-item
-          v-for="(item, index) in items" 
+          v-for="(item, index) in items"
           :key="index"
           :to="item.to"
           router
@@ -25,23 +25,23 @@
 export default {
   data: () => ({
     items: [
-        {
-          title: 'Home',
-          to: '/'
-        },
-        {
-          title: 'About',
-          to: '/about'
-        },
-        {
-          title: 'Commodities',
-          to: '/commodities'
-        },
-        {
-          title: 'Demographics',
-          to: '/demographics'
-        },
-      ]
+      {
+        title: 'Home',
+        to: '/',
+      },
+      {
+        title: 'About',
+        to: '/about',
+      },
+      {
+        title: 'Commodities',
+        to: '/commodities',
+      },
+      {
+        title: 'Demographics',
+        to: '/demographics',
+      },
+    ],
   }),
 }
 </script>

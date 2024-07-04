@@ -21,14 +21,17 @@ export default {
       try {
         this.loading = true
         const isEditing = this.$store.getters['profiling/isEditingMode']
-        let response;
-        if(isEditing){
+        let response
+        if (isEditing) {
           let id = this.$store.getters['profiling/selectedRecord'].interview.id
-          response = await this.$store.dispatch('questionnaire/submitUpdate',id)
-        }else{
+          response = await this.$store.dispatch(
+            'questionnaire/submitUpdate',
+            id
+          )
+        } else {
           response = await this.$store.dispatch('questionnaire/submitAll')
         }
-        
+
         this.$refs.snackbar.showBar(response, 'success')
       } catch (error) {
         this.$refs.snackbar.showBar(error, 'red')

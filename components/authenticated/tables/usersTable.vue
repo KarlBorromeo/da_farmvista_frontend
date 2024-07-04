@@ -1,5 +1,3 @@
-
-
 <template>
   <div class="mt-5">
     <v-data-table
@@ -22,26 +20,24 @@
       <template v-slot:[`item.avatar`]="{ item }">
         <v-container class="">
           <v-avatar>
-            <img
-              :src="item.avatarURL"
-              alt="John"
-            >
+            <img :src="item.avatarURL" alt="John" />
           </v-avatar>
           <!-- {{item.avatarURL}} -->
         </v-container>
       </template>
       <template v-slot:[`item.switch`]="{ item }">
         <v-container class="text-center">
-          <v-switch
-            color="primary"
-            v-model="item.status"
-            :disabled="true"
-          />
+          <v-switch color="primary" v-model="item.status" :disabled="true" />
         </v-container>
       </template>
       <template v-slot:[`item.actions`]="{ item }">
-        <v-btn :color="item.status?'error':'primary'" block small @click="toggleActiveStatus(item.id,item.status)">
-          {{buttonText(item.status)}}
+        <v-btn
+          :color="item.status ? 'error' : 'primary'"
+          block
+          small
+          @click="toggleActiveStatus(item.id, item.status)"
+        >
+          {{ buttonText(item.status) }}
         </v-btn>
       </template>
     </v-data-table>
@@ -64,7 +60,7 @@
 import snackbar from '../../snackbar.vue'
 export default {
   emits: ['switchCommodity'],
-  components: { snackbar},
+  components: { snackbar },
   data() {
     return {
       dialog: false,
@@ -80,47 +76,47 @@ export default {
         { text: 'Profile', align: 'center', value: 'avatar' },
         { text: 'Username', align: 'start', value: 'username' },
         { text: 'Fullname', align: 'start', value: 'fullName' },
-        { text: `Gender`, value: 'gender'},
-        { text: `Type`, value: 'type'},
-        { text: `Email`, value: 'email'},
-        { text: 'Mobile Number', value: 'mobileNumber'},
-        { text: 'Company', value: 'company'},
-        { text: 'Company Position', value: 'jobPosition'},
-        { text: 'Inactive/Active', value: 'switch', sortable: false},
-        { text: 'Action', value: 'actions', sortable: false, align: 'center', },
+        { text: `Gender`, value: 'gender' },
+        { text: `Type`, value: 'type' },
+        { text: `Email`, value: 'email' },
+        { text: 'Mobile Number', value: 'mobileNumber' },
+        { text: 'Company', value: 'company' },
+        { text: 'Company Position', value: 'jobPosition' },
+        { text: 'Inactive/Active', value: 'switch', sortable: false },
+        { text: 'Action', value: 'actions', sortable: false, align: 'center' },
       ]
     },
     pageCount() {
       return this.$store.getters['users/countPages']
     },
-    items(){
+    items() {
       return this.$store.getters['users/users']
-    },     
+    },
     getDynamicModel() {
       return (itemId) => {
         // Generate the dynamic property name
-        return `item_${itemId}_active`;
-      };
+        return `item_${itemId}_active`
+      }
     },
   },
   methods: {
     /* toggle active status */
-    async toggleActiveStatus(id,bool){
-      const decision = bool?'deactivate':'activate';
+    async toggleActiveStatus(id, bool) {
+      const decision = bool ? 'deactivate' : 'activate'
       const confirmed = confirm(`Are you sure to ${decision} this user `)
-      if(confirmed){
-        try{
-          const res = await this.$store.dispatch('users/updateActiveStatus',id)
-          this.$refs.snackbar.showBar(res,'success')
-        }catch(error){
-          this.$refs.snackbar.showBar(error,'error')
+      if (confirmed) {
+        try {
+          const res = await this.$store.dispatch('users/updateActiveStatus', id)
+          this.$refs.snackbar.showBar(res, 'success')
+        } catch (error) {
+          this.$refs.snackbar.showBar(error, 'error')
         }
       }
     },
 
     /* text button dynamic */
-    buttonText(bool){
-      return bool?'Deactivate':'Activate'
+    buttonText(bool) {
+      return bool ? 'Deactivate' : 'Activate'
     },
 
     /* fetch the survey records */
@@ -152,11 +148,11 @@ export default {
         await this.fetchAllUsers()
       }
     },
-    async search(){
-      await new Promise(resolve=>setTimeout(resolve,500))
-      this.page = 1;
-      await this.fetchAllUsers();  // fetch the all list with filter search value
-    }
+    async search() {
+      await new Promise((resolve) => setTimeout(resolve, 500))
+      this.page = 1
+      await this.fetchAllUsers() // fetch the all list with filter search value
+    },
   },
 }
 </script>

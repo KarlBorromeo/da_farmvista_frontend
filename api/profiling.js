@@ -6,7 +6,7 @@ export async function fetchAllRecords(payload) {
       type: encodeURIComponent(payload.type),
       page: encodeURIComponent(payload.page - 1),
       limit: encodeURIComponent(payload.limit),
-      search: payload.search?payload.search:''
+      search: payload.search ? payload.search : '',
     }
     const response = await Axios.get('survey', {
       params: params,
@@ -41,4 +41,3 @@ export async function deleteSurvey(id) {
     throw error
   }
 }
-

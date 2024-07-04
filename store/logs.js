@@ -1,17 +1,17 @@
 import * as api from '../api/logs'
 
 export const state = () => ({
-  logs:[],
-  countPages: 1
+  logs: [],
+  countPages: 1,
 })
 
 export const getters = {
-  logs(state){
+  logs(state) {
     return state.logs
   },
-  countPages(state){
+  countPages(state) {
     return state.countPages
-  }
+  },
 }
 
 export const mutations = {
@@ -28,9 +28,9 @@ export const mutations = {
     if (obj.limit >= obj.length) {
       state.countPages = 1
     } else {
-    state.countPages = Math.floor(obj.length / obj.limit)
-    if (obj.length % obj.limit != 0) {
-      state.countPages++
+      state.countPages = Math.floor(obj.length / obj.limit)
+      if (obj.length % obj.limit != 0) {
+        state.countPages++
       }
     }
   },
@@ -38,8 +38,8 @@ export const mutations = {
 
 export const actions = {
   /* fetch all logs */
-  async fetchAllLogs(context,payload){
-   try {
+  async fetchAllLogs(context, payload) {
+    try {
       const response = await api.fetchAllLogs(payload)
       context.commit('saveItems', response.data)
       context.commit('savePageLength', {

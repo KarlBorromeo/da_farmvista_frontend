@@ -4,50 +4,43 @@
       icon="mdi-finance"
       title="Analytics"
       :description="description"
-    />  
+    />
 
     <v-card class="mx-5 elevation-0 my-0 py-0" color="transparent">
       <v-container class="mt-0">
         <v-tabs
-            v-model="tab"
-            background-color="transparent"
-            show-arrows
-            centered
-            center-active
-            light
-            next-icon="mdi-arrow-right-bold-outline"
-            prev-icon="mdi-arrow-left-bold-outline"
+          v-model="tab"
+          background-color="transparent"
+          show-arrows
+          centered
+          center-active
+          light
+          next-icon="mdi-arrow-right-bold-outline"
+          prev-icon="mdi-arrow-left-bold-outline"
+        >
+          <v-tab
+            v-for="item in items"
+            :key="item"
+            class="caption font-weight-bold my-0 py-0"
           >
-      
-            <v-tab
-              v-for="item in items"
-              :key="item"
-              class="caption font-weight-bold my-0 py-0"
-            >
-              {{ item }}
-            </v-tab>
-          </v-tabs>
+            {{ item }}
+          </v-tab>
+        </v-tabs>
       </v-container>
     </v-card>
     <page-contents class="mt-0">
       <v-tabs-items v-model="tab">
-        <v-tab-item
-          v-for="item in items"
-          :key="item"
-        >
+        <v-tab-item v-for="item in items" :key="item">
           <!-- <v-card
             flat
             class="elevation-0"
           > -->
-             <component :is="components[tab]"></component>
+          <component :is="components[tab]"></component>
           <!-- </v-card> -->
         </v-tab-item>
       </v-tabs-items>
     </page-contents>
   </div>
-
-
-
 </template>
 
 <script>
@@ -59,39 +52,54 @@ import Infrastructure from '~/components/authenticated/tabItems/analytics/infras
 import MarketAccess from '~/components/authenticated/tabItems/analytics/marketAccess.vue'
 import AccessResources from '~/components/authenticated/tabItems/analytics/accessResources.vue'
 
-
-
-
 export default {
   middleware: 'authSuperadminAdmin',
-  components: { PageDescription, PageContents, Demographics, PestDiseases, Infrastructure, MarketAccess, AccessResources},
+  components: {
+    PageDescription,
+    PageContents,
+    Demographics,
+    PestDiseases,
+    Infrastructure,
+    MarketAccess,
+    AccessResources,
+  },
   data() {
     return {
       comp: 'logsTable',
       description:
         'This module offers critical analytics capabilities, empowering users to gain valuable insights from data, optimize performance, and make informed decisions to drive success.',
-        tab: 0,
-        items: [
-          'Demographics', 'Pest and Diseases', 'Infrastructure', 'Market access','Access Resources'
-        ],
-        components: ['Demographics', 'PestDiseases', 'Infrastructure', 'MarketAccess', 'AccessResources' ],
+      tab: 0,
+      items: [
+        'Demographics',
+        'Pest and Diseases',
+        'Infrastructure',
+        'Market access',
+        'Access Resources',
+      ],
+      components: [
+        'Demographics',
+        'PestDiseases',
+        'Infrastructure',
+        'MarketAccess',
+        'AccessResources',
+      ],
     }
   },
   beforeMount() {
     this.$store.commit('udpateHeaderTitle', 'ANALYTICS')
   },
-  async mounted(){
-    try{
+  async mounted() {
+    try {
       await this.$store.dispatch('analytics/fetchDemographics')
-    }catch(err){
-      console.err(err);
+    } catch (err) {
+      console.err(err)
     }
   },
-  watch:{
-    tab(val){
-      console.log(val);
-    }
-  }
+  watch: {
+    tab(val) {
+      console.log(val)
+    },
+  },
 }
 </script>
 

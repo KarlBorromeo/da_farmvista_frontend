@@ -61,17 +61,17 @@ export default {
     farmerCode: '',
     contactNumberRule: [
       (v) => {
-        if(v){
-          if(v.length == 11 && v[0] == '0' && v[1] == '9'){
+        if (v) {
+          if (v.length == 11 && v[0] == '0' && v[1] == '9') {
             return true
-          }else{
+          } else {
             return 'must be (09123456789) format'
           }
-        }else{
+        } else {
           return true
         }
-      }
-    ]
+      },
+    ],
   }),
   methods: {
     /* test if the form is valid, return boolean */
@@ -94,7 +94,7 @@ export default {
         firstName: this.firstname,
         middleInitial: this.middleInitial,
         contactNumber: this.contactNumber,
-        farmerCode: this.farmerCode?this.farmerCode:'',
+        farmerCode: this.farmerCode ? this.farmerCode : '',
       }
     },
   },

@@ -4,8 +4,7 @@
       <form-card-button @emitIncrement="increment" @emitDecrement="decrement" />
       <form-card v-for="i in items" :key="i">
         <v-row>
-          <v-col cols="12" class="mb-0 pb-0">
-          </v-col>
+          <v-col cols="12" class="mb-0 pb-0"> </v-col>
           <form-input-container>
             <v-text-field
               v-model="parcelNumber[i - 1]"
@@ -176,7 +175,7 @@ import {
   concatinateEachIndexes,
   isOtherValueDefinedRadio,
   extractUnmatchedValueRadio,
-  convertNumbers
+  convertNumbers,
 } from '~/reusableFunctions/questionnaireValidation'
 import formCard from '~/components/authenticated/form/formCard.vue'
 import formCardButton from '~/components/authenticated/form/formCardButton.vue'
@@ -242,7 +241,7 @@ export default {
         tabName: 'ParcelInformationValidated',
         valid,
       })
-      console.log('valid:',valid)
+      console.log('valid:', valid)
       if (valid) {
         this.$store.commit('questionnaire/saveData', {
           keyName: 'parcelInfo',
@@ -313,7 +312,7 @@ export default {
     resetData() {
       this.items = 0
       this.parcelNumber = []
-      this.area = [] 
+      this.area = []
       this.tenure = []
       this.topography = []
       this.soilFertility = []
@@ -467,14 +466,14 @@ export default {
     tempValue() {
       this.validate()
     },
-    items(value){
-      let arr = [];
-      for(let i=1; i<=value; i++){
+    items(value) {
+      let arr = []
+      for (let i = 1; i <= value; i++) {
         arr.push(i)
       }
-      this.parcelNumber = arr;
-      console.log(arr);
-    }
+      this.parcelNumber = arr
+      console.log(arr)
+    },
   },
 }
 </script>

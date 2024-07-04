@@ -18,10 +18,10 @@ export async function submitQuestionnaire(payload) {
   }
 }
 
-export async function submitUpdate(payload){
-  console.log('this is payload of submitupdate:',payload)
+export async function submitUpdate(payload) {
+  console.log('this is payload of submitupdate:', payload)
   try {
-    const response = await Axios.patch(`survey/${payload.id}`, payload.form,)
+    const response = await Axios.patch(`survey/${payload.id}`, payload.form)
     return response.data.message
   } catch (error) {
     if (Array.isArray(error.response.data.message)) {

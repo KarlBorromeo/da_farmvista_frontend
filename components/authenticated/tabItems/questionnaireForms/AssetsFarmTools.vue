@@ -89,9 +89,7 @@ export default {
       { value: 'no', label: 'No' },
     ],
     toolAge: [1, 1],
-    numberRule: [
-      (v) => parseFloat(v) >= 0 || 'invalid value',
-    ],
+    numberRule: [(v) => parseFloat(v) >= 0 || 'invalid value'],
     requiredRule: [(v) => !!v || 'This field is required'],
     tempValue: '',
   }),
@@ -136,7 +134,7 @@ export default {
         farmToolName: this.toolName,
         farmToolQuantity: convertNumbers(this.toolQuantity),
         isAcquiredGovtProgram: this.isToolAquiredGovtProg,
-        farmToolAge: convertNumbers(this.toolAge)
+        farmToolAge: convertNumbers(this.toolAge),
       }
     },
     // decrement the count of items

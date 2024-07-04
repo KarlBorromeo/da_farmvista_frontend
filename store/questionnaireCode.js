@@ -123,10 +123,10 @@ export const getters = {
   Rate(state) {},
   Sex(state) {},
   Agree(state) {},
-  HighestEducationalAttainment(state){
+  HighestEducationalAttainment(state) {
     return generateArray(state.codes.HighestEducationalAttainment)
   },
-  MarginalizedSector(state){
+  MarginalizedSector(state) {
     return generateArray(state.codes.MarginalizedSector)
   },
   PrintMaterials(state) {
@@ -163,15 +163,15 @@ export const getters = {
   CroppingSystem(state) {
     return generateArray(state.codes.CroppingSystem)
   },
-  IntervieweeStatus(state){
+  IntervieweeStatus(state) {
     return generateArray(state.codes.IntervieweeStatus)
   },
-  RegionProvince(state){
+  RegionProvince(state) {
     return generateArray(state.codes.RegionProvince)
   },
-  CityMunicipality(state){
+  CityMunicipality(state) {
     return generateArray(state.codes.CityMunicipality)
-  }
+  },
 }
 
 export const mutations = {

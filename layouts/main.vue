@@ -30,11 +30,11 @@
         </v-list>
       </div>
       <v-spacer></v-spacer>
-      <v-btn  to="/auth" elevation="1" color="primary" v-if="userLoggedin">
+      <v-btn to="/auth" elevation="1" color="primary" v-if="userLoggedin">
         Log In
         <v-icon>mdi-account-arrow-right</v-icon>
       </v-btn>
-      <v-btn  to="/dashboard" elevation="1" color="success" v-else>
+      <v-btn to="/dashboard" elevation="1" color="success" v-else>
         My Dashboard
         <v-icon>mdi-view-dashboard-variant</v-icon>
       </v-btn>
@@ -47,7 +47,6 @@
       <nuxt />
       <the-footer />
     </v-main>
-    
   </v-app>
 </template>
 
@@ -59,34 +58,33 @@ import TheFooter from '~/components/landing/TheFooter.vue'
 export default {
   components: { TheMenu, TheLogo, TheFooter },
   computed: {
-    userLoggedin(){
+    userLoggedin() {
       this.$store.commit('auth/getUserDataFromLocalStorage')
-      return !this.$store.getters['auth/userLoggedin']      
-    }
-
+      return !this.$store.getters['auth/userLoggedin']
+    },
   },
-  data(){
-    return{
+  data() {
+    return {
       items: [
         {
           title: 'Home',
-          to: '/'
+          to: '/',
         },
         {
           title: 'About',
-          to: '/about'
+          to: '/about',
         },
         {
           title: 'Commodities',
-          to: '/commodities'
+          to: '/commodities',
         },
         {
           title: 'Demographics',
-          to: '/demographics'
+          to: '/demographics',
         },
-      ]
+      ],
     }
-  }
+  },
 }
 </script>
 <style scoped>

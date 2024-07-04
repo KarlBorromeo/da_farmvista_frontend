@@ -131,7 +131,7 @@ import {
   concatinateEachIndexes,
   extractUnmatchedValueRadio,
   isOtherValueDefinedRadio,
-  convertNumbers
+  convertNumbers,
 } from '~/reusableFunctions/questionnaireValidation'
 export default {
   components: {

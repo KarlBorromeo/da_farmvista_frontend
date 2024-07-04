@@ -208,7 +208,7 @@ import {
   extractUnmatchedValueRadio,
   isOtherValueTickedCheckbox,
   concatOtherValueToList,
-  extractUnmatchedValueCheck
+  extractUnmatchedValueCheck,
 } from '~/reusableFunctions/questionnaireValidation'
 import FormCheckboxContainer from '../../form/formCheckboxContainer.vue'
 export default {
@@ -216,7 +216,7 @@ export default {
     formCard,
     FormInputContainer,
     FormRadioContainer,
-    FormCheckboxContainer
+    FormCheckboxContainer,
   },
   data: () => ({
     valid: false,
@@ -261,12 +261,12 @@ export default {
   methods: {
     /* test if the form is valid, return boolean */
     validate() {
-      let valid = false;
+      let valid = false
       const validTextRadio = this.$refs.form.validate()
       const validCheckbox = this.validateCheckbox()
-      console.log(validTextRadio,validCheckbox)
-      if(validTextRadio && validCheckbox){
-        valid = true;
+      console.log(validTextRadio, validCheckbox)
+      if (validTextRadio && validCheckbox) {
+        valid = true
       }
       this.$store.commit('questionnaire/toggleNextTab', {
         tabName: 'DetailsCoffeeAreaValidated',
@@ -277,18 +277,21 @@ export default {
           keyName: 'detailCoffeeArea',
           data: this.getData(),
         })
-        console.log('data:',this.getData())
+        console.log('data:', this.getData())
       }
     },
     /* test if the checkbox are not empty */
-    validateCheckbox(){
+    validateCheckbox() {
       console.log(this.seedSourceDetails.length)
-      if(this.seedSourceDetails.length < 1){
+      if (this.seedSourceDetails.length < 1) {
         return false
-      }else if(this.seedSourceDetails.includes('others') && !this.seedSourceDetailsOther){
+      } else if (
+        this.seedSourceDetails.includes('others') &&
+        !this.seedSourceDetailsOther
+      ) {
         return false
-      }else{
-        console.log('hahahh:',this.seedSourceDetails)
+      } else {
+        console.log('hahahh:', this.seedSourceDetails)
         return true
       }
     },

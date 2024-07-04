@@ -45,7 +45,10 @@
           />
         </form-input-container>
 
-        <form-radio-container title="Did you spary pesticided yourself?" v-if="didUsePesticide == 'yes'">
+        <form-radio-container
+          title="Did you spary pesticided yourself?"
+          v-if="didUsePesticide == 'yes'"
+        >
           <v-radio-group
             :rules="requiredRule"
             v-model="didSprayYourself"
@@ -60,7 +63,9 @@
           </v-radio-group>
         </form-radio-container>
 
-        <form-input-container v-if="didSprayYourself == 'no' && didUsePesticide == 'yes'">
+        <form-input-container
+          v-if="didSprayYourself == 'no' && didUsePesticide == 'yes'"
+        >
           <v-text-field
             v-model="payLaborSpraying"
             :rules="numberRule"
@@ -116,7 +121,10 @@
           />
         </form-input-container>
 
-        <form-radio-container title="first hear about using pesticide" v-if="didUsePesticide == 'yes'">
+        <form-radio-container
+          title="first hear about using pesticide"
+          v-if="didUsePesticide == 'yes'"
+        >
           <v-radio-group
             :rules="requiredRule"
             v-model="hearAboutPesticideUsed"
@@ -166,7 +174,10 @@
           </v-radio-group>
         </form-radio-container>
 
-        <form-checkbox-container title="Whom get pest control advice" v-if="didUsePesticide == 'yes'">
+        <form-checkbox-container
+          title="Whom get pest control advice"
+          v-if="didUsePesticide == 'yes'"
+        >
           <v-checkbox
             v-for="item in whomPestControlAdviceItems"
             v-model="whomPestControlAdvice"
@@ -211,7 +222,9 @@
           </v-radio-group>
         </form-radio-container>
 
-        <form-input-container v-if="whichAdviceCredible && didUsePesticide == 'yes'" >
+        <form-input-container
+          v-if="whichAdviceCredible && didUsePesticide == 'yes'"
+        >
           <v-text-field
             v-model="why"
             :rules="requiredRule"
@@ -344,8 +357,9 @@ export default {
     /* validate checkbox if empty or not */
     validateCheckbox() {
       if (
-        this.kindSprayerHave.length == 0 && this.haveSprayer == 'yes' ||
-        this.whomPestControlAdvice.length == 0 && this.didUsePesticide == 'yes'
+        (this.kindSprayerHave.length == 0 && this.haveSprayer == 'yes') ||
+        (this.whomPestControlAdvice.length == 0 &&
+          this.didUsePesticide == 'yes')
       ) {
         return false
       } else {
@@ -554,10 +568,13 @@ export default {
         data.pestManagementPractice.importantConsiderationDecidingPesticide,
         this.importantConsiderationDecidingPesticideItems
       )
-      console.log('pesticie other: ',extractUnmatchedValueRadio(
+      console.log(
+        'pesticie other: ',
+        extractUnmatchedValueRadio(
           data.pestManagementPractice.importantConsiderationDecidingPesticide,
           this.importantConsiderationDecidingPesticideItems
-        ))
+        )
+      )
       this.importantConsiderationDecidingPesticideOther =
         extractUnmatchedValueRadio(
           data.pestManagementPractice.importantConsiderationDecidingPesticide,

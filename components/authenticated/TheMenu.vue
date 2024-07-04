@@ -27,55 +27,44 @@
           <h4>{{ UserFirstname }}</h4>
         </v-list-item>
         <v-divider />
-          <v-list-item
-            v-for="(item, index) in dropdown"
-            :key="index"
-            color="white"
-            :to="item.to"
-            router
-          >
-            <v-list-item-title>
-              <v-btn
-                block
-                width="210"
-                class="pa-0 ma-0"
-                color="white"
-              >
-                <v-row class="ma-0" align="center">
-                  <v-col cols="3" class="header_dropdown_btns">
-                    <v-icon>{{ item.icon }}</v-icon>
-                  </v-col>
-                  <v-col cols="5" class="header_dropdown_btns text-start">
-                    {{ item.title }}
-                  </v-col>
-                  <v-col cols="4" class="header_dropdown_btns">
-                    <v-icon>{{ item.sub_icon }}</v-icon>
-                  </v-col>
-                </v-row>
-              </v-btn>
-            </v-list-item-title>
-          </v-list-item>
-          <v-list-item color="white" @click="logout">
-            <v-list-item-title>
-              <v-btn
-                block
-                width="210"
-                class="pa-0 ma-0"
-                color="white"
-              >
-                <v-row class="ma-0">
-                  <v-col cols="3" class="header_dropdown_btns">
-                    <v-icon>mdi-logout</v-icon>
-                  </v-col>
-                  <v-col cols="5" class="header_dropdown_btns text-start">
-                    Logout
-                  </v-col>
-                  <v-col cols="4" class="header_dropdown_btns">    
-                  </v-col>
-                </v-row>
-              </v-btn>
-            </v-list-item-title>
-          </v-list-item>
+        <v-list-item
+          v-for="(item, index) in dropdown"
+          :key="index"
+          color="white"
+          :to="item.to"
+          router
+        >
+          <v-list-item-title>
+            <v-btn block width="210" class="pa-0 ma-0" color="white">
+              <v-row class="ma-0" align="center">
+                <v-col cols="3" class="header_dropdown_btns">
+                  <v-icon>{{ item.icon }}</v-icon>
+                </v-col>
+                <v-col cols="5" class="header_dropdown_btns text-start">
+                  {{ item.title }}
+                </v-col>
+                <v-col cols="4" class="header_dropdown_btns">
+                  <v-icon>{{ item.sub_icon }}</v-icon>
+                </v-col>
+              </v-row>
+            </v-btn>
+          </v-list-item-title>
+        </v-list-item>
+        <v-list-item color="white" @click="logout">
+          <v-list-item-title>
+            <v-btn block width="210" class="pa-0 ma-0" color="white">
+              <v-row class="ma-0">
+                <v-col cols="3" class="header_dropdown_btns">
+                  <v-icon>mdi-logout</v-icon>
+                </v-col>
+                <v-col cols="5" class="header_dropdown_btns text-start">
+                  Logout
+                </v-col>
+                <v-col cols="4" class="header_dropdown_btns"> </v-col>
+              </v-row>
+            </v-btn>
+          </v-list-item-title>
+        </v-list-item>
       </v-list>
     </v-menu>
   </div>
@@ -92,14 +81,14 @@ export default {
           sub_icon: 'mdi-chevron-right',
           title: 'Home',
           method: 'routeMyProfile',
-          to: '/'
+          to: '/',
         },
         {
           icon: 'mdi-account-circle-outline',
           sub_icon: 'mdi-chevron-right',
           title: 'My Profile',
           method: 'routeMyProfile',
-          to: '/profile'
+          to: '/profile',
         },
       ],
     }
@@ -120,19 +109,19 @@ export default {
       this.$router.replace('/')
     },
   },
-  beforeMount(){
+  beforeMount() {
     const currentUserType = localStorage.getItem('type')
     /* add the tab for logs page if the user is superadmin */
-    if(currentUserType === 'superadmin'){
+    if (currentUserType === 'superadmin') {
       this.dropdown.push({
         icon: 'mdi-history',
         sub_icon: 'mdi-chevron-right',
         title: 'Logs',
         method: 'routeLogs',
-        to: '/logs'
+        to: '/logs',
       })
     }
-  }
+  },
 }
 </script>
 
