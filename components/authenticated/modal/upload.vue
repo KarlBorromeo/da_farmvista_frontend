@@ -18,7 +18,7 @@
         id="aw"
         v-model="file"
         label="File input"
-        accept=".xls,.xlsx"
+        accept=".xlsm"
         show-size
         counter
       ></v-file-input>

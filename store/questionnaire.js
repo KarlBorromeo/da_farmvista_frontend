@@ -148,7 +148,7 @@ export const state = () => ({
     },
   ],
   currentTab: 'BasicInformation',
-  // currentTab: 'ParcelInformation',
+  // currentTab: 'CoffeeHarvestMarketing',
   // currentTab: 'FarmWasteManagement',
   // currentTab: 'CostInputsCoffee',
   isAllValid: false,
