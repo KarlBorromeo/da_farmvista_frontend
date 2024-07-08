@@ -83,7 +83,7 @@
   </v-row>
 </template>
 <script>
-import authLogo from '~/components/authentication/theLogo.vue'
+import authLogo from '~/components/authentication/theLogoAuth.vue'
 import snackbarVue from '~/components/snackbar.vue'
 export default {
   components: { authLogo, snackbarVue },
