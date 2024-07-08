@@ -13,6 +13,7 @@
               :rules="requiredRule"
               label="* Name of Family Member"
               required
+              class="text-capitalize"
             ></v-text-field>
           </form-input-container>
 
@@ -142,19 +143,19 @@ export default {
   },
   data: () => ({
     valid: false,
-    items: 1,
-    nameFamilyMember: ['Tamplano Tahay'],
-    position: ['officer'],
+    items: 0,
+    nameFamilyMember: [],
+    position: [],
     positionItems: [],
     positionOthers: [],
-    nameOrganization: ['Tampohan'],
-    typeOrganization: ['cooperative'],
+    nameOrganization: [],
+    typeOrganization: [],
     typeOrganizationItems: [],
     typeOrganizationOthers: [],
-    numberYearsMember: [2],
-    statusMembership: ['active'],
+    numberYearsMember: [],
+    statusMembership: [],
     statusMembershipItems: [],
-    statusOrganization: ['active'],
+    statusOrganization: [],
     statusOrganizationItems: [],
     requiredRule: [(v) => !!v || 'This field is required'],
     numberRule: [(v) => parseInt(v) >= 0 || 'this number is invalid'],
@@ -176,7 +177,7 @@ export default {
       const valid = this.$refs.form.validate()
       this.$store.commit('questionnaire/toggleNextTab', {
         tabName: 'FamilyAffiliatedValidated',
-        valid,
+        valid
       })
       if (valid) {
         this.$store.commit('questionnaire/saveData', {
@@ -219,7 +220,11 @@ export default {
     },
     /* decrement the count of items, pop the end index */
     decrement() {
-      if (this.items > 0) {
+      let min = 0;
+      if(this.$store.getters['questionnaire/generalInformationDetails'].isMemberFarmerOrganization == 'yes' || this.$store.getters['profiling/selectedRecord'].profileGeneralInfo.isMemberFarmerOrganization){
+        min = 1;
+      }
+      if (this.items > min) {
         this.items--
         this.nameFamilyMember.pop()
         this.position.pop()
@@ -248,58 +253,104 @@ export default {
       this.statusMembership = []
       this.statusOrganization = []
     },
+    /* concat fullname, return full name string */
+    concatFullName(firstName,middleInitial,lastName){
+      const first = firstName + ' '
+      const middle = middleInitial?middleInitial+'. ':'';
+      const last= lastName
+      const fullName = first + middle + last
+      return fullName
+    }
   },
   beforeMount() {
     this.positionItems = this.$store.getters['questionnaireCode/Code1']
     this.typeOrganizationItems = this.$store.getters['questionnaireCode/Code2']
-    this.statusMembershipItems =
-      this.$store.getters['questionnaireCode/Code3_4']
-    this.statusOrganizationItems =
-      this.$store.getters['questionnaireCode/Code3_4']
+    this.statusMembershipItems = this.$store.getters['questionnaireCode/Code3_4']
+    this.statusOrganizationItems = this.$store.getters['questionnaireCode/Code3_4']
 
-    const data = this.$store.getters['profiling/selectedRecord']
-    if (Object.keys(data).length > 0) {
-      const length = data.familyAffiliatedFarmOrg.length
-      this.items = length
-      if (length > 0) {
+    const isEditing = this.$store.getters['profiling/isEditingMode']    
+    if (isEditing) {
+      const data = this.$store.getters['profiling/selectedRecord']
+      if (data.familyAffiliatedFarmOrg) {
+        //TODO: on edit BE, delete this if BE done START
+        if(data.profileGeneralInfo.isMemberFarmerOrganization == 'yes'){
+          const fullName = this.concatFullName(data.profile.firstName,data.profile.middleInitial,data.profile.lastName)
+          this.items++
+          this.nameFamilyMember.push(fullName)
+          this.position.push('')
+          this.positionOthers.push('')
+          this.nameOrganization.push(data.profileGeneralInfo.organizationName)
+          this.typeOrganization.push('')
+          this.typeOrganizationOthers.push('')
+          this.numberYearsMember.push('')
+          this.statusMembership.push('')
+          this.statusOrganization.push('')
+        }
+        //TODO: on edit BE, delete this if BE done END
+        const length = data.familyAffiliatedFarmOrg.length
+        this.items += length
         for (let i = 0; i < length; i++) {
-          console.log(
-            'data: ',
-            data.familyAffiliatedFarmOrg,
-            data.familyAffiliatedFarmOrg.length
-          )
-          this.nameFamilyMember[i] = data.familyAffiliatedFarmOrg[i].fullName
-          this.position[i] = isOtherValueDefinedRadio(
-            data.familyAffiliatedFarmOrg[i].position,
-            this.positionItems
-          )
-          this.positionOthers[i] = extractUnmatchedValueRadio(
-            data.familyAffiliatedFarmOrg[i].position,
-            this.positionItems
-          )
-          this.nameOrganization[i] =
-            data.familyAffiliatedFarmOrg[i].nameOrganization
-          this.typeOrganization[i] =
-            data.familyAffiliatedFarmOrg[i].typeOrganization
-          this.typeOrganizationOthers[i] = extractUnmatchedValueRadio(
-            data.familyAffiliatedFarmOrg[i].typeOrganization,
-            this.typeOrganizationItems
-          )
-          this.numberYearsMember[i] =
-            data.familyAffiliatedFarmOrg[i].yearsAsMember
-          this.statusMembership[i] =
-            data.familyAffiliatedFarmOrg[i].statusMembership
-          this.statusOrganization[i] =
-            data.familyAffiliatedFarmOrg[i].statusOrganization
+          this.nameFamilyMember.push(data.familyAffiliatedFarmOrg[i].fullName)
+          this.position.push(isOtherValueDefinedRadio(data.familyAffiliatedFarmOrg[i].position,this.positionItems))
+          this.positionOthers.push(extractUnmatchedValueRadio(data.familyAffiliatedFarmOrg[i].position,this.positionItems))
+          this.nameOrganization.push(data.familyAffiliatedFarmOrg[i].nameOrganization)
+          this.typeOrganization.push(data.familyAffiliatedFarmOrg[i].typeOrganization)
+          this.typeOrganizationOthers.push(extractUnmatchedValueRadio(data.familyAffiliatedFarmOrg[i].typeOrganization,this.typeOrganizationItems))
+          this.numberYearsMember.push(data.familyAffiliatedFarmOrg[i].yearsAsMember)
+          this.statusMembership.push(data.familyAffiliatedFarmOrg[i].statusMembership)
+          this.statusOrganization.push(data.familyAffiliatedFarmOrg[i].statusOrganization)
         }
       } else {
         this.resetData()
       }
     } else {
-      this.resetData()
+      const profileGeneralInfo = this.$store.getters['questionnaire/generalInformationDetails']
+      const profile = this.$store.getters['questionnaire/profile']
+      if(profileGeneralInfo && profile){
+        if(profileGeneralInfo.isMemberFarmerOrganization == 'yes'){
+          const firstName = profile.firstName + ' '
+          const middleInitial = profile.middleInitial?profile.middleInitial+'. ':'';
+          const lastName = profile.lastName
+          const fullName = firstName + middleInitial + lastName
+          this.items = 1
+          this.nameFamilyMember.push(fullName)
+          this.position.push('')
+          this.positionOthers.push('')
+          this.nameOrganization.push(profileGeneralInfo.organizationName)
+          this.typeOrganization.push('')
+          this.typeOrganizationOthers.push('')
+          this.numberYearsMember.push('')
+          this.statusMembership.push('')
+          this.statusOrganization.push('')
+        }
+      }else{
+        this.resetData()
+      }
+    }
+  },
+  computed: {
+    farmerOrgName(){
+      return this.$store.getters['questionnaire/generalInformationDetails'].organizationName
+    },
+    farmerOwnProfile(){
+      return this.$store.getters['questionnaire/profile']
     }
   },
   watch: {
+    /* watch if the the own farmer details member org will be change to yes or no, then it will affect also the family affiliated data */
+    farmerOrgName(val){
+      if(this.$store.getters['questionnaire/generalInformationDetails'].isMemberFarmerOrganization == 'yes'){
+          console.log(this.nameOrganization)
+          this.nameOrganization[0] = val
+      } 
+    },
+    /* watch if the farmer profile is changed like names, then it will affect also the family affilated data */
+    farmerOwnProfile(val){
+      if(this.$store.getters['questionnaire/generalInformationDetails'].isMemberFarmerOrganization == 'yes'){
+        const fullName = this.concatFullName(val.firstName,val.middleInitial,val.lastName)
+        this.nameFamilyMember[0] = fullName
+      }
+    },
     items() {
       this.validate()
     },

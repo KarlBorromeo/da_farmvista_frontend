@@ -2,10 +2,32 @@ import * as api from '../api/questionnaire'
 export const state = () => ({
   form: {
     farmHouseholdAsset: {},
-    parcelInfo: {
-      parcelNumber: [1, 2],
-      cropsPlanted: ['haha,hehe', 'aww'],
+    // parcelInfo: {  //TODO: delete this if done the profiling manual create code
+    //   parcelNumber: [1, 2],
+    //   cropsPlanted: ['haha,hehe', 'aww'],
+    // },
+    profileGeneralInfo: {
+      age: 23,
+      sex: 'male',
+      civilStatus: 'single',
+      religion: 'catholic',
+      highestEducationAttained: 'elementary level',
+      isBelongMarginalizedSector: 'yes',
+      ifNoMarginalizedSectorName: '',
+      dialectSpoken: 'bisdak',
+      isMemberFarmerOrganization: 'yes',
+      organizationTypeMembership: 'officer',
+      organizationName: 'organization sample Name OSN',
+      isHouseMemberAffiliatedToOrg: 'yes',
     },
+    profile: {
+      lastName: 'haha',
+      firstName: 'hehe',
+      middleInitial: '',
+      contactNumber: '',
+      farmerCode: '',
+    }
+
   },
   tabs: [
     {
@@ -147,10 +169,10 @@ export const state = () => ({
       tempValidity: false,
     },
   ],
-  currentTab: 'BasicInformation',
+  // currentTab: 'BasicInformation',
   // currentTab: 'CoffeeHarvestMarketing',
   // currentTab: 'FarmWasteManagement',
-  // currentTab: 'CostInputsCoffee',
+  currentTab: 'GeneralInformation',
   isAllValid: false,
   commodity: '',
   isIntervieweeValidated: true,
@@ -158,6 +180,14 @@ export const state = () => ({
 })
 
 export const getters = {
+  /* retrun the profile details */
+  profile(state){
+    return state.form.profile
+  },
+  /* return the general information details */
+  generalInformationDetails(state){
+    return state.form.profileGeneralInfo
+  },
   /* return the parcel information details */
   parcelInformationDetails(state) {
     return state.form.parcelInfo
@@ -502,7 +532,7 @@ export const mutations = {
       tab.validity = false
       tab.tempValidity = false
     })
-    state.currentTab = 'BasicInformation' //TODO:
+    // state.currentTab = 'BasicInformation' //TODO:
   },
 
   /* display the next tab contents */

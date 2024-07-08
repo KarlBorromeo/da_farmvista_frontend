@@ -16,9 +16,9 @@
           <v-radio-group :rules="requiredRule" v-model="sex" class="pa-0 ma-0">
             <v-radio
               v-for="item in sexItems"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
+              :key="item"
+              :label="item"
+              :value="item"
             ></v-radio>
           </v-radio-group>
         </form-radio-container>
@@ -31,9 +31,9 @@
           >
             <v-radio
               v-for="item in civilStatusItems"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
+              :key="item"
+              :label="item"
+              :value="item"
             ></v-radio>
           </v-radio-group>
         </form-radio-container>
@@ -66,9 +66,9 @@
           >
             <v-radio
               v-for="item in isBelongMarginalizedSectorItems"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
+              :key="item"
+              :label="item"
+              :value="item"
             ></v-radio>
           </v-radio-group>
         </form-radio-container>
@@ -122,15 +122,14 @@
           title=" If you answered 'yes' to the previous question, select type of Membership"
         >
           <v-radio-group
-            :rules="requiredRule"
             v-model="typeMembership"
             class="py-0 my-0"
           >
             <v-radio
               v-for="item in typeMembershipItems"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
+              :key="item"
+              :label="item"
+              :value="item"
             ></v-radio>
           </v-radio-group>
         </form-radio-container>
@@ -138,7 +137,6 @@
         <form-input-container v-if="isMemberOrgranization == 'yes'">
           <v-text-field
             v-model="organizationName"
-            :rules="requiredRule"
             label="* Name of Organization/Cooperative:"
           ></v-text-field>
         </form-input-container>
@@ -147,7 +145,6 @@
           title="Any household member affiliated to any farming organization/association?"
         >
           <v-radio-group
-            :rules="requiredRule"
             v-model="isAnyHouseholdMemberOrg"
             class="py-0 my-0"
           >
@@ -196,46 +193,28 @@ export default {
         return 'Age is required'
       },
     ],
-    sex: 'male',
-    sexItems: [
-      { value: 'male', label: 'Male' },
-      { value: 'female', label: 'Female' },
-    ],
-    civilStatus: 'married',
-    civilStatusItems: [
-      { value: 'single', label: 'Single' },
-      { value: 'married', label: 'Married' },
-      { value: 'widow/widower', label: 'Widow/Widower' },
-      { value: 'separated', label: 'Separated' },
-      {
-        value: 'common law partnership',
-        label: 'Common Law Partnership',
-      },
-    ],
-    religion: 'catholic',
-    highestEducationAttained: 'college grad',
+    sex: '',
+    sexItems: [],
+    civilStatus: '',
+    civilStatusItems: [],
+    religion: '',
+    highestEducationAttained: '',
     highestEducationAttainedItems: [],
-    isBelongMarginalizedSector: 'no',
-    isBelongMarginalizedSectorItems: [
-      { value: 'yes', label: 'Yes' },
-      { value: 'no', label: 'No' },
-    ],
-    nonMarginalizedSector: ['indigenous people'],
+    isBelongMarginalizedSector: '',
+    isBelongMarginalizedSectorItems: ['yes','no'],
+    nonMarginalizedSector: [],
     nonMarginalizedSectorOthers: '',
     nonMarginalizedSectorItems: [],
-    dialectSpoken: 'Bisaya',
-    isMemberOrgranization: 'no',
+    dialectSpoken: '',
+    isMemberOrgranization: '',
     isMemberOrgranizationItems: [
       { value: 'yes', label: 'Yes' },
-      { value: 'no', label: 'No' },
+      { value: 'no', label: 'No' }
     ],
     typeMembership: '',
-    typeMembershipItems: [
-      { value: 'member', label: 'Member' },
-      { value: 'Officer', label: 'Officer' },
-    ],
+    typeMembershipItems: [],
     organizationName: '',
-    isAnyHouseholdMemberOrg: 'yes',
+    isAnyHouseholdMemberOrg: '',
     isAnyHouseholdMemberOrgItems: [
       { value: 'yes', label: 'Yes' },
       { value: 'no', label: 'No' },
@@ -248,11 +227,11 @@ export default {
     validate() {
       const textRadioValid = this.$refs.form.validate()
       const checkboxValid = this.validateCheckbox()
+      const conditialFieldValid = this.validateConditionalFields()
       let valid = false
-      if (textRadioValid && checkboxValid) {
+      if (textRadioValid && checkboxValid && conditialFieldValid) {
         valid = true
       }
-      console.log('validated', valid)
       this.$store.commit('questionnaire/toggleNextTab', {
         tabName: 'GeneralInformationValidated',
         valid,
@@ -280,6 +259,13 @@ export default {
         return true
       }
     },
+    /* validate conditional fields if empty or not */
+    validateConditionalFields() {
+      if(this.isMemberOrgranization == 'yes' && (this.typeMembership == '' || this.organizationName == '') ){
+        return false
+      }
+      return true;
+    },
     /* get the data and convert it into expected key/value formats in BackEnd */
     getData() {
       return {
@@ -289,15 +275,12 @@ export default {
         religion: this.religion,
         highestEducationAttained: this.highestEducationAttained,
         isBelongMarginalizedSector: this.isBelongMarginalizedSector,
-        ifNoMarginalizedSectorName: concatOtherValueToList(
-          this.nonMarginalizedSector,
-          this.nonMarginalizedSectorOthers
-        ),
+        ifNoMarginalizedSectorName: concatOtherValueToList(this.nonMarginalizedSector,this.nonMarginalizedSectorOthers),
         dialectSpoken: this.dialectSpoken,
         isMemberFarmerOrganization: this.isMemberOrgranization,
         organizationTypeMembership: this.typeMembership,
         organizationName: this.organizationName,
-        isHouseMemberAffiliatedToOrg: this.isAnyHouseholdMemberOrg,
+        isHouseMemberAffiliatedToOrg: this.isAnyHouseholdMemberOrg
       }
     },
     /* check if 'other' checkbox is ticked */
@@ -308,6 +291,21 @@ export default {
         }
       }
       return false
+    },
+    /* reset the data into empty */
+    resetData() {
+      this.age = ''
+      this.sex = ''
+      this.civilStatus = ''
+      this.religion = ''
+      this.highestEducationAttained = ''
+      this.isBelongMarginalizedSector = ''
+      this.nonMarginalizedSector = []
+      this.dialectSpoken = ''
+      this.isMemberOrgranization = ''
+      this.typeMembership = ''
+      this.organizationName = ''
+      this.isAnyHouseholdMemberOrg = ''
     },
   },
   computed: {
@@ -321,18 +319,17 @@ export default {
   },
   watch: {
     isBelongMarginalizedSector(value) {
-      this.validate()
-      console.log('hahaha')
       if (value == 'yes') {
         this.nonMarginalizedSector = []
       }
+      this.validate()
     },
     isMemberOrgranization(value) {
-      this.validate()
       if (value == 'no') {
         this.typeMembership = ''
         this.organizationName = ''
       }
+      this.validate()
     },
     age() {
       this.validate()
@@ -358,7 +355,8 @@ export default {
     typeMembership() {
       this.validate()
     },
-    organizationName() {
+    organizationName(val) {
+      console.log(val)
       this.validate()
     },
     isAnyHouseholdMemberOrg() {
@@ -370,46 +368,46 @@ export default {
       this.$store.getters['questionnaireCode/MarginalizedSector']
     this.highestEducationAttainedItems =
       this.$store.getters['questionnaireCode/HighestEducationalAttainment']
-    const data = this.$store.getters['profiling/selectedRecord']
-    if (Object.keys(data).length > 0) {
-      this.age = data.profileGeneralInfo.age
-      this.sex = data.profileGeneralInfo.sex
-      this.civilStatus = data.profileGeneralInfo.civilStatus
-      this.religion = data.profileGeneralInfo.religion
-      this.highestEducationAttained =
-        data.profileGeneralInfo.highestEducationAttained
-      this.isBelongMarginalizedSector =
-        data.profileGeneralInfo.isBelongMarginalizedSector
-      this.nonMarginalizedSector = isOtherValueTickedCheckbox(
-        data.profileGeneralInfo.ifNoMarginalizedSectorName,
-        this.nonMarginalizedSectorItems
-      )
-      this.nonMarginalizedSectorOthers = extractUnmatchedValueCheck(
-        data.profileGeneralInfo.ifNoMarginalizedSectorName,
-        this.nonMarginalizedSectorItems
-      )
-
-      this.dialectSpoken = data.profileGeneralInfo.dialectSpoken
-      this.isMemberOrgranization =
-        data.profileGeneralInfo.isMemberFarmerOrganization
-      this.typeMembership = data.profileGeneralInfo.organizationTypeMembership
-      this.organizationName = data.profileGeneralInfo.organizationName
-      this.isAnyHouseholdMemberOrg =
-        data.profileGeneralInfo.isHouseMemberAffiliatedToOrg
+    this.civilStatusItems = this.$store.getters['questionnaireCode/CivilStatus']
+    this.sexItems = this.$store.getters['questionnaireCode/Sex']
+    this.typeMembershipItems = this.$store.getters['questionnaireCode/MembershipType']
+    const isEditing = this.$store.getters['profiling/isEditingMode']
+    if (!isEditing) {
+      this.resetData()
     } else {
-      this.age = ''
-      this.sex = ''
-      this.civilStatus = ''
-      this.religion = ''
-      this.highestEducationAttained = ''
-      this.isBelongMarginalizedSector = ''
-      this.nonMarginalizedSector = []
-      this.dialectSpoken = ''
-      this.isMemberOrgranization = ''
-      this.typeMembership = ''
-      this.organizationName = ''
-      this.isAnyHouseholdMemberOrg = ''
+      const data = this.$store.getters['profiling/selectedRecord']
+      if (data.profileGeneralInfo) {
+        this.age = data.profileGeneralInfo.age
+        this.sex = data.profileGeneralInfo.sex
+        this.civilStatus = data.profileGeneralInfo.civilStatus
+        this.religion = data.profileGeneralInfo.religion
+        this.highestEducationAttained =
+          data.profileGeneralInfo.highestEducationAttained
+        this.isBelongMarginalizedSector =
+          data.profileGeneralInfo.isBelongMarginalizedSector
+        this.nonMarginalizedSector = isOtherValueTickedCheckbox(
+          data.profileGeneralInfo.ifNoMarginalizedSectorName,
+          this.nonMarginalizedSectorItems
+        )
+        this.nonMarginalizedSectorOthers = extractUnmatchedValueCheck(
+          data.profileGeneralInfo.ifNoMarginalizedSectorName,
+          this.nonMarginalizedSectorItems
+        )
+        this.dialectSpoken = data.profileGeneralInfo.dialectSpoken
+        this.isMemberOrgranization = data.profileGeneralInfo.isMemberFarmerOrganization
+        this.typeMembership = data.profileGeneralInfo.organizationTypeMembership
+        this.organizationName = data.profileGeneralInfo.organizationName
+        this.isAnyHouseholdMemberOrg = data.profileGeneralInfo.isHouseMemberAffiliatedToOrg
+      } else {
+        this.resetData()
+      }
     }
-  },
+  }
 }
 </script>
+
+<style scoped>
+.hide{
+  display: none;
+}
+</style>
