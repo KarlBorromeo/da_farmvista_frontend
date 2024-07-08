@@ -32,9 +32,9 @@
             >
               <v-radio
                 v-for="item in sexItems"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
+                :key="item"
+                :label="item"
+                :value="item"
               ></v-radio>
             </v-radio-group>
           </form-radio-container>
@@ -76,9 +76,9 @@
             >
               <v-radio
                 v-for="item in involveCoffeefarmItems"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
+                :key="item"
+                :label="item"
+                :value="item"
               ></v-radio>
             </v-radio-group>
           </form-radio-container>
@@ -107,22 +107,16 @@ export default {
   data: () => ({
     valid: false,
     items: 1,
-    name: ['Tampolano Tahay'],
-    age: [35],
-    sex: ['male'],
-    sexItems: [
-      { value: 'male', label: 'Male' },
-      { value: 'female', label: 'Female' },
-    ],
-    roleFamily: ['father'],
-    educationsAttainment: ['college grad'],
+    name: [],
+    age: [],
+    sex: [],
+    sexItems: [],
+    roleFamily: [],
+    educationsAttainment: [],
     educationsAttainmentItems: [],
-    contributionAmount: [20000],
-    involveCoffeefarm: ['yes'],
-    involveCoffeefarmItems: [
-      { value: 'yes', label: 'Yes' },
-      { value: 'no', label: 'No' },
-    ],
+    contributionAmount: [],
+    involveCoffeefarm: [],
+    involveCoffeefarmItems: ['yes','no'],
     requiredRule: [(v) => !!v || 'invalid value'],
     numberRule: [(v) => parseInt(v) >= 0 || 'invalid value'],
     tempValue: '',
@@ -180,7 +174,7 @@ export default {
     },
     // decrement the count of items
     decrement() {
-      if (this.items > 0) {
+      if (this.items > 1) {
         this.items--
         this.name.pop()
         this.age.pop()
@@ -204,10 +198,36 @@ export default {
       this.contributionAmount = []
       this.involveCoffeefarm = []
     },
+    /* concat fullname, return full name string */
+    concatFullName(firstName,middleInitial,lastName){
+      const first = firstName + ' '
+      const middle = middleInitial?middleInitial+'. ':'';
+      const last= lastName
+      const fullName = first + middle + last
+      return fullName
+    }
+  },
+  computed: {
+    farmerGenInfo(){
+      return this.$store.getters['questionnaire/generalInformationDetails']
+    },
+    farmerOwnProfile(){
+      return this.$store.getters['questionnaire/profile']
+    }
   },
   watch: {
+    farmerGenInfo(val){
+      //TODO: tell aubrey to put to index 0 the ownFarmer details in order to target always the index 0 incase the name is changed and etc.
+      this.age[0]= val.age
+      this.sex[0]= val.sex
+      this.educationsAttainment[0] = val.highestEducationAttained
+    },
+    farmerOwnProfile(val){
+      //TODO: tell aubrey to put to index 0 the ownFarmer details in order to target always the index 0 incase the name is changed and etc.
+      const fullName = this.concatFullName(val.firstName,val.middleInitial,val.lastName)
+      this.name[0] = fullName
+    },
     name() {
-      console.log('edited name')
       this.validate()
     },
     age() {
@@ -233,32 +253,52 @@ export default {
     },
   },
   beforeMount() {
+    this.sexItems = this.$store.getters['questionnaireCode/Sex']
     this.educationsAttainmentItems =
       this.$store.getters['questionnaireCode/HighestEducationalAttainment']
-    const data = this.$store.getters['profiling/selectedRecord']
-    if (Object.keys(data).length > 0) {
-      const length = data.familySourceIncome.length
-      if (length > 0) {
-        this.items = length
-        for (let i = 0; i < length; i++) {
-          this.name[i] = data.familySourceIncome[i].fullName
-          this.age[i] = data.familySourceIncome[i].age
-          this.sex[i] = data.familySourceIncome[i].sex
-          this.roleFamily[i] = data.familySourceIncome[i].roleInFamily
-          this.educationsAttainment[i] =
-            data.familySourceIncome[i].educationAttainment
-          this.contributionAmount[i] =
-            data.familySourceIncome[i].estimatedContribution
-          this.involveCoffeefarm[i] =
-            data.familySourceIncome[i].isInvolvedCoffeeFarm
+      const isEditing = this.$store.getters['profiling/isEditingMode']
+      if(isEditing){
+        const data = this.$store.getters['profiling/selectedRecord']
+        if (Object.keys(data).length > 0) {
+          const length = data.familySourceIncome.length
+          if (length > 0) {
+            this.items = length
+            for (let i = 0; i < length; i++) {
+              this.name[i] = data.familySourceIncome[i].fullName
+              this.age[i] = data.familySourceIncome[i].age
+              this.sex[i] = data.familySourceIncome[i].sex
+              this.roleFamily[i] = data.familySourceIncome[i].roleInFamily
+              this.educationsAttainment[i] =
+                data.familySourceIncome[i].educationAttainment
+              this.contributionAmount[i] =
+                data.familySourceIncome[i].estimatedContribution
+              this.involveCoffeefarm[i] =
+                data.familySourceIncome[i].isInvolvedCoffeeFarm
+            }
+          } else {
+            this.resetData()
+          }
+        } else {
+          this.resetData()
         }
-      } else {
-        this.resetData()
+        this.tempValue = 'tempValue'
+      }else{
+        const profileGeneralInfo = this.$store.getters['questionnaire/generalInformationDetails']
+        const profile = this.$store.getters['questionnaire/profile']
+        if(profileGeneralInfo && profile){
+          const fullName = this.concatFullName(profile.firstName,profile.middleInitial,profile.lastName)
+          this.items = 1;
+          this.name.push(fullName)
+          this.age.push(profileGeneralInfo.age)
+          this.sex.push(profileGeneralInfo.sex)
+          this.roleFamily.push('')
+          this.educationsAttainment.push(profileGeneralInfo.highestEducationAttained)
+          this.contributionAmount.push('')
+          this.involveCoffeefarm.push('')
+        }
+
       }
-    } else {
-      this.resetData()
-    }
-    this.tempValue = 'tempValue'
+
   },
 }
 </script>
