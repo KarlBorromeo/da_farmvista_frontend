@@ -51,9 +51,9 @@
 </template>
 
 <script>
-import TheMenu from '~/components/landing/theMenu.vue'
-import TheLogo from '~/components/landing/theLogo.vue'
-import TheFooter from '~/components/landing/theFooter.vue'
+import TheMenu from '~/components/landing/theMenuLanding.vue'
+import TheLogo from '~/components/landing/theLogoLanding.vue'
+import TheFooter from '~/components/landing/theFooterLanding.vue'
 
 export default {
   components: { TheMenu, TheLogo, TheFooter },
