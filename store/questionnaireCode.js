@@ -121,8 +121,16 @@ export const getters = {
     return generateArray(state.codes.Code27)
   },
   Rate(state) {},
-  Sex(state) {},
+  Sex(state) {
+    return generateArray(state.codes.Sex)
+  },
   Agree(state) {},
+  MembershipType(state){
+    return generateArray(state.codes.MembershipType)
+  },
+  CivilStatus(state){
+    return generateArray(state.codes.CivilStatus)
+  },
   HighestEducationalAttainment(state) {
     return generateArray(state.codes.HighestEducationalAttainment)
   },
@@ -186,6 +194,7 @@ export const actions = {
   async fetchAllCodes(context, commodity) {
     try {
       const codes = await api.fetchAllCodes(commodity)
+      await new Promise(resolve => setTimeout(resolve,2000))
       context.commit('saveCodes', codes)
     } catch (error) {
       throw error

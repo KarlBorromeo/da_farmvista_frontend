@@ -95,7 +95,7 @@ export default {
   },
   data: () => ({
     valid: false,
-    unitItems: ['kg', 'L', 'm', 'gal', 'pcs', 'sack'],
+    unitItems: ['kg', 'L', 'm', 'gal', 'pcs', 'sack','n/a'],
     formData: {
       plantingMaterials: {
         price: '100',
@@ -290,6 +290,7 @@ export default {
           keyName: 'costInputCoffee',
           data: this.getData(),
         })
+        console.log('data here:',this.getData())
       }
     },
     /* get the data and convert it into expected key/value formats in BackEnd */
@@ -300,6 +301,7 @@ export default {
         data[keyName] = {
           price: parseInt(this.formData[keyName].price),
           quantity: parseInt(this.formData[keyName].quantity),
+          unit: this.formData[keyName].unit,
           totalTransportCost: parseInt(
             this.formData[keyName].totalTransportCost
           ),
@@ -330,6 +332,7 @@ export default {
         const keyName = this.list[i].key
         this.formData[keyName].price = data.costInputCoffee[keyName].price
         this.formData[keyName].quantity = data.costInputCoffee[keyName].quantity
+        this.formData[keyName].unit = data.costInputCoffee[keyName].unit
         this.formData[keyName].totalTransportCost =
           data.costInputCoffee[keyName].totalTransportCost
         this.formData[keyName].totalCost =
@@ -347,7 +350,7 @@ export default {
         const keyName = this.list[i].key
         this.formData[keyName].price = ''
         this.formData[keyName].quantity = ''
-        this.formData[keyName].unit = 'kg'
+        this.formData[keyName].unit = ''
         this.formData[keyName].totalTransportCost = ''
         this.formData[keyName].totalCost = ''
         this.formData[keyName].cashCredit = ''

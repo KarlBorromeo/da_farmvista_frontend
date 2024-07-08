@@ -30,13 +30,13 @@ export default {
     /* disabling edit mode, enabling create mode */
     toggleOffEditing() {
       this.$store.commit('profiling/toggleEditingMode', false)
-      this.$store.commit('questionnaire/resetTabsValidity')
+      // this.$store.commit('questionnaire/resetTabsValidity')
     },
   },
   watch: {
     dialog(val) {
       if (!val) {
-        this.$store.commit('questionnaire/resetTabsValidity')
+        // this.$store.commit('questionnaire/resetTabsValidity')
       }
     },
   },
