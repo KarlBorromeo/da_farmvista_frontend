@@ -2,7 +2,10 @@
   <v-form ref="form" v-model="valid" lazy-validation>
     <v-container>
       <v-row>
-        <form-radio-container title="Do you have a functional radio set">
+        <form-radio-container
+          title="Do you have a functional radio set"
+          :required="true"
+        >
           <v-radio-group
             :rules="requiredRule"
             v-model="formData.haveFunctionalRadio"
@@ -21,7 +24,7 @@
           <v-text-field
             v-model="formData.radioStationUsuallyTune"
             :rules="requiredRule"
-            label="Radio station usually tune"
+            label="* Radio station usually tune"
             required
           />
         </form-input-container>
@@ -37,7 +40,7 @@
             <template v-slot:activator="{ on, attrs }">
               <v-text-field
                 v-model="formData.startTimeListeningRadio"
-                label="Time start listening radio"
+                label="* Time start listening radio"
                 append-icon="mdi-clock-time-four-outline"
                 :rules="requiredRule"
                 readonly
@@ -78,7 +81,6 @@
                 v-model="formData.endTimeListeningRadio"
                 label="Time end listening radio"
                 append-icon="mdi-clock-time-four-outline"
-                :rules="requiredRule"
                 readonly
                 v-bind="attrs"
                 v-on="on"
@@ -108,31 +110,12 @@
           <v-text-field
             v-model="formData.radioProgramsListens"
             :rules="requiredRule"
-            label="Types of radio programs listen to"
+            label="* Types of radio programs listen to"
             required
           />
         </form-input-container>
-
-        <!-- <form-checkbox-container title="print materials read most">
-          <v-checkbox
-            v-for="item in formData.printMaterialsReadItems"
-            v-model="formData.printMaterialsRead"
-            :key="item"
-            :value="item"
-            :label="item"
-            dense
-            class="ma-0 pa-0 ml-5"
-            style="display: inline-block"
-          ></v-checkbox>
-          <v-text-field
-            v-if="isOtherTicked(formData.printMaterialsRead)"
-            v-model="formData.printMaterialsReadOther"
-            :rules="requiredRule"
-            label="* please specify"
-          ></v-text-field> -->
         <form-radio-container title="print materials read most">
           <v-radio-group
-            :rules="requiredRule"
             v-model="formData.printMaterialsRead"
             class="pa-0 ma-0"
           >
@@ -151,7 +134,10 @@
           ></v-text-field>
         </form-radio-container>
 
-        <form-radio-container title="Do you have a television (TV) set?">
+        <form-radio-container
+          title="Do you have a television (TV) set?"
+          :required="true"
+        >
           <v-radio-group
             :rules="requiredRule"
             v-model="formData.haveTelevision"
@@ -170,7 +156,7 @@
           <v-text-field
             v-model="formData.tvStationWatches"
             :rules="requiredRule"
-            label="What TV stations do you watch?"
+            label="* What TV stations do you watch?"
             required
           />
         </form-input-container>
@@ -186,7 +172,7 @@
             <template v-slot:activator="{ on, attrs }">
               <v-text-field
                 v-model="formData.startTimeWatchingTv"
-                label="Time start watching TV"
+                label="* Time start watching TV"
                 append-icon="mdi-clock-time-four-outline"
                 readonly
                 v-bind="attrs"
@@ -251,7 +237,10 @@
           </v-dialog>
         </form-menu-container>
 
-        <form-radio-container title="Do you have a social media account?">
+        <form-radio-container
+          title="Do you have a social media account?"
+          :required="true"
+        >
           <v-radio-group
             :rules="requiredRule"
             v-model="formData.haveSocmedAccount"
@@ -270,8 +259,10 @@
           <v-text-field
             v-model="formData.howOftenUsedSocmed"
             :rules="numberRule"
-            label="How do you often use social media?"
+            label="* How do you often use social media everyday?"
             required
+            type="number"
+            min="0"
           />
         </form-input-container>
       </v-row>
@@ -330,7 +321,6 @@ export default {
   methods: {
     /* test if the form is valid, return boolean */
     validate() {
-      console.log('validation executed', this.getData())
       const valid = this.$refs.form.validate()
       this.$store.commit('questionnaire/toggleNextTab', {
         tabName: 'InformationKnowledgeSourcesValidated',
@@ -342,7 +332,6 @@ export default {
           data: this.getData(),
         })
       }
-      console.log('data: ', this.getData(), valid)
     },
     /* check if 'other' checkbox is ticked */
     isOtherTicked(list) {
@@ -432,7 +421,7 @@ export default {
       this.formData.startTimeWatchingTv = ''
       this.formData.endTimeWatchingTv = ''
       this.formData.haveSocmedAccount = ''
-      this.formData.howOftenUsedSocmed = ''
+      this.formData.howOftenUsedSocmed = 0
     }
   },
   watch: {

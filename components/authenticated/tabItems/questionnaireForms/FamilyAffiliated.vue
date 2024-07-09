@@ -1,7 +1,6 @@
 <template>
   <v-form ref="form" v-model="valid" lazy-validation>
     <v-container>
-      <form-card-button @emitIncrement="increment" @emitDecrement="decrement" />
       <form-card v-for="(i, index) in items" :key="index">
         <v-row>
           <v-col cols="12" class="mb-0 pb-0">
@@ -17,7 +16,7 @@
             ></v-text-field>
           </form-input-container>
 
-          <form-radio-container title="Position">
+          <form-radio-container title="Position" :required="true">
             <v-radio-group
               :rules="requiredRule"
               required
@@ -50,7 +49,10 @@
             ></v-text-field>
           </form-input-container>
 
-          <form-radio-container title="Type of Institution/Organization">
+          <form-radio-container
+            title="Type of Institution/Organization"
+            :required="true"
+          >
             <v-radio-group
               :rules="requiredRule"
               required
@@ -81,10 +83,11 @@
               required
               label="* No. of years as a member"
               type="number"
+              min="0"
             ></v-text-field>
           </form-input-container>
 
-          <form-radio-container title="Status of Membership">
+          <form-radio-container title="Status of Membership" :required="true">
             <v-radio-group
               :rules="requiredRule"
               required
@@ -100,7 +103,7 @@
             </v-radio-group>
           </form-radio-container>
 
-          <form-radio-container title="Status of Organization">
+          <form-radio-container title="Status of Organization" :required="true">
             <v-radio-group
               :rules="requiredRule"
               required
@@ -118,6 +121,7 @@
           </form-radio-container>
         </v-row>
       </form-card>
+      <form-card-button @emitIncrement="increment" @emitDecrement="decrement" />
     </v-container>
     <!-- <v-btn @click="validate">Validate</v-btn> -->
   </v-form>
@@ -178,7 +182,7 @@ export default {
       const valid = this.$refs.form.validate()
       this.$store.commit('questionnaire/toggleNextTab', {
         tabName: 'FamilyAffiliatedValidated',
-        valid
+        valid,
       })
       if (valid) {
         this.$store.commit('questionnaire/saveData', {
@@ -221,9 +225,12 @@ export default {
     },
     /* decrement the count of items, pop the end index */
     decrement() {
-      let min = 0;
-      if(this.$store.getters['questionnaire/generalInformationDetails'].isMemberFarmerOrganization == 'yes'){
-        min = 1;
+      let min = 0
+      if (
+        this.$store.getters['questionnaire/generalInformationDetails']
+          .isMemberFarmerOrganization == 'yes'
+      ) {
+        min = 1
       }
       if (this.items > min) {
         this.items--
@@ -239,8 +246,11 @@ export default {
         this.statusOrganization.pop()
       }
     },
-    increment(){
-      if(this.$store.getters['questionnaire/generalInformationDetails'].isHouseMemberAffiliatedToOrg == 'yes'){
+    increment() {
+      if (
+        this.$store.getters['questionnaire/generalInformationDetails']
+          .isHouseMemberAffiliatedToOrg == 'yes'
+      ) {
         this.items++
         this.tempItems++
         this.nameFamilyMember.push('')
@@ -251,14 +261,13 @@ export default {
         this.typeOrganizationOthers.push('')
         this.numberYearsMember.push('')
         this.statusMembership.push('')
-        this.statusOrganization.push('')        
+        this.statusOrganization.push('')
       }
-
     },
     /* reset the data */
     resetData() {
       this.items = 0
-      this.tempItems = 0;
+      this.tempItems = 0
       this.nameFamilyMember = []
       this.position = []
       this.positionOthers = []
@@ -270,27 +279,33 @@ export default {
       this.statusOrganization = []
     },
     /* concat fullname, return full name string */
-    concatFullName(firstName,middleInitial,lastName){
+    concatFullName(firstName, middleInitial, lastName) {
       const first = firstName + ' '
-      const middle = middleInitial?middleInitial+'. ':'';
-      const last= lastName
+      const middle = middleInitial ? middleInitial + '. ' : ''
+      const last = lastName
       const fullName = first + middle + last
       return fullName
-    }
+    },
   },
   beforeMount() {
     this.positionItems = this.$store.getters['questionnaireCode/Code1']
     this.typeOrganizationItems = this.$store.getters['questionnaireCode/Code2']
-    this.statusMembershipItems = this.$store.getters['questionnaireCode/Code3_4']
-    this.statusOrganizationItems = this.$store.getters['questionnaireCode/Code3_4']
+    this.statusMembershipItems =
+      this.$store.getters['questionnaireCode/Code3_4']
+    this.statusOrganizationItems =
+      this.$store.getters['questionnaireCode/Code3_4']
 
-    const isEditing = this.$store.getters['profiling/isEditingMode']    
+    const isEditing = this.$store.getters['profiling/isEditingMode']
     if (isEditing) {
       const data = this.$store.getters['profiling/selectedRecord']
       if (data.familyAffiliatedFarmOrg) {
         //TODO: on edit BE, delete this if BE done START
-        if(data.profileGeneralInfo.isMemberFarmerOrganization == 'yes'){
-          const fullName = this.concatFullName(data.profile.firstName,data.profile.middleInitial,data.profile.lastName)
+        if (data.profileGeneralInfo.isMemberFarmerOrganization == 'yes') {
+          const fullName = this.concatFullName(
+            data.profile.firstName,
+            data.profile.middleInitial,
+            data.profile.lastName
+          )
           this.items++
           this.nameFamilyMember.push(fullName)
           this.position.push('')
@@ -308,24 +323,54 @@ export default {
         this.tempItems = this.items
         for (let i = 0; i < length; i++) {
           this.nameFamilyMember.push(data.familyAffiliatedFarmOrg[i].fullName)
-          this.position.push(isOtherValueDefinedRadio(data.familyAffiliatedFarmOrg[i].position,this.positionItems))
-          this.positionOthers.push(extractUnmatchedValueRadio(data.familyAffiliatedFarmOrg[i].position,this.positionItems))
-          this.nameOrganization.push(data.familyAffiliatedFarmOrg[i].nameOrganization)
-          this.typeOrganization.push(data.familyAffiliatedFarmOrg[i].typeOrganization)
-          this.typeOrganizationOthers.push(extractUnmatchedValueRadio(data.familyAffiliatedFarmOrg[i].typeOrganization,this.typeOrganizationItems))
-          this.numberYearsMember.push(data.familyAffiliatedFarmOrg[i].yearsAsMember)
-          this.statusMembership.push(data.familyAffiliatedFarmOrg[i].statusMembership)
-          this.statusOrganization.push(data.familyAffiliatedFarmOrg[i].statusOrganization)
+          this.position.push(
+            isOtherValueDefinedRadio(
+              data.familyAffiliatedFarmOrg[i].position,
+              this.positionItems
+            )
+          )
+          this.positionOthers.push(
+            extractUnmatchedValueRadio(
+              data.familyAffiliatedFarmOrg[i].position,
+              this.positionItems
+            )
+          )
+          this.nameOrganization.push(
+            data.familyAffiliatedFarmOrg[i].nameOrganization
+          )
+          this.typeOrganization.push(
+            data.familyAffiliatedFarmOrg[i].typeOrganization
+          )
+          this.typeOrganizationOthers.push(
+            extractUnmatchedValueRadio(
+              data.familyAffiliatedFarmOrg[i].typeOrganization,
+              this.typeOrganizationItems
+            )
+          )
+          this.numberYearsMember.push(
+            data.familyAffiliatedFarmOrg[i].yearsAsMember
+          )
+          this.statusMembership.push(
+            data.familyAffiliatedFarmOrg[i].statusMembership
+          )
+          this.statusOrganization.push(
+            data.familyAffiliatedFarmOrg[i].statusOrganization
+          )
         }
       } else {
         this.resetData()
       }
     } else {
-      const profileGeneralInfo = this.$store.getters['questionnaire/generalInformationDetails']
+      const profileGeneralInfo =
+        this.$store.getters['questionnaire/generalInformationDetails']
       const profile = this.$store.getters['questionnaire/profile']
-      if(profileGeneralInfo && profile){
-        if(profileGeneralInfo.isMemberFarmerOrganization == 'yes'){
-          const fullName = this.concatFullName(profile.firstName,profile.middleInitial,profile.lastName)
+      if (profileGeneralInfo && profile) {
+        if (profileGeneralInfo.isMemberFarmerOrganization == 'yes') {
+          const fullName = this.concatFullName(
+            profile.firstName,
+            profile.middleInitial,
+            profile.lastName
+          )
           this.items = 1
           this.tempItems = this.items
           this.nameFamilyMember.push(fullName)
@@ -338,77 +383,101 @@ export default {
           this.statusMembership.push('')
           this.statusOrganization.push('')
         }
-      }else{
+      } else {
         this.resetData()
       }
     }
   },
   computed: {
-    farmerGenInfo(){
+    farmerGenInfo() {
       return this.$store.getters['questionnaire/generalInformationDetails']
     },
-    farmerOwnProfile(){
+    farmerOwnProfile() {
       return this.$store.getters['questionnaire/profile']
-    }
+    },
   },
   watch: {
     /* watch if the the own farmer details member org will be change to yes or no, then it will affect also the family affiliated data */
-    farmerGenInfo(val){
-       //TODO: tell aubrey to put to index 0 the ownFarmer details in order to target always the index 0 incase the name is changed and etc.
+    farmerGenInfo(val) {
+      //TODO: tell aubrey to put to index 0 the ownFarmer details in order to target always the index 0 incase the name is changed and etc.
       const profile = this.$store.getters['questionnaire/profile']
-      const fullName = this.concatFullName(profile.firstName,profile.middleInitial,profile.lastName)
-      if(val.isMemberFarmerOrganization == 'yes' && val.isHouseMemberAffiliatedToOrg == 'no'){
-          this.items = 1;
-          this.tempItems = 1;
-          this.nameFamilyMember[0] = fullName
-          this.position[0] = ''
-          this.positionOthers[0] = ''                        
-          this.nameOrganization[0] = val.organizationName
-          this.typeOrganization[0] = ''
-          this.typeOrganizationOthers[0] = ''
-          this.numberYearsMember[0] = ''
-          this.statusMembership[0] = ''
-          this.statusOrganization[0] = ''
-      }else if(val.isMemberFarmerOrganization == 'yes' && val.isHouseMemberAffiliatedToOrg == 'yes'){
-        const index = this.nameFamilyMember.findIndex(item => item == fullName)
-        if(this.items+1 == this.tempItems+1 && index<0){
-          this.items++;
+      const fullName = this.concatFullName(
+        profile.firstName,
+        profile.middleInitial,
+        profile.lastName
+      )
+      if (
+        val.isMemberFarmerOrganization == 'yes' &&
+        val.isHouseMemberAffiliatedToOrg == 'no'
+      ) {
+        this.items = 1
+        this.tempItems = 1
+        this.nameFamilyMember[0] = fullName
+        this.position[0] = ''
+        this.positionOthers[0] = ''
+        this.nameOrganization[0] = val.organizationName
+        this.typeOrganization[0] = ''
+        this.typeOrganizationOthers[0] = ''
+        this.numberYearsMember[0] = ''
+        this.statusMembership[0] = ''
+        this.statusOrganization[0] = ''
+      } else if (
+        val.isMemberFarmerOrganization == 'yes' &&
+        val.isHouseMemberAffiliatedToOrg == 'yes'
+      ) {
+        const index = this.nameFamilyMember.findIndex(
+          (item) => item == fullName
+        )
+        if (this.items + 1 == this.tempItems + 1 && index < 0) {
+          this.items++
           this.nameFamilyMember.unshift(fullName)
           this.position.unshift('')
-          this.positionOthers.unshift('')                        
+          this.positionOthers.unshift('')
           this.nameOrganization.unshift(val.organizationName)
           this.typeOrganization.unshift('')
           this.typeOrganizationOthers.unshift('')
           this.numberYearsMember.unshift('')
           this.statusMembership.unshift('')
           this.statusOrganization.unshift('')
-        }else{
+        } else {
           this.nameFamilyMember[0] = fullName
           this.nameOrganization[0] = val.organizationName
         }
-      }else if(val.isMemberFarmerOrganization == 'no' && val.isHouseMemberAffiliatedToOrg == 'yes'){
-        const index = this.nameFamilyMember.findIndex(item => item == fullName)
-        if(index>=0){
-          this.nameFamilyMember.splice(index,1)
-          this.position.splice(index,1)
-          this.positionOthers.splice(index,1)                        
-          this.nameOrganization.splice(index,1)
-          this.typeOrganization.splice(index,1)
-          this.typeOrganizationOthers.splice(index,1)
-          this.numberYearsMember.splice(index,1)
-          this.statusMembership.splice(index,1)
-          this.statusOrganization.splice(index,1)
-          this.items--;
-          this.tempItems--;
+      } else if (
+        val.isMemberFarmerOrganization == 'no' &&
+        val.isHouseMemberAffiliatedToOrg == 'yes'
+      ) {
+        const index = this.nameFamilyMember.findIndex(
+          (item) => item == fullName
+        )
+        if (index >= 0) {
+          this.nameFamilyMember.splice(index, 1)
+          this.position.splice(index, 1)
+          this.positionOthers.splice(index, 1)
+          this.nameOrganization.splice(index, 1)
+          this.typeOrganization.splice(index, 1)
+          this.typeOrganizationOthers.splice(index, 1)
+          this.numberYearsMember.splice(index, 1)
+          this.statusMembership.splice(index, 1)
+          this.statusOrganization.splice(index, 1)
+          this.items--
+          this.tempItems--
         }
-      }else{
-        this.resetData();
+      } else {
+        this.resetData()
       }
     },
     /* watch if the farmer profile is changed like names, then it will affect also the family affilated data */
-    farmerOwnProfile(val){
-      if(this.$store.getters['questionnaire/generalInformationDetails'].isMemberFarmerOrganization == 'yes'){
-        const fullName = this.concatFullName(val.firstName,val.middleInitial,val.lastName)
+    farmerOwnProfile(val) {
+      if (
+        this.$store.getters['questionnaire/generalInformationDetails']
+          .isMemberFarmerOrganization == 'yes'
+      ) {
+        const fullName = this.concatFullName(
+          val.firstName,
+          val.middleInitial,
+          val.lastName
+        )
         this.nameFamilyMember[0] = fullName
       }
     },

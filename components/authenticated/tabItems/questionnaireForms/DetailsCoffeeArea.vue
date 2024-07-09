@@ -9,13 +9,13 @@
               v-model="classificationCropsDetails"
               :rules="requiredRule"
               label="* Details"
+              hint="Separate with comma ' , ' if multiple values"
             ></v-text-field>
           </form-input-container>
           <form-input-container>
             <v-text-field
               v-model="classificationCropsReasons"
-              :rules="requiredRule"
-              label="* Reason for using"
+              label="Reason for using"
             ></v-text-field>
           </form-input-container>
         </v-row>
@@ -35,8 +35,7 @@
           <form-input-container>
             <v-text-field
               v-model="yearPlantedReasons"
-              :rules="requiredRule"
-              label="* Reason for using"
+              label="Reason for using"
             ></v-text-field>
           </form-input-container>
         </v-row>
@@ -52,7 +51,7 @@
               label="* Details"
             ></v-text-field>
           </form-input-container>
-          <form-radio-container title="Reason for Using">
+          <form-radio-container title="Reason for Using" :required="true">
             <v-radio-group
               :rules="requiredRule"
               v-model="plantingDistanceReasons"
@@ -90,8 +89,7 @@
           <form-input-container>
             <v-text-field
               v-model="numberPlantsReasons"
-              :rules="requiredRule"
-              label="* Reason for using"
+              label="Reason for using"
             ></v-text-field>
           </form-input-container>
         </v-row>
@@ -105,14 +103,11 @@
               v-model="intercropVarietyDetails"
               :rules="requiredRule"
               label="* Details"
+              hint="Separate with comma ' , ' if multiple crops"
             ></v-text-field>
           </form-input-container>
           <form-radio-container title="Reason for Using">
-            <v-radio-group
-              :rules="requiredRule"
-              v-model="intercropVarietyReasons"
-              class="pa-0 ma-0"
-            >
+            <v-radio-group v-model="intercropVarietyReasons" class="pa-0 ma-0">
               <v-radio
                 v-for="item in reasonUsingItems"
                 :key="item"
@@ -144,8 +139,7 @@
           <form-input-container>
             <v-text-field
               v-model="totalAreaReasons"
-              :rules="requiredRule"
-              label="* Reason for using"
+              label="Reason for using"
             ></v-text-field>
           </form-input-container>
         </v-row>
@@ -153,7 +147,7 @@
       <form-card>
         <p class="my-2 pb-0 font-weight-medium">Seed Source</p>
         <v-row>
-          <form-checkbox-container title="Details">
+          <form-checkbox-container title="Details" :required="true">
             <v-checkbox
               v-for="item in seedSourceItems"
               v-model="seedSourceDetails"
@@ -171,7 +165,7 @@
             ></v-text-field>
           </form-checkbox-container>
 
-          <form-radio-container title="Reason for Using">
+          <form-radio-container title="Reason for Using" :required="true">
             <v-radio-group
               :rules="requiredRule"
               v-model="seedSourceReasons"
@@ -264,7 +258,6 @@ export default {
       let valid = false
       const validTextRadio = this.$refs.form.validate()
       const validCheckbox = this.validateCheckbox()
-      console.log(validTextRadio, validCheckbox)
       if (validTextRadio && validCheckbox) {
         valid = true
       }
@@ -277,12 +270,10 @@ export default {
           keyName: 'detailCoffeeArea',
           data: this.getData(),
         })
-        console.log('data:', this.getData())
       }
     },
     /* test if the checkbox are not empty */
     validateCheckbox() {
-      console.log(this.seedSourceDetails.length)
       if (this.seedSourceDetails.length < 1) {
         return false
       } else if (
@@ -291,7 +282,6 @@ export default {
       ) {
         return false
       } else {
-        console.log('hahahh:', this.seedSourceDetails)
         return true
       }
     },

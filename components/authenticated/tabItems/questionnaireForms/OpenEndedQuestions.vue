@@ -6,7 +6,7 @@
           <v-textarea
             v-model="goodAgriculturalPracticeUsedCoffee"
             :rules="requiredRule"
-            label="What are good agricultural practicies in planting coffee"
+            label="* What are good agricultural practicies in planting coffee"
             required
             rows="3"
           />
@@ -15,7 +15,7 @@
           <v-textarea
             v-model="challengesEncounteredCoffee"
             :rules="requiredRule"
-            label="what are the challenges encountered in planting coffee"
+            label="* What are the challenges encountered in planting coffee"
             required
             rows="3"
           />
@@ -24,7 +24,7 @@
           <v-textarea
             v-model="proposedInterventionCoffee"
             :rules="requiredRule"
-            label="What proposed intervention can be developed for planting coffee"
+            label="* What proposed intervention can be developed for planting coffee"
             required
             rows="3"
           />
@@ -37,11 +37,9 @@
 
 <script>
 import FormInputContainer from '~/components/authenticated/form/formInputContainer.vue'
-import FormRadioContainer from '~/components/authenticated/form/formRadioContainer.vue'
 export default {
   components: {
     FormInputContainer,
-    FormRadioContainer,
   },
   data() {
     return {

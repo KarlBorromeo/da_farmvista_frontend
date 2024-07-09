@@ -6,7 +6,7 @@
           <v-text-field
             v-model="formData[item.key]"
             :rules="numberRule"
-            :label="item.label"
+            :label="'* ' + item.label"
             type="number"
             min="0"
           ></v-text-field>
@@ -99,12 +99,12 @@ export default {
       this.formData.amntPaidManMachine =
         data.detailWageOperation.amntPaidManMachine
     } else {
-      this.formData.amntPaidLabor = ''
-      this.formData.goodsProvidedLabor = ''
-      this.formData.expectedWageOtherfarms = ''
-      this.formData.amntPaidCattleWithOperator = ''
-      this.formData.amntPaidCattleOnly = ''
-      this.formData.amntPaidManMachine = ''
+      this.formData.amntPaidLabor = 0
+      this.formData.goodsProvidedLabor = 0
+      this.formData.expectedWageOtherfarms = 0
+      this.formData.amntPaidCattleWithOperator = 0
+      this.formData.amntPaidCattleOnly = 0
+      this.formData.amntPaidManMachine = 0
     }
     this.tempValue = 'tempValue'
   },

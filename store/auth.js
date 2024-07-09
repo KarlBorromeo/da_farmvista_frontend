@@ -27,7 +27,6 @@ export const getters = {
 export const mutations = {
   /* save the user data to the local storage which will not be deleted after hard refresh*/
   saveUserDataToLocalStorage(state, userData) {
-    console.log(userData)
     state.currentUser.firstName = userData.firstName
     state.avatarURL = userData.avatarURL
     localStorage.setItem('token', userData.accessToken)

@@ -169,7 +169,6 @@ export default {
   },
   methods: {
     validate() {
-      console.log(this.$refs.form.validate())
       return this.$refs.form.validate()
     },
     async createAccount() {

@@ -96,9 +96,7 @@ export default {
     }
   },
   watch: {
-    tab(val) {
-      console.log(val)
-    },
+    tab(val) {},
   },
 }
 </script>

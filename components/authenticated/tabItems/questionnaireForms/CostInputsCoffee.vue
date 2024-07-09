@@ -7,7 +7,6 @@
           <form-input-container v-if="item.specify">
             <v-text-field
               v-model="formData[item.key].name"
-              :rules="requiredRule"
               label="* specify"
             ></v-text-field>
           </form-input-container>
@@ -17,6 +16,7 @@
               :rules="numberRule"
               label="* Price/Unit"
               type="number"
+              min="0"
             ></v-text-field>
           </form-input-container>
           <v-col cols="6">
@@ -25,26 +25,24 @@
               :rules="numberRule"
               label="* Qty. Used"
               type="number"
+              min="0"
             ></v-text-field>
           </v-col>
-          <!-- TODO: -->
           <v-col cols="6">
             <v-select
               :items="unitItems"
               v-model="formData[item.key].unit"
-              :rules="requiredRule"
               label="Unit"
-              required
               class="text-capitalize"
             ></v-select>
           </v-col>
-          <!-- TODO: -->
           <form-input-container>
             <v-text-field
               v-model="formData[item.key].totalTransportCost"
               :rules="numberRule"
               label="* Total Transport Used"
               type="number"
+              min="0"
             ></v-text-field>
           </form-input-container>
           <form-input-container>
@@ -53,11 +51,11 @@
               :rules="numberRule"
               label="* Total Cost"
               type="number"
+              min="0"
             ></v-text-field>
           </form-input-container>
           <form-radio-container title="Cash/Credit">
             <v-radio-group
-              :rules="requiredRule"
               v-model="formData[item.key].cashCredit"
               class="pa-0 ma-0"
             >
@@ -72,7 +70,6 @@
           <form-input-container>
             <v-text-field
               v-model="formData[item.key].sourceInputPurchased"
-              :rules="requiredRule"
               label="* Source Input/Place Purchased"
             ></v-text-field>
           </form-input-container>
@@ -95,138 +92,138 @@ export default {
   },
   data: () => ({
     valid: false,
-    unitItems: ['kg', 'L', 'm', 'gal', 'pcs', 'sack','n/a'],
+    unitItems: ['kg', 'L', 'm', 'gal', 'pcs', 'sack', 'n/a'],
     formData: {
       plantingMaterials: {
-        price: '100',
-        quantity: '100',
+        price: '',
+        quantity: '',
         unit: '',
-        totalTransportCost: '100',
-        totalCost: '100',
-        cashCredit: 'cash',
-        sourceInputPurchased: '100',
+        totalTransportCost: '',
+        totalCost: '',
+        cashCredit: '',
+        sourceInputPurchased: '',
       },
       fertilizerUrea: {
-        price: '100',
-        quantity: '100',
+        price: '',
+        quantity: '',
         unit: '',
-        totalTransportCost: '100',
-        totalCost: '100',
-        cashCredit: 'cash',
-        sourceInputPurchased: '100',
+        totalTransportCost: '',
+        totalCost: '',
+        cashCredit: '',
+        sourceInputPurchased: '',
       },
       fertilizerComplete: {
-        price: '100',
-        quantity: '100',
+        price: '',
+        quantity: '',
         unit: '',
-        totalTransportCost: '100',
-        totalCost: '100',
-        cashCredit: 'cash',
-        sourceInputPurchased: '100',
+        totalTransportCost: '',
+        totalCost: '',
+        cashCredit: '',
+        sourceInputPurchased: '',
       },
       fertilizerAmmosul: {
-        price: '100',
-        quantity: '100',
+        price: '',
+        quantity: '',
         unit: '',
-        totalTransportCost: '100',
-        totalCost: '100',
-        cashCredit: 'cash',
-        sourceInputPurchased: '100',
+        totalTransportCost: '',
+        totalCost: '',
+        cashCredit: '',
+        sourceInputPurchased: '',
       },
       fertilizerAmmophos: {
-        price: '100',
-        quantity: '100',
+        price: '',
+        quantity: '',
         unit: '',
-        totalTransportCost: '100',
-        totalCost: '100',
-        cashCredit: 'cash',
-        sourceInputPurchased: '100',
+        totalTransportCost: '',
+        totalCost: '',
+        cashCredit: '',
+        sourceInputPurchased: '',
       },
       fertilizerSolophos: {
-        price: '100',
-        quantity: '100',
+        price: '',
+        quantity: '',
         unit: '',
-        totalTransportCost: '100',
-        totalCost: '100',
-        cashCredit: 'cash',
-        sourceInputPurchased: '100',
+        totalTransportCost: '',
+        totalCost: '',
+        cashCredit: '',
+        sourceInputPurchased: '',
       },
       fertilizerMop: {
-        price: '100',
-        quantity: '100',
+        price: '',
+        quantity: '',
         unit: '',
-        totalTransportCost: '100',
-        totalCost: '100',
-        cashCredit: 'cash',
-        sourceInputPurchased: '100',
+        totalTransportCost: '',
+        totalCost: '',
+        cashCredit: '',
+        sourceInputPurchased: '',
       },
       fertilizerAnimalManure: {
-        price: '100',
-        quantity: '100',
+        price: '',
+        quantity: '',
         unit: '',
-        totalTransportCost: '100',
-        totalCost: '100',
-        cashCredit: 'cash',
-        sourceInputPurchased: '100',
+        totalTransportCost: '',
+        totalCost: '',
+        cashCredit: '',
+        sourceInputPurchased: '',
       },
       fertilizerOthers: {
-        name: 'sample specified',
-        price: '100',
-        quantity: '100',
+        name: '',
+        price: '',
+        quantity: '',
         unit: '',
-        totalTransportCost: '100',
-        totalCost: '100',
-        cashCredit: 'cash',
-        sourceInputPurchased: '100',
+        totalTransportCost: '',
+        totalCost: '',
+        cashCredit: '',
+        sourceInputPurchased: '',
       },
       lime: {
-        price: '100',
-        quantity: '100',
+        price: '',
+        quantity: '',
         unit: '',
-        totalTransportCost: '100',
-        totalCost: '100',
-        cashCredit: 'cash',
-        sourceInputPurchased: '100',
+        totalTransportCost: '',
+        totalCost: '',
+        cashCredit: '',
+        sourceInputPurchased: '',
       },
       insecticide: {
-        name: 'sample specified',
-        price: '100',
-        quantity: '100',
+        name: '',
+        price: '',
+        quantity: '',
         unit: '',
-        totalTransportCost: '100',
-        totalCost: '100',
-        cashCredit: 'cash',
-        sourceInputPurchased: '100',
+        totalTransportCost: '',
+        totalCost: '',
+        cashCredit: '',
+        sourceInputPurchased: '',
       },
       herbicide: {
-        name: 'sample specified',
-        price: '100',
-        quantity: '100',
+        name: '',
+        price: '',
+        quantity: '',
         unit: '',
-        totalTransportCost: '100',
-        totalCost: '100',
-        cashCredit: 'cash',
-        sourceInputPurchased: '100',
+        totalTransportCost: '',
+        totalCost: '',
+        cashCredit: '',
+        sourceInputPurchased: '',
       },
       fungicide: {
-        name: 'sample specified',
-        price: '100',
-        quantity: '100',
+        name: '',
+        price: '',
+        quantity: '',
         unit: '',
-        totalTransportCost: '100',
-        totalCost: '100',
-        cashCredit: 'cash',
-        sourceInputPurchased: '100',
+        totalTransportCost: '',
+        totalCost: '',
+        cashCredit: '',
+        sourceInputPurchased: '',
       },
       others: {
-        name: 'sample fertilizer other',
-        price: '100',
-        quantity: '100',
+        name: '',
+        price: '',
+        quantity: '',
         unit: '',
-        totalTransportCost: '100',
-        totalCost: '100',
-        cashCredit: 'cash',
-        sourceInputPurchased: '100',
+        totalTransportCost: '',
+        totalCost: '',
+        cashCredit: '',
+        sourceInputPurchased: '',
       },
     },
     list: [
@@ -290,7 +287,6 @@ export default {
           keyName: 'costInputCoffee',
           data: this.getData(),
         })
-        console.log('data here:',this.getData())
       }
     },
     /* get the data and convert it into expected key/value formats in BackEnd */
@@ -348,11 +344,11 @@ export default {
     } else {
       for (let i = 0; i < this.list.length; i++) {
         const keyName = this.list[i].key
-        this.formData[keyName].price = ''
-        this.formData[keyName].quantity = ''
+        this.formData[keyName].price = 0
+        this.formData[keyName].quantity = 0
         this.formData[keyName].unit = ''
-        this.formData[keyName].totalTransportCost = ''
-        this.formData[keyName].totalCost = ''
+        this.formData[keyName].totalTransportCost = 0
+        this.formData[keyName].totalCost = 0
         this.formData[keyName].cashCredit = ''
         this.formData[keyName].sourceInputPurchased = ''
         if (this.list[i].specify) {

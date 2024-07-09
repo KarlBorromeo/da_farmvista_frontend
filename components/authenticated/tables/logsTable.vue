@@ -55,9 +55,6 @@
         :circle="true"
       ></v-pagination>
     </div>
-    <v-dialog v-if="dialog" v-model="dialog" width="700">
-      <questionnaire-vue :id="id" :commodityProp="commodity" />
-    </v-dialog>
     <snackbar ref="snackbar" />
   </div>
 </template>

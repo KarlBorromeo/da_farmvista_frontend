@@ -2,7 +2,7 @@
   <div>
     <v-container class="my-0 py-0">
       <v-row class="my-0 mt-3">
-        <form-radio-container title="Harvested already?">
+        <form-radio-container title="Harvested already?" :required="true">
           <v-radio-group v-model="isHarvested" class="pa-0 ma-0">
             <v-radio
               v-for="item in isHarvestedItems"
@@ -30,11 +30,14 @@
               <v-text-field
                 v-model="formData[item.key].variable"
                 :rules="numberRule"
+                min="0"
                 label="* Details"
                 :type="item.type"
               ></v-text-field>
             </form-input-container>
-            <form-input-container v-else-if="!item.radio && item.type == 'text'">
+            <form-input-container
+              v-else-if="!item.radio && item.type == 'text'"
+            >
               <v-text-field
                 v-model="formData[item.key].variable"
                 :rules="requiredRule"
@@ -42,7 +45,7 @@
                 :type="item.type"
               ></v-text-field>
             </form-input-container>
-            <form-radio-container v-else :title="item.title">
+            <form-radio-container v-else :title="item.title" :required="true">
               <v-text-field
                 v-model="formData[item.key].variable"
                 :rules="requiredRule"
@@ -69,8 +72,7 @@
             <form-input-container>
               <v-text-field
                 v-model="formData[item.key].remarks"
-                :rules="requiredRule"
-                label="* Reason for using"
+                label="Remarks"
               ></v-text-field>
             </form-input-container>
           </v-row>
@@ -216,7 +218,6 @@ export default {
   methods: {
     /* test if the form is valid, return boolean */
     validate() {
-      console.log('validating', this.getData())
       const valid = this.$refs.form.validate()
       this.$store.commit('questionnaire/toggleNextTab', {
         tabName: 'CoffeeHarvestMarketingValidated',
@@ -278,7 +279,11 @@ export default {
     } else {
       for (let i = 0; i < this.list.length; i++) {
         const keyName = this.list[i].key
-        this.formData[keyName].variable = ''
+        if (this.list[i].type == 'number') {
+          this.formData[keyName].variable = 0
+        } else {
+          this.formData[keyName].variable = ''
+        }
         this.formData[keyName].remarks = ''
       }
     }

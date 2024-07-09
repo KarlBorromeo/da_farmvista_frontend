@@ -12,7 +12,7 @@
           ></v-text-field>
         </form-input-container>
 
-        <form-radio-container title="Sex">
+        <form-radio-container title="Sex" :required="true">
           <v-radio-group :rules="requiredRule" v-model="sex" class="pa-0 ma-0">
             <v-radio
               v-for="item in sexItems"
@@ -23,7 +23,7 @@
           </v-radio-group>
         </form-radio-container>
 
-        <form-radio-container title="Civil Status">
+        <form-radio-container title="Civil Status" :required="true">
           <v-radio-group
             :rules="requiredRule"
             v-model="civilStatus"
@@ -52,13 +52,16 @@
             :items="highestEducationAttainedItems"
             v-model="highestEducationAttained"
             :rules="requiredRule"
-            label="Highest Educational Attainment"
+            label="* Highest Educational Attainment"
             required
             class="text-capitalize"
           ></v-select>
         </form-select-container>
 
-        <form-radio-container title="Belongs to the Marginalized Sector">
+        <form-radio-container
+          title="Belongs to the Marginalized Sector"
+          :required="true"
+        >
           <v-radio-group
             :rules="requiredRule"
             v-model="isBelongMarginalizedSector"
@@ -76,6 +79,7 @@
         <form-checkbox-container
           v-if="isBelongMarginalizedSector == 'no'"
           title="If you answered 'no' to the previous question: please specify"
+          :required="true"
         >
           <v-checkbox
             v-for="item in nonMarginalizedSectorItems"
@@ -102,6 +106,7 @@
 
         <form-radio-container
           title="Member of a farmer organization or cooperative?"
+          :required="true"
         >
           <v-radio-group
             :rules="requiredRule"
@@ -120,11 +125,9 @@
         <form-radio-container
           v-if="isMemberOrgranization == 'yes'"
           title=" If you answered 'yes' to the previous question, select type of Membership"
+          :required="true"
         >
-          <v-radio-group
-            v-model="typeMembership"
-            class="py-0 my-0"
-          >
+          <v-radio-group v-model="typeMembership" class="py-0 my-0">
             <v-radio
               v-for="item in typeMembershipItems"
               :key="item"
@@ -143,11 +146,9 @@
 
         <form-radio-container
           title="Any household member affiliated to any farming organization/association?"
+          :required="true"
         >
-          <v-radio-group
-            v-model="isAnyHouseholdMemberOrg"
-            class="py-0 my-0"
-          >
+          <v-radio-group v-model="isAnyHouseholdMemberOrg" class="py-0 my-0">
             <v-radio
               v-for="item in isAnyHouseholdMemberOrgItems"
               :key="item.value"
@@ -201,7 +202,7 @@ export default {
     highestEducationAttained: '',
     highestEducationAttainedItems: [],
     isBelongMarginalizedSector: '',
-    isBelongMarginalizedSectorItems: ['yes','no'],
+    isBelongMarginalizedSectorItems: ['yes', 'no'],
     nonMarginalizedSector: [],
     nonMarginalizedSectorOthers: '',
     nonMarginalizedSectorItems: [],
@@ -209,7 +210,7 @@ export default {
     isMemberOrgranization: '',
     isMemberOrgranizationItems: [
       { value: 'yes', label: 'Yes' },
-      { value: 'no', label: 'No' }
+      { value: 'no', label: 'No' },
     ],
     typeMembership: '',
     typeMembershipItems: [],
@@ -261,10 +262,13 @@ export default {
     },
     /* validate conditional fields if empty or not */
     validateConditionalFields() {
-      if(this.isMemberOrgranization == 'yes' && (this.typeMembership == '' || this.organizationName == '') ){
+      if (
+        this.isMemberOrgranization == 'yes' &&
+        (this.typeMembership == '' || this.organizationName == '')
+      ) {
         return false
       }
-      return true;
+      return true
     },
     /* get the data and convert it into expected key/value formats in BackEnd */
     getData() {
@@ -275,12 +279,15 @@ export default {
         religion: this.religion,
         highestEducationAttained: this.highestEducationAttained,
         isBelongMarginalizedSector: this.isBelongMarginalizedSector,
-        ifNoMarginalizedSectorName: concatOtherValueToList(this.nonMarginalizedSector,this.nonMarginalizedSectorOthers),
+        ifNoMarginalizedSectorName: concatOtherValueToList(
+          this.nonMarginalizedSector,
+          this.nonMarginalizedSectorOthers
+        ),
         dialectSpoken: this.dialectSpoken,
         isMemberFarmerOrganization: this.isMemberOrgranization,
         organizationTypeMembership: this.typeMembership,
         organizationName: this.organizationName,
-        isHouseMemberAffiliatedToOrg: this.isAnyHouseholdMemberOrg
+        isHouseMemberAffiliatedToOrg: this.isAnyHouseholdMemberOrg,
       }
     },
     /* check if 'other' checkbox is ticked */
@@ -356,7 +363,6 @@ export default {
       this.validate()
     },
     organizationName(val) {
-      console.log(val)
       this.validate()
     },
     isAnyHouseholdMemberOrg() {
@@ -370,7 +376,8 @@ export default {
       this.$store.getters['questionnaireCode/HighestEducationalAttainment']
     this.civilStatusItems = this.$store.getters['questionnaireCode/CivilStatus']
     this.sexItems = this.$store.getters['questionnaireCode/Sex']
-    this.typeMembershipItems = this.$store.getters['questionnaireCode/MembershipType']
+    this.typeMembershipItems =
+      this.$store.getters['questionnaireCode/MembershipType']
     const isEditing = this.$store.getters['profiling/isEditingMode']
     if (!isEditing) {
       this.resetData()
@@ -394,20 +401,22 @@ export default {
           this.nonMarginalizedSectorItems
         )
         this.dialectSpoken = data.profileGeneralInfo.dialectSpoken
-        this.isMemberOrgranization = data.profileGeneralInfo.isMemberFarmerOrganization
+        this.isMemberOrgranization =
+          data.profileGeneralInfo.isMemberFarmerOrganization
         this.typeMembership = data.profileGeneralInfo.organizationTypeMembership
         this.organizationName = data.profileGeneralInfo.organizationName
-        this.isAnyHouseholdMemberOrg = data.profileGeneralInfo.isHouseMemberAffiliatedToOrg
+        this.isAnyHouseholdMemberOrg =
+          data.profileGeneralInfo.isHouseMemberAffiliatedToOrg
       } else {
         this.resetData()
       }
     }
-  }
+  },
 }
 </script>
 
 <style scoped>
-.hide{
+.hide {
   display: none;
 }
 </style>

@@ -2,11 +2,11 @@
   <v-form ref="form" v-model="valid" lazy-validation>
     <v-container>
       <form-card v-for="item in topicsList" :key="item.topic">
-        <p class="my-2 pb-0 font-weight-medium text-capitalize">
+        <strong class="my-2 pb-4 text-capitalize">
           {{ item.topic }}
-        </p>
+        </strong>
         <v-row v-for="questions in getList(item.listname)" :key="questions.key">
-          <form-radio-container :title="questions.label">
+          <form-radio-container :title="questions.label" :required="true">
             <v-radio-group
               :rules="rateRule"
               v-model="formData[item.topic][questions.key]"
@@ -316,7 +316,6 @@ export default {
     },
     /* create key value pairs */
     createKevValuePair(list, topic) {
-      console.log('list: ', list)
       const object = {}
       for (let i = 0; i < list.length; i++) {
         const keyName = list[i].key

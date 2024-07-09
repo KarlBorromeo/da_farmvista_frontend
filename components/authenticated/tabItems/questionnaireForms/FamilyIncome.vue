@@ -1,7 +1,6 @@
 <template>
   <v-form ref="form" v-model="valid" lazy-validation>
     <v-container>
-      <form-card-button @emitIncrement="increment" @emitDecrement="decrement" />
       <form-card v-for="i in items" :key="i">
         <v-row>
           <v-col cols="12" class="mb-0 pb-0">
@@ -24,7 +23,7 @@
             ></v-text-field>
           </form-input-container>
 
-          <form-radio-container title="Sex">
+          <form-radio-container title="Sex" :required="true">
             <v-radio-group
               :rules="requiredRule"
               v-model="sex[i - 1]"
@@ -52,7 +51,7 @@
               :items="educationsAttainmentItems"
               v-model="educationsAttainment[i - 1]"
               :rules="requiredRule"
-              label="Highest Educational Attainment"
+              label="* Highest Educational Attainment"
               required
               class="text-capitalize"
             ></v-select>
@@ -68,7 +67,10 @@
             ></v-text-field>
           </form-input-container>
 
-          <form-radio-container title="Involved in coffee farm">
+          <form-radio-container
+            title="Involved in coffee farm"
+            :required="true"
+          >
             <v-radio-group
               :rules="requiredRule"
               v-model="involveCoffeefarm[i - 1]"
@@ -84,6 +86,7 @@
           </form-radio-container>
         </v-row>
       </form-card>
+      <form-card-button @emitIncrement="increment" @emitDecrement="decrement" />
     </v-container>
     <!-- <v-btn @click="validate">Validate</v-btn> -->
   </v-form>
@@ -116,7 +119,7 @@ export default {
     educationsAttainmentItems: [],
     contributionAmount: [],
     involveCoffeefarm: [],
-    involveCoffeefarmItems: ['yes','no'],
+    involveCoffeefarmItems: ['yes', 'no'],
     requiredRule: [(v) => !!v || 'invalid value'],
     numberRule: [(v) => parseInt(v) >= 0 || 'invalid value'],
     tempValue: '',
@@ -146,7 +149,6 @@ export default {
           data: this.getData(),
         })
       }
-      console.log(this.getData(), valid)
     },
     /* create an object that is an empty values */
     getEmptyData() {
@@ -199,32 +201,36 @@ export default {
       this.involveCoffeefarm = []
     },
     /* concat fullname, return full name string */
-    concatFullName(firstName,middleInitial,lastName){
+    concatFullName(firstName, middleInitial, lastName) {
       const first = firstName + ' '
-      const middle = middleInitial?middleInitial+'. ':'';
-      const last= lastName
+      const middle = middleInitial ? middleInitial + '. ' : ''
+      const last = lastName
       const fullName = first + middle + last
       return fullName
-    }
+    },
   },
   computed: {
-    farmerGenInfo(){
+    farmerGenInfo() {
       return this.$store.getters['questionnaire/generalInformationDetails']
     },
-    farmerOwnProfile(){
+    farmerOwnProfile() {
       return this.$store.getters['questionnaire/profile']
-    }
+    },
   },
   watch: {
-    farmerGenInfo(val){
+    farmerGenInfo(val) {
       //TODO: tell aubrey to put to index 0 the ownFarmer details in order to target always the index 0 incase the name is changed and etc.
-      this.age[0]= val.age
-      this.sex[0]= val.sex
+      this.age[0] = val.age
+      this.sex[0] = val.sex
       this.educationsAttainment[0] = val.highestEducationAttained
     },
-    farmerOwnProfile(val){
+    farmerOwnProfile(val) {
       //TODO: tell aubrey to put to index 0 the ownFarmer details in order to target always the index 0 incase the name is changed and etc.
-      const fullName = this.concatFullName(val.firstName,val.middleInitial,val.lastName)
+      const fullName = this.concatFullName(
+        val.firstName,
+        val.middleInitial,
+        val.lastName
+      )
       this.name[0] = fullName
     },
     name() {
@@ -256,49 +262,54 @@ export default {
     this.sexItems = this.$store.getters['questionnaireCode/Sex']
     this.educationsAttainmentItems =
       this.$store.getters['questionnaireCode/HighestEducationalAttainment']
-      const isEditing = this.$store.getters['profiling/isEditingMode']
-      if(isEditing){
-        const data = this.$store.getters['profiling/selectedRecord']
-        if (Object.keys(data).length > 0) {
-          const length = data.familySourceIncome.length
-          if (length > 0) {
-            this.items = length
-            for (let i = 0; i < length; i++) {
-              this.name[i] = data.familySourceIncome[i].fullName
-              this.age[i] = data.familySourceIncome[i].age
-              this.sex[i] = data.familySourceIncome[i].sex
-              this.roleFamily[i] = data.familySourceIncome[i].roleInFamily
-              this.educationsAttainment[i] =
-                data.familySourceIncome[i].educationAttainment
-              this.contributionAmount[i] =
-                data.familySourceIncome[i].estimatedContribution
-              this.involveCoffeefarm[i] =
-                data.familySourceIncome[i].isInvolvedCoffeeFarm
-            }
-          } else {
-            this.resetData()
+    const isEditing = this.$store.getters['profiling/isEditingMode']
+    if (isEditing) {
+      const data = this.$store.getters['profiling/selectedRecord']
+      if (Object.keys(data).length > 0) {
+        const length = data.familySourceIncome.length
+        if (length > 0) {
+          this.items = length
+          for (let i = 0; i < length; i++) {
+            this.name[i] = data.familySourceIncome[i].fullName
+            this.age[i] = data.familySourceIncome[i].age
+            this.sex[i] = data.familySourceIncome[i].sex
+            this.roleFamily[i] = data.familySourceIncome[i].roleInFamily
+            this.educationsAttainment[i] =
+              data.familySourceIncome[i].educationAttainment
+            this.contributionAmount[i] =
+              data.familySourceIncome[i].estimatedContribution
+            this.involveCoffeefarm[i] =
+              data.familySourceIncome[i].isInvolvedCoffeeFarm
           }
         } else {
           this.resetData()
         }
-        this.tempValue = 'tempValue'
-      }else{
-        const profileGeneralInfo = this.$store.getters['questionnaire/generalInformationDetails']
-        const profile = this.$store.getters['questionnaire/profile']
-        if(profileGeneralInfo && profile){
-          const fullName = this.concatFullName(profile.firstName,profile.middleInitial,profile.lastName)
-          this.items = 1;
-          this.name.push(fullName)
-          this.age.push(profileGeneralInfo.age)
-          this.sex.push(profileGeneralInfo.sex)
-          this.roleFamily.push('')
-          this.educationsAttainment.push(profileGeneralInfo.highestEducationAttained)
-          this.contributionAmount.push('')
-          this.involveCoffeefarm.push('')
-        }
-
+      } else {
+        this.resetData()
       }
-
+      this.tempValue = 'tempValue'
+    } else {
+      const profileGeneralInfo =
+        this.$store.getters['questionnaire/generalInformationDetails']
+      const profile = this.$store.getters['questionnaire/profile']
+      if (profileGeneralInfo && profile) {
+        const fullName = this.concatFullName(
+          profile.firstName,
+          profile.middleInitial,
+          profile.lastName
+        )
+        this.items = 1
+        this.name.push(fullName)
+        this.age.push(profileGeneralInfo.age)
+        this.sex.push(profileGeneralInfo.sex)
+        this.roleFamily.push('')
+        this.educationsAttainment.push(
+          profileGeneralInfo.highestEducationAttained
+        )
+        this.contributionAmount.push('')
+        this.involveCoffeefarm.push('')
+      }
+    }
   },
 }
 </script>

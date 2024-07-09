@@ -4,13 +4,13 @@
       <form-card v-for="item in list" :key="item.key">
         <v-row>
           <labor-operation-container
-            :title="titleGenerator(item.title, 'Man-Animal Day (MAD)')"
+            :title="titleGenerator(item.title, 'Man-Day (MD)')"
           >
             <labor-operation-col-number>
               <v-text-field
                 class="my-0 py-0"
                 v-model="formData[item.key].manDay.fl"
-                label="FL"
+                label="Family Labor"
                 :rules="numberRule"
                 type="number"
                 min="0"
@@ -20,7 +20,7 @@
               <v-text-field
                 class="my-0 py-0"
                 v-model="formData[item.key].manDay.hl"
-                label="FL"
+                label="Hired Labor"
                 :rules="numberRule"
                 type="number"
                 min="0"
@@ -30,7 +30,7 @@
               <v-text-field
                 class="my-0 py-0"
                 v-model="formData[item.key].manDay.bl"
-                label="FL"
+                label="Bayanihan Labor"
                 :rules="numberRule"
                 type="number"
                 min="0"
@@ -44,7 +44,7 @@
               <v-text-field
                 class="my-0 py-0"
                 v-model="formData[item.key].manAnimalDay.fl"
-                label="FL"
+                label="Family Labor"
                 :rules="numberRule"
                 type="number"
                 min="0"
@@ -54,7 +54,7 @@
               <v-text-field
                 class="my-0 py-0"
                 v-model="formData[item.key].manAnimalDay.hl"
-                label="FL"
+                label="Family Labor"
                 :rules="numberRule"
                 type="number"
                 min="0"
@@ -64,7 +64,7 @@
               <v-text-field
                 class="my-0 py-0"
                 v-model="formData[item.key].manAnimalDay.bl"
-                label="FL"
+                label="Bayanihan Labor"
                 :rules="numberRule"
                 type="number"
                 min="0"
@@ -79,7 +79,6 @@
                 class="my-0 py-0"
                 v-model="formData[item.key].animalDay.rented"
                 label="specify the animal"
-                :rules="requiredRule"
               />
             </labor-operation-col-text>
             <labor-operation-col-number>
@@ -101,7 +100,6 @@
                 class="my-0 py-0"
                 v-model="formData[item.key].mechanical.rented"
                 label="specify the mechanical"
-                :rules="requiredRule"
               />
             </labor-operation-col-text>
             <labor-operation-col-number>
@@ -119,7 +117,6 @@
                 class="my-0 py-0"
                 v-model="formData[item.key].remarks"
                 label="Remarks"
-                :rules="requiredRule"
               />
             </form-input-container>
           </labor-operation-container>
@@ -631,16 +628,16 @@ export default {
       })
     } else {
       list.forEach((item) => {
-        this.formData[item.key].manDay.fl = ''
-        this.formData[item.key].manDay.hl = ''
-        this.formData[item.key].manDay.bl = ''
-        this.formData[item.key].manAnimalDay.fl = ''
-        this.formData[item.key].manAnimalDay.hl = ''
-        this.formData[item.key].manAnimalDay.bl = ''
+        this.formData[item.key].manDay.fl = 0
+        this.formData[item.key].manDay.hl = 0
+        this.formData[item.key].manDay.bl = 0
+        this.formData[item.key].manAnimalDay.fl = 0
+        this.formData[item.key].manAnimalDay.hl = 0
+        this.formData[item.key].manAnimalDay.bl = 0
         this.formData[item.key].animalDay.rented = ''
-        this.formData[item.key].animalDay.rentedAmount = ''
+        this.formData[item.key].animalDay.rentedAmount = 0
         this.formData[item.key].mechanical.rented = ''
-        this.formData[item.key].mechanical.rentedAmount = ''
+        this.formData[item.key].mechanical.rentedAmount = 0
         this.formData[item.key].remarks = ''
       })
     }

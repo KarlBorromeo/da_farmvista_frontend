@@ -2,7 +2,11 @@
   <v-form ref="form" v-model="valid" lazy-validation>
     <v-container>
       <v-row>
-        <form-radio-container title="Interviewee Status" class="mt-2">
+        <form-radio-container
+          title="Interviewee Status"
+          class="mt-2"
+          :required="true"
+        >
           <v-radio-group
             :rules="requiredRule"
             v-model="intervieweeStatus"
@@ -40,7 +44,7 @@
           <v-text-field
             v-model="date"
             :rules="dateRule"
-            label="Date of Validation"
+            label="* Date of Validation"
             required
             type="date"
           ></v-text-field>
@@ -57,7 +61,7 @@
             <template v-slot:activator="{ on, attrs }">
               <v-text-field
                 v-model="interviewStart"
-                label="Interview Start (24 hrs format)"
+                label="* Interview Start (24 hrs format)"
                 append-icon="mdi-clock-time-four-outline"
                 :rules="interviewStartRule"
                 readonly
@@ -90,7 +94,7 @@
             <template v-slot:activator="{ on, attrs }">
               <v-text-field
                 v-model="interviewEnd"
-                label="Interview Start (24 hrs format)"
+                label="* Interview Start (24 hrs format)"
                 append-icon="mdi-clock-time-four-outline"
                 :rules="interviewEndRule"
                 readonly
@@ -116,7 +120,7 @@
           <v-select
             v-model="regionProvince"
             :items="regionProvinceItems"
-            label="Region/Pronvince"
+            label="* Region/Pronvince"
             dense
             class="text-capitalize"
             :rules="requiredRule"
@@ -129,7 +133,7 @@
             :items="municipalityItems"
             v-model="municipality"
             :rules="requiredRule"
-            label="City/Municipality"
+            label="* City/Municipality"
             required
             class="text-capitalize"
           ></v-select>
@@ -139,7 +143,7 @@
           <v-text-field
             v-model="barangay"
             :rules="barangayRule"
-            label="Barangay"
+            label="*Barangay"
             required
             class="mb-2"
           ></v-text-field>

@@ -6,6 +6,11 @@
       </h2>
       <commodity-dropdown v-if="!id" @switchCommodity="switchCommodity" />
     </div>
+    <v-progress-linear v-model="progress" color="primary" height="25" striped
+      ><strong class="white--text"
+        >{{ Math.ceil(progress) }}%</strong
+      ></v-progress-linear
+    >
     <v-divider />
     <v-toolbar light elevation="0" v-if="currentCommodity == 'coffee'">
       <template>
@@ -359,6 +364,7 @@ export default {
       loading: false,
       currentCommodity: 'coffee',
       initialTab: 0,
+      progress: 45,
     }
   },
   methods: {

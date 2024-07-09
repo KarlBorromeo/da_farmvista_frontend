@@ -22,7 +22,10 @@
           ></v-text-field>
         </form-input-container>
 
-        <form-radio-container title="Was there time stopped farming?">
+        <form-radio-container
+          title="Was there time stopped farming?"
+          :required="true"
+        >
           <v-radio-group
             :rules="requiredRule"
             v-model="isThereStoppedFarming"
@@ -60,7 +63,6 @@
         <form-input-container v-if="isStopped">
           <v-text-field
             v-model="reasonStopping"
-            :rules="requiredRule"
             label="* Provide reason for stopping"
           ></v-text-field>
         </form-input-container>
@@ -75,39 +77,50 @@ import FormInputContainer from '~/components/authenticated/form/formInputContain
 import FormRadioContainer from '~/components/authenticated/form/formRadioContainer.vue'
 export default {
   components: { FormInputContainer, FormRadioContainer },
-  data: () => ({
-    valid: false,
-    avgYearsGeneralFarming: '1',
-    avgYearsContourFarming: '2',
-    isThereStoppedFarming: 'no',
-    isThereStoppedFarmingItems: [
-      { value: 'yes', label: 'Yes' },
-      { value: 'no', label: 'No' },
-      { value: 'partially', label: 'Partially' },
-    ],
-    yearStopped: '',
-    yearResumed: '',
-    yearRule: [
-      (v) => {
-        const year = parseInt(v)
-        const currentDate = new Date()
-        const currentYear = currentDate.getFullYear()
-        if (year > 1900 && year <= currentYear) {
-          return true
-        } else {
-          return 'invalid year'
-        }
-      },
-    ],
-    reasonStopping: '',
-    requiredRule: [(v) => !!v || 'this field is required'],
-    numberRule: [(v) => parseFloat(v) >= 0 || 'invalid value'],
-    tempValue: '',
-  }),
+  data() {
+    return {
+      valid: false,
+      avgYearsGeneralFarming: '1',
+      avgYearsContourFarming: '2',
+      isThereStoppedFarming: 'no',
+      isThereStoppedFarmingItems: [
+        { value: 'yes', label: 'Yes' },
+        { value: 'no', label: 'No' },
+        { value: 'partially', label: 'Partially' },
+      ],
+      yearStopped: '',
+      yearResumed: '',
+      yearRule: [
+        (v) => {
+          if (this.isThereStoppedFarming != 'no') {
+            const year = parseInt(v)
+            const currentDate = new Date()
+            const currentYear = currentDate.getFullYear()
+            if (year > 1900 && year <= currentYear) {
+              return true
+            } else {
+              return 'invalid year'
+            }
+          } else {
+            return true
+          }
+        },
+      ],
+      reasonStopping: '',
+      requiredRule: [(v) => !!v || 'this field is required'],
+      numberRule: [(v) => parseFloat(v) >= 0 || 'invalid value'],
+      tempValue: '',
+    }
+  },
   methods: {
     /* test if the form is valid, return boolean */
     validate() {
-      const valid = this.$refs.form.validate()
+      const validTexts = this.$refs.form.validate()
+      const optionalFieldValid = this.validateConditionalFields()
+      let valid = false
+      if (validTexts && optionalFieldValid) {
+        valid = true
+      }
       this.$store.commit('questionnaire/toggleNextTab', {
         tabName: 'GeneralFarmingInformationValidated',
         valid,
@@ -129,6 +142,18 @@ export default {
         yearResumedFarming: this.yearResumed,
         reasonStopping: this.reasonStopping,
       }
+    },
+    /* validate conditional fields if empty or not */
+    validateConditionalFields() {
+      if (
+        this.isThereStoppedFarming == 'yes' &&
+        (this.yearStopped == '' ||
+          this.yearResumed == '' ||
+          this.reasonStopping == '')
+      ) {
+        return false
+      }
+      return true
     },
   },
   computed: {
