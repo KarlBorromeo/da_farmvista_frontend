@@ -49,9 +49,6 @@
         :circle="true"
       ></v-pagination>
     </div>
-    <v-dialog v-if="dialog" v-model="dialog" width="700">
-      <questionnaire-vue :id="id" :commodityProp="commodity" />
-    </v-dialog>
     <snackbar ref="snackbar" />
   </div>
 </template>
@@ -121,7 +118,6 @@ export default {
 
     /* fetch the survey records */
     async fetchAllUsers() {
-      console.log(this.page)
       try {
         this.loading = true
         await this.$store.dispatch('users/fetchAllUsers', {

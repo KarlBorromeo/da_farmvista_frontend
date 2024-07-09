@@ -10,7 +10,10 @@
           ></v-text-field>
         </form-input-container>
 
-        <form-checkbox-container title="Source of planting material">
+        <form-checkbox-container
+          title="Source of planting material"
+          :required="true"
+        >
           <v-checkbox
             v-for="item in sourcePlantingMaterialItems"
             v-model="sourcePlantingMaterial"
@@ -29,7 +32,7 @@
           ></v-text-field>
         </form-checkbox-container>
 
-        <form-checkbox-container title="Coffee variety used">
+        <form-checkbox-container title="Coffee variety used" :required="true">
           <v-checkbox
             v-for="item in coffeeVarietyItems"
             v-model="coffeeVariety"
@@ -48,7 +51,10 @@
           ></v-text-field>
         </form-checkbox-container>
 
-        <form-checkbox-container title="Method of land preparation">
+        <form-checkbox-container
+          title="Method of land preparation"
+          :required="true"
+        >
           <v-checkbox
             v-for="item in methodLandPreparationItems"
             v-model="methodLandPreparation"
@@ -67,7 +73,7 @@
           ></v-text-field>
         </form-checkbox-container>
 
-        <form-checkbox-container title="Row orientation">
+        <form-checkbox-container title="Row orientation" :required="true">
           <v-checkbox
             v-for="item in rowOrientationItems"
             v-model="rowOrientation"
@@ -158,7 +164,10 @@
           ></v-text-field>
         </form-checkbox-container>
 
-        <form-radio-container title="Use of inorganic fertilizer">
+        <form-radio-container
+          title="Use of inorganic fertilizer"
+          :required="true"
+        >
           <v-radio-group
             :rules="requiredRule"
             v-model="isUseInorganicFertilizer"
@@ -184,6 +193,7 @@
         <form-radio-container
           v-if="isUseInorganicFertilizer == 'yes'"
           title=" Specify the method of inorganic application"
+          :required="true"
         >
           <v-radio-group
             :rules="requiredRule"
@@ -208,7 +218,10 @@
           </v-radio-group>
         </form-radio-container>
 
-        <form-radio-container title="Use of organic fertilizer">
+        <form-radio-container
+          title="Use of organic fertilizer"
+          :required="true"
+        >
           <v-radio-group
             :rules="requiredRule"
             v-model="isUseOrganicFertilizer"
@@ -234,6 +247,7 @@
         <form-radio-container
           v-if="isUseOrganicFertilizer == 'yes'"
           title=" Specify the method of organic application"
+          :required="true"
         >
           <v-radio-group
             :rules="requiredRule"
@@ -255,7 +269,7 @@
           </v-radio-group>
         </form-radio-container>
 
-        <form-radio-container title="Practice green manuring">
+        <form-radio-container title="Practice green manuring" :required="true">
           <v-radio-group
             :rules="requiredRule"
             v-model="isPracticeGreenManuring"
@@ -270,7 +284,7 @@
           </v-radio-group>
         </form-radio-container>
 
-        <form-radio-container title="Return crop residue">
+        <form-radio-container title="Return crop residue" :required="true">
           <v-radio-group
             :rules="requiredRule"
             v-model="isReturnCropResidue"
@@ -288,8 +302,8 @@
         <form-input-container>
           <v-text-field
             v-model="dateHarvesting"
-            :rules="requiredRule"
-            label="* Date of Harvesting, Example: 02 - 2012 , 16 - 2023"
+            :rules="regexRule"
+            label="* Date of Harvesting, Example: 02 - 2012 , 11 - 2023 or 10 - 2020"
           ></v-text-field>
         </form-input-container>
       </v-row>
@@ -318,42 +332,42 @@ export default {
   },
   data: () => ({
     valid: false,
-    startPlanting: '2000',
-    sourcePlantingMaterial: ['seeds', 'seedlings'],
+    startPlanting: '',
+    sourcePlantingMaterial: [],
     sourcePlantingMaterialItems: [],
     sourcePlantingMaterialOther: '',
-    coffeeVariety: ['robusta', 'excelsa'],
+    coffeeVariety: [],
     coffeeVarietyItems: [],
     coffeeVarietyOther: '',
-    methodLandPreparation: ['clearing'],
+    methodLandPreparation: [],
     methodLandPreparationItems: [],
     methodLandPreparationOther: '',
-    rowOrientation: ['east-west'],
+    rowOrientation: [],
     rowOrientationItems: [],
     rowOrientationOther: '',
     plantingDepth: '.5',
     soilType: '',
-    weedControl: ['physical', 'chemical'],
+    weedControl: [],
     weedControlOther: '',
-    insectPestManagement: ['physical', 'chemical'],
+    insectPestManagement: [],
     insectPestManagementOther: '',
-    diseaseManagement: ['physical', 'chemical'],
+    diseaseManagement: [],
     diseaseManagementOther: '',
     typeMethodItems: [], //items for weedControl, insectPestMngmnt, diseaseMngmnt
     isUseInorganicFertilizer: 'yes',
     // if yes
-    kindInorganicFertilizer: 'sample data for kind inorganic',
-    methodInorganicApplication: 'broadcast',
+    kindInorganicFertilizer: '',
+    methodInorganicApplication: '',
     methodInorganicApplicationOther: '',
-    isUseOrganicFertilizer: 'no',
+    isUseOrganicFertilizer: '',
     // if yes
     kindOgranicFertilizer: '',
     methodOrganicApplication: '',
     methodOrganicApplicationOther: '',
     methodApplicationItems: [], //items for methodApplicationInorganicFertilizer, methodOrganicApplication
-    isPracticeGreenManuring: 'no',
-    isReturnCropResidue: 'yes',
-    dateHarvesting: 'sampe date harvesting',
+    isPracticeGreenManuring: '',
+    isReturnCropResidue: '',
+    dateHarvesting: '',
     isAgreeItems: ['yes', 'no'], //items for isUseInorganicFertilizer, isUseOrganicFertilizer, isPracticeGreenManuring, isReturnCropResidue
     requiredRule: [(v) => !!v || 'This field is required'],
     listRule: [(v) => v.length > 0 || 'select at least one option'],
@@ -370,9 +384,21 @@ export default {
         }
       },
     ],
-    numberRule: [
-      (v) => !!v || 'This field is required',
-      (v) => parseFloat(v) >= 0 || 'invalid depth value',
+    numberRule: [(v) => parseFloat(v) >= 0 || 'invalid depth value'],
+    regexRule: [
+      (v) => {
+        if (!v) {
+          return 'field required'
+        } else {
+          const regex = /^\d{2}\s*-\s*\d{4}\s*(,\s*\d{2}\s*-\s*\d{4})?$/
+          const result = regex.test(v)
+          if (result) {
+            return true
+          } else {
+            return 'follow the input pattern'
+          }
+        }
+      },
     ],
   }),
   methods: {
@@ -401,10 +427,7 @@ export default {
         this.sourcePlantingMaterial.length == 0 ||
         this.coffeeVariety.length == 0 ||
         this.methodLandPreparation.length == 0 ||
-        this.rowOrientation.length == 0 ||
-        this.weedControl.length == 0 ||
-        this.insectPestManagement.length == 0 ||
-        this.diseaseManagement.length == 0
+        this.rowOrientation.length == 0
       ) {
         return false
       } else {

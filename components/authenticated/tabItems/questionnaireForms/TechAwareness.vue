@@ -5,6 +5,7 @@
         <v-row>
           <form-radio-container
             title="Have you heard about coffee farming tech/practices"
+            :required="true"
           >
             <v-radio-group
               :rules="requiredRule"
@@ -26,7 +27,7 @@
           {{ camelToSpace(item) }}
         </p>
         <v-row>
-          <form-radio-container title="have you heard?">
+          <form-radio-container title="have you heard?" :required="true">
             <v-radio-group
               :rules="requiredRule"
               v-model="formData[item].isHeard"

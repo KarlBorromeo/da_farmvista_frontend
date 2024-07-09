@@ -6,28 +6,27 @@ export const state = () => ({
     //   parcelNumber: [1, 2],
     //   cropsPlanted: ['haha,hehe', 'aww'],
     // },
-    profileGeneralInfo: {
-      age: 23,
-      sex: 'male',
-      civilStatus: 'single',
-      religion: 'catholic',
-      highestEducationAttained: 'elementary level',
-      isBelongMarginalizedSector: 'yes',
-      ifNoMarginalizedSectorName: '',
-      dialectSpoken: 'bisdak',
-      isMemberFarmerOrganization: 'yes',
-      organizationTypeMembership: 'officer',
-      organizationName: 'organization sample Name OSN',
-      isHouseMemberAffiliatedToOrg: 'yes',
-    },
-    profile: {
-      lastName: 'haha',
-      firstName: 'hehe',
-      middleInitial: '',
-      contactNumber: '',
-      farmerCode: '',
-    }
-
+    // profileGeneralInfo: {
+    //   age: 23,
+    //   sex: 'male',
+    //   civilStatus: 'single',
+    //   religion: 'catholic',
+    //   highestEducationAttained: 'elementary level',
+    //   isBelongMarginalizedSector: 'yes',
+    //   ifNoMarginalizedSectorName: '',
+    //   dialectSpoken: 'bisdak',
+    //   isMemberFarmerOrganization: 'yes',
+    //   organizationTypeMembership: 'officer',
+    //   organizationName: 'organization sample Name OSN',
+    //   isHouseMemberAffiliatedToOrg: 'yes',
+    // },
+    // profile: {
+    //   lastName: 'haha',
+    //   firstName: 'hehe',
+    //   middleInitial: '',
+    //   contactNumber: '',
+    //   farmerCode: '',
+    // }
   },
   tabs: [
     {
@@ -169,10 +168,10 @@ export const state = () => ({
       tempValidity: false,
     },
   ],
-  // currentTab: 'BasicInformation',
-  // currentTab: 'CoffeeHarvestMarketing',
-  // currentTab: 'FarmWasteManagement',
-  currentTab: 'GeneralInformation',
+  currentTab: 'BasicInformation',
+  // currentTab: 'HouseholdExpenses',
+  // currentTab: 'PestDamageObserved',
+  // currentTab: 'FarmActivities',
   isAllValid: false,
   commodity: '',
   isIntervieweeValidated: true,
@@ -181,11 +180,11 @@ export const state = () => ({
 
 export const getters = {
   /* retrun the profile details */
-  profile(state){
+  profile(state) {
     return state.form.profile
   },
   /* return the general information details */
-  generalInformationDetails(state){
+  generalInformationDetails(state) {
     return state.form.profileGeneralInfo
   },
   /* return the parcel information details */

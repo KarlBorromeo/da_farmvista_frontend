@@ -2,7 +2,7 @@
   <v-form ref="form" v-model="valid" lazy-validation>
     <v-container>
       <v-row>
-        <form-radio-container title="Did you use pesticide">
+        <form-radio-container title="Did you use pesticide" :required="true">
           <v-radio-group
             :rules="requiredRule"
             v-model="didUsePesticide"
@@ -21,7 +21,7 @@
           <v-text-field
             v-model="typeOfPesticide"
             :rules="requiredRule"
-            label="specify type of pesticide"
+            label="* specify type of pesticide"
             required
           />
         </form-input-container>
@@ -30,7 +30,7 @@
           <v-text-field
             v-model="whomIdeaApplyPesticide"
             :rules="requiredRule"
-            label="whom get idea applying pesticides"
+            label="* whom get idea applying pesticides"
             required
           />
         </form-input-container>
@@ -40,13 +40,15 @@
             v-model="timesAppliedPesticide"
             :rules="numberRule"
             type="number"
-            label="how many times apply pesticides"
+            label="* how many times apply pesticides"
             required
+            min="0"
           />
         </form-input-container>
 
         <form-radio-container
           title="Did you spary pesticided yourself?"
+          :required="true"
           v-if="didUsePesticide == 'yes'"
         >
           <v-radio-group
@@ -70,12 +72,13 @@
             v-model="payLaborSpraying"
             :rules="numberRule"
             type="number"
-            label="how much pay labor of spraying"
+            label="* how much pay labor of spraying"
             required
+            min="0"
           />
         </form-input-container>
 
-        <form-radio-container title="Do you have a sprayer?">
+        <form-radio-container title="Do you have a sprayer?" :required="true">
           <v-radio-group
             :rules="requiredRule"
             v-model="haveSprayer"
@@ -93,6 +96,7 @@
         <form-checkbox-container
           v-if="haveSprayer == 'yes'"
           title="Kind of sprayer do you have"
+          :required="true"
         >
           <v-checkbox
             v-for="item in kindSprayerHaveItems"
@@ -116,7 +120,7 @@
           <v-text-field
             v-model="howGetSprayer"
             :rules="requiredRule"
-            label="how do you get hold of a sprayer"
+            label="* how do you get hold of a sprayer"
             required
           />
         </form-input-container>
@@ -124,6 +128,7 @@
         <form-radio-container
           title="first hear about using pesticide"
           v-if="didUsePesticide == 'yes'"
+          :required="true"
         >
           <v-radio-group
             :rules="requiredRule"
@@ -139,13 +144,13 @@
             <v-text-field
               v-if="hearAboutPesticideUsed == 'group'"
               v-model="pesticideUsedGroup"
-              label="Group: please specify"
+              label="* Group: please specify"
               :rules="requiredRule"
             />
             <v-text-field
               v-if="hearAboutPesticideUsed == 'mass media'"
               v-model="pesticideUsedMassMedia"
-              label="Mass Media: please specify"
+              label="* Mass Media: please specify"
               :rules="requiredRule"
             />
           </v-radio-group>
@@ -153,6 +158,7 @@
 
         <form-radio-container
           title="most important consideration deciding for pesticide to buy"
+          :required="true"
         >
           <v-radio-group
             :rules="requiredRule"
@@ -168,7 +174,7 @@
             <v-text-field
               v-if="importantConsiderationDecidingPesticide == 'others'"
               v-model="importantConsiderationDecidingPesticideOther"
-              label="Other: please specify"
+              label="* Other: please specify"
               :rules="requiredRule"
             />
           </v-radio-group>
@@ -177,6 +183,7 @@
         <form-checkbox-container
           title="Whom get pest control advice"
           v-if="didUsePesticide == 'yes'"
+          :required="true"
         >
           <v-checkbox
             v-for="item in whomPestControlAdviceItems"
@@ -192,14 +199,14 @@
             v-if="isSpecificCheckboxTicked(whomPestControlAdvice, 'mass media')"
             v-model="controlAdviceMassMedia"
             :rules="requiredRule"
-            label="Mass Media: specify"
+            label="* Mass Media: specify"
             required
           />
           <v-text-field
             v-if="isSpecificCheckboxTicked(whomPestControlAdvice, 'others')"
             v-model="controlAdviceOther"
             :rules="requiredRule"
-            label="Others: specify"
+            label="* Others: specify"
             required
           />
         </form-checkbox-container>
@@ -207,6 +214,7 @@
         <form-radio-container
           v-if="whomPestControlAdvice.length > 1 && didUsePesticide == 'yes'"
           title="which of these the most credible advice to you?"
+          :required="true"
         >
           <v-radio-group
             :rules="requiredRule"
@@ -228,13 +236,14 @@
           <v-text-field
             v-model="why"
             :rules="requiredRule"
-            label="why?"
+            label="* why?"
             required
           />
         </form-input-container>
 
         <form-radio-container
           title="Have you attended a training on pest management?"
+          :required="true"
         >
           <v-radio-group
             :rules="requiredRule"
@@ -254,7 +263,7 @@
           <v-text-field
             v-model="trainingAbout"
             :rules="requiredRule"
-            label="what was the training about?"
+            label="* what was the training about?"
             required
           />
         </form-input-container>
@@ -263,7 +272,7 @@
           <v-text-field
             v-model="whoOrganizedTraining"
             :rules="requiredRule"
-            label="who organized the training?"
+            label="* who organized the training?"
             required
           />
         </form-input-container>
@@ -294,36 +303,36 @@ export default {
   data() {
     return {
       valid: false,
-      didUsePesticide: 'no',
+      didUsePesticide: '',
       // yes
       typeOfPesticide: '',
-      whomIdeaApplyPesticide: 'secret daw',
-      timesAppliedPesticide: '2',
-      didSprayYourself: 'no',
+      whomIdeaApplyPesticide: '',
+      timesAppliedPesticide: '',
+      didSprayYourself: '',
       // no
-      payLaborSpraying: '100',
-      haveSprayer: 'yes',
+      payLaborSpraying: '',
+      haveSprayer: '',
       // yes
-      kindSprayerHave: ['hand sprayer', 'others'],
+      kindSprayerHave: [],
       kindSprayerHaveItems: [],
-      kindSprayerHaveOther: 'bumba',
+      kindSprayerHaveOther: '',
       // no
       howGetSprayer: '',
-      hearAboutPesticideUsed: 'group',
+      hearAboutPesticideUsed: '',
       hearAboutPesticideUsedItems: [],
       pesticideUsedMassMedia: '',
-      pesticideUsedGroup: 'group sample',
-      importantConsiderationDecidingPesticide: 'price',
+      pesticideUsedGroup: '',
+      importantConsiderationDecidingPesticide: '',
       importantConsiderationDecidingPesticideItems: [],
       importantConsiderationDecidingPesticideOther: '',
-      whomPestControlAdvice: ['neighbor', 'relatives', 'others'],
+      whomPestControlAdvice: [],
       whomPestControlAdviceItems: [],
       controlAdviceMassMedia: '',
-      controlAdviceOther: 'advice other sample',
+      controlAdviceOther: '',
       // whomePestControlAdvice.length > 1
-      whichAdviceCredible: 'relatives',
-      why: 'for da char',
-      attendedTrainingPestManagement: 'no',
+      whichAdviceCredible: '',
+      why: '',
+      attendedTrainingPestManagement: '',
       // yes
       trainingAbout: '',
       whoOrganizedTraining: '',
@@ -442,9 +451,9 @@ export default {
       if (value !== 'yes') {
         this.typeOfPesticide = ''
         this.whomIdeaApplyPesticide = ''
-        this.timesAppliedPesticide = ''
+        this.timesAppliedPesticide = 0
         this.didSprayYourself = ''
-        this.payLaborSpraying = ''
+        this.payLaborSpraying = 0
         this.hearAboutPesticideUsed = ''
         this.pesticideUsedGroup = ''
         this.pesticideUsedMassMedia = ''
@@ -458,7 +467,7 @@ export default {
     didSprayYourself(value) {
       this.validate()
       if (value !== 'no') {
-        this.payLaborSpraying = ''
+        this.payLaborSpraying = 0
       }
     },
     haveSprayer(value) {
@@ -568,13 +577,6 @@ export default {
         data.pestManagementPractice.importantConsiderationDecidingPesticide,
         this.importantConsiderationDecidingPesticideItems
       )
-      console.log(
-        'pesticie other: ',
-        extractUnmatchedValueRadio(
-          data.pestManagementPractice.importantConsiderationDecidingPesticide,
-          this.importantConsiderationDecidingPesticideItems
-        )
-      )
       this.importantConsiderationDecidingPesticideOther =
         extractUnmatchedValueRadio(
           data.pestManagementPractice.importantConsiderationDecidingPesticide,
@@ -603,7 +605,7 @@ export default {
       this.didUsePesticide = ''
       this.typeOfPesticide = ''
       this.whomIdeaApplyPesticide = ''
-      this.timesAppliedPesticide = ''
+      this.timesAppliedPesticide = 0
       this.didSprayYourself = ''
       this.payLaborSpraying = ''
       this.haveSprayer = ''

@@ -23,13 +23,13 @@
                   <v-text-field
                     v-model="singleParcelInfo.crop"
                     :rules="specialCharactersRule"
-                    label="crop name grown"
+                    label="* crop name grown"
                     :disabled="true"
                   ></v-text-field>
                 </v-col>
                 <v-spacer />
                 <v-col cols="5" sm="3" class="alignHorizontalVertical">
-                  <p class="body-2">is utilized?</p>
+                  <p class="body-2">* is utilized?</p>
                 </v-col>
 
                 <v-col
@@ -65,7 +65,7 @@
                   <v-text-field
                     v-model="singleParcelInfo.waste"
                     :rules="specialCharactersRule"
-                    label="wastes"
+                    label="* wastes"
                     hint="Separate with comma ' , ' if multiple wastes"
                   ></v-text-field>
                 </v-col>
@@ -83,7 +83,7 @@
                   <v-text-field
                     :rules="numberRule"
                     v-model="singleParcelInfo.kg"
-                    label="waste volume in (kg)"
+                    label="* waste volume in (kg)"
                     type="number"
                     min="0"
                   >
@@ -153,7 +153,6 @@ export default {
         valid,
       })
       if (valid) {
-        console.log(this.getData())
         this.$store.commit('questionnaire/saveData', {
           keyName: 'farmWasteManagement',
           data: this.getData(),
@@ -220,22 +219,23 @@ export default {
         this.parcelInfo.push(singleParcelInfo)
       }
     } else {
-      const existingParcelInfo = this.$store.getters['profiling/selectedRecord'].parcelInfo
-      if(existingParcelInfo){
-        for(let k=0; k<existingParcelInfo.length; k++){
+      const existingParcelInfo =
+        this.$store.getters['profiling/selectedRecord'].parcelInfo
+      if (existingParcelInfo) {
+        for (let k = 0; k < existingParcelInfo.length; k++) {
           this.parcelNumber.push(existingParcelInfo[k].parcelNumber)
-          let singleParcelFarmWaste  = existingParcelInfo[k].farmWaste
+          let singleParcelFarmWaste = existingParcelInfo[k].farmWaste
           let singleParcelInfo = []
           for (let i = 0; i < singleParcelFarmWaste.length; i++) {
             singleParcelInfo.push({
               crop: singleParcelFarmWaste[i].cropsGrown,
               isUtilized: singleParcelFarmWaste[i].isUtilized,
               waste: singleParcelFarmWaste[i].kindWasteProduced,
-              kg: singleParcelFarmWaste[i].volumeWasteKg
+              kg: singleParcelFarmWaste[i].volumeWasteKg,
             })
           }
           this.parcelInfo.push(singleParcelInfo)
-        }     
+        }
       }
     }
   },

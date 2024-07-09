@@ -1,7 +1,6 @@
 <template>
   <v-form ref="form" v-model="valid" lazy-validation>
     <v-container>
-      <form-card-button @emitIncrement="increment" @emitDecrement="decrement" />
       <form-card v-for="i in items" :key="i">
         <v-row>
           <v-col cols="12" class="mb-0 pb-0">
@@ -30,6 +29,7 @@
 
           <form-radio-container
             title="Did acquire through government or programs"
+            :required="true"
           >
             <v-radio-group
               :rules="requiredRule"
@@ -57,6 +57,7 @@
           </form-input-container>
         </v-row>
       </form-card>
+      <form-card-button @emitIncrement="increment" @emitDecrement="decrement" />
     </v-container>
     <!-- <v-btn @click="validate">Validate</v-btn> -->
   </v-form>
@@ -185,12 +186,12 @@ export default {
       if (length > 0) {
         this.items = length
         for (let i = 0; i < length; i++) {
-          this.toolName[i] = data.farmHouseholdAsset.farmTool[i].farmtoolName
+          this.toolName[i] = data.farmHouseholdAsset.farmTool[i].farmToolName
           this.toolQuantity[i] =
-            data.farmHouseholdAsset.farmTool[i].farmtoolQuantity
+            data.farmHouseholdAsset.farmTool[i].farmToolQuantity
           this.isToolAquiredGovtProg[i] =
             data.farmHouseholdAsset.farmTool[i].isAcquiredGovtProgram
-          this.toolAge[i] = data.farmHouseholdAsset.farmTool[i].farmtoolAge
+          this.toolAge[i] = data.farmHouseholdAsset.farmTool[i].farmToolAge
         }
       } else {
         this.resetData()

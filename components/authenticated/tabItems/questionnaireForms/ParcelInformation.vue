@@ -1,7 +1,6 @@
 <template>
   <v-form ref="form" v-model="valid" lazy-validation>
     <v-container>
-      <form-card-button @emitIncrement="increment" @emitDecrement="decrement" />
       <form-card v-for="i in items" :key="i">
         <v-row>
           <v-col cols="12" class="mb-0 pb-0"> </v-col>
@@ -20,10 +19,11 @@
               :rules="numberRule"
               label="* Area (ha)"
               type="number"
+              min="0"
             ></v-text-field>
           </form-input-container>
 
-          <form-radio-container title="Tenure">
+          <form-radio-container title="Tenure" :required="true">
             <v-radio-group
               :rules="requiredRule"
               v-model="tenure[i - 1]"
@@ -45,7 +45,7 @@
             </v-radio-group>
           </form-radio-container>
 
-          <form-radio-container title="Topography">
+          <form-radio-container title="Topography" :required="true">
             <v-radio-group
               :rules="requiredRule"
               v-model="topography[i - 1]"
@@ -67,7 +67,7 @@
             </v-radio-group>
           </form-radio-container>
 
-          <form-radio-container title="Soil Fertility">
+          <form-radio-container title="Soil Fertility" :required="true">
             <v-radio-group
               :rules="requiredRule"
               v-model="soilFertility[i - 1]"
@@ -89,7 +89,7 @@
             </v-radio-group>
           </form-radio-container>
 
-          <form-radio-container title="Cropping System">
+          <form-radio-container title="Cropping System" :required="true">
             <v-radio-group
               :rules="requiredRule"
               v-model="croppingSystem[i - 1]"
@@ -111,7 +111,7 @@
             </v-radio-group>
           </form-radio-container>
 
-          <form-radio-container title="Source Water">
+          <form-radio-container title="Source Water" :required="true">
             <v-radio-group
               :rules="requiredRule"
               v-model="sourceWater[i - 1]"
@@ -133,7 +133,7 @@
             </v-radio-group>
           </form-radio-container>
 
-          <form-radio-container title="Land Use Status">
+          <form-radio-container title="Land Use Status" :required="true">
             <v-radio-group
               :rules="requiredRule"
               v-model="landUseStatus[i - 1]"
@@ -155,16 +155,17 @@
             </v-radio-group>
           </form-radio-container>
 
-          <form-input-container>
+          <form-input-container class="mt-2">
             <v-text-field
               v-model="cropsPlanted[i - 1]"
-              :rules="requiredRule"
+              :rules="regexRule"
               label="* Crops Planted (coffee,corn)"
               hint="Separate with comma ' , ' if multiple crops"
             ></v-text-field>
           </form-input-container>
         </v-row>
       </form-card>
+      <form-card-button @emitIncrement="increment" @emitDecrement="decrement" />
     </v-container>
     <!-- <v-btn @click="validate">Validate</v-btn> -->
   </v-form>
@@ -219,12 +220,37 @@ export default {
       (v) => parseFloat(v) > 0 || 'invalid value',
     ],
     requiredRule: [(v) => !!v || 'This field is required'],
+    regexRule: [
+      (v) => {
+        if (!v) {
+          return 'This field is required'
+        }
+        const regex =
+          /^[a-zA-Z0-9,\/ ]*(?![!@#$%^&*()_+={}[\]:;"'<>,.?~`\\|]).$/
+        if (regex.test(v)) {
+          const arrayVal = v.split(',')
+          for (let i = 0; i < arrayVal.length; i++) {
+            let val = arrayVal[i]
+            let counter = 0
+            for (let j = 0; j < arrayVal.length; j++) {
+              if (arrayVal[j] === val) {
+                counter++
+              }
+            }
+            if (counter > 1) {
+              return 'duplicated inputs not allowed'
+            }
+          }
+          return true
+        }
+        return 'Strictly need to follow the format separated with comma if multiple values'
+      },
+    ],
     tempValue: '',
   }),
   methods: {
     /* test if the form is valid, return boolean */
     validate() {
-      console.log('haah')
       if (this.items == 0) {
         this.$store.commit('questionnaire/toggleNextTab', {
           tabName: 'ParcelInformationValidated',
@@ -241,15 +267,11 @@ export default {
         tabName: 'ParcelInformationValidated',
         valid,
       })
-      console.log('valid:', valid)
       if (valid) {
         this.$store.commit('questionnaire/saveData', {
           keyName: 'parcelInfo',
           data: this.getData(),
         })
-        // console.log(this.items)
-        // console.log(this.cropsPlanted)
-        // console.log(this.$store.getters['questionnaire/parcelInformationDetails'])
       }
     },
     /* create an object that is an empty values */
@@ -472,7 +494,6 @@ export default {
         arr.push(i)
       }
       this.parcelNumber = arr
-      console.log(arr)
     },
   },
 }

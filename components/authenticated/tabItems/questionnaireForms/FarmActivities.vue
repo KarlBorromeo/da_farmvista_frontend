@@ -2,7 +2,7 @@
   <v-form ref="form" v-model="valid" lazy-validation>
     <v-container>
       <v-row>
-        <form-checkbox-container title="Agricultural System">
+        <form-checkbox-container title="Agricultural System" :required="true">
           <v-checkbox
             v-for="item in agriculturalSystemItems"
             v-model="agriculturalSystem"
@@ -21,6 +21,7 @@
 
         <form-radio-container
           title="Did know proper reutilization of agri-waste?"
+          :required="true"
         >
           <v-radio-group
             :rules="requiredRule"
@@ -39,6 +40,7 @@
         <form-checkbox-container
           v-if="didKnowProperReutilization == 'no'"
           title="If No, where diposed the unutilzied agir-waste?"
+          :required="true"
         >
           <v-checkbox
             v-for="item in whereDisposedUnutilizedAgriwasteItems"
@@ -58,6 +60,7 @@
 
         <form-checkbox-container
           title="Where heared about reutilization of agri-waste"
+          :required="true"
         >
           <v-checkbox
             v-for="item in whereHearAboutReutilizationItems"
@@ -97,16 +100,16 @@ export default {
   },
   data: () => ({
     valid: false,
-    agriculturalSystem: ['crop production', 'agroforestry'],
+    agriculturalSystem: [],
     agriculturalSystemItems: [],
     agriculturalSystemOther: '',
-    didKnowProperReutilization: 'yes',
+    didKnowProperReutilization: '',
     didKnowProperReutilizationItems: ['yes', 'no'],
     // if no
     whereDisposedUnutilizedAgriwaste: [],
     whereDisposedUnutilizedAgriwasteItems: [],
     whereDisposedUnutilizedAgriwasteOther: '',
-    whereHearAboutReutilization: ['social media', 'training'],
+    whereHearAboutReutilization: [],
     whereHearAboutReutilizationItems: [],
     whereHearAboutReutilizationOther: '',
     requiredRule: [(v) => !!v || 'This field is required'],
@@ -143,6 +146,21 @@ export default {
       } else if (
         this.didKnowProperReutilization == 'no' &&
         this.whereDisposedUnutilizedAgriwaste.length == 0
+      ) {
+        return false
+      } else if (
+        this.isOtherTicked(this.agriculturalSystem) &&
+        this.agriculturalSystemOther == ''
+      ) {
+        return false
+      } else if (
+        this.isOtherTicked(this.whereDisposedUnutilizedAgriwaste) &&
+        this.whereDisposedUnutilizedAgriwasteOther == ''
+      ) {
+        return false
+      } else if (
+        this.isOtherTicked(this.whereHearAboutReutilization) &&
+        this.whereHearAboutReutilizationOther == ''
       ) {
         return false
       } else {

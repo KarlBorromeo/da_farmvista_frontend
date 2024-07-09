@@ -125,10 +125,10 @@ export const getters = {
     return generateArray(state.codes.Sex)
   },
   Agree(state) {},
-  MembershipType(state){
+  MembershipType(state) {
     return generateArray(state.codes.MembershipType)
   },
-  CivilStatus(state){
+  CivilStatus(state) {
     return generateArray(state.codes.CivilStatus)
   },
   HighestEducationalAttainment(state) {
@@ -141,7 +141,6 @@ export const getters = {
     return generateArray(state.codes.PrintMaterials)
   },
   PestControlAdvice(state) {
-    console.log('this is pest control advice', state.codes.PestControlAdvice)
     return generateArray(state.codes.PestControlAdvice)
   },
   PesticideConsideration(state) {
@@ -194,7 +193,6 @@ export const actions = {
   async fetchAllCodes(context, commodity) {
     try {
       const codes = await api.fetchAllCodes(commodity)
-      await new Promise(resolve => setTimeout(resolve,2000))
       context.commit('saveCodes', codes)
     } catch (error) {
       throw error

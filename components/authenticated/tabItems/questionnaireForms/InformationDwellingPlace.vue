@@ -12,7 +12,7 @@
           ></v-text-field>
         </form-input-container>
 
-        <form-radio-container title="House Ownership">
+        <form-radio-container title="House Ownership" :required="true">
           <v-radio-group
             :rules="requiredRule"
             v-model="houseOwernship"
@@ -28,7 +28,7 @@
               v-if="houseOwernship === 'others'"
               v-model="houseOwernshipOther"
               :rules="requiredRule"
-              label="Other:"
+              label="* Other:"
               class="my-0 py-0 pt-1"
             ></v-text-field>
           </v-radio-group>
@@ -44,7 +44,7 @@
           ></v-text-field>
         </form-input-container>
 
-        <form-radio-container title="Materials Roof Made">
+        <form-radio-container title="Materials Roof Made" :required="true">
           <v-radio-group
             :rules="requiredRule"
             v-model="typeRoofMade"
@@ -60,13 +60,13 @@
               v-if="typeRoofMade === 'others'"
               v-model="typeRoofMadeOther"
               :rules="requiredRule"
-              label="Other:"
+              label="* Other:"
               class="my-0 py-0 pt-1"
             ></v-text-field>
           </v-radio-group>
         </form-radio-container>
 
-        <form-radio-container title="Materials Wall Made">
+        <form-radio-container title="Materials Wall Made" :required="true">
           <v-radio-group
             :rules="requiredRule"
             v-model="typeWallMade"
@@ -82,13 +82,13 @@
               v-if="typeWallMade === 'others'"
               v-model="typeWallMadeOther"
               :rules="requiredRule"
-              label="Other:"
+              label="* Other:"
               class="my-0 py-0 pt-1"
             ></v-text-field>
           </v-radio-group>
         </form-radio-container>
 
-        <form-radio-container title="Kind toilet facility">
+        <form-radio-container title="Kind toilet facility" :required="true">
           <v-radio-group
             :rules="requiredRule"
             v-model="kindToilet"
@@ -104,13 +104,13 @@
               v-if="kindToilet === 'others'"
               v-model="kindToiletOther"
               :rules="requiredRule"
-              label="Other:"
+              label="* Other:"
               class="my-0 py-0 pt-1"
             ></v-text-field>
           </v-radio-group>
         </form-radio-container>
 
-        <form-radio-container title="Kind lighting facility">
+        <form-radio-container title="Kind lighting facility" :required="true">
           <v-radio-group
             :rules="requiredRule"
             v-model="lightingFacility"
@@ -126,13 +126,13 @@
               v-if="lightingFacility === 'others'"
               v-model="lightingFacilityOther"
               :rules="requiredRule"
-              label="Other:"
+              label="* Other:"
               class="my-0 py-0 pt-1"
             ></v-text-field>
           </v-radio-group>
         </form-radio-container>
 
-        <form-radio-container title="Source cooking fuel">
+        <form-radio-container title="Source cooking fuel" :required="true">
           <v-radio-group
             :rules="requiredRule"
             v-model="sourceCooking"
@@ -148,13 +148,13 @@
               v-if="sourceCooking === 'others'"
               v-model="sourceCookingOther"
               :rules="requiredRule"
-              label="Other:"
+              label="* Other:"
               class="my-0 py-0 pt-1"
             ></v-text-field>
           </v-radio-group>
         </form-radio-container>
 
-        <form-radio-container title="Drinking water supply">
+        <form-radio-container title="Drinking water supply" :required="true">
           <v-radio-group
             :rules="requiredRule"
             v-model="sourceWaterDrink"
@@ -170,7 +170,7 @@
               v-if="sourceWaterDrink === 'others'"
               v-model="sourceWaterDrinkOther"
               :rules="requiredRule"
-              label="Other:"
+              label="* Other:"
               class="my-0 py-0 pt-1"
             ></v-text-field>
           </v-radio-group>
@@ -287,7 +287,6 @@ export default {
 
     const data = this.$store.getters['profiling/selectedRecord']
     if (Object.keys(data).length > 0) {
-      console.log('data: ', data.detailDwellingPlace)
       this.yearsResidence = data.yearCurrentResidence.numberYear
       this.houseOwernship = isOtherValueDefinedRadio(
         data.detailDwellingPlace.houseOwnership,

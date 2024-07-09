@@ -116,7 +116,7 @@
           <v-text-field
             v-model="otherExpenses"
             :rules="numberRule"
-            label="* Other expenses in a week"
+            label="Other expenses in a week"
             type="number"
             min="0"
           ></v-text-field>
@@ -124,8 +124,7 @@
         <form-input-container>
           <v-text-field
             v-model="otherExpensesSpecify"
-            :rules="requiredRule"
-            label="* Other expenses Specify:"
+            label="Other expenses Specify:"
             hint="specify the other item name"
           ></v-text-field>
         </form-input-container>
@@ -142,18 +141,18 @@ export default {
   components: { FormInputContainer },
   data: () => ({
     valid: false,
-    food: 100,
-    clothing: 100,
-    utilities: 100,
-    householdFacilities: 100,
-    nonFoodItems: 100,
-    healthExpenses: 100,
-    transportation: 100,
-    communication: 100,
-    recreation: 100,
-    education: 100,
-    specialOccasions: 100,
-    otherExpenses: 100,
+    food: '',
+    clothing: '',
+    utilities: '',
+    householdFacilities: '',
+    nonFoodItems: '',
+    healthExpenses: '',
+    transportation: '',
+    communication: '',
+    recreation: '',
+    education: '',
+    specialOccasions: '',
+    otherExpenses: '',
     otherExpensesSpecify: 'sample other',
     numberRule: [(v) => parseInt(v) >= 0 || 'invalid value'],
     requiredRule: [(v) => !!v || 'This field is required'],
@@ -250,18 +249,19 @@ export default {
       this.otherExpenses = data.householdExpense.others
       this.otherExpensesSpecify = data.householdExpense.otherSpecified
     } else {
-      this.food = ''
-      this.clothing = ''
-      this.utilities = ''
-      this.householdFacilities = ''
-      this.nonFoodItems = ''
-      this.healthExpenses = ''
-      this.transportation = ''
-      this.communication = ''
-      this.recreation = ''
-      this.education = ''
-      this.specialOccasions = ''
-      this.otherExpenses = ''
+      this.food = 0
+      this.clothing = 0
+      this.utilities = 0
+      this.householdFacilities = 0
+      this.nonFoodItems = 0
+      this.healthExpenses = 0
+      this.transportation = 0
+      this.communication = 0
+      this.recreation = 0
+      this.education = 0
+      this.specialOccasions = 0
+      this.otherExpenses = 0
+      this.otherExpensesSpecify = ''
     }
   },
 }

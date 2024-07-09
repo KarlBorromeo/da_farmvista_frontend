@@ -37,7 +37,6 @@ export const mutations = {
   /* update the active status in store */
   updateActiveStatus(state, id) {
     const index = state.users.findIndex((user) => user.id == id)
-    console.log(index, state.users[index])
     if (index >= 0) {
       state.users[index].status = !state.users[index].status
     }

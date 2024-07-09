@@ -63,7 +63,6 @@ export default {
   },
   methods: {
     transformedSearchText(value, search, item) {
-      console.log('val:', value)
       search = search.toString().toLowerCase()
       return (
         value != null &&

@@ -96,7 +96,6 @@ export default {
   methods: {
     /* test if the form is valid, return boolean */
     validate() {
-      console.log(this.getData())
       const valid = this.$refs.form.validate()
       this.$store.commit('questionnaire/toggleNextTab', {
         tabName: 'FarmIncomeValidated',
@@ -156,13 +155,13 @@ export default {
       this.nonFarmIncome = data.farmSourceIncome.nonFarm
       this.otherSources = data.farmSourceIncome.otherSource
     } else {
-      this.coffee = ''
-      this.crops = ''
-      this.livestock = ''
-      this.agroforestry = ''
-      this.otherLivelihood = ''
-      this.nonFarmIncome = ''
-      this.otherSources = ''
+      this.coffee = 0
+      this.crops = 0
+      this.livestock = 0
+      this.agroforestry = 0
+      this.otherLivelihood = 0
+      this.nonFarmIncome = 0
+      this.otherSources = 0
     }
   },
 }

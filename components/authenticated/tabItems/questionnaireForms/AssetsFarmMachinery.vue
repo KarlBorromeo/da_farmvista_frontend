@@ -1,7 +1,6 @@
 <template>
   <v-form ref="form" v-model="valid" lazy-validation>
     <v-container>
-      <form-card-button @emitIncrement="increment" @emitDecrement="decrement" />
       <form-card v-for="i in items" :key="i">
         <v-row>
           <v-col cols="12" class="mb-0 pb-0">
@@ -36,6 +35,7 @@
 
           <form-radio-container
             title="Did acquire through government or programs?"
+            :required="true"
           >
             <v-radio-group
               :rules="requiredRule"
@@ -63,6 +63,7 @@
           </form-input-container>
         </v-row>
       </form-card>
+      <form-card-button @emitIncrement="increment" @emitDecrement="decrement" />
     </v-container>
     <!-- <v-btn @click="validate">Validate</v-btn> -->
   </v-form>
