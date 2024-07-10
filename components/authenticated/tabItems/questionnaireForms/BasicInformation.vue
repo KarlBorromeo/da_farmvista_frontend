@@ -102,6 +102,14 @@ export default {
         farmerCode: this.farmerCode ? this.farmerCode : '',
       }
     },
+    /* concat fullname, return full name string */
+    concatFullName(firstName, middleInitial, lastName) {
+      const first = firstName + ' '
+      const middle = middleInitial ? middleInitial + '. ' : ''
+      const last = lastName
+      const fullName = first + middle + last
+      return fullName
+    },
   },
   watch: {
     surename() {

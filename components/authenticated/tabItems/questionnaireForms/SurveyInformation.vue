@@ -296,15 +296,15 @@ export default {
     },
   },
   beforeMount() {
-    this.intervieweeStatusItems =
-      this.$store.getters['questionnaireCode/IntervieweeStatus']
+    // this.intervieweeStatusItems =
+    //   this.$store.getters['questionnaireCode/IntervieweeStatus']
     this.regionProvinceItems =
       this.$store.getters['questionnaireCode/RegionProvince']
     this.municipalityItems =
       this.$store.getters['questionnaireCode/CityMunicipality']
     const data = this.$store.getters['profiling/selectedRecord']
     if (Object.keys(data).length > 0) {
-      this.intervieweeStatus = data.interview.intervieweeStatus
+      this.intervieweeStatus = 'validated'
       this.date = data.interview.dateOfInterview
       this.surveyNumber = data.interview.surveyNo
       this.interviewer = data.interview.validatorName

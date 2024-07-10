@@ -168,17 +168,30 @@ export const state = () => ({
       tempValidity: false,
     },
   ],
-  currentTab: 'BasicInformation',
+  // currentTab: 'BasicInformation',
   // currentTab: 'HouseholdExpenses',
   // currentTab: 'PestDamageObserved',
-  // currentTab: 'FarmActivities',
+  currentTab: 'GeneralInformation',
   isAllValid: false,
   commodity: '',
   isIntervieweeValidated: true,
   isBasicInfoSurveyInfoValid: false,
+
+  /* handler for isHouseMemberAffiliatedToOrg inside the generalInformation, in order for this to watch the value and affect the familyAffiliated tab forms */
+  isHouseMemberAffiliatedToOrg: '',
+  /* handler for isMemberFarmerOrganization inside the generalInformation, in order for this to watch the value and affect the familyAffiliated tab forms */
+  selfFarmerOrganization: {},
 })
 
 export const getters = {
+  /* return yes or no, this will be used inside the famillyAffiliated form */
+  selfFarmerOrganization(state){
+    return state.selfFarmerOrganization
+  },
+  /* return yes or no, this will be used inside the famillyAffiliated form */
+  isHouseMemberAffiliatedToOrg(state){
+    return state.isHouseMemberAffiliatedToOrg
+  },
   /* retrun the profile details */
   profile(state) {
     return state.form.profile
@@ -502,6 +515,14 @@ export const getters = {
 }
 
 export const mutations = {
+  /* save the details value of the interviewed farmer organization if member */
+  saveSelfFarmerOrganization(state,details){
+    state.selfFarmerOrganization = details
+  },
+  /* save the yes or no value of the isHouseMemberAffiliated */
+  saveIsHouseMemberAffiliatedToOrg(state,YesNo){
+    state.isHouseMemberAffiliatedToOrg = YesNo
+  },
   /* set the tab validity expected obj is {tabName: string, valid: boolean }*/
   toggleNextTab(state, obj) {
     const tabs = state.tabs
