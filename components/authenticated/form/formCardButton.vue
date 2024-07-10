@@ -1,13 +1,8 @@
 <template>
-  <v-row class="mb-1 pa-4">
-    <v-col cols="12" md="6" class="d-flex pa-0 ma-0 mb-2">
-      <v-btn block small color="success" @click="increment"
+  <v-row class="mb-1 pa-4" justify="center">
+    <v-col cols="12" sm="4" md="3" class="d-flex pa-0 ma-0 mb-2">
+      <v-btn block small color="warning" class="black--text" @click="increment" :disabled="disabled"
         >Add <v-icon>mdi-plus</v-icon></v-btn
-      >
-    </v-col>
-    <v-col cols="12" md="6" class="d-flex pa-0 ma-0">
-      <v-btn block small color="warning" @click="decrement" class="black--text"
-        >Remove last item <v-icon>mdi-minus</v-icon></v-btn
       >
     </v-col>
   </v-row>
@@ -15,12 +10,10 @@
 
 <script>
 export default {
+  props: ['disabled'],
   methods: {
     increment() {
       this.$emit('emitIncrement')
-    },
-    decrement() {
-      this.$emit('emitDecrement')
     },
   },
 }
