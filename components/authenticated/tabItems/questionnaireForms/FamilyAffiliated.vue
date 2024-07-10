@@ -242,6 +242,12 @@ export default {
         this.statusMembership.splice(index,1)
         this.statusOrganization.splice(index,1)
         this.items--
+
+        let fullname = "maria liza a. racho"
+        let i = this.nameFamilyMember.findIndex(item => item === fullname)
+        if(i>=0){
+          this.disabledIndex = i
+        }
       }
     },
     increment() {
@@ -412,7 +418,7 @@ export default {
           if(existingValIndex<0){
             this.items++
             this.tempItems++
-            indexNumber = this.tempItems
+            indexNumber = this.tempItems-1
             this.nameFamilyMember.splice(indexNumber,1,fullname)
             this.position.splice(indexNumber,1,val.organizationTypeMembership)
             this.positionOthers.splice(indexNumber,1,'')
@@ -421,17 +427,17 @@ export default {
             this.typeOrganizationOthers.splice(indexNumber,1,'')
             this.numberYearsMember.splice(indexNumber,1,'')
             this.statusMembership.splice(indexNumber,1,'')
-            this.statusOrganization.splice(indexNumber,1,'')
+            this.statusOrganization.splice(indexNumber,1,'')          
           }else{
             indexNumber = existingValIndex
             this.nameFamilyMember[indexNumber] = fullname
             this.position[indexNumber] = val.organizationTypeMembership
             this.nameOrganization[indexNumber] = val.organizationName
           }
-          this.disabledIndex = indexNumber 
+          this.disabledIndex = indexNumber
           this.validate() 
         }
-        console.log('tempitems:',this.tempItems,'items:',this.items)
+        console.log('tempitems:',this.tempItems,'items:',this.items,'disabledIndex:',this.disabledIndex)
       },
       deep: true,
     },
@@ -464,7 +470,7 @@ export default {
             this.disabledIndex = i
           }
         }
-        console.log('after family:',this.items)
+        console.log('after family:',this.items,'disabledIndex:',this.disabledIndex)
       }else{
         this.diableIncrement = false;
       }
