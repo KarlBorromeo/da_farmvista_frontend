@@ -93,7 +93,7 @@ export default {
     /* when edit button is clicked, open the modal for the whole record of this specific id, and enable editing mode and disabling create mode*/
     editItem(id) {
       this.$store.commit('profiling/toggleEditingMode', true)
-      this.$store.commit('questionnaire/toggleIsIntervieweeValidated', false)
+      this.$store.commit('questionnaire/toggleIsInterviewed', false)
       this.dialog = true
       this.id = id
     },

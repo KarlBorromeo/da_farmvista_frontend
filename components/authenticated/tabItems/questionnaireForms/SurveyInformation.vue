@@ -2,26 +2,7 @@
   <v-form ref="form" v-model="valid" lazy-validation>
     <v-container>
       <v-row>
-        <form-radio-container
-          title="Interviewee Status"
-          class="mt-2"
-          :required="true"
-        >
-          <v-radio-group
-            :rules="requiredRule"
-            v-model="intervieweeStatus"
-            class="pa-0 ma-0"
-          >
-            <v-radio
-              v-for="item in intervieweeStatusItems"
-              :key="item"
-              :label="item"
-              :value="item"
-              class="text-capitalize"
-            ></v-radio>
-          </v-radio-group>
-        </form-radio-container>
-        <form-input-container v-if="intervieweeStatus === 'validated'">
+        <form-input-container>
           <v-text-field
             v-model="surveyNumber"
             :rules="surveyNumberRule"
@@ -33,9 +14,9 @@
 
         <form-input-container>
           <v-text-field
-            v-model="interviewer"
+            v-model="validatorName"
             :rules="requiredRule"
-            label="* Name of Interviewer"
+            label="* Name of Interviewer Validator"
             required
           ></v-text-field>
         </form-input-container>
@@ -50,7 +31,7 @@
           ></v-text-field>
         </form-input-container>
 
-        <form-menu-container v-if="intervieweeStatus === 'validated'">
+        <form-menu-container>
           <v-dialog
             ref="timeStartPicker"
             v-model="timeStartPicker"
@@ -83,7 +64,7 @@
           </v-dialog>
         </form-menu-container>
 
-        <form-menu-container v-if="intervieweeStatus === 'validated'">
+        <form-menu-container>
           <v-dialog
             ref="timeEndPicker"
             v-model="timeEndPicker"
@@ -115,39 +96,6 @@
             </v-time-picker>
           </v-dialog>
         </form-menu-container>
-
-        <form-select-container>
-          <v-select
-            v-model="regionProvince"
-            :items="regionProvinceItems"
-            label="* Region/Pronvince"
-            dense
-            class="text-capitalize"
-            :rules="requiredRule"
-            required
-          ></v-select>
-        </form-select-container>
-
-        <form-select-container>
-          <v-select
-            :items="municipalityItems"
-            v-model="municipality"
-            :rules="requiredRule"
-            label="* City/Municipality"
-            required
-            class="text-capitalize"
-          ></v-select>
-        </form-select-container>
-
-        <form-input-container>
-          <v-text-field
-            v-model="barangay"
-            :rules="barangayRule"
-            label="*Barangay"
-            required
-            class="mb-2"
-          ></v-text-field>
-        </form-input-container>
       </v-row>
     </v-container>
     <!-- <v-btn @click="validate">Validate</v-btn> -->
@@ -169,11 +117,9 @@ export default {
   data() {
     return {
       valid: false,
-      intervieweeStatus: '',
-      intervieweeStatusItems: [],
       surveyNumber: '',
       surveyNumberRule: [(v) => !!v || 'survey number is required'],
-      interviewer: '',
+      validatorName: '',
       date: '',
       dateRule: [(v) => !!v || 'date is required'],
       interviewStart: '',
@@ -182,13 +128,7 @@ export default {
       interviewEnd: '',
       timeEndPicker: false,
       interviewEndRule: [(v) => !!v || 'time end is required'],
-      regionProvince: '',
-      regionProvinceItems: [],
-      municipality: '',
-      municipalityItems: [],
-      barangay: '',
-      barangayRule: [(v) => !!v || 'Barangay is required'],
-      requiredRule: [(v) => !!v || 'This field is required'],
+      requiredRule: [(v) => !!v || 'this field is required'],
     }
   },
 
@@ -209,12 +149,12 @@ export default {
       }
 
       // this is the basis to enable the submission tab, it is not really related to this form, it just to toggle the submission tab if the interviewee status is !validated <3
-      if (this.intervieweeStatus !== 'validated') {
-        this.$store.commit('questionnaire/toggleNextTab', {
-          tabName: 'OpenEndedQuestionRatingValidated',
-          valid,
-        })
-      }
+      // if (this.intervieweeStatus !== 'validated') {
+      //   this.$store.commit('questionnaire/toggleNextTab', {
+      //     tabName: 'OpenEndedQuestionRatingValidated',
+      //     valid,
+      //   })
+      // }
     },
     /* converts into hh:mm format*/
     convertTimeToHHMM(timeStr) {
@@ -232,15 +172,11 @@ export default {
     /* return the data of this form as an object */
     getData() {
       return {
-        intervieweeStatus: this.intervieweeStatus,
         dateOfInterview: this.date,
         surveyNo: this.surveyNumber ? parseInt(this.surveyNumber) : '',
-        validatorName: this.interviewer,
+        validatorName: this.validatorName,
         interviewStart: this.convertTimeToHHMM(this.interviewStart),
         interviewEnd: this.convertTimeToHHMM(this.interviewEnd),
-        regionProvince: this.regionProvince,
-        cityMunicipality: this.municipality,
-        barangay: this.barangay,
       }
     },
     /* ensure to execute the method validate() if saving time, sometimes the watch is not working well on this part*/
@@ -255,28 +191,13 @@ export default {
     },
   },
   watch: {
-    intervieweeStatus(val) {
-      if (val !== 'validated') {
-        this.surveyNumber = ''
-        this.interviewStart = ''
-        this.interviewEnd = ''
-        this.validate()
-        this.$store.commit('questionnaire/toggleIsIntervieweeValidated', false)
-      } else {
-        this.$store.commit('questionnaire/toggleIsIntervieweeValidated', true)
-        this.$store.commit('questionnaire/toggleNextTab', {
-          tabName: 'SurveyInformationValidated',
-          valid: false,
-        })
-      }
-    },
     date() {
       this.validate()
     },
     surveyNumber() {
       this.validate()
     },
-    interviewer() {
+    validatorName() {
       this.validate()
     },
     interviewStart() {
@@ -284,40 +205,38 @@ export default {
     },
     interviewEnd() {
       this.validate()
-    },
-    regionProvince() {
-      this.validate()
-    },
-    municipality() {
-      this.validate()
-    },
-    barangay() {
-      this.validate()
-    },
+    }
   },
   beforeMount() {
-    // this.intervieweeStatusItems =
-    //   this.$store.getters['questionnaireCode/IntervieweeStatus']
-    this.regionProvinceItems =
-      this.$store.getters['questionnaireCode/RegionProvince']
-    this.municipalityItems =
-      this.$store.getters['questionnaireCode/CityMunicipality']
-    const data = this.$store.getters['profiling/selectedRecord']
-    if (Object.keys(data).length > 0) {
-      this.intervieweeStatus = 'validated'
-      this.date = data.interview.dateOfInterview
-      this.surveyNumber = data.interview.surveyNo
-      this.interviewer = data.interview.validatorName
-      this.interviewStart = data.interview.interviewStart
-      this.interviewEnd = data.interview.interviewEnd
-      this.regionProvince = data.interview.regionProvince
-      this.municipality = data.interview.cityMunicipality
-      this.barangay = data.interview.barangay
-    } else {
+    const isEditing = this.$store.getters['profiling/isEditingMode']
+    if (isEditing) {
+      const data = this.$store.getters['profiling/selectedRecord']
+      if (Object.keys(data).length > 0) {
+        this.intervieweeStatus = 'validated'
+        this.date = data.interview.dateOfInterview
+        this.surveyNumber = data.interview.surveyNo
+        this.validatorName = data.interview.validatorName
+        this.interviewStart = data.interview.interviewStart
+        this.interviewEnd = data.interview.interviewEnd
+        this.regionProvince = data.interview.regionProvince
+        this.municipality = data.interview.cityMunicipality
+        this.barangay = data.interview.barangay
+      } else {
+        this.intervieweeStatus = 'validated'
+        this.date = ''
+        this.surveyNumber = ''
+        this.validatorName = ''
+        this.interviewStart = ''
+        this.interviewEnd = ''
+        this.regionProvince = ''
+        this.municipality = ''
+        this.barangay = ''
+      }      
+    }else {
       this.intervieweeStatus = ''
       this.date = ''
       this.surveyNumber = ''
-      this.interviewer = ''
+      this.validatorName = ''
       this.interviewStart = ''
       this.interviewEnd = ''
       this.regionProvince = ''

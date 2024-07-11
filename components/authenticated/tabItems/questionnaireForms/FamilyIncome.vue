@@ -2,6 +2,7 @@
   <v-form ref="form" v-model="valid" lazy-validation>
     <v-container>
       <form-card v-for="i in items" :key="i">
+        <v-btn :disabled="(i-1) === disabledIndex" icon class="formCardDeleteBtn" @click="deleteFormCard(i-1)"><v-icon class="red--text">mdi-trash-can</v-icon></v-btn>
         <v-row>
           <v-col cols="12" class="mb-0 pb-0">
             <p class="ma-0 pa-0 font-weight-black">{{ i }}</p>
@@ -11,6 +12,7 @@
               v-model="name[i - 1]"
               :rules="requiredRule"
               label="* Name"
+              :disabled="(i-1) === disabledIndex"
             ></v-text-field>
           </form-input-container>
 
@@ -20,6 +22,7 @@
               :rules="numberRule"
               label="* Age"
               type="number"
+              :disabled="(i-1) === disabledIndex"
             ></v-text-field>
           </form-input-container>
 
@@ -28,6 +31,7 @@
               :rules="requiredRule"
               v-model="sex[i - 1]"
               class="pa-0 ma-0"
+              :disabled="(i-1) === disabledIndex"
             >
               <v-radio
                 v-for="item in sexItems"
@@ -54,6 +58,7 @@
               label="* Highest Educational Attainment"
               required
               class="text-capitalize"
+              :disabled="(i-1) === disabledIndex"
             ></v-select>
           </form-select-container>
 
@@ -123,6 +128,7 @@ export default {
     requiredRule: [(v) => !!v || 'invalid value'],
     numberRule: [(v) => parseInt(v) >= 0 || 'invalid value'],
     tempValue: '',
+    disabledIndex: ''
   }),
   methods: {
     /* test if the form is valid, return boolean */
@@ -192,6 +198,7 @@ export default {
     },
     resetData() {
       this.items = 0
+      this.disabledIndex = ''
       this.name = []
       this.age = []
       this.sex = []
@@ -199,6 +206,22 @@ export default {
       this.educationsAttainment = []
       this.contributionAmount = []
       this.involveCoffeefarm = []
+    },
+     /* delete the record of card existing record */
+    deleteFormCard(index) {
+      this.name.splice(index,1)
+      this.age.splice(index,1)
+      this.sex.splice(index,1)
+      this.roleFamily.splice(index,1)
+      this.educationsAttainment.splice(index,1)
+      this.contributionAmount.splice(index,1)
+      this.involveCoffeefarm.splice(index,1)
+      this.items--
+      let fullname = "maria liza a. racho"
+      let i = this.name.findIndex(item => item === fullname)
+      if(i>=0){
+        this.disabledIndex = i
+      }
     },
     /* concat fullname, return full name string */
     concatFullName(firstName, middleInitial, lastName) {
@@ -213,8 +236,8 @@ export default {
     farmerGenInfo() {
       return this.$store.getters['questionnaire/generalInformationDetails']
     },
-    farmerOwnProfile() {
-      return this.$store.getters['questionnaire/profile']
+    selfFarmerFullname() {
+      return this.$store.getters['questionnaire/selfFarmerFullname']
     },
   },
   watch: {
@@ -224,14 +247,9 @@ export default {
       this.sex[0] = val.sex
       this.educationsAttainment[0] = val.highestEducationAttained
     },
-    farmerOwnProfile(val) {
+    selfFarmerFullname(val) {
       //TODO: tell aubrey to put to index 0 the ownFarmer details in order to target always the index 0 incase the name is changed and etc.
-      const fullName = this.concatFullName(
-        val.firstName,
-        val.middleInitial,
-        val.lastName
-      )
-      this.name[0] = fullName
+      this.name[0] = val
     },
     name() {
       this.validate()
@@ -268,6 +286,7 @@ export default {
       if (Object.keys(data).length > 0) {
         const length = data.familySourceIncome.length
         if (length > 0) {
+          this.disabledIndex = 0
           this.items = length
           for (let i = 0; i < length; i++) {
             this.name[i] = data.familySourceIncome[i].fullName

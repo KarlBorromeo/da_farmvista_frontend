@@ -4,34 +4,11 @@
       <v-row>
         <form-input-container>
           <v-text-field
-            v-model="surename"
-            :rules="requiredRules"
-            label="* Farmer's Surename"
-            required
-          ></v-text-field>
-        </form-input-container>
-
-        <form-input-container>
-          <v-text-field
-            v-model="firstname"
-            :rules="requiredRules"
-            label="* Farmer's Firstname"
-            required
-          ></v-text-field>
-        </form-input-container>
-
-        <form-input-container>
-          <v-text-field
-            v-model="middleInitial"
-            label="Farmer's Middle Initial"
-          ></v-text-field>
-        </form-input-container>
-
-        <form-input-container>
-          <v-text-field
             v-model="contactNumber"
             :rules="contactNumberRule"
             label="Farmer's Phone Number"
+            counter="11"
+            maxlength="11"
           ></v-text-field>
         </form-input-container>
 
@@ -58,10 +35,6 @@ export default {
   components: { formInputContainer },
   data: () => ({
     valid: false,
-    surename: '',
-    firstname: '',
-    requiredRules: [(v) => !!v || 'This field is required'],
-    middleInitial: '',
     contactNumber: '',
     farmerCode: '',
     contactNumberRule: [
@@ -95,32 +68,12 @@ export default {
     },
     getData() {
       return {
-        lastName: this.surename,
-        firstName: this.firstname,
-        middleInitial: this.middleInitial,
         contactNumber: this.contactNumber,
         farmerCode: this.farmerCode ? this.farmerCode : '',
       }
     },
-    /* concat fullname, return full name string */
-    concatFullName(firstName, middleInitial, lastName) {
-      const first = firstName + ' '
-      const middle = middleInitial ? middleInitial + '. ' : ''
-      const last = lastName
-      const fullName = first + middle + last
-      return fullName
-    },
   },
   watch: {
-    surename() {
-      this.validate()
-    },
-    firstname() {
-      this.validate()
-    },
-    middleInitial() {
-      this.validate()
-    },
     contactNumber() {
       this.validate()
     },
@@ -130,18 +83,21 @@ export default {
   },
   beforeMount() {
     const data = this.$store.getters['profiling/selectedRecord']
+
     if (Object.keys(data).length > 0) {
-      this.firstname = data.profile.firstName
-      this.surename = data.profile.lastName
-      this.middleInitial = data.profile.middleInitial
       this.contactNumber = data.profile.contactNumber
       this.farmerCode = data.profile.farmerCode
     } else {
-      this.firstname = ''
-      this.surename = ''
-      this.middleInitial = ''
       this.contactNumber = ''
       this.farmerCode = ''
+      this.$store.commit('questionnaire/toggleNextTab', {
+        tabName: 'BasicInformationValidated',
+        valid:true,
+      })
+      this.$store.commit('questionnaire/saveData', {
+        keyName: 'profile',
+        data: this.getData(),
+      })
     }
   },
 }

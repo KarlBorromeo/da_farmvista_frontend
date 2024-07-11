@@ -30,6 +30,11 @@ export const state = () => ({
   },
   tabs: [
     {
+      tabName: 'DemographicFarmerProfile',
+      validity: false,
+      tempValidity: false,
+    },
+    {
       tabName: 'BasicInformationValidated',
       validity: false,
       tempValidity: false,
@@ -168,22 +173,149 @@ export const state = () => ({
       tempValidity: false,
     },
   ],
+  tabs2: [ // for not interviewed
+    {
+      tabName: 'DemographicFarmerProfile',
+      validity: false,
+      tempValidity: false,
+    },
+    {
+      tabName: 'ReasonStopping',
+      validity: false,
+      tempValidity: false,
+    },
+  ],
+  tabs3: [ // for inactive status
+    {
+      tabName: 'DemographicFarmerProfile',
+      validity: false,
+      tempValidity: false,
+    },
+    {
+      tabName: 'BasicInformationValidated',
+      validity: false,
+      tempValidity: false,
+    },
+    {
+      tabName: 'SurveyInformationValidated',
+      validity: false,
+      tempValidity: false,
+    },
+    {
+      tabName: 'GeneralInformationValidated',
+      validity: false,
+      tempValidity: false,
+    },
+    {
+      tabName: 'FamilyAffiliatedValidated',
+      validity: false,
+      tempValidity: false,
+    },
+    { tabName: 'FamilyIncomeValidated', validity: false, tempValidity: false },
+    { tabName: 'FarmIncomeValidated', validity: false, tempValidity: false },
+    {
+      tabName: 'HouseholdExpensesValidated',
+      validity: false,
+      tempValidity: false,
+    },
+    {
+      tabName: 'AssetsFarmToolsValidated',
+      validity: false,
+      tempValidity: false,
+    },
+    {
+      tabName: 'AssetsFarmMachineryValidated',
+      validity: false,
+      tempValidity: false,
+    },
+    {
+      tabName: 'AssetsFarmPoultryLivestockValidated',
+      validity: false,
+      tempValidity: false,
+    },
+    {
+      tabName: 'AssetsFarmStructureValidated',
+      validity: false,
+      tempValidity: false,
+    },
+    {
+      tabName: 'InformationDwellingPlaceValidated',
+      validity: false,
+      tempValidity: false,
+    },
+    {
+      tabName: 'GeneralFarmingInformationValidated',
+      validity: false,
+      tempValidity: false,
+    },
+    {
+      tabName: 'InfrastructureDistanceAccessibilityValidated',
+      validity: false,
+      tempValidity: false,
+    },
+    {
+      tabName: 'FarmActivitiesValidated',
+      validity: false,
+      tempValidity: false,
+    },
+    {
+      tabName: 'DetailWageOperationValidated',
+      validity: false,
+      tempValidity: false,
+    },
+    { 
+      tabName: 'TechAwarenessValidated', 
+      validity: false, 
+      tempValidity: false 
+    },
+    {
+      tabName: 'InformationKnowledgeSourcesValidated',
+      validity: false,
+      tempValidity: false,
+    },
+    {
+      tabName: 'OpenEndedQuestionsValidated',
+      validity: false,
+      tempValidity: false,
+    },
+    {
+      tabName: 'OpenEndedQuestionRatingValidated',
+      validity: false,
+      tempValidity: false,
+    },
+  ],
   // currentTab: 'BasicInformation',
   // currentTab: 'HouseholdExpenses',
   // currentTab: 'PestDamageObserved',
-  currentTab: 'GeneralInformation',
+  currentTab: 'DemographicFarmerProfile',
+  // currentTab: 'ReasonStopping',
+  // currentTab: 'OpenEndedQuestionRating',
+  progress: 0,
   isAllValid: false,
   commodity: '',
-  isIntervieweeValidated: true,
+  isInterviewed: true,
+  isSelfFarmerActive: true,
   isBasicInfoSurveyInfoValid: false,
 
   /* handler for isHouseMemberAffiliatedToOrg inside the generalInformation, in order for this to watch the value and affect the familyAffiliated tab forms */
   isHouseMemberAffiliatedToOrg: '',
   /* handler for isMemberFarmerOrganization inside the generalInformation, in order for this to watch the value and affect the familyAffiliated tab forms */
   selfFarmerOrganization: {},
+  /* handler for self farmer's fullname inside the demographic farmer profile in order for this to watch the value and affect the familyAffiliated & familyIncome tab forms */
+  selfFarmerFullname: {},
+  /* handler for (age,sex,education attainment) level inside the general info farmer profile in order for this to watch the value and affect the familyAffiliated & familyIncome tab forms */
+  selfFarmerGeneralInfo: {},
 })
 
 export const getters = {
+  /* return the progress percentage of the form */
+  progress(state){
+    return state.progress
+  },
+  /* return fullname, this will be used inside the famillyAffiliated and familyIncome form */
+  selfFarmerFullname(state){
+    return state.selfFarmerFullname
+  },
   /* return yes or no, this will be used inside the famillyAffiliated form */
   selfFarmerOrganization(state){
     return state.selfFarmerOrganization
@@ -204,15 +336,30 @@ export const getters = {
   parcelInformationDetails(state) {
     return state.form.parcelInfo
   },
-  /* return boolean if the current interview is validated or not eg(diseased,declined,not-present, et.) */
-  isIntervieweeValidated(state) {
-    return state.isIntervieweeValidated
+  /* return boolean if the farmer is interviewed or not*/
+  isInterviewed(state) {
+    return state.isInterviewed
+  },
+  /* return boolean if the farmer is interviewed or not*/
+  isSelfFarmerActive(state) {
+    return state.isSelfFarmerActive
   },
   /* return the updated tab selected */
   currentTab(state) {
     return state.currentTab
   },
-  SurveyInformationValidated(state) {
+  /* Tab1 Items Getters START */
+  Tab1DemographicFarmerProfileValidated(state) {
+    const index = state.tabs.findIndex(
+      (el) => el.tabName == 'DemographicFarmerProfile'
+    )
+    if (index >= 0) {
+      return state.tabs[index].validity
+    } else {
+      console.error('tabname cannot find')
+    }
+  },
+  Tab1SurveyInformationValidated(state) {
     const index = state.tabs.findIndex(
       (el) => el.tabName == 'SurveyInformationValidated'
     )
@@ -222,7 +369,7 @@ export const getters = {
       console.error('tabname cannot find')
     }
   },
-  BasicInformationValidated(state) {
+  Tab1BasicInformationValidated(state) {
     const index = state.tabs.findIndex(
       (el) => el.tabName == 'BasicInformationValidated'
     )
@@ -232,7 +379,7 @@ export const getters = {
       console.error('tabname cannot find')
     }
   },
-  GeneralInformationValidated(state) {
+  Tab1GeneralInformationValidated(state) {
     const index = state.tabs.findIndex(
       (el) => el.tabName == 'GeneralInformationValidated'
     )
@@ -242,7 +389,7 @@ export const getters = {
       console.error('tabname cannot find')
     }
   },
-  FamilyAffiliatedValidated(state) {
+  Tab1FamilyAffiliatedValidated(state) {
     const index = state.tabs.findIndex(
       (el) => el.tabName == 'FamilyAffiliatedValidated'
     )
@@ -252,7 +399,7 @@ export const getters = {
       console.error('tabname cannot find')
     }
   },
-  FamilyIncomeValidated(state) {
+  Tab1FamilyIncomeValidated(state) {
     const index = state.tabs.findIndex(
       (el) => el.tabName == 'FamilyIncomeValidated'
     )
@@ -262,7 +409,7 @@ export const getters = {
       console.error('tabname cannot find')
     }
   },
-  FarmIncomeValidated(state) {
+  Tab1FarmIncomeValidated(state) {
     const index = state.tabs.findIndex(
       (el) => el.tabName == 'FarmIncomeValidated'
     )
@@ -272,7 +419,7 @@ export const getters = {
       console.error('tabname cannot find')
     }
   },
-  HouseholdExpensesValidated(state) {
+  Tab1HouseholdExpensesValidated(state) {
     const index = state.tabs.findIndex(
       (el) => el.tabName == 'HouseholdExpensesValidated'
     )
@@ -282,7 +429,7 @@ export const getters = {
       console.error('tabname cannot find')
     }
   },
-  AssetsFarmToolsValidated(state) {
+  Tab1AssetsFarmToolsValidated(state) {
     const index = state.tabs.findIndex(
       (el) => el.tabName == 'AssetsFarmToolsValidated'
     )
@@ -292,7 +439,7 @@ export const getters = {
       console.error('tabname cannot find')
     }
   },
-  AssetsFarmMachineryValidated(state) {
+  Tab1AssetsFarmMachineryValidated(state) {
     const index = state.tabs.findIndex(
       (el) => el.tabName == 'AssetsFarmMachineryValidated'
     )
@@ -302,7 +449,7 @@ export const getters = {
       console.error('tabname cannot find')
     }
   },
-  AssetsFarmPoultryLivestockValidated(state) {
+  Tab1AssetsFarmPoultryLivestockValidated(state) {
     const index = state.tabs.findIndex(
       (el) => el.tabName == 'AssetsFarmPoultryLivestockValidated'
     )
@@ -312,7 +459,7 @@ export const getters = {
       console.error('tabname cannot find')
     }
   },
-  AssetsFarmStructureValidated(state) {
+  Tab1AssetsFarmStructureValidated(state) {
     const index = state.tabs.findIndex(
       (el) => el.tabName == 'AssetsFarmStructureValidated'
     )
@@ -322,7 +469,7 @@ export const getters = {
       console.error('tabname cannot find')
     }
   },
-  InformationDwellingPlaceValidated(state) {
+  Tab1InformationDwellingPlaceValidated(state) {
     const index = state.tabs.findIndex(
       (el) => el.tabName == 'InformationDwellingPlaceValidated'
     )
@@ -332,7 +479,7 @@ export const getters = {
       console.error('tabname cannot find')
     }
   },
-  GeneralFarmingInformationValidated(state) {
+  Tab1GeneralFarmingInformationValidated(state) {
     const index = state.tabs.findIndex(
       (el) => el.tabName == 'GeneralFarmingInformationValidated'
     )
@@ -342,7 +489,7 @@ export const getters = {
       console.error('tabname cannot find')
     }
   },
-  ParcelInformationValidated(state) {
+  Tab1ParcelInformationValidated(state) {
     const index = state.tabs.findIndex(
       (el) => el.tabName == 'ParcelInformationValidated'
     )
@@ -352,7 +499,7 @@ export const getters = {
       console.error('tabname cannot find')
     }
   },
-  DetailsCoffeeAreaValidated(state) {
+  Tab1DetailsCoffeeAreaValidated(state) {
     const index = state.tabs.findIndex(
       (el) => el.tabName == 'DetailsCoffeeAreaValidated'
     )
@@ -362,7 +509,7 @@ export const getters = {
       console.error('tabname cannot find')
     }
   },
-  InfrastructureDistanceAccessibilityValidated(state) {
+  Tab1InfrastructureDistanceAccessibilityValidated(state) {
     const index = state.tabs.findIndex(
       (el) => el.tabName == 'InfrastructureDistanceAccessibilityValidated'
     )
@@ -372,7 +519,7 @@ export const getters = {
       console.error('tabname cannot find')
     }
   },
-  FarmActivitiesValidated(state) {
+  Tab1FarmActivitiesValidated(state) {
     const index = state.tabs.findIndex(
       (el) => el.tabName == 'FarmActivitiesValidated'
     )
@@ -382,7 +529,7 @@ export const getters = {
       console.error('tabname cannot find')
     }
   },
-  FarmWasteManagementValidated(state) {
+  Tab1FarmWasteManagementValidated(state) {
     const index = state.tabs.findIndex(
       (el) => el.tabName == 'FarmWasteManagementValidated'
     )
@@ -392,7 +539,7 @@ export const getters = {
       console.error('tabname cannot find')
     }
   },
-  CroppingPatternCalendarValidated(state) {
+  Tab1CroppingPatternCalendarValidated(state) {
     const index = state.tabs.findIndex(
       (el) => el.tabName == 'CroppingPatternCalendarValidated'
     )
@@ -402,7 +549,7 @@ export const getters = {
       console.error('tabname cannot find')
     }
   },
-  DetailsCoffeeProductionValidated(state) {
+  Tab1DetailsCoffeeProductionValidated(state) {
     const index = state.tabs.findIndex(
       (el) => el.tabName == 'DetailsCoffeeProductionValidated'
     )
@@ -412,7 +559,7 @@ export const getters = {
       console.error('tabname cannot find')
     }
   },
-  LaborUtilizationOperationsValidated(state) {
+  Tab1LaborUtilizationOperationsValidated(state) {
     const index = state.tabs.findIndex(
       (el) => el.tabName == 'LaborUtilizationOperationsValidated'
     )
@@ -422,7 +569,7 @@ export const getters = {
       console.error('tabname cannot find')
     }
   },
-  DetailWageOperationValidated(state) {
+  Tab1DetailWageOperationValidated(state) {
     const index = state.tabs.findIndex(
       (el) => el.tabName == 'DetailWageOperationValidated'
     )
@@ -432,7 +579,7 @@ export const getters = {
       console.error('tabname cannot find')
     }
   },
-  CostInputsCoffeeValidated(state) {
+  Tab1CostInputsCoffeeValidated(state) {
     const index = state.tabs.findIndex(
       (el) => el.tabName == 'CostInputsCoffeeValidated'
     )
@@ -442,7 +589,7 @@ export const getters = {
       console.error('tabname cannot find')
     }
   },
-  PestDamageObservedValidated(state) {
+  Tab1PestDamageObservedValidated(state) {
     const index = state.tabs.findIndex(
       (el) => el.tabName == 'PestDamageObservedValidated'
     )
@@ -452,7 +599,7 @@ export const getters = {
       console.error('tabname cannot find')
     }
   },
-  PestManagementPracticeValidated(state) {
+  Tab1PestManagementPracticeValidated(state) {
     const index = state.tabs.findIndex(
       (el) => el.tabName == 'PestManagementPracticeValidated'
     )
@@ -462,7 +609,7 @@ export const getters = {
       console.error('tabname cannot find')
     }
   },
-  CoffeeHarvestMarketingValidated(state) {
+  Tab1CoffeeHarvestMarketingValidated(state) {
     const index = state.tabs.findIndex(
       (el) => el.tabName == 'CoffeeHarvestMarketingValidated'
     )
@@ -472,7 +619,7 @@ export const getters = {
       console.error('tabname cannot find')
     }
   },
-  TechAwarenessValidated(state) {
+  Tab1TechAwarenessValidated(state) {
     const index = state.tabs.findIndex(
       (el) => el.tabName == 'TechAwarenessValidated'
     )
@@ -482,7 +629,7 @@ export const getters = {
       console.error('tabname cannot find')
     }
   },
-  InformationKnowledgeSourcesValidated(state) {
+  Tab1InformationKnowledgeSourcesValidated(state) {
     const index = state.tabs.findIndex(
       (el) => el.tabName == 'InformationKnowledgeSourcesValidated'
     )
@@ -492,7 +639,7 @@ export const getters = {
       console.error('tabname cannot find')
     }
   },
-  OpenEndedQuestionsValidated(state) {
+  Tab1OpenEndedQuestionsValidated(state) {
     const index = state.tabs.findIndex(
       (el) => el.tabName == 'OpenEndedQuestionsValidated'
     )
@@ -502,7 +649,7 @@ export const getters = {
       console.error('tabname cannot find')
     }
   },
-  OpenEndedQuestionRatingValidated(state) {
+  Tab1OpenEndedQuestionRatingValidated(state) {
     const index = state.tabs.findIndex(
       (el) => el.tabName == 'OpenEndedQuestionRatingValidated'
     )
@@ -512,9 +659,269 @@ export const getters = {
       console.error('tabname cannot find')
     }
   },
+  //TODO: delete this after
+  // Tab1ReasonStoppingValidated(state) {
+  //   const index = state.tabs.findIndex(
+  //     (el) => el.tabName == 'ReasonStopping'
+  //   )
+  //   if (index >= 0) {
+  //     return state.tabs[index].validity
+  //   } else {
+  //     console.error('tabname cannot find')
+  //   }
+  // },
+  /* Tab1 Items Getters END */
+  /* Tab2 Items Getters START */ //TODO:
+  Tab2DemographicFarmerProfileValidated(state) {
+    const index = state.tabs2.findIndex(
+      (el) => el.tabName == 'DemographicFarmerProfile'
+    )
+    if (index >= 0) {
+      return state.tabs2[index].validity
+    } else {
+      console.error('tabname cannot find')
+    }
+  },
+  Tab2ReasonStoppingValidated(state) {
+    const index = state.tabs2.findIndex(
+      (el) => el.tabName == 'ReasonStopping'
+    )
+    if (index >= 0) {
+      return state.tabs2[index].validity
+    } else {
+      console.error('tabname cannot find')
+    }
+  },
+  /* Tab2 Items Getters END */
+  /* Tab3 Items Getters START *///TODO:
+  Tab3DemographicFarmerProfileValidated(state) {
+    const index = state.tabs3.findIndex(
+      (el) => el.tabName == 'DemographicFarmerProfile'
+    )
+    if (index >= 0) {
+      return state.tabs3[index].validity
+    } else {
+      console.error('tabname cannot find')
+    }
+  },
+  Tab3SurveyInformationValidated(state) {
+    const index = state.tabs3.findIndex(
+      (el) => el.tabName == 'SurveyInformationValidated'
+    )
+    if (index >= 0) {
+      return state.tabs3[index].validity
+    } else {
+      console.error('tabname cannot find')
+    }
+  },
+  Tab3BasicInformationValidated(state) {
+    const index = state.tabs3.findIndex(
+      (el) => el.tabName == 'BasicInformationValidated'
+    )
+    if (index >= 0) {
+      return state.tabs3[index].validity
+    } else {
+      console.error('tabname cannot find')
+    }
+  },
+  Tab3GeneralInformationValidated(state) {
+    const index = state.tabs3.findIndex(
+      (el) => el.tabName == 'GeneralInformationValidated'
+    )
+    if (index >= 0) {
+      return state.tabs3[index].validity
+    } else {
+      console.error('tabname cannot find')
+    }
+  },
+  Tab3FamilyAffiliatedValidated(state) {
+    const index = state.tabs3.findIndex(
+      (el) => el.tabName == 'FamilyAffiliatedValidated'
+    )
+    if (index >= 0) {
+      return state.tabs3[index].validity
+    } else {
+      console.error('tabname cannot find')
+    }
+  },
+  Tab3FamilyIncomeValidated(state) {
+    const index = state.tabs3.findIndex(
+      (el) => el.tabName == 'FamilyIncomeValidated'
+    )
+    if (index >= 0) {
+      return state.tabs3[index].validity
+    } else {
+      console.error('tabname cannot find')
+    }
+  },
+  Tab3FarmIncomeValidated(state) {
+    const index = state.tabs3.findIndex(
+      (el) => el.tabName == 'FarmIncomeValidated'
+    )
+    if (index >= 0) {
+      return state.tabs3[index].validity
+    } else {
+      console.error('tabname cannot find')
+    }
+  },
+  Tab3HouseholdExpensesValidated(state) {
+    const index = state.tabs3.findIndex(
+      (el) => el.tabName == 'HouseholdExpensesValidated'
+    )
+    if (index >= 0) {
+      return state.tabs3[index].validity
+    } else {
+      console.error('tabname cannot find')
+    }
+  },
+  Tab3AssetsFarmToolsValidated(state) {
+    const index = state.tabs3.findIndex(
+      (el) => el.tabName == 'AssetsFarmToolsValidated'
+    )
+    if (index >= 0) {
+      return state.tabs3[index].validity
+    } else {
+      console.error('tabname cannot find')
+    }
+  },
+  Tab3AssetsFarmMachineryValidated(state) {
+    const index = state.tabs3.findIndex(
+      (el) => el.tabName == 'AssetsFarmMachineryValidated'
+    )
+    if (index >= 0) {
+      return state.tabs3[index].validity
+    } else {
+      console.error('tabname cannot find')
+    }
+  },
+  Tab3AssetsFarmPoultryLivestockValidated(state) {
+    const index = state.tabs3.findIndex(
+      (el) => el.tabName == 'AssetsFarmPoultryLivestockValidated'
+    )
+    if (index >= 0) {
+      return state.tabs3[index].validity
+    } else {
+      console.error('tabname cannot find')
+    }
+  },
+  Tab3AssetsFarmStructureValidated(state) {
+    const index = state.tabs3.findIndex(
+      (el) => el.tabName == 'AssetsFarmStructureValidated'
+    )
+    if (index >= 0) {
+      return state.tabs3[index].validity
+    } else {
+      console.error('tabname cannot find')
+    }
+  },
+  Tab3InformationDwellingPlaceValidated(state) {
+    const index = state.tabs3.findIndex(
+      (el) => el.tabName == 'InformationDwellingPlaceValidated'
+    )
+    if (index >= 0) {
+      return state.tabs3[index].validity
+    } else {
+      console.error('tabname cannot find')
+    }
+  },
+  Tab3GeneralFarmingInformationValidated(state) {
+    const index = state.tabs3.findIndex(
+      (el) => el.tabName == 'GeneralFarmingInformationValidated'
+    )
+    if (index >= 0) {
+      return state.tabs3[index].validity
+    } else {
+      console.error('tabname cannot find')
+    }
+  },
+  Tab3ParcelInformationValidated(state) {
+    const index = state.tabs3.findIndex(
+      (el) => el.tabName == 'ParcelInformationValidated'
+    )
+    if (index >= 0) {
+      return state.tabs3[index].validity
+    } else {
+      console.error('tabname cannot find')
+    }
+  },
+  Tab3InfrastructureDistanceAccessibilityValidated(state) {
+    const index = state.tabs3.findIndex(
+      (el) => el.tabName == 'InfrastructureDistanceAccessibilityValidated'
+    )
+    if (index >= 0) {
+      return state.tabs3[index].validity
+    } else {
+      console.error('tabname cannot find')
+    }
+  },
+  Tab3FarmActivitiesValidated(state) {
+    const index = state.tabs3.findIndex(
+      (el) => el.tabName == 'FarmActivitiesValidated'
+    )
+    if (index >= 0) {
+      return state.tabs3[index].validity
+    } else {
+      console.error('tabname cannot find')
+    }
+  },
+  Tab3DetailWageOperationValidated(state) {
+    const index = state.tabs3.findIndex(
+      (el) => el.tabName == 'DetailWageOperationValidated'
+    )
+    if (index >= 0) {
+      return state.tabs3[index].validity
+    } else {
+      console.error('tabname cannot find')
+    }
+  },
+  Tab3TechAwarenessValidated(state) {
+    const index = state.tabs3.findIndex(
+      (el) => el.tabName == 'TechAwarenessValidated'
+    )
+    if (index >= 0) {
+      return state.tabs3[index].validity
+    } else {
+      console.error('tabname cannot find')
+    }
+  },
+  Tab3InformationKnowledgeSourcesValidated(state) {
+    const index = state.tabs3.findIndex(
+      (el) => el.tabName == 'InformationKnowledgeSourcesValidated'
+    )
+    if (index >= 0) {
+      return state.tabs3[index].validity
+    } else {
+      console.error('tabname cannot find')
+    }
+  },
+  Tab3OpenEndedQuestionsValidated(state) {
+    const index = state.tabs3.findIndex(
+      (el) => el.tabName == 'OpenEndedQuestionsValidated'
+    )
+    if (index >= 0) {
+      return state.tabs3[index].validity
+    } else {
+      console.error('tabname cannot find')
+    }
+  },
+  Tab3OpenEndedQuestionRatingValidated(state) {
+    const index = state.tabs3.findIndex(
+      (el) => el.tabName == 'OpenEndedQuestionRatingValidated'
+    )
+    if (index >= 0) {
+      return state.tabs3[index].validity
+    } else {
+      console.error('tabname cannot find')
+    }
+  },
+  /* Tab3 Items Getters END */
 }
 
 export const mutations = {
+  /* save the fullname value of self farmer */
+  saveSelfFarmerFullname(state,fullname){
+    state.selfFarmerFullname = fullname
+  },
   /* save the details value of the interviewed farmer organization if member */
   saveSelfFarmerOrganization(state,details){
     state.selfFarmerOrganization = details
@@ -524,21 +931,36 @@ export const mutations = {
     state.isHouseMemberAffiliatedToOrg = YesNo
   },
   /* set the tab validity expected obj is {tabName: string, valid: boolean }*/
-  toggleNextTab(state, obj) {
-    const tabs = state.tabs
-    const index = tabs.findIndex((el) => el.tabName == obj.tabName)
+  toggleNextTab(state, obj) { //TODO:
+    let tabs = [];
+    let tabname = obj.tabName
+    if(!state.isInterviewed){
+      tabs = state.tabs2
+    }else if(!state.isSelfFarmerActive){
+      tabs = state.tabs3
+    }else{
+      tabs = state.tabs
+    }
+    const tabsLength = tabs.length
+    const index = tabs.findIndex((el) => el.tabName == tabname)
+    console.log(index)
     if (index >= 0) {
       if (obj.valid) {
-        state.tabs[index].validity = true
-        state.tabs[index].tempValidity = true
+        state.progress = ((index+1)/tabsLength)*100
+        if(index == tabsLength-1){
+          state.progress = 100;
+        }
+        tabs[index].validity = true
+        tabs[index].tempValidity = true
         for (let i = index + 1; i < tabs.length; i++) {
-          if (state.tabs[i].tempValidity) {
-            state.tabs[i].validity = true
+          if (tabs[i].tempValidity) {
+            tabs[i].validity = true
           }
         }
       } else {
+        state.progress = ((index+1)/tabsLength)*100
         for (let i = index; i < tabs.length; i++) {
-          state.tabs[i].validity = false
+          tabs[i].validity = false
         }
       }
     } else {
@@ -552,6 +974,7 @@ export const mutations = {
       tab.validity = false
       tab.tempValidity = false
     })
+    state.progress = 0
     // state.currentTab = 'BasicInformation' //TODO:
   },
 
@@ -594,9 +1017,9 @@ export const mutations = {
     state.commodity = commodity
   },
 
-  /* toggle the isIntervieweeValidated */
-  toggleIsIntervieweeValidated(state, bool) {
-    state.isIntervieweeValidated = bool
+  /* toggle the isInterviewed */
+  toggleIsInterviewed(state, bool) {
+    state.isInterviewed = bool
     // this will remove or add the 'farmHouseholdAsset' key in the form to just remove it when the interviewee is not validated, the default form has an existing 'farmHouseholdAsset' already
     if (!bool) {
       delete state.form.farmHouseholdAsset
@@ -604,12 +1027,17 @@ export const mutations = {
       state.form.farmHouseholdAsset = {}
     }
   },
+
+  /* toggle the isSelfFarmerActive */ //TODO:
+  toggleIsSelfFarmerActive(state,bool){
+    state.isSelfFarmerActive = bool
+  }
 }
 
 export const actions = {
   /* submit the form if all the tabs are validated or (basicInfo and surveyInfo forms only if interviewee status is not validated) */
   async submitAll(context) {
-    if (context.state.isIntervieweeValidated) {
+    if (context.state.isInterviewed) {
       context.commit('checkValidityAll')
     } else {
       context.commit('checkBasicInfoSurveyInfoValdity')
@@ -632,7 +1060,7 @@ export const actions = {
 
   /* submit and update the existing record or (basicInfo and surveyInfo forms only if interviewee status is not validated) */
   async submitUpdate(context, id) {
-    if (context.state.isIntervieweeValidated) {
+    if (context.state.isInterviewed) {
       context.commit('checkValidityAll')
     } else {
       context.commit('checkBasicInfoSurveyInfoValdity')
