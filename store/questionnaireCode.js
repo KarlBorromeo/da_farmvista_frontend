@@ -2,6 +2,8 @@ import * as api from '../api/questionnaireCode.js'
 
 export const state = () => ({
   codes: {},
+  cities: [],
+  barangays: []
 })
 
 /* this function gets the values of 
@@ -18,6 +20,12 @@ function generateArray(object) {
 }
 
 export const getters = {
+  barangays(state){
+    return state.barangays
+  },
+  cities(state){
+    return state.cities
+  },
   Code1(state) {
     return generateArray(state.codes.Code1)
   },
@@ -174,11 +182,22 @@ export const getters = {
     return generateArray(state.codes.IntervieweeStatus)
   },
   RegionProvince(state) {
-    return generateArray(state.codes.RegionProvince)
+    let arr = []
+    for(let i=0; i<state.codes.Location.length; i++){
+      arr.push(state.codes.Location[i].province)
+    }
+    return arr
   },
   CityMunicipality(state) {
     return generateArray(state.codes.CityMunicipality)
   },
+  ProfileStatus(state) {
+    return generateArray(state.codes.ProfileStatus)
+  },
+  ProfileClassification(state) {
+    return generateArray(state.codes.ProfileClassification)
+  },
+  
 }
 
 export const mutations = {
@@ -186,6 +205,33 @@ export const mutations = {
   saveCodes(state, codes) {
     state.codes = codes
   },
+  /* generate dynamic city lists */
+  generateDynamicCities(state,province){
+    // const location = [...state.codes.Location]
+    let index = state.codes.Location.findIndex(item => item.province == province)
+    if(index>=0){
+      state.cities = state.codes.Location[index].cities.map(item => item.city)
+      console.log(state.cities)
+    }else{
+      state.cities = []
+    }
+  },
+  /* generate dynamic barangay lists */
+  generateDynamicBarangay(state,obj){
+    // const location = [...state.codes.Location]
+    let index = state.codes.Location.findIndex(item => item.province == obj.province)
+    if(index>=0){
+      const cities = state.codes.Location[index].cities
+      let ind = cities.findIndex(el => el.city == obj.city)
+      if(ind>=0){
+        state.barangays = cities[ind].barangay
+      }else{
+        state.barangays = []
+      }
+    }else{
+      state.barangays = []
+    }
+  }
 }
 
 export const actions = {

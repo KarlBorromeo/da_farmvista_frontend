@@ -268,6 +268,7 @@ export default {
     },
     /* reset the data */
     resetData() {
+      this.disabledIndex = ''
       this.items = 0
       this.tempItems = 0
       this.nameFamilyMember = []
@@ -280,14 +281,6 @@ export default {
       this.statusMembership = []
       this.statusOrganization = []
     },
-    /* concat fullname, return full name string */
-    concatFullName(firstName, middleInitial, lastName) {
-      const first = firstName + ' '
-      const middle = middleInitial ? middleInitial + '. ' : ''
-      const last = lastName
-      const fullName = first + middle + last
-      return fullName
-    },
   },
   beforeMount() {
     this.positionItems = this.$store.getters['questionnaireCode/Code1']
@@ -296,16 +289,13 @@ export default {
       this.$store.getters['questionnaireCode/Code3_4']
     this.statusOrganizationItems =
       this.$store.getters['questionnaireCode/Code3_4']
-
     const isEditing = this.$store.getters['profiling/isEditingMode']
     if (isEditing) {
       const data = this.$store.getters['profiling/selectedRecord']
       if (data.familyAffiliatedFarmOrg) {
-        //TODO: on edit BE, delete this if BE done START
         if (data.profileGeneralInfo.isMemberFarmerOrganization == 'yes') {
           this.disabledIndex = 0
         }
-        //TODO: on edit BE, delete this if BE done END
         const length = data.familyAffiliatedFarmOrg.length
         this.items += length
         this.tempItems = this.items
@@ -354,15 +344,11 @@ export default {
       const profile = this.$store.getters['questionnaire/profile']
       if (profileGeneralInfo && profile) {
         if (profileGeneralInfo.isMemberFarmerOrganization == 'yes') {
-          const fullName = this.concatFullName(
-            profile.firstName,
-            profile.middleInitial,
-            profile.lastName
-          )
+          let fullname = this.$store.getters['questionnaire/selfFarmerFullname']
           this.items = 1
           this.disabledIndex = this.items-1
           this.tempItems = this.items
-          this.nameFamilyMember.push(fullName)
+          this.nameFamilyMember.push(fullname)
           this.position.push('')
           this.positionOthers.push('')
           this.nameOrganization.push(profileGeneralInfo.organizationName)
@@ -391,7 +377,7 @@ export default {
   watch: {
     selfFarmerOrganization: {
       handler: function (val) {
-        let fullname = "maria liza a. racho"
+        let fullname = this.$store.getters['questionnaire/selfFarmerFullname']
         if(val.isMemberFarmerOrganization == 'no'){   
           this.disabledIndex = ''
           let length = this.nameFamilyMember.length
@@ -444,11 +430,7 @@ export default {
     isHouseMemberAffiliatedToOrg(val) {
       if(val == 'no'){
         this.diableIncrement = true;
-
-        function removeIndex(length,fullname){
-          
-        }
-        let fullname = "maria liza a. racho"
+        let fullname = this.$store.getters['questionnaire/selfFarmerFullname']
         let length = this.nameFamilyMember.length
         for(let i=0; i<length; i++){
           if(this.nameFamilyMember[i] !== fullname){

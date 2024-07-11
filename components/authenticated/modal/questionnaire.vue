@@ -6,7 +6,7 @@
       </h2>
       <commodity-dropdown v-if="!id" @switchCommodity="switchCommodity" />
     </div>
-    <v-progress-linear v-model="progress" color="primary" height="25" striped
+    <v-progress-linear :value="progress" color="primary" height="25" striped
       ><strong class="white--text"
         >{{ Math.ceil(progress) }}%</strong
       ></v-progress-linear
@@ -23,11 +23,28 @@
         >
           <v-tab
             class="caption font-weight-black"
+            @click="selectTab('DemographicFarmerProfile')"
+          >
+            I. Demographic Farmer Profile
+          </v-tab>
+          <v-tab
+            v-if="!isInterviewed"
+            :disabled="DemographicFarmerProfileValidated"
+            class="caption font-weight-black"
+            @click="selectTab('ReasonStopping')"
+          >
+            Reason
+          </v-tab>
+          <v-tab
+            v-if="isInterviewed"
+            :disabled="DemographicFarmerProfileValidated"
+            class="caption font-weight-black"
             @click="selectTab('BasicInformation')"
           >
             I. Farmer's Basic Information
           </v-tab>
           <v-tab
+            v-if="isInterviewed"
             @click="selectTab('SurveyInformation')"
             class="caption font-weight-black"
             :disabled="BasicInformationValidated"
@@ -36,7 +53,7 @@
           </v-tab>
 
           <v-tab
-            v-if="isIntervieweeValidated"
+            v-if="isInterviewed"
             class="caption font-weight-black"
             @click="selectTab('GeneralInformation')"
             :disabled="SurveyInformationValidated"
@@ -45,7 +62,7 @@
           </v-tab>
 
           <v-tab
-            v-if="isIntervieweeValidated"
+            v-if="isInterviewed"
             class="caption font-weight-black"
             @click="selectTab('FamilyAffiliated')"
             :disabled="GeneralInformationValidated"
@@ -53,7 +70,7 @@
             II. Family Affiliated
           </v-tab>
           <v-tab
-            v-if="isIntervieweeValidated"
+            v-if="isInterviewed"
             class="caption font-weight-black"
             @click="selectTab('FamilyIncome')"
             :disabled="FamilyAffiliatedValidated"
@@ -61,7 +78,7 @@
             III. Family Income
           </v-tab>
           <v-tab
-            v-if="isIntervieweeValidated"
+            v-if="isInterviewed"
             class="caption font-weight-black"
             @click="selectTab('FarmIncome')"
             :disabled="FamilyIncomeValidated"
@@ -69,7 +86,7 @@
             III. Farm Income
           </v-tab>
           <v-tab
-            v-if="isIntervieweeValidated"
+            v-if="isInterviewed"
             class="caption font-weight-black"
             @click="selectTab('HouseholdExpenses')"
             :disabled="FarmIncomeValidated"
@@ -77,7 +94,7 @@
             IV. Household Expenses
           </v-tab>
           <v-tab
-            v-if="isIntervieweeValidated"
+            v-if="isInterviewed"
             class="caption font-weight-black"
             @click="selectTab('AssetsFarmTools')"
             :disabled="HouseholdExpensesValidated"
@@ -85,7 +102,7 @@
             V. Assets Farm Tools
           </v-tab>
           <v-tab
-            v-if="isIntervieweeValidated"
+            v-if="isInterviewed"
             class="caption font-weight-black"
             @click="selectTab('AssetsFarmMachinery')"
             :disabled="AssetsFarmToolsValidated"
@@ -93,7 +110,7 @@
             V. Assets Farm Machinery
           </v-tab>
           <v-tab
-            v-if="isIntervieweeValidated"
+            v-if="isInterviewed"
             class="caption font-weight-black"
             @click="selectTab('AssetsFarmPoultryLivestock')"
             :disabled="AssetsFarmMachineryValidated"
@@ -101,7 +118,7 @@
             V. Assets Farm Poultry Livestock
           </v-tab>
           <v-tab
-            v-if="isIntervieweeValidated"
+            v-if="isInterviewed"
             class="caption font-weight-black"
             @click="selectTab('AssetsFarmStructure')"
             :disabled="AssetsFarmPoultryLivestockValidated"
@@ -109,7 +126,7 @@
             V. Assets Farm Structure
           </v-tab>
           <v-tab
-            v-if="isIntervieweeValidated"
+            v-if="isInterviewed"
             class="caption font-weight-black"
             @click="selectTab('InformationDwellingPlace')"
             :disabled="AssetsFarmStructureValidated"
@@ -117,7 +134,7 @@
             VI. Information Dwelling Place
           </v-tab>
           <v-tab
-            v-if="isIntervieweeValidated"
+            v-if="isInterviewed"
             class="caption font-weight-black"
             @click="selectTab('GeneralFarmingInformation')"
             :disabled="InformationDwellingPlaceValidated"
@@ -125,7 +142,7 @@
             VII. General Farming Information
           </v-tab>
           <v-tab
-            v-if="isIntervieweeValidated"
+            v-if="isInterviewed"
             class="caption font-weight-black"
             @click="selectTab('ParcelInformation')"
             :disabled="GeneralFarmingInformationValidated"
@@ -133,7 +150,7 @@
             VII.IV Parcel Information
           </v-tab>
           <v-tab
-            v-if="isIntervieweeValidated"
+            v-if="isInterviewed"
             class="caption font-weight-black"
             @click="selectTab('DetailsCoffeeArea')"
             :disabled="ParcelInformationValidated"
@@ -141,7 +158,7 @@
             VII.V Details Coffee Area
           </v-tab>
           <v-tab
-            v-if="isIntervieweeValidated"
+            v-if="isInterviewed"
             class="caption font-weight-black"
             @click="selectTab('InfrastructureDistanceAccessibility')"
             :disabled="DetailsCoffeeAreaValidated"
@@ -149,7 +166,7 @@
             VII.VI Infrastructure Distance Accessibility
           </v-tab>
           <v-tab
-            v-if="isIntervieweeValidated"
+            v-if="isInterviewed"
             class="caption font-weight-black"
             @click="selectTab('FarmActivities')"
             :disabled="InfrastructureDistanceAccessibilityValidated"
@@ -157,7 +174,7 @@
             VIII Farm Activities
           </v-tab>
           <v-tab
-            v-if="isIntervieweeValidated"
+            v-if="isInterviewed"
             class="caption font-weight-black"
             @click="selectTab('FarmWasteManagement')"
             :disabled="FarmActivitiesValidated"
@@ -165,7 +182,7 @@
             VIII.IV Farm Waste Management
           </v-tab>
           <v-tab
-            v-if="isIntervieweeValidated"
+            v-if="isInterviewed"
             class="caption font-weight-black"
             @click="selectTab('CroppingPatternCalendar')"
             :disabled="FarmWasteManagementValidated"
@@ -173,7 +190,7 @@
             VIII.V Cropping Pattern Calendar
           </v-tab>
           <v-tab
-            v-if="isIntervieweeValidated"
+            v-if="isInterviewed"
             class="caption font-weight-black"
             @click="selectTab('DetailsCoffeeProduction')"
             :disabled="CroppingPatternCalendarValidated"
@@ -181,7 +198,7 @@
             IX Details Coffee Production
           </v-tab>
           <v-tab
-            v-if="isIntervieweeValidated"
+            v-if="isInterviewed"
             class="caption font-weight-black"
             @click="selectTab('LaborUtilizationOperations')"
             :disabled="DetailsCoffeeProductionValidated"
@@ -189,7 +206,7 @@
             IX.II Labor Utilization Operations
           </v-tab>
           <v-tab
-            v-if="isIntervieweeValidated"
+            v-if="isInterviewed"
             class="caption font-weight-black"
             @click="selectTab('DetailWageOperation')"
             :disabled="LaborUtilizationOperationsValidated"
@@ -197,7 +214,7 @@
             IX.III Detail Wage Operation
           </v-tab>
           <v-tab
-            v-if="isIntervieweeValidated"
+            v-if="isInterviewed"
             class="caption font-weight-black"
             @click="selectTab('CostInputsCoffee')"
             :disabled="DetailWageOperationValidated"
@@ -205,7 +222,7 @@
             IX.IV Cost Inputs Coffee
           </v-tab>
           <v-tab
-            v-if="isIntervieweeValidated"
+            v-if="isInterviewed"
             class="caption font-weight-black"
             @click="selectTab('PestDamageObserved')"
             :disabled="CostInputsCoffeeValidated"
@@ -213,7 +230,7 @@
             X Pest Damage Observed
           </v-tab>
           <v-tab
-            v-if="isIntervieweeValidated"
+            v-if="isInterviewed"
             class="caption font-weight-black"
             @click="selectTab('PestManagementPractice')"
             :disabled="PestDamageObservedValidated"
@@ -221,7 +238,7 @@
             X.I Pest Management Practice
           </v-tab>
           <v-tab
-            v-if="isIntervieweeValidated"
+            v-if="isInterviewed"
             class="caption font-weight-black"
             @click="selectTab('CoffeeHarvestMarketing')"
             :disabled="PestManagementPracticeValidated"
@@ -229,7 +246,7 @@
             XI Coffee Harvest Marketing
           </v-tab>
           <v-tab
-            v-if="isIntervieweeValidated"
+            v-if="isInterviewed"
             class="caption font-weight-black"
             @click="selectTab('TechAwareness')"
             :disabled="CoffeeHarvestMarketingValidated"
@@ -237,7 +254,7 @@
             XII Technology Awareness
           </v-tab>
           <v-tab
-            v-if="isIntervieweeValidated"
+            v-if="isInterviewed"
             class="caption font-weight-black"
             @click="selectTab('InformationKnowledgeSources')"
             :disabled="TechAwarenessValidated"
@@ -245,7 +262,7 @@
             XIII Information Knowledge Sources
           </v-tab>
           <v-tab
-            v-if="isIntervieweeValidated"
+            v-if="isInterviewed"
             class="caption font-weight-black"
             @click="selectTab('OpenEndedQuestions')"
             :disabled="InformationKnowledgeSourcesValidated"
@@ -253,7 +270,7 @@
             XIV Open Ended Questions
           </v-tab>
           <v-tab
-            v-if="isIntervieweeValidated"
+            v-if="isInterviewed"
             class="caption font-weight-black"
             @click="selectTab('OpenEndedQuestionRating')"
             :disabled="OpenEndedQuestionsValidated"
@@ -263,7 +280,7 @@
           <v-tab
             class="caption font-weight-black"
             @click="selectTab('SubmissionPage')"
-            :disabled="OpenEndedQuestionRatingValidated"
+            :disabled="SubmissionAllowed"
           >
             SUBMISSION
           </v-tab>
@@ -288,6 +305,7 @@
 </template>
 
 <script>
+import DemographicFarmerProfile from '../tabItems/questionnaireForms/DemographicFarmerProfile.vue'
 import BasicInformation from '../tabItems/questionnaireForms/BasicInformation.vue'
 import SurveyInformation from '../tabItems/questionnaireForms/SurveyInformation.vue'
 import GeneralInformation from '../tabItems/questionnaireForms/GeneralInformation.vue'
@@ -318,13 +336,17 @@ import TechAwareness from '../tabItems/questionnaireForms/TechAwareness.vue'
 import InformationKnowledgeSources from '../tabItems/questionnaireForms/InformationKnowledgeSources.vue'
 import OpenEndedQuestions from '../tabItems/questionnaireForms/OpenEndedQuestions.vue'
 import OpenEndedQuestionRating from '../tabItems/questionnaireForms/OpenEndedQuestionRating.vue'
+import ReasonStopping from '../tabItems/questionnaireForms/ReasonStopping.vue'
 import SubmissionPage from '../tabItems/questionnaireForms/SubmissionPage.vue'
 import CommodityDropdown from '../commodityDropdown.vue'
 import snackbar from '~/components/snackbar.vue'
 
+
+
 export default {
   props: ['id', 'commodityProp'],
   components: {
+    DemographicFarmerProfile,
     SurveyInformation,
     BasicInformation,
     GeneralInformation,
@@ -339,22 +361,23 @@ export default {
     InformationDwellingPlace,
     GeneralFarmingInformation,
     ParcelInformation,
-    DetailsCoffeeArea,
+    DetailsCoffeeArea,//TODO: not required if inactive
     InfrastructureDistanceAccessibility,
     FarmActivities,
-    FarmWasteManagement,
-    CroppingPatternCalendar,
-    DetailsCoffeeProduction,
-    LaborUtilizationOperations,
+    FarmWasteManagement,//TODO: not required if inactive
+    CroppingPatternCalendar,//TODO: not required if inactive
+    DetailsCoffeeProduction,//TODO: not required if inactive
+    LaborUtilizationOperations,//TODO: not required if inactive
     DetailWageOperation,
-    CostInputsCoffee,
-    PestDamageObserved,
-    PestManagementPractice,
-    CoffeeHarvestMarketing,
+    CostInputsCoffee,//TODO: not required if inactive
+    PestDamageObserved,//TODO: not required if inactive
+    PestManagementPractice,//TODO: not required if inactive
+    CoffeeHarvestMarketing,//TODO: not required if inactive
     TechAwareness,
     InformationKnowledgeSources,
     OpenEndedQuestions,
     OpenEndedQuestionRating,
+    ReasonStopping,//TODO: not required if not interviewed
     SubmissionPage,
     CommodityDropdown,
     snackbar,
@@ -364,7 +387,6 @@ export default {
       loading: false,
       currentCommodity: 'coffee',
       initialTab: 0,
-      progress: 45,
     }
   },
   methods: {
@@ -410,124 +432,134 @@ export default {
     },
   },
   computed: {
-    isIntervieweeValidated() {
-      return this.$store.getters['questionnaire/isIntervieweeValidated']
+    progress(){
+      return this.$store.getters['questionnaire/progress']
+    },
+    isInterviewed() {
+      return this.$store.getters['questionnaire/isInterviewed']
     },
     currentTab() {
       return this.$store.getters['questionnaire/currentTab']
     },
+    DemographicFarmerProfileValidated() {
+      return !this.$store.getters['questionnaire/Tab1DemographicFarmerProfileValidated']
+    },
     SurveyInformationValidated() {
-      return !this.$store.getters['questionnaire/SurveyInformationValidated']
+      return !this.$store.getters['questionnaire/Tab1SurveyInformationValidated']
     },
     BasicInformationValidated() {
-      return !this.$store.getters['questionnaire/BasicInformationValidated']
+      return !this.$store.getters['questionnaire/Tab1BasicInformationValidated']
     },
     GeneralInformationValidated() {
-      return !this.$store.getters['questionnaire/GeneralInformationValidated']
+      return !this.$store.getters['questionnaire/Tab1GeneralInformationValidated']
     },
     FamilyAffiliatedValidated() {
-      return !this.$store.getters['questionnaire/FamilyAffiliatedValidated']
+      return !this.$store.getters['questionnaire/Tab1FamilyAffiliatedValidated']
     },
     FamilyIncomeValidated() {
-      return !this.$store.getters['questionnaire/FamilyIncomeValidated']
+      return !this.$store.getters['questionnaire/Tab1FamilyIncomeValidated']
     },
     FarmIncomeValidated() {
-      return !this.$store.getters['questionnaire/FarmIncomeValidated']
+      return !this.$store.getters['questionnaire/Tab1FarmIncomeValidated']
     },
     HouseholdExpensesValidated() {
-      return !this.$store.getters['questionnaire/HouseholdExpensesValidated']
+      return !this.$store.getters['questionnaire/Tab1HouseholdExpensesValidated']
     },
     AssetsFarmToolsValidated() {
-      return !this.$store.getters['questionnaire/AssetsFarmToolsValidated']
+      return !this.$store.getters['questionnaire/Tab1AssetsFarmToolsValidated']
     },
     AssetsFarmMachineryValidated() {
-      return !this.$store.getters['questionnaire/AssetsFarmMachineryValidated']
+      return !this.$store.getters['questionnaire/Tab1AssetsFarmMachineryValidated']
     },
     AssetsFarmPoultryLivestockValidated() {
       return !this.$store.getters[
-        'questionnaire/AssetsFarmPoultryLivestockValidated'
+        'questionnaire/Tab1AssetsFarmPoultryLivestockValidated'
       ]
     },
     AssetsFarmStructureValidated() {
-      return !this.$store.getters['questionnaire/AssetsFarmStructureValidated']
+      return !this.$store.getters['questionnaire/Tab1AssetsFarmStructureValidated']
     },
     InformationDwellingPlaceValidated() {
       return !this.$store.getters[
-        'questionnaire/InformationDwellingPlaceValidated'
+        'questionnaire/Tab1InformationDwellingPlaceValidated'
       ]
     },
     GeneralFarmingInformationValidated() {
       return !this.$store.getters[
-        'questionnaire/GeneralFarmingInformationValidated'
+        'questionnaire/Tab1GeneralFarmingInformationValidated'
       ]
     },
     ParcelInformationValidated() {
-      return !this.$store.getters['questionnaire/ParcelInformationValidated']
+      return !this.$store.getters['questionnaire/Tab1ParcelInformationValidated']
     },
     DetailsCoffeeAreaValidated() {
-      return !this.$store.getters['questionnaire/DetailsCoffeeAreaValidated']
+      return !this.$store.getters['questionnaire/Tab1DetailsCoffeeAreaValidated']
     },
     InfrastructureDistanceAccessibilityValidated() {
       return !this.$store.getters[
-        'questionnaire/InfrastructureDistanceAccessibilityValidated'
+        'questionnaire/Tab1InfrastructureDistanceAccessibilityValidated'
       ]
     },
     FarmActivitiesValidated() {
-      return !this.$store.getters['questionnaire/FarmActivitiesValidated']
+      return !this.$store.getters['questionnaire/Tab1FarmActivitiesValidated']
     },
     FarmWasteManagementValidated() {
-      return !this.$store.getters['questionnaire/FarmWasteManagementValidated']
+      return !this.$store.getters['questionnaire/Tab1FarmWasteManagementValidated']
     },
     CroppingPatternCalendarValidated() {
       return !this.$store.getters[
-        'questionnaire/CroppingPatternCalendarValidated'
+        'questionnaire/Tab1CroppingPatternCalendarValidated'
       ]
     },
     DetailsCoffeeProductionValidated() {
       return !this.$store.getters[
-        'questionnaire/DetailsCoffeeProductionValidated'
+        'questionnaire/Tab1DetailsCoffeeProductionValidated'
       ]
     },
     LaborUtilizationOperationsValidated() {
       return !this.$store.getters[
-        'questionnaire/LaborUtilizationOperationsValidated'
+        'questionnaire/Tab1LaborUtilizationOperationsValidated'
       ]
     },
     DetailWageOperationValidated() {
-      return !this.$store.getters['questionnaire/DetailWageOperationValidated']
+      return !this.$store.getters['questionnaire/Tab1DetailWageOperationValidated']
     },
     CostInputsCoffeeValidated() {
-      return !this.$store.getters['questionnaire/CostInputsCoffeeValidated']
+      return !this.$store.getters['questionnaire/Tab1CostInputsCoffeeValidated']
     },
     PestDamageObservedValidated() {
-      return !this.$store.getters['questionnaire/PestDamageObservedValidated']
+      return !this.$store.getters['questionnaire/Tab1PestDamageObservedValidated']
     },
     PestManagementPracticeValidated() {
       return !this.$store.getters[
-        'questionnaire/PestManagementPracticeValidated'
+        'questionnaire/Tab1PestManagementPracticeValidated'
       ]
     },
     CoffeeHarvestMarketingValidated() {
       return !this.$store.getters[
-        'questionnaire/CoffeeHarvestMarketingValidated'
+        'questionnaire/Tab1CoffeeHarvestMarketingValidated'
       ]
     },
     TechAwarenessValidated() {
-      return !this.$store.getters['questionnaire/TechAwarenessValidated']
+      return !this.$store.getters['questionnaire/Tab1TechAwarenessValidated']
     },
     InformationKnowledgeSourcesValidated() {
       return !this.$store.getters[
-        'questionnaire/InformationKnowledgeSourcesValidated'
+        'questionnaire/Tab1InformationKnowledgeSourcesValidated'
       ]
     },
     OpenEndedQuestionsValidated() {
-      return !this.$store.getters['questionnaire/OpenEndedQuestionsValidated']
+      return !this.$store.getters['questionnaire/Tab1OpenEndedQuestionsValidated']
     },
-    OpenEndedQuestionRatingValidated() {
-      return !this.$store.getters[
-        'questionnaire/OpenEndedQuestionRatingValidated'
-      ]
-    },
+    SubmissionAllowed(){
+      const openEndedQuestionsValidity = this.$store.getters['questionnaire/Tab1OpenEndedQuestionRatingValidated']
+      const reasonValidity = this.$store.getters['questionnaire/Tab1ReasonStoppingValidated']
+      if(openEndedQuestionsValidity || reasonValidity){
+        return false
+      }else{
+        return true
+      }
+    }
   },
   /* 
     fetch a specific survey record once only if the prop "id" is not null or undefined,
