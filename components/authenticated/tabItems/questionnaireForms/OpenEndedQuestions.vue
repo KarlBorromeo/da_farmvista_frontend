@@ -38,6 +38,9 @@
 <script>
 import FormInputContainer from '~/components/authenticated/form/formInputContainer.vue'
 export default {
+  activated(){
+    this.validate()
+  },
   components: {
     FormInputContainer,
   },

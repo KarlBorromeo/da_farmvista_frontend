@@ -139,6 +139,9 @@ import formInputContainer from '~/components/authenticated/form/formInputContain
 import formRadioContainer from '../../form/formRadioContainer.vue'
 import formSelectContainer from '../../form/formSelectContainer.vue'
 export default {
+	activated(){
+		this.validate()
+	},
 	components: { formInputContainer, formSelectContainer, formRadioContainer },
 	data: () => ({
 		valid: false,
@@ -169,10 +172,7 @@ export default {
 			if(textValid && this.regionProvince && this.cityMunicipality && this.barangay){
 				valid = true
 			}
-			this.$store.commit('questionnaire/toggleNextTab', {
-			tabName: 'DemographicFarmerProfile',
-			valid,
-			})
+
 			if (valid) {
 				this.$store.commit('questionnaire/saveData', {
 					keyName: 'demographicProfile',
@@ -180,7 +180,13 @@ export default {
 				})
 				const fullname = this.concatFullName(this.farmerFirstName,this.farmerMiddileInitial,this.farmerSurName)
 				this.$store.commit('questionnaire/saveSelfFarmerFullname',fullname)
+				this.$store.commit('questionnaire/toggleIsSelfFarmerActive',this.status === 'active')
+				this.$store.commit('questionnaire/toggleIsInterviewed', this.isInterviewed === 'yes')
 			}
+			this.$store.commit('questionnaire/toggleNextTab', {
+				tabName: 'DemographicFarmerProfile',
+				valid,
+			})
 		},
 		/* concat fullname, return full name string */
 		concatFullName(firstName, middleInitial, lastName) {
@@ -236,20 +242,22 @@ export default {
 		classification(){
 			this.validate()
 		},
-		status(val){	//TODO:
+		status(val){
 			if(val !== 'active'){
 				this.$store.commit('questionnaire/toggleIsSelfFarmerActive',true)
 			}else{
 				this.$store.commit('questionnaire/toggleIsSelfFarmerActive',false)
 			}
+			this.$store.commit('questionnaire/resetTabsValidity')
 			this.validate()
 		},
-		isInterviewed(val){
+		isInterviewed(val){		
 			if (val === 'yes') {
 				this.$store.commit('questionnaire/toggleIsInterviewed', true)
 			} else {
 				this.$store.commit('questionnaire/toggleIsInterviewed', false)
       		}
+			this.$store.commit('questionnaire/resetTabsValidity')
 			this.validate()
 		},
 		farmerFirstName(){

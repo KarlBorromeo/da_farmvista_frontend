@@ -28,7 +28,7 @@ export const state = () => ({
     //   farmerCode: '',
     // }
   },
-  tabs: [
+  tabs1: [ // for interviewed and active status
     {
       tabName: 'DemographicFarmerProfile',
       validity: false,
@@ -173,19 +173,7 @@ export const state = () => ({
       tempValidity: false,
     },
   ],
-  tabs2: [ // for not interviewed
-    {
-      tabName: 'DemographicFarmerProfile',
-      validity: false,
-      tempValidity: false,
-    },
-    {
-      tabName: 'ReasonStopping',
-      validity: false,
-      tempValidity: false,
-    },
-  ],
-  tabs3: [ // for inactive status
+  tabs2: [ // for interviewed and inactive status
     {
       tabName: 'DemographicFarmerProfile',
       validity: false,
@@ -249,6 +237,11 @@ export const state = () => ({
       tempValidity: false,
     },
     {
+      tabName: 'ParcelInformationValidated',
+      validity: false,
+      tempValidity: false,
+    },
+    {
       tabName: 'InfrastructureDistanceAccessibilityValidated',
       validity: false,
       tempValidity: false,
@@ -280,6 +273,18 @@ export const state = () => ({
     },
     {
       tabName: 'OpenEndedQuestionRatingValidated',
+      validity: false,
+      tempValidity: false,
+    },
+  ],
+  tabs3: [ // for not interviewed
+    {
+      tabName: 'DemographicFarmerProfile',
+      validity: false,
+      tempValidity: false,
+    },
+    {
+      tabName: 'ReasonStopping',
       validity: false,
       tempValidity: false,
     },
@@ -350,328 +355,318 @@ export const getters = {
   },
   /* Tab1 Items Getters START */
   Tab1DemographicFarmerProfileValidated(state) {
-    const index = state.tabs.findIndex(
+    const index = state.tabs1.findIndex(
       (el) => el.tabName == 'DemographicFarmerProfile'
     )
     if (index >= 0) {
-      return state.tabs[index].validity
+      return state.tabs1[index].validity
     } else {
       console.error('tabname cannot find')
     }
   },
   Tab1SurveyInformationValidated(state) {
-    const index = state.tabs.findIndex(
+    const index = state.tabs1.findIndex(
       (el) => el.tabName == 'SurveyInformationValidated'
     )
     if (index >= 0) {
-      return state.tabs[index].validity
+      return state.tabs1[index].validity
     } else {
       console.error('tabname cannot find')
     }
   },
   Tab1BasicInformationValidated(state) {
-    const index = state.tabs.findIndex(
+    const index = state.tabs1.findIndex(
       (el) => el.tabName == 'BasicInformationValidated'
     )
     if (index >= 0) {
-      return state.tabs[index].validity
+      return state.tabs1[index].validity
     } else {
       console.error('tabname cannot find')
     }
   },
   Tab1GeneralInformationValidated(state) {
-    const index = state.tabs.findIndex(
+    const index = state.tabs1.findIndex(
       (el) => el.tabName == 'GeneralInformationValidated'
     )
     if (index >= 0) {
-      return state.tabs[index].validity
+      return state.tabs1[index].validity
     } else {
       console.error('tabname cannot find')
     }
   },
   Tab1FamilyAffiliatedValidated(state) {
-    const index = state.tabs.findIndex(
+    const index = state.tabs1.findIndex(
       (el) => el.tabName == 'FamilyAffiliatedValidated'
     )
     if (index >= 0) {
-      return state.tabs[index].validity
+      return state.tabs1[index].validity
     } else {
       console.error('tabname cannot find')
     }
   },
   Tab1FamilyIncomeValidated(state) {
-    const index = state.tabs.findIndex(
+    const index = state.tabs1.findIndex(
       (el) => el.tabName == 'FamilyIncomeValidated'
     )
     if (index >= 0) {
-      return state.tabs[index].validity
+      return state.tabs1[index].validity
     } else {
       console.error('tabname cannot find')
     }
   },
   Tab1FarmIncomeValidated(state) {
-    const index = state.tabs.findIndex(
+    const index = state.tabs1.findIndex(
       (el) => el.tabName == 'FarmIncomeValidated'
     )
     if (index >= 0) {
-      return state.tabs[index].validity
+      return state.tabs1[index].validity
     } else {
       console.error('tabname cannot find')
     }
   },
   Tab1HouseholdExpensesValidated(state) {
-    const index = state.tabs.findIndex(
+    const index = state.tabs1.findIndex(
       (el) => el.tabName == 'HouseholdExpensesValidated'
     )
     if (index >= 0) {
-      return state.tabs[index].validity
+      return state.tabs1[index].validity
     } else {
       console.error('tabname cannot find')
     }
   },
   Tab1AssetsFarmToolsValidated(state) {
-    const index = state.tabs.findIndex(
+    const index = state.tabs1.findIndex(
       (el) => el.tabName == 'AssetsFarmToolsValidated'
     )
     if (index >= 0) {
-      return state.tabs[index].validity
+      return state.tabs1[index].validity
     } else {
       console.error('tabname cannot find')
     }
   },
   Tab1AssetsFarmMachineryValidated(state) {
-    const index = state.tabs.findIndex(
+    const index = state.tabs1.findIndex(
       (el) => el.tabName == 'AssetsFarmMachineryValidated'
     )
     if (index >= 0) {
-      return state.tabs[index].validity
+      return state.tabs1[index].validity
     } else {
       console.error('tabname cannot find')
     }
   },
   Tab1AssetsFarmPoultryLivestockValidated(state) {
-    const index = state.tabs.findIndex(
+    const index = state.tabs1.findIndex(
       (el) => el.tabName == 'AssetsFarmPoultryLivestockValidated'
     )
     if (index >= 0) {
-      return state.tabs[index].validity
+      return state.tabs1[index].validity
     } else {
       console.error('tabname cannot find')
     }
   },
   Tab1AssetsFarmStructureValidated(state) {
-    const index = state.tabs.findIndex(
+    const index = state.tabs1.findIndex(
       (el) => el.tabName == 'AssetsFarmStructureValidated'
     )
     if (index >= 0) {
-      return state.tabs[index].validity
+      return state.tabs1[index].validity
     } else {
       console.error('tabname cannot find')
     }
   },
   Tab1InformationDwellingPlaceValidated(state) {
-    const index = state.tabs.findIndex(
+    const index = state.tabs1.findIndex(
       (el) => el.tabName == 'InformationDwellingPlaceValidated'
     )
     if (index >= 0) {
-      return state.tabs[index].validity
+      return state.tabs1[index].validity
     } else {
       console.error('tabname cannot find')
     }
   },
   Tab1GeneralFarmingInformationValidated(state) {
-    const index = state.tabs.findIndex(
+    const index = state.tabs1.findIndex(
       (el) => el.tabName == 'GeneralFarmingInformationValidated'
     )
     if (index >= 0) {
-      return state.tabs[index].validity
+      return state.tabs1[index].validity
     } else {
       console.error('tabname cannot find')
     }
   },
   Tab1ParcelInformationValidated(state) {
-    const index = state.tabs.findIndex(
+    const index = state.tabs1.findIndex(
       (el) => el.tabName == 'ParcelInformationValidated'
     )
     if (index >= 0) {
-      return state.tabs[index].validity
+      return state.tabs1[index].validity
     } else {
       console.error('tabname cannot find')
     }
   },
   Tab1DetailsCoffeeAreaValidated(state) {
-    const index = state.tabs.findIndex(
+    const index = state.tabs1.findIndex(
       (el) => el.tabName == 'DetailsCoffeeAreaValidated'
     )
     if (index >= 0) {
-      return state.tabs[index].validity
+      return state.tabs1[index].validity
     } else {
       console.error('tabname cannot find')
     }
   },
   Tab1InfrastructureDistanceAccessibilityValidated(state) {
-    const index = state.tabs.findIndex(
+    const index = state.tabs1.findIndex(
       (el) => el.tabName == 'InfrastructureDistanceAccessibilityValidated'
     )
     if (index >= 0) {
-      return state.tabs[index].validity
+      return state.tabs1[index].validity
     } else {
       console.error('tabname cannot find')
     }
   },
   Tab1FarmActivitiesValidated(state) {
-    const index = state.tabs.findIndex(
+    const index = state.tabs1.findIndex(
       (el) => el.tabName == 'FarmActivitiesValidated'
     )
     if (index >= 0) {
-      return state.tabs[index].validity
+      return state.tabs1[index].validity
     } else {
       console.error('tabname cannot find')
     }
   },
   Tab1FarmWasteManagementValidated(state) {
-    const index = state.tabs.findIndex(
+    const index = state.tabs1.findIndex(
       (el) => el.tabName == 'FarmWasteManagementValidated'
     )
     if (index >= 0) {
-      return state.tabs[index].validity
+      return state.tabs1[index].validity
     } else {
       console.error('tabname cannot find')
     }
   },
   Tab1CroppingPatternCalendarValidated(state) {
-    const index = state.tabs.findIndex(
+    const index = state.tabs1.findIndex(
       (el) => el.tabName == 'CroppingPatternCalendarValidated'
     )
     if (index >= 0) {
-      return state.tabs[index].validity
+      return state.tabs1[index].validity
     } else {
       console.error('tabname cannot find')
     }
   },
   Tab1DetailsCoffeeProductionValidated(state) {
-    const index = state.tabs.findIndex(
+    const index = state.tabs1.findIndex(
       (el) => el.tabName == 'DetailsCoffeeProductionValidated'
     )
     if (index >= 0) {
-      return state.tabs[index].validity
+      return state.tabs1[index].validity
     } else {
       console.error('tabname cannot find')
     }
   },
   Tab1LaborUtilizationOperationsValidated(state) {
-    const index = state.tabs.findIndex(
+    const index = state.tabs1.findIndex(
       (el) => el.tabName == 'LaborUtilizationOperationsValidated'
     )
     if (index >= 0) {
-      return state.tabs[index].validity
+      return state.tabs1[index].validity
     } else {
       console.error('tabname cannot find')
     }
   },
   Tab1DetailWageOperationValidated(state) {
-    const index = state.tabs.findIndex(
+    const index = state.tabs1.findIndex(
       (el) => el.tabName == 'DetailWageOperationValidated'
     )
     if (index >= 0) {
-      return state.tabs[index].validity
+      return state.tabs1[index].validity
     } else {
       console.error('tabname cannot find')
     }
   },
   Tab1CostInputsCoffeeValidated(state) {
-    const index = state.tabs.findIndex(
+    const index = state.tabs1.findIndex(
       (el) => el.tabName == 'CostInputsCoffeeValidated'
     )
     if (index >= 0) {
-      return state.tabs[index].validity
+      return state.tabs1[index].validity
     } else {
       console.error('tabname cannot find')
     }
   },
   Tab1PestDamageObservedValidated(state) {
-    const index = state.tabs.findIndex(
+    const index = state.tabs1.findIndex(
       (el) => el.tabName == 'PestDamageObservedValidated'
     )
     if (index >= 0) {
-      return state.tabs[index].validity
+      return state.tabs1[index].validity
     } else {
       console.error('tabname cannot find')
     }
   },
   Tab1PestManagementPracticeValidated(state) {
-    const index = state.tabs.findIndex(
+    const index = state.tabs1.findIndex(
       (el) => el.tabName == 'PestManagementPracticeValidated'
     )
     if (index >= 0) {
-      return state.tabs[index].validity
+      return state.tabs1[index].validity
     } else {
       console.error('tabname cannot find')
     }
   },
   Tab1CoffeeHarvestMarketingValidated(state) {
-    const index = state.tabs.findIndex(
+    const index = state.tabs1.findIndex(
       (el) => el.tabName == 'CoffeeHarvestMarketingValidated'
     )
     if (index >= 0) {
-      return state.tabs[index].validity
+      return state.tabs1[index].validity
     } else {
       console.error('tabname cannot find')
     }
   },
   Tab1TechAwarenessValidated(state) {
-    const index = state.tabs.findIndex(
+    const index = state.tabs1.findIndex(
       (el) => el.tabName == 'TechAwarenessValidated'
     )
     if (index >= 0) {
-      return state.tabs[index].validity
+      return state.tabs1[index].validity
     } else {
       console.error('tabname cannot find')
     }
   },
   Tab1InformationKnowledgeSourcesValidated(state) {
-    const index = state.tabs.findIndex(
+    const index = state.tabs1.findIndex(
       (el) => el.tabName == 'InformationKnowledgeSourcesValidated'
     )
     if (index >= 0) {
-      return state.tabs[index].validity
+      return state.tabs1[index].validity
     } else {
       console.error('tabname cannot find')
     }
   },
   Tab1OpenEndedQuestionsValidated(state) {
-    const index = state.tabs.findIndex(
+    const index = state.tabs1.findIndex(
       (el) => el.tabName == 'OpenEndedQuestionsValidated'
     )
     if (index >= 0) {
-      return state.tabs[index].validity
+      return state.tabs1[index].validity
     } else {
       console.error('tabname cannot find')
     }
   },
   Tab1OpenEndedQuestionRatingValidated(state) {
-    const index = state.tabs.findIndex(
+    const index = state.tabs1.findIndex(
       (el) => el.tabName == 'OpenEndedQuestionRatingValidated'
     )
     if (index >= 0) {
-      return state.tabs[index].validity
+      return state.tabs1[index].validity
     } else {
       console.error('tabname cannot find')
     }
   },
-  //TODO: delete this after
-  // Tab1ReasonStoppingValidated(state) {
-  //   const index = state.tabs.findIndex(
-  //     (el) => el.tabName == 'ReasonStopping'
-  //   )
-  //   if (index >= 0) {
-  //     return state.tabs[index].validity
-  //   } else {
-  //     console.error('tabname cannot find')
-  //   }
-  // },
   /* Tab1 Items Getters END */
-  /* Tab2 Items Getters START */ //TODO:
+
+  /* Tab2 Items Getters START */
   Tab2DemographicFarmerProfileValidated(state) {
     const index = state.tabs2.findIndex(
       (el) => el.tabName == 'DemographicFarmerProfile'
@@ -682,9 +677,209 @@ export const getters = {
       console.error('tabname cannot find')
     }
   },
-  Tab2ReasonStoppingValidated(state) {
+  Tab2SurveyInformationValidated(state) {
     const index = state.tabs2.findIndex(
-      (el) => el.tabName == 'ReasonStopping'
+      (el) => el.tabName == 'SurveyInformationValidated'
+    )
+    if (index >= 0) {
+      return state.tabs2[index].validity
+    } else {
+      console.error('tabname cannot find')
+    }
+  },
+  Tab2BasicInformationValidated(state) {
+    const index = state.tabs2.findIndex(
+      (el) => el.tabName == 'BasicInformationValidated'
+    )
+    if (index >= 0) {
+      return state.tabs2[index].validity
+    } else {
+      console.error('tabname cannot find')
+    }
+  },
+  Tab2GeneralInformationValidated(state) {
+    const index = state.tabs2.findIndex(
+      (el) => el.tabName == 'GeneralInformationValidated'
+    )
+    if (index >= 0) {
+      return state.tabs2[index].validity
+    } else {
+      console.error('tabname cannot find')
+    }
+  },
+  Tab2FamilyAffiliatedValidated(state) {
+    const index = state.tabs2.findIndex(
+      (el) => el.tabName == 'FamilyAffiliatedValidated'
+    )
+    if (index >= 0) {
+      return state.tabs2[index].validity
+    } else {
+      console.error('tabname cannot find')
+    }
+  },
+  Tab2FamilyIncomeValidated(state) {
+    const index = state.tabs2.findIndex(
+      (el) => el.tabName == 'FamilyIncomeValidated'
+    )
+    if (index >= 0) {
+      return state.tabs2[index].validity
+    } else {
+      console.error('tabname cannot find')
+    }
+  },
+  Tab2FarmIncomeValidated(state) {
+    const index = state.tabs2.findIndex(
+      (el) => el.tabName == 'FarmIncomeValidated'
+    )
+    if (index >= 0) {
+      return state.tabs2[index].validity
+    } else {
+      console.error('tabname cannot find')
+    }
+  },
+  Tab2HouseholdExpensesValidated(state) {
+    const index = state.tabs2.findIndex(
+      (el) => el.tabName == 'HouseholdExpensesValidated'
+    )
+    if (index >= 0) {
+      return state.tabs2[index].validity
+    } else {
+      console.error('tabname cannot find')
+    }
+  },
+  Tab2AssetsFarmToolsValidated(state) {
+    const index = state.tabs2.findIndex(
+      (el) => el.tabName == 'AssetsFarmToolsValidated'
+    )
+    if (index >= 0) {
+      return state.tabs2[index].validity
+    } else {
+      console.error('tabname cannot find')
+    }
+  },
+  Tab2AssetsFarmMachineryValidated(state) {
+    const index = state.tabs2.findIndex(
+      (el) => el.tabName == 'AssetsFarmMachineryValidated'
+    )
+    if (index >= 0) {
+      return state.tabs2[index].validity
+    } else {
+      console.error('tabname cannot find')
+    }
+  },
+  Tab2AssetsFarmPoultryLivestockValidated(state) {
+    const index = state.tabs2.findIndex(
+      (el) => el.tabName == 'AssetsFarmPoultryLivestockValidated'
+    )
+    if (index >= 0) {
+      return state.tabs2[index].validity
+    } else {
+      console.error('tabname cannot find')
+    }
+  },
+  Tab2AssetsFarmStructureValidated(state) {
+    const index = state.tabs2.findIndex(
+      (el) => el.tabName == 'AssetsFarmStructureValidated'
+    )
+    if (index >= 0) {
+      return state.tabs2[index].validity
+    } else {
+      console.error('tabname cannot find')
+    }
+  },
+  Tab2InformationDwellingPlaceValidated(state) {
+    const index = state.tabs2.findIndex(
+      (el) => el.tabName == 'InformationDwellingPlaceValidated'
+    )
+    if (index >= 0) {
+      return state.tabs2[index].validity
+    } else {
+      console.error('tabname cannot find')
+    }
+  },
+  Tab2GeneralFarmingInformationValidated(state) {
+    const index = state.tabs2.findIndex(
+      (el) => el.tabName == 'GeneralFarmingInformationValidated'
+    )
+    if (index >= 0) {
+      return state.tabs2[index].validity
+    } else {
+      console.error('tabname cannot find')
+    }
+  },
+  Tab2ParcelInformationValidated(state) {
+    const index = state.tabs2.findIndex(
+      (el) => el.tabName == 'ParcelInformationValidated'
+    )
+    if (index >= 0) {
+      return state.tabs2[index].validity
+    } else {
+      console.error('tabname cannot find')
+    }
+  },
+  Tab2InfrastructureDistanceAccessibilityValidated(state) {
+    const index = state.tabs2.findIndex(
+      (el) => el.tabName == 'InfrastructureDistanceAccessibilityValidated'
+    )
+    if (index >= 0) {
+      return state.tabs2[index].validity
+    } else {
+      console.error('tabname cannot find')
+    }
+  },
+  Tab2FarmActivitiesValidated(state) {
+    const index = state.tabs2.findIndex(
+      (el) => el.tabName == 'FarmActivitiesValidated'
+    )
+    if (index >= 0) {
+      return state.tabs2[index].validity
+    } else {
+      console.error('tabname cannot find')
+    }
+  },
+  Tab2DetailWageOperationValidated(state) {
+    const index = state.tabs2.findIndex(
+      (el) => el.tabName == 'DetailWageOperationValidated'
+    )
+    if (index >= 0) {
+      return state.tabs2[index].validity
+    } else {
+      console.error('tabname cannot find')
+    }
+  },
+  Tab2TechAwarenessValidated(state) {
+    const index = state.tabs2.findIndex(
+      (el) => el.tabName == 'TechAwarenessValidated'
+    )
+    if (index >= 0) {
+      return state.tabs2[index].validity
+    } else {
+      console.error('tabname cannot find')
+    }
+  },
+  Tab2InformationKnowledgeSourcesValidated(state) {
+    const index = state.tabs2.findIndex(
+      (el) => el.tabName == 'InformationKnowledgeSourcesValidated'
+    )
+    if (index >= 0) {
+      return state.tabs2[index].validity
+    } else {
+      console.error('tabname cannot find')
+    }
+  },
+  Tab2OpenEndedQuestionsValidated(state) {
+    const index = state.tabs2.findIndex(
+      (el) => el.tabName == 'OpenEndedQuestionsValidated'
+    )
+    if (index >= 0) {
+      return state.tabs2[index].validity
+    } else {
+      console.error('tabname cannot find')
+    }
+  },
+  Tab2OpenEndedQuestionRatingValidated(state) {
+    const index = state.tabs2.findIndex(
+      (el) => el.tabName == 'OpenEndedQuestionRatingValidated'
     )
     if (index >= 0) {
       return state.tabs2[index].validity
@@ -693,7 +888,8 @@ export const getters = {
     }
   },
   /* Tab2 Items Getters END */
-  /* Tab3 Items Getters START *///TODO:
+
+  /* Tab3 Items Getters START */
   Tab3DemographicFarmerProfileValidated(state) {
     const index = state.tabs3.findIndex(
       (el) => el.tabName == 'DemographicFarmerProfile'
@@ -704,209 +900,9 @@ export const getters = {
       console.error('tabname cannot find')
     }
   },
-  Tab3SurveyInformationValidated(state) {
+  Tab3ReasonStoppingValidated(state) {
     const index = state.tabs3.findIndex(
-      (el) => el.tabName == 'SurveyInformationValidated'
-    )
-    if (index >= 0) {
-      return state.tabs3[index].validity
-    } else {
-      console.error('tabname cannot find')
-    }
-  },
-  Tab3BasicInformationValidated(state) {
-    const index = state.tabs3.findIndex(
-      (el) => el.tabName == 'BasicInformationValidated'
-    )
-    if (index >= 0) {
-      return state.tabs3[index].validity
-    } else {
-      console.error('tabname cannot find')
-    }
-  },
-  Tab3GeneralInformationValidated(state) {
-    const index = state.tabs3.findIndex(
-      (el) => el.tabName == 'GeneralInformationValidated'
-    )
-    if (index >= 0) {
-      return state.tabs3[index].validity
-    } else {
-      console.error('tabname cannot find')
-    }
-  },
-  Tab3FamilyAffiliatedValidated(state) {
-    const index = state.tabs3.findIndex(
-      (el) => el.tabName == 'FamilyAffiliatedValidated'
-    )
-    if (index >= 0) {
-      return state.tabs3[index].validity
-    } else {
-      console.error('tabname cannot find')
-    }
-  },
-  Tab3FamilyIncomeValidated(state) {
-    const index = state.tabs3.findIndex(
-      (el) => el.tabName == 'FamilyIncomeValidated'
-    )
-    if (index >= 0) {
-      return state.tabs3[index].validity
-    } else {
-      console.error('tabname cannot find')
-    }
-  },
-  Tab3FarmIncomeValidated(state) {
-    const index = state.tabs3.findIndex(
-      (el) => el.tabName == 'FarmIncomeValidated'
-    )
-    if (index >= 0) {
-      return state.tabs3[index].validity
-    } else {
-      console.error('tabname cannot find')
-    }
-  },
-  Tab3HouseholdExpensesValidated(state) {
-    const index = state.tabs3.findIndex(
-      (el) => el.tabName == 'HouseholdExpensesValidated'
-    )
-    if (index >= 0) {
-      return state.tabs3[index].validity
-    } else {
-      console.error('tabname cannot find')
-    }
-  },
-  Tab3AssetsFarmToolsValidated(state) {
-    const index = state.tabs3.findIndex(
-      (el) => el.tabName == 'AssetsFarmToolsValidated'
-    )
-    if (index >= 0) {
-      return state.tabs3[index].validity
-    } else {
-      console.error('tabname cannot find')
-    }
-  },
-  Tab3AssetsFarmMachineryValidated(state) {
-    const index = state.tabs3.findIndex(
-      (el) => el.tabName == 'AssetsFarmMachineryValidated'
-    )
-    if (index >= 0) {
-      return state.tabs3[index].validity
-    } else {
-      console.error('tabname cannot find')
-    }
-  },
-  Tab3AssetsFarmPoultryLivestockValidated(state) {
-    const index = state.tabs3.findIndex(
-      (el) => el.tabName == 'AssetsFarmPoultryLivestockValidated'
-    )
-    if (index >= 0) {
-      return state.tabs3[index].validity
-    } else {
-      console.error('tabname cannot find')
-    }
-  },
-  Tab3AssetsFarmStructureValidated(state) {
-    const index = state.tabs3.findIndex(
-      (el) => el.tabName == 'AssetsFarmStructureValidated'
-    )
-    if (index >= 0) {
-      return state.tabs3[index].validity
-    } else {
-      console.error('tabname cannot find')
-    }
-  },
-  Tab3InformationDwellingPlaceValidated(state) {
-    const index = state.tabs3.findIndex(
-      (el) => el.tabName == 'InformationDwellingPlaceValidated'
-    )
-    if (index >= 0) {
-      return state.tabs3[index].validity
-    } else {
-      console.error('tabname cannot find')
-    }
-  },
-  Tab3GeneralFarmingInformationValidated(state) {
-    const index = state.tabs3.findIndex(
-      (el) => el.tabName == 'GeneralFarmingInformationValidated'
-    )
-    if (index >= 0) {
-      return state.tabs3[index].validity
-    } else {
-      console.error('tabname cannot find')
-    }
-  },
-  Tab3ParcelInformationValidated(state) {
-    const index = state.tabs3.findIndex(
-      (el) => el.tabName == 'ParcelInformationValidated'
-    )
-    if (index >= 0) {
-      return state.tabs3[index].validity
-    } else {
-      console.error('tabname cannot find')
-    }
-  },
-  Tab3InfrastructureDistanceAccessibilityValidated(state) {
-    const index = state.tabs3.findIndex(
-      (el) => el.tabName == 'InfrastructureDistanceAccessibilityValidated'
-    )
-    if (index >= 0) {
-      return state.tabs3[index].validity
-    } else {
-      console.error('tabname cannot find')
-    }
-  },
-  Tab3FarmActivitiesValidated(state) {
-    const index = state.tabs3.findIndex(
-      (el) => el.tabName == 'FarmActivitiesValidated'
-    )
-    if (index >= 0) {
-      return state.tabs3[index].validity
-    } else {
-      console.error('tabname cannot find')
-    }
-  },
-  Tab3DetailWageOperationValidated(state) {
-    const index = state.tabs3.findIndex(
-      (el) => el.tabName == 'DetailWageOperationValidated'
-    )
-    if (index >= 0) {
-      return state.tabs3[index].validity
-    } else {
-      console.error('tabname cannot find')
-    }
-  },
-  Tab3TechAwarenessValidated(state) {
-    const index = state.tabs3.findIndex(
-      (el) => el.tabName == 'TechAwarenessValidated'
-    )
-    if (index >= 0) {
-      return state.tabs3[index].validity
-    } else {
-      console.error('tabname cannot find')
-    }
-  },
-  Tab3InformationKnowledgeSourcesValidated(state) {
-    const index = state.tabs3.findIndex(
-      (el) => el.tabName == 'InformationKnowledgeSourcesValidated'
-    )
-    if (index >= 0) {
-      return state.tabs3[index].validity
-    } else {
-      console.error('tabname cannot find')
-    }
-  },
-  Tab3OpenEndedQuestionsValidated(state) {
-    const index = state.tabs3.findIndex(
-      (el) => el.tabName == 'OpenEndedQuestionsValidated'
-    )
-    if (index >= 0) {
-      return state.tabs3[index].validity
-    } else {
-      console.error('tabname cannot find')
-    }
-  },
-  Tab3OpenEndedQuestionRatingValidated(state) {
-    const index = state.tabs3.findIndex(
-      (el) => el.tabName == 'OpenEndedQuestionRatingValidated'
+      (el) => el.tabName == 'ReasonStopping'
     )
     if (index >= 0) {
       return state.tabs3[index].validity
@@ -932,18 +928,17 @@ export const mutations = {
   },
   /* set the tab validity expected obj is {tabName: string, valid: boolean }*/
   toggleNextTab(state, obj) { //TODO:
-    let tabs = [];
+    let tabs = []
     let tabname = obj.tabName
-    if(!state.isInterviewed){
+    if(state.isInterviewed && state.isSelfFarmerActive){
+      tabs = state.tabs1
+    }else if(state.isInterviewed && !state.isSelfFarmerActive){
       tabs = state.tabs2
-    }else if(!state.isSelfFarmerActive){
-      tabs = state.tabs3
     }else{
-      tabs = state.tabs
+      tabs = state.tabs3
     }
     const tabsLength = tabs.length
     const index = tabs.findIndex((el) => el.tabName == tabname)
-    console.log(index)
     if (index >= 0) {
       if (obj.valid) {
         state.progress = ((index+1)/tabsLength)*100
@@ -970,11 +965,22 @@ export const mutations = {
 
   /* reset the validity of all tabs into false */
   resetTabsValidity(state) {
-    state.tabs.forEach((tab) => {
+    let tabs = []
+    if(state.isInterviewed && state.isSelfFarmerActive){
+      tabs = state.tabs1
+    }else if(state.isInterviewed && !state.isSelfFarmerActive){
+      tabs = state.tabs2
+    }else{
+      tabs = state.tabs3
+    }
+    tabs.forEach((tab) => {
       tab.validity = false
       tab.tempValidity = false
     })
     state.progress = 0
+    state.form = {
+      farmHouseholdAsset: {}
+    }
     // state.currentTab = 'BasicInformation' //TODO:
   },
 

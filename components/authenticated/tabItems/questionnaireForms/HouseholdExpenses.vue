@@ -138,6 +138,9 @@
 import FormInputContainer from '~/components/authenticated/form/formInputContainer.vue'
 import { convertNumbers } from '~/reusableFunctions/questionnaireValidation'
 export default {
+  activated(){
+    this.validate()
+  },
   components: { FormInputContainer },
   data: () => ({
     valid: false,

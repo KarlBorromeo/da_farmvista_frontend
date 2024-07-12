@@ -33,6 +33,9 @@
 import formInputContainer from '~/components/authenticated/form/formInputContainer.vue'
 export default {
   components: { formInputContainer },
+  activated(){
+    this.validate()
+  },
   data: () => ({
     valid: false,
     contactNumber: '',

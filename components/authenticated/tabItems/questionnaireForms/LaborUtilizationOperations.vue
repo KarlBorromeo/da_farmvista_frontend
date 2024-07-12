@@ -135,6 +135,9 @@ import laborOperationColText from '~/components/authenticated/form/laborOperatio
 import FormInputContainer from '~/components/authenticated/form/formInputContainer.vue'
 import { convertNumbers } from '~/reusableFunctions/questionnaireValidation'
 export default {
+  activated(){
+    this.validate()
+  },
   components: {
     formCard,
     laborOperationContainer,

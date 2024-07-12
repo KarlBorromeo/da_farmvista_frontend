@@ -243,6 +243,9 @@ import {
 } from '~/reusableFunctions/questionnaireValidation'
 import FormCheckboxContainer from '~/components/authenticated/form/formCheckboxContainer.vue'
 export default {
+  activated(){
+    this.validate()
+  },
   components: {
     FormCheckboxContainer,
   },

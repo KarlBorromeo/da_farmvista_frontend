@@ -283,6 +283,9 @@ import FormMenuContainer from '~/components/authenticated/form/formMenuContainer
 import FormRadioContainer from '~/components/authenticated/form/formRadioContainer.vue'
 
 export default {
+  activated(){
+    this.validate()
+  },
   components: {
     FormCheckboxContainer,
     FormInputContainer,

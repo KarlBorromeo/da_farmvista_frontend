@@ -325,6 +325,9 @@ import {
   extractUnmatchedValueRadio,
 } from '~/reusableFunctions/questionnaireValidation'
 export default {
+  activated(){
+    this.validate()
+  },
   components: {
     FormInputContainer,
     FormRadioContainer,
