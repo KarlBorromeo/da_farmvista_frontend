@@ -71,6 +71,9 @@ import FormRadioContainer from '~/components/authenticated/form/formRadioContain
 import FormSelectContainer from '~/components/authenticated/form/formSelectContainer.vue'
 import { convertNumbers } from '~/reusableFunctions/questionnaireValidation'
 export default {
+  activated(){
+    this.validate()
+  },
   components: {
     formCard,
     formCardButton,

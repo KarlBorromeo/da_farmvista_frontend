@@ -106,6 +106,9 @@ import formCardButton from '~/components/authenticated/form/formCardButton.vue'
 import FormInputContainer from '~/components/authenticated/form/formInputContainer.vue'
 import FormRadioContainer from '~/components/authenticated/form/formRadioContainer.vue'
 export default {
+  activated(){
+    this.validate()
+  },
   components: {
     formCard,
     formCardButton,

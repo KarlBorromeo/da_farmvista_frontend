@@ -31,6 +31,9 @@
 import FormCard from '~/components/authenticated/form/formCard.vue'
 import FormRadioContainer from '~/components/authenticated/form/formRadioContainer.vue'
 export default {
+  activated(){
+    this.validate()
+  },
   components: {
     FormCard,
     FormRadioContainer,

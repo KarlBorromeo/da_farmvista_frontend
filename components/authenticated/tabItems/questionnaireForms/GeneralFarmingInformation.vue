@@ -76,6 +76,9 @@
 import FormInputContainer from '~/components/authenticated/form/formInputContainer.vue'
 import FormRadioContainer from '~/components/authenticated/form/formRadioContainer.vue'
 export default {
+  activated(){
+    this.validate()
+  },
   components: { FormInputContainer, FormRadioContainer },
   data() {
     return {

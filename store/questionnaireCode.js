@@ -211,7 +211,6 @@ export const mutations = {
     let index = state.codes.Location.findIndex(item => item.province == province)
     if(index>=0){
       state.cities = state.codes.Location[index].cities.map(item => item.city)
-      console.log(state.cities)
     }else{
       state.cities = []
     }

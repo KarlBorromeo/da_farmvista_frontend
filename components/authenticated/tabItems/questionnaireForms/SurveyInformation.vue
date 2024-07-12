@@ -108,6 +108,9 @@ import FormMenuContainer from '~/components/authenticated/form/formMenuContainer
 import FormRadioContainer from '~/components/authenticated/form/formRadioContainer.vue'
 import FormSelectContainer from '~/components/authenticated/form/formSelectContainer.vue'
 export default {
+  activated(){
+    this.validate()
+  },
   components: {
     formInputContainer,
     FormRadioContainer,
