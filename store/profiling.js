@@ -73,7 +73,7 @@ export const mutations = {
         nameOrganization: element.profileGeneralInfo
           ? element.profileGeneralInfo.organizationName
           : '',
-        status: element.interview.intervieweeStatus,
+        status: element.interview.status,
       }
       state.itemsCurrentPage.push(object)
     })
