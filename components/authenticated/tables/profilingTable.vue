@@ -23,7 +23,7 @@
       <template v-slot:[`item.validated`]="{ item }">
         <p
           class="text-center"
-          :class="item.status != 'validated' ? 'red--text' : ''"
+          :class="item.status === 'active' ? 'black--text' : 'red--text'"
         >
           {{ item.status }}
         </p>

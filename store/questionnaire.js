@@ -295,6 +295,7 @@ export const state = () => ({
   currentTab: 'DemographicFarmerProfile',
   // currentTab: 'ReasonStopping',
   // currentTab: 'OpenEndedQuestionRating',
+  sliderTabPosition: 0,
   progress: 0,
   isAllValid: false,
   commodity: '',
@@ -313,6 +314,9 @@ export const state = () => ({
 })
 
 export const getters = {
+  sliderTabPosition(state){
+    return state.sliderTabPosition
+  },
   /* return the progress percentage of the form */
   progress(state){
     return state.progress
@@ -931,11 +935,11 @@ export const mutations = {
     let tabs = []
     let tabname = obj.tabName
     if(state.isInterviewed && state.isSelfFarmerActive){
-      tabs = state.tabs1
+      tabs = [...state.tabs1]
     }else if(state.isInterviewed && !state.isSelfFarmerActive){
-      tabs = state.tabs2
+      tabs = [...state.tabs2]
     }else{
-      tabs = state.tabs3
+      tabs = [...state.tabs3]
     }
     const tabsLength = tabs.length
     const index = tabs.findIndex((el) => el.tabName == tabname)
@@ -959,7 +963,7 @@ export const mutations = {
         }
       }
     } else {
-      alert('oops something wrong')
+      alert('oops something wrong'+tabname)
     }
   },
 
@@ -967,11 +971,11 @@ export const mutations = {
   resetTabsValidity(state) {
     let tabs = []
     if(state.isInterviewed && state.isSelfFarmerActive){
-      tabs = state.tabs1
+      tabs = [...state.tabs1]
     }else if(state.isInterviewed && !state.isSelfFarmerActive){
-      tabs = state.tabs2
+      tabs = [...state.tabs2]
     }else{
-      tabs = state.tabs3
+      tabs = [...state.tabs3]
     }
     tabs.forEach((tab) => {
       tab.validity = false
@@ -981,11 +985,25 @@ export const mutations = {
     state.form = {
       farmHouseholdAsset: {}
     }
-    // state.currentTab = 'BasicInformation' //TODO:
+    state.currentTab = 'DemographicFarmerProfile' //TODO:
   },
 
   /* display the next tab contents */
   displayCurrentTab(state, tabName) {
+    let tabs = []
+    if(state.isInterviewed && state.isSelfFarmerActive){
+      tabs = [...state.tabs1]
+    }else if(state.isInterviewed && !state.isSelfFarmerActive){
+      tabs = [...state.tabs2]
+    }else{
+      tabs = [...state.tabs3]
+    }
+    const index = tabs.findIndex(item => item.tabName === tabName+'Validated')
+    if(index>=0){
+      state.sliderTabPosition = index
+    }else{
+      state.sliderTabPosition = 0
+    }
     state.currentTab = tabName
   },
 

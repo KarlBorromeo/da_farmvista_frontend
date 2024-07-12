@@ -20,11 +20,6 @@
         </form-input-container>
       </v-row>
     </v-container>
-    <v-container class="d-flex">
-      <v-btn icon><v-icon>mdi-chevron-left-circle</v-icon></v-btn>
-      <v-spacer />
-      <v-btn icon><v-icon>mdi-chevron-right-circle</v-icon></v-btn>
-    </v-container>
     <!-- <v-btn @click="validate">Validate</v-btn> -->
   </v-form>
 </template>

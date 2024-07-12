@@ -1,5 +1,5 @@
 <template>
-  <v-card light class="pa-4">
+  <v-card id="card" light class="pa-4" style="border: 1px solid black; overflow:hidden!important">
     <div class="d-flex align-center justify-space-between pa-4">
       <h2 class="pa-0 ma-0 headline font-weight-bold">
         Survey Questionaire {{ currentCommodity }}
@@ -21,6 +21,7 @@
           slider-color="primary"
           v-model="initialTab"
         >
+        
           <v-tab
             class="caption font-weight-black"
             @click="selectTab('DemographicFarmerProfile')"
@@ -474,6 +475,9 @@
       </v-card>
       <v-card v-else> EMPTY </v-card>
     </v-tabs-items>
+    <v-row justify="center">
+      <a href="#card" id="arrow-up-scroll"><v-btn icon large><v-icon>mdi-arrow-up-circle-outline</v-icon></v-btn></a>
+    </v-row>
     <snackbar ref="snackbar" />
   </v-card>
 </template>
@@ -518,6 +522,17 @@ import snackbar from '~/components/snackbar.vue'
 
 
 export default {
+  mounted() {
+    // Smooth scrolling with JavaScript
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+  },
   props: ['id', 'commodityProp'],
   components: {
     DemographicFarmerProfile,
@@ -835,11 +850,24 @@ export default {
     }
   },
   watch: {
+    initialTab(val){
+      console.log('this the tab index val:',val,typeof(val))
+    },
     /* watch the current tab, move to the intial tab when the current tab is BasicInformation */
     currentTab(tabName) {
-      if (tabName == 'BasicInformation') {
+      if (tabName == 'DemographicFarmerProfile') {
         this.initialTab = 0
       }
+      // else{
+      //   const indexTab = this.$store.getters['questionnaire/sliderTabPosition']
+      //   console.log(indexTab)
+      //   this.initialTab = indexTab + 2;
+        /* this is unanswered concern, but here is the explanation why we comeup with this statement,
+           we have only 2 tabs taht is conditional, all remenaing tabs are coniditonal, means it is binded with "v-if",
+           my understanding on this is the vuejs is expecting 2 tabs adn remaining is optional, if we don't add number 2 the sliding tab
+           positiong of the tabs will go to the end. To fix this error we added number 2 to the index of the tabs.
+        */
+      // }
     },
     /* fetch codes if the commodity changed*/
     async currentCommodity(newVal, oldVal) {
@@ -857,8 +885,16 @@ export default {
     },
   },
 }
+
 </script>
 
 <style scoped>
 @import url('~/assets/css/fonts.css');
+#arrow-up-scroll{
+  opacity: .5;
+}
+#arrow-up-scroll:hover{
+  opacity: 1;
+  transition: .1s ease-in;
+}
 </style>
