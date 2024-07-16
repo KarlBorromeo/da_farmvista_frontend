@@ -1,6 +1,7 @@
 <template>
   <v-form ref="form" v-model="valid" lazy-validation>
     <v-container>
+      {{isHouseMemberAffiliatedToOrg}}
       <form-card v-for="(i, index) in items" :key="index">
         <v-btn :disabled="(i-1) === disabledIndex" icon class="formCardDeleteBtn" @click="deleteFormCard(i-1)"><v-icon class="red--text">mdi-trash-can</v-icon></v-btn>
         <v-row>
@@ -24,7 +25,6 @@
               required
               v-model="position[i - 1]"
               class="py-0 my-0"
-              :disabled="(i-1) === disabledIndex"
             >
               <v-radio
                 v-for="item in positionItems"
@@ -125,7 +125,7 @@
           </form-radio-container>
         </v-row>
       </form-card>
-      <form-card-button @emitIncrement="increment" :disabled="diableIncrement"/>
+      <form-card-button @emitIncrement="increment" :disabled="disableIncrement"/>
     </v-container>
     <!-- <v-btn @click="validate">Validate</v-btn> -->
   </v-form>
@@ -171,12 +171,13 @@ export default {
     statusOrganizationItems: [],
     requiredRule: [(v) => !!v || 'This field is required'],
     numberRule: [(v) => parseInt(v) >= 0 || 'this number is invalid'],
-    diableIncrement: false,
+    disableIncrement: false,
     disabledIndex: '',
   }),
   methods: {
     /* test if the form is valid, return boolean */
-    validate() {
+    async validate() {
+      await new Promise(resolve => setTimeout(resolve,300))
       if (this.items == 0) {
         this.$store.commit('questionnaire/toggleNextTab', {
           tabName: 'FamilyAffiliatedValidated',
@@ -209,7 +210,7 @@ export default {
         typeOrganization: [],
         yearsAsMember: [],
         statusMembership: [],
-        statusOrganization: [],
+        statusOrganization: []
       }
     },
     /* get the data and convert it into expected key/value formats in BackEnd */
@@ -245,8 +246,7 @@ export default {
         this.statusMembership.splice(index,1)
         this.statusOrganization.splice(index,1)
         this.items--
-
-        let fullname = "maria liza a. racho"
+        let fullname = this.$store.getters['questionnaire/selfFarmerFullname']
         let i = this.nameFamilyMember.findIndex(item => item === fullname)
         if(i>=0){
           this.disabledIndex = i
@@ -297,7 +297,11 @@ export default {
       const data = this.$store.getters['profiling/selectedRecord']
       if (data.familyAffiliatedFarmOrg) {
         if (data.profileGeneralInfo.isMemberFarmerOrganization == 'yes') {
-          this.disabledIndex = 0
+          let fullname = this.$store.getters['questionnaire/selfFarmerFullname']
+          let index = data.familyAffiliatedFarmOrg.findIndex(item => item.fullName === fullname)
+          if(index>=0){
+            this.disabledIndex = index
+          }
         }
         const length = data.familyAffiliatedFarmOrg.length
         this.items += length
@@ -343,9 +347,8 @@ export default {
       }
     } else {
       const profileGeneralInfo =
-        this.$store.getters['questionnaire/generalInformationDetails']
-      const profile = this.$store.getters['questionnaire/profile']
-      if (profileGeneralInfo && profile) {
+      this.$store.getters['questionnaire/generalInformationDetails']
+      if (profileGeneralInfo) {
         if (profileGeneralInfo.isMemberFarmerOrganization == 'yes') {
           let fullname = this.$store.getters['questionnaire/selfFarmerFullname']
           this.items = 1
@@ -361,9 +364,18 @@ export default {
           this.statusMembership.push('')
           this.statusOrganization.push('')
         }
+
+        if (profileGeneralInfo.isAnyHouseholdMemberOrg == 'yes'){
+          this.disableIncrement = false
+        }else{
+          this.disableIncrement = true
+        }
       } else {
+        
         this.resetData()
       }
+
+
     }
   },
   computed: {
@@ -432,7 +444,7 @@ export default {
     },
     isHouseMemberAffiliatedToOrg(val) {
       if(val == 'no'){
-        this.diableIncrement = true;
+        this.disableIncrement = true;
         let fullname = this.$store.getters['questionnaire/selfFarmerFullname']
         let length = this.nameFamilyMember.length
         for(let i=0; i<length; i++){
@@ -457,7 +469,7 @@ export default {
         }
         console.log('after family:',this.items,'disabledIndex:',this.disabledIndex)
       }else{
-        this.diableIncrement = false;
+        this.disableIncrement = false;
       }
     },
     // /* watch if the farmer profile is changed like names, then it will affect also the family affilated data */

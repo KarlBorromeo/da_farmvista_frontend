@@ -22,48 +22,51 @@
           </form-radio-container>
         </v-row>
       </form-card>
-      <form-card v-for="item in list" :key="item">
-        <p class="my-2 pb-0 font-weight-medium">
-          {{ camelToSpace(item) }}
-        </p>
-        <v-row>
-          <form-radio-container title="have you heard?" :required="true">
-            <v-radio-group
-              :rules="requiredRule"
-              v-model="formData[item].isHeard"
-              class="pa-0 ma-0"
-            >
-              <v-radio
-                v-for="item in isAgreeItems"
-                :key="item"
-                :label="item"
-                :value="item"
-              ></v-radio>
-            </v-radio-group>
-          </form-radio-container>
-          <form-input-container v-if="formData[item].isHeard == 'yes'">
-            <v-text-field
-              v-model="formData[item].sourceInfo"
-              :rules="requiredRule"
-              label="* Source of information"
-            ></v-text-field>
-          </form-input-container>
-          <form-input-container v-if="formData[item].isHeard == 'yes'">
-            <v-text-field
-              v-model="formData[item].howDidLearnTechPractices"
-              :rules="requiredRule"
-              label="* How did you learn about the Tech/Practices"
-            ></v-text-field>
-          </form-input-container>
-          <form-input-container v-if="formData[item].isHeard == 'yes'">
-            <v-text-field
-              v-model="formData[item].year"
-              :rules="yearRule"
-              label="* Year"
-            ></v-text-field>
-          </form-input-container>
-        </v-row>
-      </form-card>
+      <div>
+        <form-card v-for="item in list" :key="item">
+          <p class="my-2 pb-0 font-weight-medium">
+            {{ camelToSpace(item) }}
+          </p>
+          <v-row>
+            <form-radio-container title="have you heard?" :required="true">
+              <v-radio-group
+                :rules="requiredRule"
+                v-model="formData[item].isHeard"
+                class="pa-0 ma-0"
+              >
+                <v-radio
+                  v-for="item in isAgreeItems"
+                  :key="item"
+                  :label="item"
+                  :value="item"
+                ></v-radio>
+              </v-radio-group>
+            </form-radio-container>
+            <form-input-container v-if="formData[item].isHeard == 'yes'">
+              <v-text-field
+                v-model="formData[item].sourceInfo"
+                :rules="requiredRule"
+                label="* Source of information"
+              ></v-text-field>
+            </form-input-container>
+            <form-input-container v-if="formData[item].isHeard == 'yes'">
+              <v-text-field
+                v-model="formData[item].howDidLearnTechPractices"
+                :rules="requiredRule"
+                label="* How did you learn about the Tech/Practices"
+              ></v-text-field>
+            </form-input-container>
+            <form-input-container v-if="formData[item].isHeard == 'yes'">
+              <v-text-field
+                v-model="formData[item].year"
+                :rules="yearRule"
+                label="* Year"
+              ></v-text-field>
+            </form-input-container>
+          </v-row>
+        </form-card>        
+      </div>
+      
     </v-container>
     <!-- <v-btn @click="validate">Validate</v-btn> -->
   </v-form>
@@ -609,7 +612,8 @@ export default {
   }),
   methods: {
     /* test if the form is valid, return boolean */
-    validate() {
+    async validate() {
+      await new Promise(resolve => setTimeout(resolve,500))
       const valid = this.$refs.form.validate()
       this.$store.commit('questionnaire/toggleNextTab', {
         tabName: 'TechAwarenessValidated',

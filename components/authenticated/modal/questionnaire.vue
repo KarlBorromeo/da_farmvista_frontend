@@ -1,5 +1,5 @@
 <template>
-  <v-card id="card" light class="pa-4" style="border: 1px solid black; overflow:hidden!important">
+  <v-card id="card" ref="card" light class="pa-4" style="border: 1px solid black; overflow:hidden!important">
     <div class="d-flex align-center justify-space-between pa-4">
       <h2 class="pa-0 ma-0 headline font-weight-bold">
         Survey Questionaire {{ currentCommodity }}
@@ -892,9 +892,15 @@ export default {
 @import url('~/assets/css/fonts.css');
 #arrow-up-scroll{
   opacity: .5;
+  animation: upDownMovement 1s ease-in-out infinite;
 }
 #arrow-up-scroll:hover{
   opacity: 1;
   transition: .1s ease-in;
+}
+@keyframes upDownMovement {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0); }
 }
 </style>

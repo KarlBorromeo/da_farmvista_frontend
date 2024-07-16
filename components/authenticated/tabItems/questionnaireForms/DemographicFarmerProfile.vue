@@ -111,7 +111,7 @@
 					<v-text-field
 						v-model="confirmedBy"
 						:rules="requiredRule"
-						label="* Confirmed by:"
+						label="* Confirmed by (Name):"
 						required
 					></v-text-field>
 				</form-input-container>
@@ -119,7 +119,7 @@
 					<v-text-field
 						v-model="position"
 						:rules="requiredRule"
-						label="* Position:"
+						label="* Confirmed by (Position):"
 						required
 					></v-text-field>
 				</form-input-container>
@@ -161,8 +161,9 @@ export default {
 	}),
 	methods: {
 		/* test if the form is valid, return boolean */
-		async validate() {
+		async validate() {		
 			const textValid = this.$refs.form.validate()
+			await new Promise(resolve => setTimeout(resolve,300))
 			let valid = false;
 			if(textValid && this.regionProvince && this.cityMunicipality && this.barangay){
 				valid = true
@@ -170,7 +171,7 @@ export default {
 
 			if (valid) {
 				this.$store.commit('questionnaire/saveData', {
-					keyName: 'demographicProfile',
+					keyName: 'interview',
 					data: this.getData(),
 				})
 				const fullname = this.concatFullName(this.farmerFirstName,this.farmerMiddileInitial,this.farmerSurName)
@@ -199,11 +200,11 @@ export default {
 				classification : this.classification,
 				status : this.status,
 				isInterviewed : this.isInterviewed,
-				farmerFirstName : this.farmerFirstName,
-				farmerSurName : this.farmerSurName,
-				farmerMiddileInitial : this.farmerMiddileInitial,
-				confirmedBy : this.confirmedBy,
-				position : this.position
+				firstName : this.farmerFirstName,
+				lastName : this.farmerSurName,
+				middleInitial : this.farmerMiddileInitial,
+				confirmedByName : this.confirmedBy,
+				confirmedByPosition : this.position
 			}
 		}
 	},

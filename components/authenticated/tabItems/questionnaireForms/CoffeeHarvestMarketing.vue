@@ -40,7 +40,6 @@
             >
               <v-text-field
                 v-model="formData[item.key].variable"
-                :rules="requiredRule"
                 label="* Details"
                 :type="item.type"
               ></v-text-field>
@@ -48,8 +47,6 @@
             <form-radio-container v-else :title="item.title" :required="true">
               <v-text-field
                 v-model="formData[item.key].variable"
-                :rules="requiredRule"
-                class="requiredFieldHidden"
               />
               <v-radio-group
                 v-model="formData[item.key].variable"
@@ -220,7 +217,8 @@ export default {
   }),
   methods: {
     /* test if the form is valid, return boolean */
-    validate() {
+    async validate() {
+      await new Promise(resolve => setTimeout(resolve,300))
       const valid = this.$refs.form.validate()
       this.$store.commit('questionnaire/toggleNextTab', {
         tabName: 'CoffeeHarvestMarketingValidated',
@@ -317,7 +315,5 @@ export default {
 </script>
 
 <style scoped>
-.requiredFieldHidden {
-  display: none !important;
-}
+
 </style>

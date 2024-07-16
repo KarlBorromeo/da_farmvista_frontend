@@ -294,7 +294,8 @@ export default {
       this.$refs.form.validate() doesn't really check if the checkboxes are not empty or not 
       that is why using  validateCheckbox manually
     */
-    validate() {
+    async validate() {
+      await new Promise(resolve => setTimeout(resolve,300))
       const valid = this.validateCheckbox()
       this.$store.commit('questionnaire/toggleNextTab', {
         tabName: 'CroppingPatternCalendarValidated',

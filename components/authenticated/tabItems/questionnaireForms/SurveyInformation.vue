@@ -137,7 +137,8 @@ export default {
 
   methods: {
     /* test if the form is valid, return boolean */
-    validate() {
+    async validate() {
+      await new Promise(resolve => setTimeout(resolve,300))
       const valid = this.$refs.form.validate()
       this.$store.commit('questionnaire/toggleNextTab', {
         tabName: 'SurveyInformationValidated',
@@ -174,7 +175,10 @@ export default {
     },
     /* return the data of this form as an object */
     getData() {
+      const form = this.$store.getters['questionnaire/form']
+      const demographic = form.interview
       return {
+        ...demographic,
         dateOfInterview: this.date,
         surveyNo: this.surveyNumber ? parseInt(this.surveyNumber) : '',
         validatorName: this.validatorName,

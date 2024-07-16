@@ -156,13 +156,14 @@ export default {
     education: '',
     specialOccasions: '',
     otherExpenses: '',
-    otherExpensesSpecify: 'sample other',
+    otherExpensesSpecify: '',
     numberRule: [(v) => parseInt(v) >= 0 || 'invalid value'],
     requiredRule: [(v) => !!v || 'This field is required'],
   }),
   methods: {
     /* test if the form is valid, return boolean */
-    validate() {
+    async validate() {
+      await new Promise(resolve => setTimeout(resolve,300))
       const valid = this.$refs.form.validate()
       this.$store.commit('questionnaire/toggleNextTab', {
         tabName: 'HouseholdExpensesValidated',
@@ -190,7 +191,7 @@ export default {
         education: convertNumbers(this.education),
         specialOccasions: convertNumbers(this.specialOccasions),
         others: convertNumbers(this.otherExpenses),
-        otherSpecified: this.otherExpensesSpecify,
+        otherSpecified: this.otherExpensesSpecify?this.otherExpensesSpecify:'',
       }
     },
   },

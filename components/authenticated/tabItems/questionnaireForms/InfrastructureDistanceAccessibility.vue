@@ -14,7 +14,7 @@
             ></v-text-field>
           </form-input-container>
           <form-radio-container title="Distance in (b) Unit">
-            <v-radio-group v-model="farmToNearestRoad.unit" class="pa-0 ma-0">
+            <v-radio-group v-model="farmToNearestRoad.unit" :rules="requiredRule" class="pa-0 ma-0">
               <v-radio
                 v-for="item in unitItems"
                 :key="item"
@@ -27,6 +27,7 @@
             <v-radio-group
               v-model="farmToNearestRoad.dominantTransportation"
               class="pa-0 ma-0"
+              :rules="requiredRule"
             >
               <v-radio
                 v-for="item in transportationItems"
@@ -45,6 +46,7 @@
           <form-radio-container title="Dominant Type of Road">
             <v-radio-group
               v-model="farmToNearestRoad.dominantRoad"
+              :rules="requiredRule"
               class="pa-0 ma-0"
             >
               <v-radio
@@ -77,7 +79,7 @@
             ></v-text-field>
           </form-input-container>
           <form-radio-container title="Distance in (b) Unit">
-            <v-radio-group v-model="farmToResidence.unit" class="pa-0 ma-0">
+            <v-radio-group v-model="farmToResidence.unit" :rules="requiredRule" class="pa-0 ma-0">
               <v-radio
                 v-for="item in unitItems"
                 :key="item"
@@ -89,6 +91,7 @@
           <form-radio-container title="Dominant Mode of Transportation">
             <v-radio-group
               v-model="farmToResidence.dominantTransportation"
+              :rules="requiredRule"
               class="pa-0 ma-0"
             >
               <v-radio
@@ -108,6 +111,7 @@
           <form-radio-container title="Dominant Type of Road">
             <v-radio-group
               v-model="farmToResidence.dominantRoad"
+              :rules="requiredRule"
               class="pa-0 ma-0"
             >
               <v-radio
@@ -136,7 +140,7 @@
               :rules="numberRule"
               type="number"
               min="0"
-              label="* Details"
+              label="Details"
             ></v-text-field>
           </form-input-container>
           <form-radio-container title="Distance in (b) Unit">
@@ -199,7 +203,7 @@
               :rules="numberRule"
               type="number"
               min="0"
-              label="* Details"
+              label="Details"
             ></v-text-field>
           </form-input-container>
           <form-radio-container title="Distance in (b) Unit">
@@ -267,7 +271,7 @@
               :rules="numberRule"
               type="number"
               min="0"
-              label="* Details"
+              label="Details"
             ></v-text-field>
           </form-input-container>
           <form-radio-container title="Distance in (b) Unit">
@@ -330,7 +334,7 @@
               :rules="numberRule"
               type="number"
               min="0"
-              label="* Details"
+              label="Details"
             ></v-text-field>
           </form-input-container>
           <form-radio-container title="Distance in (b) Unit">
@@ -470,7 +474,8 @@ export default {
   }),
   methods: {
     /* test if the form is valid, return boolean */
-    validate() {
+    async validate() {
+      await new Promise(resolve => setTimeout(resolve,300))
       const valid = this.$refs.form.validate()
       this.$store.commit('questionnaire/toggleNextTab', {
         tabName: 'InfrastructureDistanceAccessibilityValidated',
