@@ -2,6 +2,7 @@
   <v-form ref="form" v-model="valid" lazy-validation>
     <v-container>
       <form-card v-for="i in items" :key="i">
+        <v-btn :disabled="(i-1) === disabledIndex" icon class="formCardDeleteBtn" @click="deleteFormCard(i-1)"><v-icon class="red--text">mdi-trash-can</v-icon></v-btn>
         <v-row>
           <v-col cols="12" class="mb-0 pb-0"> </v-col>
           <form-input-container>
@@ -165,7 +166,7 @@
           </form-input-container>
         </v-row>
       </form-card>
-      <form-card-button @emitIncrement="increment" @emitDecrement="decrement" />
+      <form-card-button @emitIncrement="increment"/>
     </v-container>
     <!-- <v-btn @click="validate">Validate</v-btn> -->
   </v-form>
@@ -318,19 +319,23 @@ export default {
         cropsPlanted: this.cropsPlanted,
       }
     },
-    // decrement the count of items
-    decrement() {
-      if (this.items > 0) {
-        this.items--
-        this.tenure.pop()
-        this.topography.pop()
-        this.soilFertility.pop()
-        this.croppingSystem.pop()
-        this.sourceWater.pop()
-        this.landUseStatus.pop()
-        this.cropsPlanted.pop()
-        this.validate()
-      }
+     /* delete the record of card existing record */
+     deleteFormCard(index) {
+      this.items--
+      this.parcelNumber.splice(index,1)
+      this.area.splice(index,1)
+      this.tenure.splice(index,1)
+      this.topography.splice(index,1)
+      this.soilFertility.splice(index,1)
+      this.croppingSystem.splice(index,1)
+      this.sourceWater.splice(index,1)
+      this.landUseStatus.splice(index,1)
+      this.cropsPlanted.splice(index,1)
+      this.tenureOther.splice(index,1)
+      this.topographyOther.splice(index,1)
+      this.croppingSystemOther.splice(index,1)
+      this.sourceWaterOther.splice(index,1)
+      this.landUseStatusOther.splice(index,1)
     },
     increment() {
       this.items++
