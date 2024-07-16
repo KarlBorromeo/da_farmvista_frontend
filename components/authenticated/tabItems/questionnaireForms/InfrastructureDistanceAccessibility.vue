@@ -13,7 +13,7 @@
               label="* Details"
             ></v-text-field>
           </form-input-container>
-          <form-radio-container title="Distance in (b) Unit">
+          <form-radio-container title="Distance in (b) Unit" :required="true">
             <v-radio-group v-model="farmToNearestRoad.unit" :rules="requiredRule" class="pa-0 ma-0">
               <v-radio
                 v-for="item in unitItems"
@@ -23,7 +23,7 @@
               ></v-radio>
             </v-radio-group>
           </form-radio-container>
-          <form-radio-container title="Dominant Mode of Transportation">
+          <form-radio-container title="Dominant Mode of Transportation" :required="true">
             <v-radio-group
               v-model="farmToNearestRoad.dominantTransportation"
               class="pa-0 ma-0"
@@ -43,7 +43,7 @@
               ></v-text-field>
             </v-radio-group>
           </form-radio-container>
-          <form-radio-container title="Dominant Type of Road">
+          <form-radio-container title="Dominant Type of Road" :required="true">
             <v-radio-group
               v-model="farmToNearestRoad.dominantRoad"
               :rules="requiredRule"
@@ -78,7 +78,7 @@
               label="* Details"
             ></v-text-field>
           </form-input-container>
-          <form-radio-container title="Distance in (b) Unit">
+          <form-radio-container title="Distance in (b) Unit" :required="true">
             <v-radio-group v-model="farmToResidence.unit" :rules="requiredRule" class="pa-0 ma-0">
               <v-radio
                 v-for="item in unitItems"
@@ -88,7 +88,7 @@
               ></v-radio>
             </v-radio-group>
           </form-radio-container>
-          <form-radio-container title="Dominant Mode of Transportation">
+          <form-radio-container title="Dominant Mode of Transportation" :required="true">
             <v-radio-group
               v-model="farmToResidence.dominantTransportation"
               :rules="requiredRule"
@@ -108,7 +108,7 @@
               ></v-text-field>
             </v-radio-group>
           </form-radio-container>
-          <form-radio-container title="Dominant Type of Road">
+          <form-radio-container title="Dominant Type of Road" :required="true">
             <v-radio-group
               v-model="farmToResidence.dominantRoad"
               :rules="requiredRule"

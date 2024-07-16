@@ -6,7 +6,7 @@
       </h2>
     </div>
 
-    <label for="aw" id="upload">
+    <label for="file-input" id="upload">
       <v-icon class="center" x-large id="file-icon">mdi-file-outline</v-icon>
       <v-icon class="center" x-large id="cloud-icon"
         >mdi-cloud-upload-outline</v-icon
@@ -15,7 +15,7 @@
     </label>
     <div>
       <v-file-input
-        id="aw"
+        id="file-input"
         v-model="file"
         label="File input"
         accept=".xlsm"
@@ -63,8 +63,15 @@ export default {
         await new Promise((resolve) => setTimeout(resolve, 4000))
         this.$emit('emitCloseModal')
         this.file = ''
+        /* fetch the surveys */
+        await this.$store.dispatch('profiling/fetchAllSurvey', {
+          type: this.commodity,
+          page: 1,
+          limit: 10,
+        })
       } catch (error) {
         this.$refs.snackbar.showBar(error, 'red')
+
       }
       this.disabledBtn = !this.disabledBtn
     },

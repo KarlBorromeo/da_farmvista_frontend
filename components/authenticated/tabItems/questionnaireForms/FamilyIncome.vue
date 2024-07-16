@@ -316,6 +316,7 @@ export default {
         this.educationsAttainment.push(profileGeneralInfo.highestEducationAttained)
         this.contributionAmount.push('')
         this.involveCoffeefarm.push('')
+        this.disabledIndex = 0
       }
     }
   },

@@ -1,7 +1,6 @@
 <template>
   <v-form ref="form" v-model="valid" lazy-validation>
     <v-container>
-      {{isHouseMemberAffiliatedToOrg}}
       <form-card v-for="(i, index) in items" :key="index">
         <v-btn :disabled="(i-1) === disabledIndex" icon class="formCardDeleteBtn" @click="deleteFormCard(i-1)"><v-icon class="red--text">mdi-trash-can</v-icon></v-btn>
         <v-row>

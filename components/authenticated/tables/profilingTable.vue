@@ -61,7 +61,7 @@ export default {
     return {
       dialog: false,
       search: '',
-      items: [],
+      // items: [],
       itemPerPage: 10, // number of rows per page
       loading: false, // toggle the loading of the table
       page: 1, // current page number
@@ -88,6 +88,9 @@ export default {
     pages() {
       return this.$store.getters['profiling/countPages']
     },
+    items(){
+      return this.$store.getters['profiling/items']
+    }
   },
   methods: {
     /* when edit button is clicked, open the modal for the whole record of this specific id, and enable editing mode and disabling create mode*/
@@ -115,14 +118,14 @@ export default {
     async fetchAllSurvey() {
       try {
         this.loading = true
-        this.items = []
+        // this.items = []
         await this.$store.dispatch('profiling/fetchAllSurvey', {
           type: this.commodity,
           search: this.search.toLowerCase(),
           page: this.page,
           limit: this.itemPerPage,
         })
-        this.items = this.$store.getters['profiling/items']
+        // this.items = this.$store.getters['profiling/items']
       } catch (error) {
         this.$refs.snackbar.showBar(error, 'red')
       }
