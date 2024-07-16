@@ -91,7 +91,7 @@
           </form-radio-container>
         </v-row>
       </form-card>
-      <form-card-button @emitIncrement="increment" @emitDecrement="decrement" />
+      <form-card-button @emitIncrement="increment"/>
     </v-container>
     <!-- <v-btn @click="validate">Validate</v-btn> -->
   </v-form>
@@ -135,7 +135,8 @@ export default {
   }),
   methods: {
     /* test if the form is valid, return boolean */
-    validate() {
+    async validate() {
+      await new Promise(resolve => setTimeout(resolve,300))
       if (this.items == 0) {
         this.$store.commit('questionnaire/toggleNextTab', {
           tabName: 'FamilyIncomeValidated',
@@ -183,19 +184,6 @@ export default {
         isInvolvedCoffeeFarm: this.involveCoffeefarm,
       }
     },
-    // decrement the count of items
-    decrement() {
-      if (this.items > 1) {
-        this.items--
-        this.name.pop()
-        this.age.pop()
-        this.sex.pop()
-        this.roleFamily.pop()
-        this.educationsAttainment.pop()
-        this.contributionAmount.pop()
-        this.involveCoffeefarm.pop()
-      }
-    },
     increment() {
       this.items++
     },
@@ -220,7 +208,7 @@ export default {
       this.contributionAmount.splice(index,1)
       this.involveCoffeefarm.splice(index,1)
       this.items--
-      let fullname = "maria liza a. racho"
+      let fullname = this.$store.getters['questionnaire/selfFarmerFullname']
       let i = this.name.findIndex(item => item === fullname)
       if(i>=0){
         this.disabledIndex = i
@@ -246,9 +234,11 @@ export default {
   watch: {
     farmerGenInfo(val) {
       //TODO: tell aubrey to put to index 0 the ownFarmer details in order to target always the index 0 incase the name is changed and etc.
-      this.age[0] = val.age
-      this.sex[0] = val.sex
-      this.educationsAttainment[0] = val.highestEducationAttained
+      if(val){
+        this.age[0] = val.age
+        this.sex[0] = val.sex
+        this.educationsAttainment[0] = val.highestEducationAttained        
+      }
     },
     selfFarmerFullname(val) {
       //TODO: tell aubrey to put to index 0 the ownFarmer details in order to target always the index 0 incase the name is changed and etc.
@@ -289,7 +279,11 @@ export default {
       if (Object.keys(data).length > 0) {
         const length = data.familySourceIncome.length
         if (length > 0) {
-          this.disabledIndex = 0
+          let fullname = this.$store.getters['questionnaire/selfFarmerFullname']
+          let index = data.familyAffiliatedFarmOrg.findIndex(item => item.fullName === fullname)
+          if(index>=0){
+            this.disabledIndex = index
+          }
           this.items = length
           for (let i = 0; i < length; i++) {
             this.name[i] = data.familySourceIncome[i].fullName
@@ -311,23 +305,15 @@ export default {
       }
       this.tempValue = 'tempValue'
     } else {
-      const profileGeneralInfo =
-        this.$store.getters['questionnaire/generalInformationDetails']
-      const profile = this.$store.getters['questionnaire/profile']
-      if (profileGeneralInfo && profile) {
-        const fullName = this.concatFullName(
-          profile.firstName,
-          profile.middleInitial,
-          profile.lastName
-        )
+      const profileGeneralInfo = this.$store.getters['questionnaire/generalInformationDetails']
+      if (profileGeneralInfo) {
+        let fullname = this.$store.getters['questionnaire/selfFarmerFullname']
         this.items = 1
-        this.name.push(fullName)
+        this.name.push(fullname)
         this.age.push(profileGeneralInfo.age)
         this.sex.push(profileGeneralInfo.sex)
         this.roleFamily.push('')
-        this.educationsAttainment.push(
-          profileGeneralInfo.highestEducationAttained
-        )
+        this.educationsAttainment.push(profileGeneralInfo.highestEducationAttained)
         this.contributionAmount.push('')
         this.involveCoffeefarm.push('')
       }

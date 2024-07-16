@@ -126,6 +126,7 @@
           v-if="isMemberOrgranization == 'yes'"
           title=" If you answered 'yes' to the previous question, select type of Membership"
           :required="true"
+          :rules="requiredRule"
         >
           <v-radio-group v-model="typeMembership" class="py-0 my-0">
             <v-radio
@@ -139,6 +140,7 @@
 
         <form-input-container v-if="isMemberOrgranization == 'yes'">
           <v-text-field
+            :rules="requiredRule"
             v-model="organizationName"
             label="* Name of Organization/Cooperative:"
           ></v-text-field>
@@ -228,7 +230,8 @@ export default {
   }),
   methods: {
     /* test if the form is valid, return boolean */
-    validate() {
+    async validate() {
+      await new Promise(resolve => setTimeout(resolve,300))
       const textRadioValid = this.$refs.form.validate()
       const checkboxValid = this.validateCheckbox()
       const conditialFieldValid = this.validateConditionalFields()

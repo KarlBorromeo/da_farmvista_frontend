@@ -2,9 +2,8 @@
   <v-form ref="form" v-model="valid" lazy-validation>
     <v-container>
       <v-row>
-        <form-radio-container title="Did you use pesticide" :required="true">
+        <form-radio-container title="Did you use pesticide">
           <v-radio-group
-            :rules="requiredRule"
             v-model="didUsePesticide"
             class="pa-0 ma-0"
           >
@@ -78,9 +77,8 @@
           />
         </form-input-container>
 
-        <form-radio-container title="Do you have a sprayer?" :required="true">
+        <form-radio-container title="Do you have a sprayer?">
           <v-radio-group
-            :rules="requiredRule"
             v-model="haveSprayer"
             class="pa-0 ma-0"
           >
@@ -119,8 +117,7 @@
         <form-input-container v-else>
           <v-text-field
             v-model="howGetSprayer"
-            :rules="requiredRule"
-            label="* how do you get hold of a sprayer"
+            label="how do you get hold of a sprayer"
             required
           />
         </form-input-container>
@@ -158,10 +155,8 @@
 
         <form-radio-container
           title="most important consideration deciding for pesticide to buy"
-          :required="true"
         >
           <v-radio-group
-            :rules="requiredRule"
             v-model="importantConsiderationDecidingPesticide"
             class="pa-0 ma-0"
           >
@@ -243,10 +238,8 @@
 
         <form-radio-container
           title="Have you attended a training on pest management?"
-          :required="true"
         >
           <v-radio-group
-            :rules="requiredRule"
             v-model="attendedTrainingPestManagement"
             class="pa-0 ma-0"
           >
@@ -348,7 +341,8 @@ export default {
   },
   methods: {
     /* test if the form is valid, return boolean */
-    validate() {
+    async validate() {
+      await new Promise(resolve => setTimeout(resolve,300))
       const textRadioValid = this.$refs.form.validate()
       const validCheckbox = this.validateCheckbox()
       let valid = false

@@ -2,6 +2,7 @@
   <v-form ref="form" v-model="valid" lazy-validation>
     <v-container>
       <form-card v-for="i in items" :key="i">
+        <v-btn icon class="formCardDeleteBtn" @click="deleteFormCard(i-1)"><v-icon class="red--text">mdi-trash-can</v-icon></v-btn>
         <v-row>
           <v-col cols="12" class="mb-0 pb-0">
             <p class="ma-0 pa-0 font-weight-black">{{ i }}</p>
@@ -57,7 +58,7 @@
           </form-input-container>
         </v-row>
       </form-card>
-      <form-card-button @emitIncrement="increment" @emitDecrement="decrement" />
+      <form-card-button @emitIncrement="increment"/>
     </v-container>
     <!-- <v-btn @click="validate">Validate</v-btn> -->
   </v-form>
@@ -102,7 +103,8 @@ export default {
   }),
   methods: {
     /* test if the form is valid, return boolean */
-    validate() {
+    async validate() {
+      await new Promise(resolve => setTimeout(resolve,300))
       if (this.items == 0) {
         this.$store.commit('questionnaire/toggleNextTab', {
           tabName: 'AssetsFarmPoultryLivestockValidated',
@@ -144,16 +146,6 @@ export default {
         poultryLivestockAge: convertNumbers(this.poultryLivestockAge),
       }
     },
-    // decrement the count of items
-    decrement() {
-      if (this.items > 0) {
-        this.items--
-        this.poultryLivestockName.pop()
-        this.poultryLivestockQuantity.pop()
-        this.ispoultryLivestockAquiredGovtProg.pop()
-        this.poultryLivestockAge.pop()
-      }
-    },
     increment() {
       this.items++
     },
@@ -163,6 +155,14 @@ export default {
       this.poultryLivestockQuantity = []
       this.ispoultryLivestockAquiredGovtProg = []
       this.poultryLivestockAge = []
+    },
+    /* delete the record of card existing record */
+    deleteFormCard(index) {
+      this.items--
+      this.poultryLivestockName.splice(index,1)
+      this.poultryLivestockQuantity.splice(index,1)
+      this.ispoultryLivestockAquiredGovtProg.splice(index,1)
+      this.poultryLivestockAge.splice(index,1)
     },
   },
   watch: {

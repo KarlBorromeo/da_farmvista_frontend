@@ -39,7 +39,7 @@
 
         <form-checkbox-container
           v-if="didKnowProperReutilization == 'no'"
-          title="If No, where diposed the unutilzied agir-waste?"
+          title="If No, where diposed the unutilzied agri-waste?"
           :required="true"
         >
           <v-checkbox
@@ -59,6 +59,7 @@
         </form-checkbox-container>
 
         <form-checkbox-container
+        v-if="didKnowProperReutilization == 'yes'"
           title="Where heared about reutilization of agri-waste"
           :required="true"
         >
@@ -121,7 +122,8 @@ export default {
   }),
   methods: {
     /* test if the form is valid, return boolean */
-    validate() {
+    async validate() {
+      await new Promise(resolve => setTimeout(resolve,300))
       const textRadioValid = this.$refs.form.validate()
       const checkboxValid = this.validateCheckbox()
       let valid = false
@@ -273,6 +275,8 @@ export default {
       this.validate()
       if (value == 'yes') {
         this.whereDisposedUnutilizedAgriwaste = []
+      }else{
+        this.whereHearAboutReutilization = []
       }
     },
     whereDisposedUnutilizedAgriwasteOther() {

@@ -4,10 +4,8 @@
       <v-row>
         <form-radio-container
           title="Do you have a functional radio set"
-          :required="true"
         >
           <v-radio-group
-            :rules="requiredRule"
             v-model="formData.haveFunctionalRadio"
             class="pa-0 ma-0"
           >
@@ -136,10 +134,8 @@
 
         <form-radio-container
           title="Do you have a television (TV) set?"
-          :required="true"
         >
           <v-radio-group
-            :rules="requiredRule"
             v-model="formData.haveTelevision"
             class="pa-0 ma-0"
           >
@@ -239,10 +235,8 @@
 
         <form-radio-container
           title="Do you have a social media account?"
-          :required="true"
         >
           <v-radio-group
-            :rules="requiredRule"
             v-model="formData.haveSocmedAccount"
             class="pa-0 ma-0"
           >
@@ -323,7 +317,8 @@ export default {
   }),
   methods: {
     /* test if the form is valid, return boolean */
-    validate() {
+    async validate() {
+      await new Promise(resolve => setTimeout(resolve,300))
       const valid = this.$refs.form.validate()
       this.$store.commit('questionnaire/toggleNextTab', {
         tabName: 'InformationKnowledgeSourcesValidated',

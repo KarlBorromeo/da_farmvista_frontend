@@ -2,6 +2,7 @@
   <v-form ref="form" v-model="valid" lazy-validation>
     <v-container>
       <form-card v-for="i in items" :key="i">
+        <v-btn icon class="formCardDeleteBtn" @click="deleteFormCard(i-1)"><v-icon class="red--text">mdi-trash-can</v-icon></v-btn>
         <v-row class="pb-3">
           <v-col cols="12" class="mb-0 pb-0">
             <p class="ma-0 pa-0 font-weight-black">{{ i }}</p>
@@ -34,6 +35,13 @@
               label="* Management"
               dense
             ></v-select>
+            <v-text-field
+              v-if="management[i - 1] == 'others'"
+              v-model="managementOther[i - 1]"
+              :rules="requiredRule"
+              label="Please Specify"
+              class="my-0 py-0 pt-1"
+            ></v-text-field>
           </form-select-container>
 
           <form-select-container>
@@ -41,13 +49,13 @@
               v-model="perceivedEffectiveness[i - 1]"
               :items="perceivedEffectivenessItems"
               :rules="requiredRule"
-              label="* Management"
+              label="* Perceived Effectiveness"
               dense
             ></v-select>
           </form-select-container>
         </v-row>
       </form-card>
-      <form-card-button @emitIncrement="increment" @emitDecrement="decrement" />
+      <form-card-button @emitIncrement="increment" />
     </v-container>
     <!-- <v-btn @click="validate">Validate</v-btn> -->
   </v-form>
@@ -92,7 +100,8 @@ export default {
   }),
   methods: {
     /* test if the form is valid, return boolean */
-    validate() {
+    async validate() {
+      await new Promise(resolve => setTimeout(resolve,300))
       if (this.items == 0) {
         this.$store.commit('questionnaire/toggleNextTab', {
           tabName: 'PestDamageObservedValidated',
@@ -150,16 +159,14 @@ export default {
         perceivedEffectiveness: this.perceivedEffectiveness,
       }
     },
-    // decrement the count of items
-    decrement() {
-      if (this.items > 0) {
-        this.items--
-        this.pestDiseaseDamagesPlants.pop()
-        this.stageOccurence.pop()
-        this.management.pop()
-        this.managementOther.pop()
-        this.perceivedEffectiveness.pop()
-      }
+    /* delete the record of card existing record */
+    deleteFormCard(index) {
+      this.items--
+      this.pestDiseaseDamagesPlants.splice(index,1)
+      this.stageOccurence.splice(index,1)
+      this.management.splice(index,1)
+      this.managementOther.splice(index,1)
+      this.perceivedEffectiveness.splice(index,1)
     },
     increment() {
       this.items++

@@ -52,6 +52,7 @@ export default {
   methods: {
     /* test if the form is valid, return boolean */
     async validate() {
+      await new Promise(resolve => setTimeout(resolve,300))
       const valid = this.$refs.form.validate()
       this.$store.commit('questionnaire/toggleNextTab', {
         tabName: 'BasicInformationValidated',
@@ -62,10 +63,16 @@ export default {
           keyName: 'profile',
           data: this.getData(),
         })
+        console.log(this.getData())
       }
     },
     getData() {
+      const form = this.$store.getters['questionnaire/form']
+      const demographic = form.interview
       return {
+        firstName: demographic.firstName,
+        lastName: demographic.lastName,
+        middleInitial: demographic.middleInitial,
         contactNumber: this.contactNumber,
         farmerCode: this.farmerCode ? this.farmerCode : '',
       }

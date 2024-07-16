@@ -2,31 +2,6 @@ import * as api from '../api/questionnaire'
 export const state = () => ({
   form: {
     farmHouseholdAsset: {},
-    // parcelInfo: {  //TODO: delete this if done the profiling manual create code
-    //   parcelNumber: [1, 2],
-    //   cropsPlanted: ['haha,hehe', 'aww'],
-    // },
-    // profileGeneralInfo: {
-    //   age: 23,
-    //   sex: 'male',
-    //   civilStatus: 'single',
-    //   religion: 'catholic',
-    //   highestEducationAttained: 'elementary level',
-    //   isBelongMarginalizedSector: 'yes',
-    //   ifNoMarginalizedSectorName: '',
-    //   dialectSpoken: 'bisdak',
-    //   isMemberFarmerOrganization: 'yes',
-    //   organizationTypeMembership: 'officer',
-    //   organizationName: 'organization sample Name OSN',
-    //   isHouseMemberAffiliatedToOrg: 'yes',
-    // },
-    // profile: {
-    //   lastName: 'haha',
-    //   firstName: 'hehe',
-    //   middleInitial: '',
-    //   contactNumber: '',
-    //   farmerCode: '',
-    // }
   },
   tabs1: [ // for interviewed and active status
     {
@@ -293,7 +268,7 @@ export const state = () => ({
   // currentTab: 'HouseholdExpenses',
   // currentTab: 'PestDamageObserved',
   currentTab: 'DemographicFarmerProfile',
-  // currentTab: 'ReasonStopping',
+  // currentTab: 'PestDamageObserved',
   // currentTab: 'OpenEndedQuestionRating',
   sliderTabPosition: 0,
   progress: 0,
@@ -314,6 +289,9 @@ export const state = () => ({
 })
 
 export const getters = {
+  form(state){
+    return state.form
+  },
   sliderTabPosition(state){
     return state.sliderTabPosition
   },
@@ -333,7 +311,7 @@ export const getters = {
   isHouseMemberAffiliatedToOrg(state){
     return state.isHouseMemberAffiliatedToOrg
   },
-  /* retrun the profile details */
+  /* return the profile details */
   profile(state) {
     return state.form.profile
   },
@@ -1020,21 +998,29 @@ export const mutations = {
   /* test if the all forms are valid before submission */
   checkValidityAll(state) {
     state.isAllValid = true
-    for (let i = 0; i < state.tabs.length; i++) {
-      if (state.tabs[i].validity == false) {
+    let tabs = []
+    if(state.isInterviewed && state.isSelfFarmerActive){
+      tabs = [...state.tabs1]
+    }else if(state.isInterviewed && !state.isSelfFarmerActive){
+      tabs = [...state.tabs2]
+    }else{
+      tabs = [...state.tabs3]
+    }
+    for (let i = 0; i < tabs.length; i++) {
+      if (tabs[i].validity == false) {
         state.isAllValid = false
         return
       }
     }
   },
 
-  /* test if the basic information and survey information form are valid before submission */
-  checkBasicInfoSurveyInfoValdity(state) {
-    state.isBasicInfoSurveyInfoValid = false
-    if (state.tabs[0].validity && state.tabs[1].validity) {
-      state.isBasicInfoSurveyInfoValid = true
-    }
-  },
+  // /* test if the basic information and survey information form are valid before submission */
+  // checkBasicInfoSurveyInfoValdity(state) {
+  //   state.isBasicInfoSurveyInfoValid = false
+  //   if (state.tabs[0].validity && state.tabs[1].validity) {
+  //     state.isBasicInfoSurveyInfoValid = true
+  //   }
+  // },
 
   /* update the commodity type */
   updateCommodity(state, commodity) {
@@ -1061,16 +1047,16 @@ export const mutations = {
 export const actions = {
   /* submit the form if all the tabs are validated or (basicInfo and surveyInfo forms only if interviewee status is not validated) */
   async submitAll(context) {
-    if (context.state.isInterviewed) {
-      context.commit('checkValidityAll')
-    } else {
-      context.commit('checkBasicInfoSurveyInfoValdity')
-    }
+    // if (context.state.isInterviewed) {
+    //   context.commit('checkValidityAll')
+    // } else {
+    //   context.commit('checkBasicInfoSurveyInfoValdity')
+    // }
     const payload = {
       type: context.state.commodity,
       form: context.state.form,
     }
-    if (context.state.isAllValid || context.state.isBasicInfoSurveyInfoValid) {
+    if (context.state.isAllValid) {
       try {
         const response = await api.submitQuestionnaire(payload)
         return response

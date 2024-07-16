@@ -71,6 +71,7 @@ export const isOtherValueDefinedRadio = (value, items) => {
 }
 /* return the value that is not matched on the items or else return '', this is for radio or select*/
 export const extractUnmatchedValueRadio = (value, items) => {
+  console.log(value,items)
   if (value) {
     let countMatches = 0
     items.forEach((item) => {
