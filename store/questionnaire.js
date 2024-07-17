@@ -268,8 +268,8 @@ export const state = () => ({
   // currentTab: 'HouseholdExpenses',
   // currentTab: 'PestDamageObserved',
   // currentTab: 'DemographicFarmerProfile',
-  currentTab: 'FarmActivities',
-  // currentTab: 'OpenEndedQuestionRating',
+  // currentTab: 'GeneralFarmingInformation',
+  currentTab: 'SurveyInformation',
   sliderTabPosition: 0,
   progress: 0,
   isAllValid: false,
@@ -286,6 +286,8 @@ export const state = () => ({
   selfFarmerFullname: {},
   /* handler for (age,sex,education attainment) level inside the general info farmer profile in order for this to watch the value and affect the familyAffiliated & familyIncome tab forms */
   selfFarmerGeneralInfo: {},
+  /* handler for (parcel number and crops planted) inside the parcelInformation in order to watch the value and affect the farmwasteManagement tab form */
+  parcelInfo: {}
 })
 
 export const getters = {
@@ -294,6 +296,10 @@ export const getters = {
   },
   sliderTabPosition(state){
     return state.sliderTabPosition
+  },
+  /* return the array of parcel number and the crops planted */
+  parcelInfo(state){
+    return state.parcelInfo
   },
   /* return the progress percentage of the form */
   progress(state){
@@ -319,10 +325,11 @@ export const getters = {
   generalInformationDetails(state) {
     return state.form.profileGeneralInfo
   },
-  /* return the parcel information details */
-  parcelInformationDetails(state) {
-    return state.form.parcelInfo
-  },
+  // TODO:
+  // /* return the parcel information details */
+  // parcelInformationDetails(state) {
+  //   return state.form.parcelInfo
+  // },
   /* return boolean if the farmer is interviewed or not*/
   isInterviewed(state) {
     return state.isInterviewed
@@ -896,6 +903,10 @@ export const getters = {
 }
 
 export const mutations = {
+  /* save the array of parcel numbers and crops planted */
+  saveParcelInfo(state,obj){
+    state.parcelInfo = obj
+  },
   /* save the fullname value of self farmer */
   saveSelfFarmerFullname(state,fullname){
     state.selfFarmerFullname = fullname
@@ -963,6 +974,13 @@ export const mutations = {
     state.form = {
       farmHouseholdAsset: {}
     }
+    state.isInterviewed = true
+    state.isSelfFarmerActive = true
+    state.isHouseMemberAffiliatedToOrg = ''
+    state.selfFarmerOrganization = {}
+    state.selfFarmerFullname = {}
+    state.selfFarmerGeneralInfo = {}
+    state.parcelInfo = {}
     state.currentTab = 'DemographicFarmerProfile' //TODO:
   },
 

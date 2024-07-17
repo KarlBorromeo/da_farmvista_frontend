@@ -126,8 +126,6 @@ export default {
       await new Promise(resolve => setTimeout(resolve,300))
       const textRadioValid = this.$refs.form.validate()
       const checkboxValid = this.validateCheckbox()
-      console.log(textRadioValid,checkboxValid)
-      console.log(this.whereDisposedUnutilizedAgriwaste,this.whereHearAboutReutilization)
       let valid = false
       if (textRadioValid && checkboxValid) {
         valid = true
@@ -145,7 +143,6 @@ export default {
     },
     /* check if checkbox are empty or not */
     validateCheckbox() {
-      console.log('length:',this.whereDisposedUnutilizedAgriwaste.length)
       if (
         this.agriculturalSystem.length == 0
       ) {
@@ -181,7 +178,6 @@ export default {
     },
     /* check if 'other' checkbox is ticked */
     isOtherTicked(list) {
-      console.log('list:',list)
       for (let i = 0; i < list.length; i++) {
         if (list[i] == 'others') {
           return true

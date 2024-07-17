@@ -190,7 +190,53 @@ export default {
       }
     },
   },
+  computed: {
+    parcelInfoStore(){
+      return this.$store.getters['questionnaire/parcelInfo']
+    }
+  },
   watch: {
+    parcelInfoStore(val){
+      console.log('val form:',val)
+      this.parcelInfo = []
+      const existingParcelInfo = this.$store.getters['profiling/selectedRecord'].parcelInfo
+      if (existingParcelInfo) {
+        const cropsPlanted = val.cropsPlanted
+        for (let k = 0; k < cropsPlanted.length; k++) {
+          this.parcelNumber.push(existingParcelInfo[k].parcelNumber)
+
+          const cropsPlantedArr = cropsPlanted[k].split(',')
+          let singleParcelFarmWaste = existingParcelInfo[k].farmWaste
+          let singleParcelInfo = []
+          for (let i = 0; i < cropsPlantedArr.length; i++) {
+            singleParcelInfo.push({
+              crop: cropsPlantedArr[i],
+              isUtilized: singleParcelFarmWaste[i]?singleParcelFarmWaste[i].isUtilized:'',
+              waste: singleParcelFarmWaste[i]?singleParcelFarmWaste[i].kindWasteProduced:'',
+              kg: singleParcelFarmWaste[i]?singleParcelFarmWaste[i].volumeWasteKg:'',
+            })
+          }
+          this.parcelInfo.push(singleParcelInfo)
+        }
+      }else{
+      
+      const cropsPlanted = val.cropsPlanted
+      this.parcelNumber = val.parcelNumbers
+      for (let j = 0; j < cropsPlanted.length; j++) {
+        const cropsPlantedArr = cropsPlanted[j].split(',')
+        let singleParcelInfo = []
+        for (let i = 0; i < cropsPlantedArr.length; i++) {
+          singleParcelInfo.push({
+            crop: cropsPlantedArr[i],
+            isUtilized: '',
+            waste: '',
+            kg: '',
+          })
+        }
+        this.parcelInfo.push(singleParcelInfo)
+      }
+      }
+    },
     parcelInfo: {
       handler: function () {
         this.validate()
@@ -200,15 +246,15 @@ export default {
   },
   beforeMount() {
     const isEditing = this.$store.getters['profiling/isEditingMode']
+    /* creating manually */
     if (!isEditing) {
-      // this is composed of single/mulitple parcels
+      // this is composed of single/mulitple parcels, creating a list of farmwaste that has an empty values
       const cropsPlanted =
-        this.$store.getters['questionnaire/parcelInformationDetails']
-          .cropsPlanted
+        this.$store.getters['questionnaire/parcelInfo'].cropsPlanted
       this.parcelNumber =
         this.$store.getters[
-          'questionnaire/parcelInformationDetails'
-        ].parcelNumber
+          'questionnaire/parcelInfo'
+        ].parcelNumbers
       for (let j = 0; j < cropsPlanted.length; j++) {
         const cropsPlantedArr = cropsPlanted[j].split(',')
         let singleParcelInfo = []
@@ -223,19 +269,22 @@ export default {
         this.parcelInfo.push(singleParcelInfo)
       }
     } else {
-      const existingParcelInfo =
-        this.$store.getters['profiling/selectedRecord'].parcelInfo
+    /* updating/editing existing record */
+      const existingParcelInfo = this.$store.getters['profiling/selectedRecord'].parcelInfo
       if (existingParcelInfo) {
-        for (let k = 0; k < existingParcelInfo.length; k++) {
+        /* the list of this form rely on the parcel information form, it considers if the user changes the number of parcels and also changes the crops planted per parcels */
+        const cropsPlanted = this.$store.getters['questionnaire/parcelInfo'].cropsPlanted
+        for (let k = 0; k < cropsPlanted.length; k++) {
           this.parcelNumber.push(existingParcelInfo[k].parcelNumber)
+          const cropsPlantedArr = cropsPlanted[k].split(',')
           let singleParcelFarmWaste = existingParcelInfo[k].farmWaste
           let singleParcelInfo = []
-          for (let i = 0; i < singleParcelFarmWaste.length; i++) {
+          for (let i = 0; i < cropsPlantedArr.length; i++) {
             singleParcelInfo.push({
-              crop: singleParcelFarmWaste[i].cropsGrown,
-              isUtilized: singleParcelFarmWaste[i].isUtilized,
-              waste: singleParcelFarmWaste[i].kindWasteProduced,
-              kg: singleParcelFarmWaste[i].volumeWasteKg,
+              crop: cropsPlantedArr[i],
+              isUtilized: singleParcelFarmWaste[i]?singleParcelFarmWaste[i].isUtilized:'',
+              waste: singleParcelFarmWaste[i]?singleParcelFarmWaste[i].kindWasteProduced:'',
+              kg: singleParcelFarmWaste[i]?singleParcelFarmWaste[i].volumeWasteKg:'',
             })
           }
           this.parcelInfo.push(singleParcelInfo)
