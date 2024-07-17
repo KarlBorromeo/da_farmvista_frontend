@@ -55,18 +55,22 @@ export const convertNumbers = (value) => {
 // FOR RADIO AND SELECT
 /* check if the radio value is not matched on the one of the list, return 'others' if not match else return the matched value, this is for radio or select*/
 export const isOtherValueDefinedRadio = (value, items) => {
-  let countMatchedTimes = 0
-  let matchedValue = ''
-  for (let i = 0; i < items.length; i++) {
-    if (value === items[i]) {
-      countMatchedTimes++
-      matchedValue = items[i]
+  if(value){
+    let countMatchedTimes = 0
+    let matchedValue = ''
+    for (let i = 0; i < items.length; i++) {
+      if (value === items[i]) {
+        countMatchedTimes++
+        matchedValue = items[i]
+      }
     }
-  }
-  if (countMatchedTimes > 0) {
-    return matchedValue
-  } else {
-    return 'others'
+    if (countMatchedTimes > 0) {
+      return matchedValue
+    } else {
+      return 'others'
+    }    
+  }else{
+    return ''
   }
 }
 /* return the value that is not matched on the items or else return '', this is for radio or select*/

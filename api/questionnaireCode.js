@@ -9,7 +9,7 @@ export async function fetchAllCodes(commodity) {
     const response = await Axios.get(`survey/codes`, {
       params: params,
     })
-    return response.data.data.codes
+    return response.data.codes
   } catch (error) {
     throw error
   }
