@@ -382,7 +382,7 @@ export default {
       if (length > 0) {
         this.items = length
         for (let i = 0; i < length; i++) {
-          // this.parcelNumber[i] = data.parcelInfo[i].parcelNumber
+          this.parcelNumber[i] = data.parcelInfo[i].parcelNumber
           this.area[i] = data.parcelInfo[i].area
           this.tenure[i] = isOtherValueDefinedRadio(
               data.parcelInfo[i].tenure,
