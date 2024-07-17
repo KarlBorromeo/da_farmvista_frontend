@@ -850,9 +850,9 @@ export default {
     }
   },
   watch: {
-    initialTab(val){
-      console.log('this the tab index val:',val,typeof(val))
-    },
+    // initialTab(val){
+    //   console.log('this the tab index val:',val,typeof(val))
+    // },
     /* watch the current tab, move to the intial tab when the current tab is BasicInformation */
     currentTab(tabName) {
       if (tabName == 'DemographicFarmerProfile') {

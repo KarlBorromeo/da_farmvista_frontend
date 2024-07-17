@@ -2,7 +2,7 @@
   <v-form ref="form" v-model="valid" lazy-validation>
     <v-container>
       <form-card v-for="i in items" :key="i">
-        <v-btn :disabled="(i-1) === disabledIndex" icon class="formCardDeleteBtn" @click="deleteFormCard(i-1)"><v-icon class="red--text">mdi-trash-can</v-icon></v-btn>
+        <v-btn icon class="formCardDeleteBtn" @click="deleteFormCard(i-1)"><v-icon class="red--text">mdi-trash-can</v-icon></v-btn>
         <v-row>
           <v-col cols="12" class="mb-0 pb-0"> </v-col>
           <form-input-container>
@@ -198,8 +198,8 @@ export default {
   data: () => ({
     valid: false,
     items: 1,
-    parcelNumber: [1],
-    area: [1],
+    parcelNumber: [],
+    area: [],
     tenure: ['land owner'],
     tenureItems: [],
     tenureOther: [],
@@ -265,6 +265,10 @@ export default {
           keyName: 'parcelInfo',
           data: this.getEmptyData(),
         })
+        this.$store.commit('questionnaire/saveParcelInfo',{
+            parcelNumbers: [],
+            cropsPlanted: []
+        })
         return
       }
       const valid = this.$refs.form.validate()
@@ -276,6 +280,10 @@ export default {
         this.$store.commit('questionnaire/saveData', {
           keyName: 'parcelInfo',
           data: this.getData(),
+        })
+        this.$store.commit('questionnaire/saveParcelInfo',{
+            parcelNumbers: [...this.parcelNumber],
+            cropsPlanted: [...this.cropsPlanted]
         })
       }
     },
@@ -367,19 +375,19 @@ export default {
       this.$store.getters['questionnaireCode/CroppingSystem']
     this.sourceWaterItems = this.$store.getters['questionnaireCode/Code14']
     this.landUseStatusItems = this.$store.getters['questionnaireCode/Code15']
-
-    const data = this.$store.getters['profiling/selectedRecord']
-    if (Object.keys(data).length > 0) {
+    const isEditing = this.$store.getters['profiling/isEditingMode']
+    if (isEditing) {
+      const data = this.$store.getters['profiling/selectedRecord']
       const length = data.parcelInfo.length
       if (length > 0) {
         this.items = length
         for (let i = 0; i < length; i++) {
-          ;(this.parcelNumber[i] = data.parcelInfo[i].parcelNumber),
-            (this.area[i] = data.parcelInfo[i].area),
-            (this.tenure[i] = isOtherValueDefinedRadio(
+          // this.parcelNumber[i] = data.parcelInfo[i].parcelNumber
+          this.area[i] = data.parcelInfo[i].area
+          this.tenure[i] = isOtherValueDefinedRadio(
               data.parcelInfo[i].tenure,
               this.tenureItems
-            ))
+            )
           this.tenureOther[i] = extractUnmatchedValueRadio(
             data.parcelInfo[i].tenure,
             this.tenureItems

@@ -292,64 +292,95 @@ export default {
     this.statusOrganizationItems =
       this.$store.getters['questionnaireCode/Code3_4']
     const isEditing = this.$store.getters['profiling/isEditingMode']
+    const fullname = this.$store.getters['questionnaire/selfFarmerFullname']
+
+    /* if editing a record */
     if (isEditing) {
       const data = this.$store.getters['profiling/selectedRecord']
-      if (data.familyAffiliatedFarmOrg) {
-        if (data.profileGeneralInfo.isMemberFarmerOrganization == 'yes') {
-          let fullname = this.$store.getters['questionnaire/selfFarmerFullname']
-          let index = data.familyAffiliatedFarmOrg.findIndex(item => item.fullName === fullname)
-          if(index>=0){
-            this.disabledIndex = index
+      const length = data.familyAffiliatedFarmOrg.length
+      this.items += length
+      this.tempItems = this.items
+        
+      /* instantiate all the record from backend */
+      for (let i = 0; i < length; i++) {
+        this.nameFamilyMember.push(data.familyAffiliatedFarmOrg[i].fullName)
+        this.position.push(
+          isOtherValueDefinedRadio(
+            data.familyAffiliatedFarmOrg[i].position,
+            this.positionItems
+          )
+        )
+        this.positionOthers.push(
+          extractUnmatchedValueRadio(
+            data.familyAffiliatedFarmOrg[i].position,
+            this.positionItems
+          )
+        )
+        this.nameOrganization.push(
+          data.familyAffiliatedFarmOrg[i].nameOrganization
+        )
+        this.typeOrganization.push(
+          data.familyAffiliatedFarmOrg[i].typeOrganization
+        )
+        this.typeOrganizationOthers.push(
+          extractUnmatchedValueRadio(
+            data.familyAffiliatedFarmOrg[i].typeOrganization,
+            this.typeOrganizationItems
+          )
+        )
+        this.numberYearsMember.push(
+          data.familyAffiliatedFarmOrg[i].yearsAsMember
+        )
+        this.statusMembership.push(
+          data.familyAffiliatedFarmOrg[i].statusMembership
+        )
+        this.statusOrganization.push(
+          data.familyAffiliatedFarmOrg[i].statusOrganization
+        )
+      }
+
+      /* decide if remove the self farmer record or not if he/she is not a member of org */
+      const selfFarmerOrganization = this.$store.getters['questionnaire/selfFarmerOrganization']
+      if (selfFarmerOrganization.isMemberFarmerOrganization == 'yes') {
+        let index = data.familyAffiliatedFarmOrg.findIndex(item => item.fullName === fullname)
+        if(index>=0){
+          this.disabledIndex = index
+        }
+      }else{
+        this.disabledIndex = ''
+        let length = this.nameFamilyMember.length
+        for(let i=0; i<length; i++){
+          if(this.nameFamilyMember[i] === fullname){
+            this.nameFamilyMember.splice(i,1)
+            this.position.splice(i,1)
+            this.positionOthers.splice(i,1)
+            this.nameOrganization.splice(i,1)
+            this.typeOrganization.splice(i,1)
+            this.typeOrganizationOthers.splice(i,1)
+            this.numberYearsMember.splice(i,1)
+            this.statusMembership.splice(i,1)
+            this.statusOrganization.splice(i,1)
+            this.items--
+            this.tempItems--
+            i=0;
+            length = this.nameFamilyMember.length
           }
         }
-        const length = data.familyAffiliatedFarmOrg.length
-        this.items += length
-        this.tempItems = this.items
-        for (let i = 0; i < length; i++) {
-          this.nameFamilyMember.push(data.familyAffiliatedFarmOrg[i].fullName)
-          this.position.push(
-            isOtherValueDefinedRadio(
-              data.familyAffiliatedFarmOrg[i].position,
-              this.positionItems
-            )
-          )
-          this.positionOthers.push(
-            extractUnmatchedValueRadio(
-              data.familyAffiliatedFarmOrg[i].position,
-              this.positionItems
-            )
-          )
-          this.nameOrganization.push(
-            data.familyAffiliatedFarmOrg[i].nameOrganization
-          )
-          this.typeOrganization.push(
-            data.familyAffiliatedFarmOrg[i].typeOrganization
-          )
-          this.typeOrganizationOthers.push(
-            extractUnmatchedValueRadio(
-              data.familyAffiliatedFarmOrg[i].typeOrganization,
-              this.typeOrganizationItems
-            )
-          )
-          this.numberYearsMember.push(
-            data.familyAffiliatedFarmOrg[i].yearsAsMember
-          )
-          this.statusMembership.push(
-            data.familyAffiliatedFarmOrg[i].statusMembership
-          )
-          this.statusOrganization.push(
-            data.familyAffiliatedFarmOrg[i].statusOrganization
-          )
-        }
-      } else {
-        this.resetData()
+      }
+
+      /* decide to disable or not the add button if there is any other household member in organizations */
+      const isAnyHouseholdMemberOrg = this.$store.getters['questionnaire/isHouseMemberAffiliatedToOrg']
+      if (isAnyHouseholdMemberOrg == 'yes'){
+        this.disableIncrement = false
+      }else{
+        this.disableIncrement = true
       }
     } else {
-      const profileGeneralInfo =
-      this.$store.getters['questionnaire/generalInformationDetails']
+    /* if manually creating a record */
+      const profileGeneralInfo = this.$store.getters['questionnaire/generalInformationDetails']
       if (profileGeneralInfo) {
+        /* add own self farmer if he/she is a member of organizations */
         if (profileGeneralInfo.isMemberFarmerOrganization == 'yes') {
-          let fullname = this.$store.getters['questionnaire/selfFarmerFullname']
           this.items = 1
           this.disabledIndex = this.items-1
           this.tempItems = this.items
@@ -364,17 +395,15 @@ export default {
           this.statusOrganization.push('')
         }
 
+        /* disable/enable the add button if any other member of the family is member of organization */
         if (profileGeneralInfo.isAnyHouseholdMemberOrg == 'yes'){
           this.disableIncrement = false
         }else{
           this.disableIncrement = true
         }
-      } else {
-        
+      } else {      
         this.resetData()
       }
-
-
     }
   },
   computed: {
@@ -384,18 +413,19 @@ export default {
     selfFarmerOrganization(){
       return this.$store.getters['questionnaire/selfFarmerOrganization']
     },
-    farmerOwnProfile() {
-      return this.$store.getters['questionnaire/profile']
+    selfFarmerFullname() {
+      return this.$store.getters['questionnaire/selfFarmerFullname']
     },
   },
   watch: {
+    /* watch the changes value of isMemberFarmerOrganization */
     selfFarmerOrganization: {
       handler: function (val) {
         let fullname = this.$store.getters['questionnaire/selfFarmerFullname']
         if(val.isMemberFarmerOrganization == 'no'){   
           this.disabledIndex = ''
           let length = this.nameFamilyMember.length
-           for(let i=0; i<length; i++){
+          for(let i=0; i<length; i++){
             if(this.nameFamilyMember[i] === fullname){
               this.nameFamilyMember.splice(i,1)
               this.position.splice(i,1)
@@ -437,10 +467,10 @@ export default {
           this.disabledIndex = indexNumber
           this.validate() 
         }
-        console.log('tempitems:',this.tempItems,'items:',this.items,'disabledIndex:',this.disabledIndex)
       },
       deep: true,
     },
+    /* watch the changes value of isHouseMemberAffiliatedToOrg */
     isHouseMemberAffiliatedToOrg(val) {
       if(val == 'no'){
         this.disableIncrement = true;
@@ -462,29 +492,19 @@ export default {
             i=0;
             length = this.nameFamilyMember.length
             this.disabledIndex = i
-          }else{
-            this.disabledIndex = i
           }
         }
-        console.log('after family:',this.items,'disabledIndex:',this.disabledIndex)
       }else{
         this.disableIncrement = false;
       }
     },
-    // /* watch if the farmer profile is changed like names, then it will affect also the family affilated data */
-    // farmerOwnProfile(val) {
-    //   if (
-    //     this.$store.getters['questionnaire/generalInformationDetails']
-    //       .isMemberFarmerOrganization == 'yes'
-    //   ) {
-    //     const fullName = this.concatFullName(
-    //       val.firstName,
-    //       val.middleInitial,
-    //       val.lastName
-    //     )
-    //     this.nameFamilyMember[0] = fullName
-    //   }
-    // },
+    /* watch if the self farmer fullname is changed like names, then it will update the name of the index of disabled index if there is disabled index*/
+    selfFarmerFullname(val) {
+      console.log(val,this.disabledIndex)
+       if(this.disabledIndex>=0){
+        this.nameFamilyMember[this.disabledIndex] = val
+       }
+    },
     items() {
       this.validate()
     },
