@@ -10,6 +10,12 @@
 <script>
 import snackbar from '~/components/snackbar.vue'
 export default {
+  activated(){
+    this.$store.commit('questionnaire/toggleNextTab', {
+      tabName: 'Submission',
+      valid:true,
+    })
+  },
   components: { snackbar },
   data() {
     return {
