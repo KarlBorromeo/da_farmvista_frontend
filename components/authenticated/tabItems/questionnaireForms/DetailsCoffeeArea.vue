@@ -406,12 +406,12 @@ export default {
     } else {
       this.classificationCropsDetails = ''
       this.classificationCropsReasons = ''
-      this.yearPlantedDetails = ''
+      this.yearPlantedDetails = 0
       this.yearPlantedReasons = ''
       this.plantingDistanceDetails = ''
       this.plantingDistanceReasons = ''
       this.plantingDistanceReasonsOther = ''
-      this.numberPlantsDetails = ''
+      this.numberPlantsDetails = 0
       this.numberPlantsReasons = ''
       this.intercropVarietyDetails = ''
       this.intercropVarietyReasons = ''

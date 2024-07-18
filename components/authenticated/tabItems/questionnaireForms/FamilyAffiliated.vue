@@ -283,6 +283,14 @@ export default {
       this.statusMembership = []
       this.statusOrganization = []
     },
+    /* concat fullname, return full name string */
+		concatFullName(firstName, middleInitial, lastName) {
+			const first = firstName + ' '
+			const middle = middleInitial ? middleInitial + '. ' : ''
+			const last = lastName
+			const fullName = first + middle + last
+			return fullName
+		},
   },
   beforeMount() {
     this.positionItems = this.$store.getters['questionnaireCode/Code1']
@@ -342,7 +350,9 @@ export default {
       /* decide if remove the self farmer record or not if he/she is not a member of org */
       const selfFarmerOrganization = this.$store.getters['questionnaire/selfFarmerOrganization']
       if (selfFarmerOrganization.isMemberFarmerOrganization == 'yes') {
-        let index = data.familyAffiliatedFarmOrg.findIndex(item => item.fullName === fullname)
+        const selectedRecordSelfFarmerName = this.concatFullName(data.profile.firstName,data.profile.middleInitial,data.profile.lastName)
+
+        let index = data.familyAffiliatedFarmOrg.findIndex(item => item.fullName === selectedRecordSelfFarmerName)
         if(index>=0){
           this.disabledIndex = index
         }
@@ -375,6 +385,10 @@ export default {
       }else{
         this.disableIncrement = true
       }
+
+      if(this.disabledIndex>=0){
+        this.nameFamilyMember[this.disabledIndex] = fullname
+      }
     } else {
     /* if manually creating a record */
       const profileGeneralInfo = this.$store.getters['questionnaire/generalInformationDetails']
@@ -395,8 +409,8 @@ export default {
           this.statusOrganization.push('')
         }
 
-        /* disable/enable the add button if any other member of the family is member of organization */
-        if (profileGeneralInfo.isAnyHouseholdMemberOrg == 'yes'){
+        const isAnyHouseholdMemberOrg = this.$store.getters['questionnaire/isHouseMemberAffiliatedToOrg']
+        if (isAnyHouseholdMemberOrg == 'yes'){
           this.disableIncrement = false
         }else{
           this.disableIncrement = true
@@ -500,7 +514,6 @@ export default {
     },
     /* watch if the self farmer fullname is changed like names, then it will update the name of the index of disabled index if there is disabled index*/
     selfFarmerFullname(val) {
-      console.log(val,this.disabledIndex)
        if(this.disabledIndex>=0){
         this.nameFamilyMember[this.disabledIndex] = val
        }

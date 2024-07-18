@@ -74,7 +74,7 @@ export default {
       return [
         // { text: 'ID.', align: 'start', value: 'id' },
         { text: 'Survey No.', align: 'start', value: 'surveyNo' },
-        { text: `Date Interview (YYYY/MM/DD)`, value: 'dateInterview' },
+        // { text: `Date Interview (YYYY/MM/DD)`, value: 'dateInterview' },
         { text: `Farmer's Name`, value: 'farmerName' },
         { text: `Farmer's Code`, value: 'farmerCode' },
         { text: 'Region/Province', value: 'regionProvince' },

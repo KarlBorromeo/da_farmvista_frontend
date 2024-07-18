@@ -258,11 +258,11 @@ export const state = () => ({
       validity: false,
       tempValidity: false,
     },
-    {
-      tabName: 'ReasonStopping',
-      validity: false,
-      tempValidity: false,
-    },
+    // {
+    //   tabName: 'ReasonStopping',
+    //   validity: false,
+    //   tempValidity: false,
+    // },
   ],
   // currentTab: 'BasicInformation',
   // currentTab: 'HouseholdExpenses',
@@ -889,16 +889,16 @@ export const getters = {
       console.error('tabname cannot find')
     }
   },
-  Tab3ReasonStoppingValidated(state) {
-    const index = state.tabs3.findIndex(
-      (el) => el.tabName == 'ReasonStopping'
-    )
-    if (index >= 0) {
-      return state.tabs3[index].validity
-    } else {
-      console.error('tabname cannot find')
-    }
-  },
+  // Tab3ReasonStoppingValidated(state) {
+  //   const index = state.tabs3.findIndex(
+  //     (el) => el.tabName == 'ReasonStopping'
+  //   )
+  //   if (index >= 0) {
+  //     return state.tabs3[index].validity
+  //   } else {
+  //     console.error('tabname cannot find')
+  //   }
+  // },
   /* Tab3 Items Getters END */
 }
 
@@ -971,16 +971,16 @@ export const mutations = {
       tab.tempValidity = false
     })
     state.progress = 0
-    state.form = {
-      farmHouseholdAsset: {}
-    }
-    state.isInterviewed = true
-    state.isSelfFarmerActive = true
-    state.isHouseMemberAffiliatedToOrg = ''
-    state.selfFarmerOrganization = {}
-    state.selfFarmerFullname = {}
-    state.selfFarmerGeneralInfo = {}
-    state.parcelInfo = {}
+    // state.form = {
+    //   farmHouseholdAsset: {}
+    // }
+    // state.isInterviewed = true
+    // state.isSelfFarmerActive = true
+    // state.isHouseMemberAffiliatedToOrg = ''
+    // state.selfFarmerOrganization = {}
+    // state.selfFarmerFullname = {}
+    // state.selfFarmerGeneralInfo = {}
+    // state.parcelInfo = {}
     state.currentTab = 'DemographicFarmerProfile' //TODO:
   },
 
@@ -1049,11 +1049,11 @@ export const mutations = {
   toggleIsInterviewed(state, bool) {
     state.isInterviewed = bool
     // this will remove or add the 'farmHouseholdAsset' key in the form to just remove it when the interviewee is not validated, the default form has an existing 'farmHouseholdAsset' already
-    if (!bool) {
-      delete state.form.farmHouseholdAsset
-    } else {
-      state.form.farmHouseholdAsset = {}
-    }
+    // if (!bool) {
+    //   delete state.form.farmHouseholdAsset
+    // } else {
+    //   state.form.farmHouseholdAsset = {}
+    // }
   },
 
   /* toggle the isSelfFarmerActive */ //TODO:
@@ -1065,11 +1065,7 @@ export const mutations = {
 export const actions = {
   /* submit the form if all the tabs are validated or (basicInfo and surveyInfo forms only if interviewee status is not validated) */
   async submitAll(context) {
-    // if (context.state.isInterviewed) {
-    //   context.commit('checkValidityAll')
-    // } else {
-    //   context.commit('checkBasicInfoSurveyInfoValdity')
-    // }
+    context.commit('checkValidityAll')
     const payload = {
       type: context.state.commodity,
       form: context.state.form,

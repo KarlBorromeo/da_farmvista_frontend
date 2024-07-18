@@ -1,5 +1,5 @@
 <template>
-	<v-form ref="form" v-model="valid" lazy-validation>
+	<v-form ref="form" v-model="valid">
 		<v-container>
 			<v-row>
 				<form-select-container>
@@ -67,6 +67,15 @@
 						></v-radio>
 					</v-radio-group>
 				</form-radio-container>
+				<form-input-container v-if="status == 'inactive'">
+					<v-textarea
+						v-model="reasonForStopCoffeeFarm"
+						:rules="requiredRule"
+						label="* Reason for Stopping Farming"
+						required
+						rows="2"
+					/>
+				</form-input-container>
 				<form-radio-container title="Is interviewed" :required="true">
 					<v-radio-group
 						:rules="requiredRule"
@@ -150,6 +159,7 @@ export default {
 		classificationItems: [],
 		status: '',
 		statusItems: [],
+		reasonForStopCoffeeFarm: '',
 		isInterviewed: '',
 		isInterviewedItems: ['yes','no'],
 		farmerFirstName: '',
@@ -161,14 +171,35 @@ export default {
 	}),
 	methods: {
 		/* test if the form is valid, return boolean */
-		async validate() {		
-			const textValid = this.$refs.form.validate()
-			await new Promise(resolve => setTimeout(resolve,300))
+		async validate() {				
+			await new Promise(resolve => setTimeout(resolve,300))		
 			let valid = false;
-			if(textValid && this.regionProvince && this.cityMunicipality && this.barangay){
+			// const textValid = this.$refs.form.validate()
+			// if(textValid && this.regionProvince && this.cityMunicipality && this.barangay){
+			if((this.regionProvince && 
+				this.cityMunicipality && 
+				this.barangay &&
+				this.classification &&
+				this.status == 'active' &&
+				this.isInterviewed &&
+				this.farmerFirstName &&
+				this.farmerSurName &&
+				this.confirmedBy &&
+				this.position) || 
+				(this.regionProvince && 
+				this.cityMunicipality && 
+				this.barangay &&
+				this.classification &&
+				this.status == 'inactive' &&
+				this.reasonForStopCoffeeFarm &&
+				this.isInterviewed &&
+				this.farmerFirstName &&
+				this.farmerSurName &&
+				this.confirmedBy &&
+				this.position)
+			){
 				valid = true
 			}
-
 			if (valid) {
 				this.$store.commit('questionnaire/saveData', {
 					keyName: 'interview',
@@ -178,6 +209,33 @@ export default {
 				this.$store.commit('questionnaire/saveSelfFarmerFullname',fullname)
 				this.$store.commit('questionnaire/toggleIsSelfFarmerActive',this.status === 'active')
 				this.$store.commit('questionnaire/toggleIsInterviewed', this.isInterviewed === 'yes')
+
+				/* tests if we already save an prfoile details data into the store inside the basicInformation tab */
+				const existingProfilewDetails = this.$store.getters['questionnaire/form'].profile
+				if(existingProfilewDetails && existingProfilewDetails.contactNumber){
+					this.$store.commit('questionnaire/saveData', {
+						keyName: 'profile',
+						data: {
+							firstName: this.farmerFirstName,
+							lastName: this.farmerSurName,
+							middleInitial: this.farmerMiddileInitial,
+							contactNumber: existingProfilewDetails.contactNumber,
+							farmerCode: existingProfilewDetails.farmerCode
+						},
+					})
+				}
+				if(this.isInterviewed == 'no'){
+					this.$store.commit('questionnaire/saveData', {
+						keyName: 'profile',
+						data: {
+							firstName: this.farmerFirstName,
+							lastName: this.farmerSurName,
+							middleInitial: this.farmerMiddileInitial,
+							contactNumber: "",
+							farmerCode: ""
+						},
+					})
+				}
 			}
 			this.$store.commit('questionnaire/toggleNextTab', {
 				tabName: 'DemographicFarmerProfile',
@@ -193,19 +251,35 @@ export default {
 			return fullName
 		},
 		getData(){
-			return {
+			let obj = {
 				regionProvince : this.regionProvince,
 				cityMunicipality : this.cityMunicipality,
 				barangay : this.barangay,
 				classification : this.classification,
 				status : this.status,
+				reasonForStopCoffeeFarm: this.reasonForStopCoffeeFarm,
 				isInterviewed : this.isInterviewed,
 				firstName : this.farmerFirstName,
 				lastName : this.farmerSurName,
 				middleInitial : this.farmerMiddileInitial,
 				confirmedByName : this.confirmedBy,
-				confirmedByPosition : this.position
+				confirmedByPosition : this.position				
 			}
+
+			/* tests if we already save an inteview details data into the store inside the surveyInformation tab*/
+			const existingInterviewDetails = this.$store.getters['questionnaire/form'].interview
+			if(existingInterviewDetails && existingInterviewDetails.dateOfInterview){
+				obj = {
+					...obj,
+					dateOfInterview: existingInterviewDetails.dateOfInterview,
+					surveyNo: existingInterviewDetails.surveyNo,
+					validatorName: existingInterviewDetails.validatorName,
+					interviewStart: existingInterviewDetails.interviewStart,
+					interviewEnd: existingInterviewDetails.interviewEnd
+				}
+				
+			}
+			return obj
 		}
 	},
 	watch: {
@@ -247,6 +321,9 @@ export default {
 			this.$store.commit('questionnaire/resetTabsValidity')
 			this.validate()
 		},
+		reasonForStopCoffeeFarm(){
+			this.validate()
+		},
 		isInterviewed(val){		
 			if (val === 'yes') {
 				this.$store.commit('questionnaire/toggleIsInterviewed', true)
@@ -280,7 +357,8 @@ export default {
 			return this.$store.getters['questionnaireCode/barangays']
 		}
 	},
-	beforeMount() {
+	async beforeMount() {
+		await new Promise(resolve => setTimeout(resolve,300))
 		this.statusItems =
 			this.$store.getters['questionnaireCode/ProfileStatus']
 		this.classificationItems =

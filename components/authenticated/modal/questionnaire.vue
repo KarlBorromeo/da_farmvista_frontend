@@ -442,14 +442,14 @@
           </v-tab>
 
           <!-- TAB 3 -->
-          <v-tab
+          <!-- <v-tab
             v-if="!isInterviewed"
             :disabled="Tab3DemographicFarmerProfileValidated"
             class="caption font-weight-black"
             @click="selectTab('ReasonStopping')"
           >
             I. Reason Stopping
-          </v-tab>
+          </v-tab> -->
 
           <!-- SUBMISSION -->
           <v-tab
@@ -831,7 +831,7 @@ export default {
     /* for not interviewed either active or inactive, tab buttons ended here*/
 
     SubmissionAllowed(){
-      const openEndedQuestionsValidity = this.$store.getters['questionnaire/Tab1OpenEndedQuestionRatingValidated'] || this.$store.getters['questionnaire/Tab2OpenEndedQuestionRatingValidated']
+      const openEndedQuestionsValidity = this.$store.getters['questionnaire/Tab1OpenEndedQuestionRatingValidated'] || this.$store.getters['questionnaire/Tab2OpenEndedQuestionRatingValidated'] || this.$store.getters['questionnaire/Tab3DemographicFarmerProfileValidated']
       const reasonValidity = this.$store.getters['questionnaire/Tab3ReasonStoppingValidated']
       if(openEndedQuestionsValidity || reasonValidity){
         return false
@@ -844,10 +844,17 @@ export default {
     fetch a specific survey record once only if the prop "id" is not null or undefined,
   */
   async beforeMount() {
-    await this.fetchAllCodes()
-    if (this.id) {
-      await this.fetchOneRecord()
+     this.loading = true;
+    try{
+     
+      await this.fetchAllCodes()
+      if (this.id) {
+        await this.fetchOneRecord()
+      }
+    }catch(err){
+      console.error
     }
+    this.loading = false;
   },
   watch: {
     // initialTab(val){
@@ -858,16 +865,6 @@ export default {
       if (tabName == 'DemographicFarmerProfile') {
         this.initialTab = 0
       }
-      // else{
-      //   const indexTab = this.$store.getters['questionnaire/sliderTabPosition']
-      //   console.log(indexTab)
-      //   this.initialTab = indexTab + 2;
-        /* this is unanswered concern, but here is the explanation why we comeup with this statement,
-           we have only 2 tabs taht is conditional, all remenaing tabs are coniditonal, means it is binded with "v-if",
-           my understanding on this is the vuejs is expecting 2 tabs adn remaining is optional, if we don't add number 2 the sliding tab
-           positiong of the tabs will go to the end. To fix this error we added number 2 to the index of the tabs.
-        */
-      // }
     },
     /* fetch codes if the commodity changed*/
     async currentCommodity(newVal, oldVal) {
