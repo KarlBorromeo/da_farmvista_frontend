@@ -280,7 +280,8 @@ export default {
         const length = data.familySourceIncome.length
         if (length > 0) {
           let fullname = this.$store.getters['questionnaire/selfFarmerFullname']
-          let index = data.familyAffiliatedFarmOrg.findIndex(item => item.fullName === fullname)
+          const selectedRecordSelfFarmerName = this.concatFullName(data.profile.firstName,data.profile.middleInitial,data.profile.lastName)
+          let index = data.familyAffiliatedFarmOrg.findIndex(item => item.fullName === selectedRecordSelfFarmerName)
           if(index>=0){
             this.disabledIndex = index
           }
@@ -296,6 +297,11 @@ export default {
               data.familySourceIncome[i].estimatedContribution
             this.involveCoffeefarm[i] =
               data.familySourceIncome[i].isInvolvedCoffeeFarm
+          }
+
+          /* update the name of the disbled index, it will be used if we modified the name in the demograhpic form */
+          if(this.disabledIndex>=0){
+            this.name[this.disabledIndex] = fullname
           }
         } else {
           this.resetData()

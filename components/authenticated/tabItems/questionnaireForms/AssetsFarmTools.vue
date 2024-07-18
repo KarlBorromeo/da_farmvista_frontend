@@ -102,7 +102,6 @@ export default {
     /* test if the form is valid, return boolean */
     async validate() {
       await new Promise(resolve => setTimeout(resolve,300))
-      console.log('validating',this.$refs.form.validate())
       if (this.items == 0) {
         this.$store.commit('questionnaire/toggleNextTab', {
           tabName: 'AssetsFarmToolsValidated',
@@ -129,10 +128,10 @@ export default {
     /* create an object that is an empty values */
     getEmptyData() {
       return {
-        farmtoolName: [],
-        farmtoolQuantity: [],
+        farmToolName: [],
+        farmToolQuantity: [],
         isAcquiredGovtProgram: [],
-        farmtoolAge: [],
+        farmToolAge: [],
       }
     },
     /* get the data and convert it into expected key/value formats in BackEnd */

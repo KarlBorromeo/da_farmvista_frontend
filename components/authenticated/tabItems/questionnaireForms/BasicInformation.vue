@@ -63,7 +63,6 @@ export default {
           keyName: 'profile',
           data: this.getData(),
         })
-        console.log(this.getData())
       }
     },
     getData() {

@@ -640,59 +640,63 @@ export default {
   },
   watch: {
     isUseInorganicFertilizer(value) {
-      this.validate()
+      
       if (value == 'no') {
         this.kindInorganicFertilizer = ''
         this.methodInorganicApplication = ''
         this.methodInorganicApplicationOther = ''
       }
+      this.validate()
     },
-    methodInorganicApplicationOther() {
+    methodInorganicApplication() {
       this.validate()
     },
     isUseOrganicFertilizer(value) {
-      this.validate()
+      
       if (value == 'no') {
         this.kindOgranicFertilizer = ''
         this.methodOrganicApplication = ''
         this.methodOrganicApplicationOther = ''
       }
+      this.validate()
     },
-    methodOrganicApplicationOther() {
+    methodOrganicApplication() {
       this.validate()
     },
     sourcePlantingMaterial(value) {
-      this.validate()
+      
       const otherTicked = value.findIndex((item) => item == 'others')
       if (!otherTicked) {
         this.sourcePlantingMaterialOther = ''
       }
+      this.validate()
     },
     sourcePlantingMaterialOther() {
       this.validate()
     },
     coffeeVariety(value) {
-      this.validate()
+      
       const otherTicked = value.findIndex((item) => item == 'others')
       if (!otherTicked) {
         this.coffeeVarietyOther = ''
       }
+      this.validate()
     },
     coffeeVarietyOther() {
       this.validate()
     },
     methodLandPreparation(value) {
-      this.validate()
+      
       const otherTicked = value.findIndex((item) => item == 'others')
       if (!otherTicked) {
         this.methodLandPreparationOther = ''
       }
+      this.validate()
     },
     methodLandPreparationOther() {
       this.validate()
     },
     rowOrientation(value) {
-      this.validate()
       const otherTicked = value.findIndex((item) => item == 'others')
       if (!otherTicked) {
         this.rowOrientationOther = ''
@@ -709,25 +713,27 @@ export default {
       this.validate()
     },
     weedControl(value) {
-      this.validate()
+      
       const otherTicked = value.findIndex((item) => item == 'others')
       if (!otherTicked) {
         this.weedControlOther = ''
       }
+      this.validate()
     },
     insectPestManagement(value) {
-      this.validate()
+    
       const otherTicked = value.findIndex((item) => item == 'others')
       if (!otherTicked) {
         this.insectPestManagementOther = ''
       }
+        this.validate()
     },
     diseaseManagement(value) {
-      this.validate()
       const otherTicked = value.findIndex((item) => item == 'others')
       if (!otherTicked) {
         this.diseaseManagementOther = ''
       }
+      this.validate()
     },
     startPlanting() {
       this.validate()
@@ -753,16 +759,10 @@ export default {
     sourcePlantingMaterialOther() {
       this.validate()
     },
-    isUseInorganicFertilizer() {
-      this.validate()
-    },
     kindInorganicFertilizer() {
       this.validate()
     },
-    methodInorganicApplicationOther() {
-      this.validate()
-    },
-    isUseOrganicFertilizer() {
+    methodOrganicApplicationOther() {
       this.validate()
     },
     kindOgranicFertilizer() {

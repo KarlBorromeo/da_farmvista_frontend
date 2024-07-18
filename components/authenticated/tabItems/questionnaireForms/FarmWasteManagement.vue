@@ -197,7 +197,6 @@ export default {
   },
   watch: {
     parcelInfoStore(val){
-      console.log('val form:',val)
       this.parcelInfo = []
       const existingParcelInfo = this.$store.getters['profiling/selectedRecord'].parcelInfo
       if (existingParcelInfo) {
