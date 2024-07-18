@@ -1,5 +1,5 @@
 <template>
-  <v-card id="card" ref="card" light class="pa-4" style="border: 1px solid black; overflow:hidden!important">
+  <v-card id="card" ref="card" light class="pa-4">
     <div class="d-flex align-center justify-space-between pa-4">
       <h2 class="pa-0 ma-0 headline font-weight-bold">
         Survey Questionaire {{ currentCommodity }}
@@ -454,7 +454,7 @@
           <!-- SUBMISSION -->
           <v-tab
             class="caption font-weight-black"
-            @click="selectTab('SubmissionPage')"
+            @click="selectTab('Submission')"
             :disabled="SubmissionAllowed"
           >
             SUBMISSION
@@ -514,8 +514,8 @@ import TechAwareness from '../tabItems/questionnaireForms/TechAwareness.vue'
 import InformationKnowledgeSources from '../tabItems/questionnaireForms/InformationKnowledgeSources.vue'
 import OpenEndedQuestions from '../tabItems/questionnaireForms/OpenEndedQuestions.vue'
 import OpenEndedQuestionRating from '../tabItems/questionnaireForms/OpenEndedQuestionRating.vue'
-import ReasonStopping from '../tabItems/questionnaireForms/ReasonStopping.vue'
-import SubmissionPage from '../tabItems/questionnaireForms/SubmissionPage.vue'
+// import ReasonStopping from '../tabItems/questionnaireForms/ReasonStopping.vue'
+import Submission from '../tabItems/questionnaireForms/SubmissionPage.vue'
 import CommodityDropdown from '../commodityDropdown.vue'
 import snackbar from '~/components/snackbar.vue'
 
@@ -566,8 +566,8 @@ export default {
     InformationKnowledgeSources,
     OpenEndedQuestions,
     OpenEndedQuestionRating,
-    ReasonStopping,//TODO: not required if not interviewed
-    SubmissionPage,
+    // ReasonStopping,//TODO: not required if not interviewed
+    Submission,
     CommodityDropdown,
     snackbar,
   },

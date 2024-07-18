@@ -146,6 +146,11 @@ export const state = () => ({
       tabName: 'OpenEndedQuestionRatingValidated',
       validity: false,
       tempValidity: false,
+    }, 
+    {
+      tabName: 'Submission',
+      validity: true,
+      tempValidity: true,
     },
   ],
   tabs2: [ // for interviewed and inactive status
@@ -251,6 +256,11 @@ export const state = () => ({
       validity: false,
       tempValidity: false,
     },
+    {
+      tabName: 'SubmissionValidated',
+      validity: true,
+      tempValidity: true,
+    },
   ],
   tabs3: [ // for not interviewed
     {
@@ -258,6 +268,12 @@ export const state = () => ({
       validity: false,
       tempValidity: false,
     },
+    {
+      tabName: 'Submission',
+      validity: true,
+      tempValidity: true,
+    },
+
     // {
     //   tabName: 'ReasonStopping',
     //   validity: false,
@@ -1001,6 +1017,9 @@ export const mutations = {
       state.sliderTabPosition = 0
     }
     state.currentTab = tabName
+    if(tabName == 'Submission'){
+      state.progress = 100
+    }
   },
 
   /* save the all data of forms to a one object */
