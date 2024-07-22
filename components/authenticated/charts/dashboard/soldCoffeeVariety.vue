@@ -2,30 +2,36 @@
   <v-col cols="12" class="mt-2">
     <v-card class="pa-3 rounded-lg">
       <menu-dropdown-provinces @emitChangeProvince="changeprovince" />
-      <v-row justify="center">
-        <v-col cols="12">
+      <chart-title :title="title"/>
+      <v-row justify="center" class="ma-0 pa-0">
+        <v-col cols="12" class="ma-0 pa-0">
           <apexchart :options="options" :series="series" />
         </v-col>
       </v-row>
+      <chart-recommendation :text="recommendation" />
     </v-card>
   </v-col>
 </template>
 
 <script>
-import { chartPallet } from '~/chart_config/chart'
+import { chartPallet, titleStyle } from '~/chart_config/chart'
 import VueApexCharts from 'vue-apexcharts'
-import MenuDropdownProvinces from '../menuDropdownProvinces.vue'
+import menuDropdownProvinces from '../../menuDropdownProvinces.vue'
+import chartTitle from './chartTitle.vue'
+import chartRecommendation from './chartRecommendation.vue'
 export default {
   components: {
     apexchart: VueApexCharts,
-    MenuDropdownProvinces,
+    menuDropdownProvinces,
+    chartTitle,
+    chartRecommendation
   },
   methods: {
     changeprovince(province) {
       const obj = {
         province,
-        stateName: 'soldCommodityByProvince',
-        stateNameSelected: 'soldCommodityByProvinceSelected',
+        stateName: 'soldCoffeeVarietyByProvince',
+        stateNameSelected: 'soldCoffeeVarietyByProvinceSelected',
       }
       this.$store.commit('dashboard/changeProvince', obj)
     },
@@ -40,25 +46,27 @@ export default {
     this.height = 500
   },
   computed: {
+    title(){
+      return this.$store.getters['dashboard/data'].soldCoffeeVarietyByProvince
+              .title +
+            ' - ' +
+            this.$store.getters['dashboard/soldCoffeeVarietyByProvinceSelected']
+              .province
+    },
+    recommendation(){
+      return this.$store.getters['dashboard/soldCoffeeVarietyByProvinceSelected']
+        .recommendation
+    },
     provinces() {
-      return this.$store.getters['dashboard/data'].soldCommodityByProvince
+      return this.$store.getters['dashboard/data'].soldCoffeeVarietyByProvince
         .provinces
     },
     series() {
-      return this.$store.getters['dashboard/soldCommodityByProvinceSelected']
+      return this.$store.getters['dashboard/soldCoffeeVarietyByProvinceSelected']
         .series
     },
     options() {
       return {
-        title: {
-          text:
-            this.$store.getters['dashboard/data'].soldCommodityByProvince
-              .title +
-            ' - ' +
-            this.$store.getters['dashboard/soldCommodityByProvinceSelected']
-              .province,
-          align: 'center',
-        },
         chart: {
           height: this.height,
           stacked: true,
@@ -87,13 +95,13 @@ export default {
         },
         xaxis: {
           categories:
-            this.$store.getters['dashboard/soldCommodityByProvinceSelected']
+            this.$store.getters['dashboard/soldCoffeeVarietyByProvinceSelected']
               .categories,
         },
         colors: chartPallet(),
         yaxis: {
           title: {
-            text: this.$store.getters['dashboard/data'].soldCommodityByProvince
+            text: this.$store.getters['dashboard/data'].soldCoffeeVarietyByProvince
               .yLabel,
           },
         },

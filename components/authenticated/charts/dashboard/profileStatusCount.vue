@@ -1,50 +1,60 @@
 <template>
-  <v-col cols="12" lg="6" class="mt-2">
+  <v-col cols="12" lg="6">
     <v-card
       class="pa-3 rounded-lg"
-      style="height: 100%; display: flex; flex-direction: column"
+      style="height: 100%"
     >
       <menu-dropdown-provinces @emitChangeProvince="changeProvince" />
+      <chart-title :title="title" />
       <apexchart :options="options" :series="series" />
+      <chart-recommendation :text="recommendation"/>
     </v-card>
+    
   </v-col>
 </template>
 <script>
-import { chartPallet } from '~/chart_config/chart'
+import { chartPallet, titleStyle } from '~/chart_config/chart'
 import VueApexCharts from 'vue-apexcharts'
-import MenuDropdownProvinces from '../menuDropdownProvinces.vue'
+import MenuDropdownProvinces from '../../menuDropdownProvinces.vue'
+import chartTitle from './chartTitle.vue'
+import chartRecommendation from './chartRecommendation.vue'
 export default {
   components: {
     apexchart: VueApexCharts,
     MenuDropdownProvinces,
+    chartTitle,
+    chartRecommendation
   },
   methods: {
     changeProvince(province) {
       const obj = {
         province,
-        stateName: 'intervieweeStatusByProvince',
-        stateNameSelected: 'intervieweeStatusByProvinceSelected',
+        stateName: 'profileStatusCountByProvince',
+        stateNameSelected: 'profileStatusCountByProvinceSelected',
       }
       this.$store.commit('dashboard/changeProvince', obj)
     },
   },
   computed: {
+    title(){
+      return this.$store.getters['dashboard/data'].profileStatusCountByProvince
+              .title +
+            ' - ' +
+            this.$store.getters['dashboard/profileStatusCountByProvinceSelected']
+              .province
+    },
+    recommendation(){
+      return this.$store.getters[
+        'dashboard/profileStatusCountByProvinceSelected'
+      ].recommendation 
+    },
     series() {
       return this.$store.getters[
-        'dashboard/intervieweeStatusByProvinceSelected'
+        'dashboard/profileStatusCountByProvinceSelected'
       ].series
     },
     options() {
       return {
-        title: {
-          text:
-            this.$store.getters['dashboard/data'].intervieweeStatusByProvince
-              .title +
-            ' - ' +
-            this.$store.getters['dashboard/intervieweeStatusByProvinceSelected']
-              .province,
-          align: 'center',
-        },
         chart: {
           type: 'bar',
           toolbar: {
@@ -71,14 +81,14 @@ export default {
         },
         xaxis: {
           categories:
-            this.$store.getters['dashboard/intervieweeStatusByProvinceSelected']
+            this.$store.getters['dashboard/profileStatusCountByProvinceSelected']
               .categories,
         },
         colors: chartPallet(),
         yaxis: {
           title: {
             text: this.$store.getters['dashboard/data']
-              .intervieweeStatusByProvince.yLabel,
+              .profileStatusCountByProvince.yLabel,
           },
         },
         fill: {
