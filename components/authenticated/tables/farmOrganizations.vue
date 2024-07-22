@@ -18,9 +18,7 @@
           class="mt-2"
           @emitChangeProvince="changeProvince"
         />
-        <h2 class="title text-center mt-1">
-          Farm Organizations - {{ province }}
-        </h2>
+        <chart-title :title="title" />
         <v-text-field
           v-model="search"
           label="Search here the record"
@@ -33,9 +31,11 @@
 
 <script>
 import menuDropdownProvinces from '~/components/authenticated/menuDropdownProvinces.vue'
+import chartTitle from '../charts/dashboard/chartTitle.vue'
 export default {
   components: {
     menuDropdownProvinces,
+    chartTitle
   },
   data() {
     return {
@@ -61,8 +61,8 @@ export default {
         'dashboard/farmOrganizationFarmerCountSelected'
       ].data
     },
-    province() {
-      return this.$store.getters[
+    title() {
+      return 'Farm Organizations - ' + this.$store.getters[
         'dashboard/farmOrganizationFarmerCountSelected'
       ].province
     },

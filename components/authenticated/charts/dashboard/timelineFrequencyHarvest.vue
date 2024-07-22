@@ -1,14 +1,14 @@
 <template>
-  <v-col cols="12" lg="4" class="mt-2">
+  <v-col cols="12" lg="4">
     <v-card
       class="pa-3 rounded-lg"
-      style="height: 100%; display: flex; flex-direction: column"
+      style="height: 100%"
     >
-      <v-row justify="end">
-        <v-col cols="1" id="year-dropdown">
-          <v-menu offset-y left>
+      <v-row justify="end" class="ma-0 pa-0">
+        <v-col cols="1" id="year-dropdown" class="ma-0 pa-0">
+          <v-menu bottom left class="ma-0 pa-0" style="border: 1px solid black">
             <template v-slot:activator="{ on, attrs }">
-              <v-icon v-bind="attrs" v-on="on">mdi-dots-vertical</v-icon>
+              <v-icon class="ma-0 pa-0" v-bind="attrs" v-on="on">mdi-dots-vertical</v-icon>
             </template>
             <v-list>
               <v-list-item
@@ -23,11 +23,13 @@
           </v-menu>
         </v-col>
       </v-row>
-      <v-row style="height: 100%" align-content="center">
-        <v-col cols="12">
-          <apexchart :options="options" :series="series" style="height: 100%" />
+      <chart-title :title="title"/>
+      <v-row align="start" class="mt-2">
+        <v-col cols="12" >
+          <apexchart :options="options" :series="series"/>
         </v-col>
       </v-row>
+      <chart-recommendation :text="recommendation" />
     </v-card>
   </v-col>
 </template>
@@ -35,9 +37,13 @@
 <script>
 import VueApexCharts from 'vue-apexcharts'
 import { chartPallet } from '~/chart_config/chart'
+import chartTitle from './chartTitle.vue'
+import chartRecommendation from './chartRecommendation.vue'
 export default {
   components: {
     apexchart: VueApexCharts,
+    chartTitle,
+    chartRecommendation
   },
   methods: {
     changeYear(year) {
@@ -45,6 +51,15 @@ export default {
     },
   },
   computed: {
+    title(){
+      return this.$store.getters['dashboard/data']
+              .timelineFrequencyOfHarvestPerYear.title +
+            ' - ' +
+            this.$store.getters['dashboard/timelineFrequencySelected'].year
+    },
+    recommendation(){
+      return this.$store.getters['dashboard/timelineFrequencySelected'].recommendation
+    },
     years() {
       return this.$store.getters['dashboard/data']
         .timelineFrequencyOfHarvestPerYear.years
@@ -56,6 +71,7 @@ export default {
       return {
         chart: {
           type: 'area',
+          height: 800,
           toolbar: {
             show: false,
             tools: {
@@ -68,14 +84,6 @@ export default {
               reset: false,
             },
           },
-        },
-        title: {
-          text:
-            this.$store.getters['dashboard/data']
-              .timelineFrequencyOfHarvestPerYear.title +
-            ' - ' +
-            this.$store.getters['dashboard/timelineFrequencySelected'].year,
-          align: 'center',
         },
         yaxis: {
           title: {
