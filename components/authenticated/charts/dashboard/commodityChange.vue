@@ -7,7 +7,7 @@
     </template>
     <v-list elevation="15">
       <v-list-item v-for="(item, i) in commodity" :key="i">
-        <v-list-item-title @click="switchCommodity(item)">{{
+        <v-list-item-title class="dropdown-item" @click="switchCommodity(item)">{{
           item
         }}</v-list-item-title>
       </v-list-item>
@@ -30,3 +30,9 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.dropdown-item{
+  cursor: pointer;
+}
+</style>

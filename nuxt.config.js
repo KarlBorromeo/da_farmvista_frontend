@@ -69,6 +69,8 @@ export default {
           success: '#f55525', // ex: btn
           info: '#F7F5F2',
           warning: '#D9D9D9',
+          blue: '#2294f2',
+          green: '#53b057'
         },
       },
     },
