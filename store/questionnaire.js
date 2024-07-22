@@ -273,19 +273,8 @@ export const state = () => ({
       validity: true,
       tempValidity: true,
     },
-
-    // {
-    //   tabName: 'ReasonStopping',
-    //   validity: false,
-    //   tempValidity: false,
-    // },
   ],
-  // currentTab: 'BasicInformation',
-  // currentTab: 'HouseholdExpenses',
-  // currentTab: 'PestDamageObserved',
-  // currentTab: 'DemographicFarmerProfile',
-  // currentTab: 'GeneralFarmingInformation',
-  currentTab: 'SurveyInformation',
+  currentTab: 'BasicInformation',
   sliderTabPosition: 0,
   progress: 0,
   isAllValid: false,
@@ -293,6 +282,7 @@ export const state = () => ({
   isInterviewed: true,
   isSelfFarmerActive: true,
   isBasicInfoSurveyInfoValid: false,
+  onGoingFillup: false, //TODO:
 
   /* handler for isHouseMemberAffiliatedToOrg inside the generalInformation, in order for this to watch the value and affect the familyAffiliated tab forms */
   isHouseMemberAffiliatedToOrg: '',
@@ -307,6 +297,9 @@ export const state = () => ({
 })
 
 export const getters = {
+  onGoingFillup(state){ //TODO:
+    return state.onGoingFillup
+  },
   form(state){
     return state.form
   },
@@ -919,6 +912,10 @@ export const getters = {
 }
 
 export const mutations = {
+  /* toggle the ongoing fill up TODO:*/
+  toggleOngoingFillup(state, bool){
+    state.onGoingFillup = bool;
+  },
   /* save the array of parcel numbers and crops planted */
   saveParcelInfo(state,obj){
     state.parcelInfo = obj
@@ -936,7 +933,7 @@ export const mutations = {
     state.isHouseMemberAffiliatedToOrg = YesNo
   },
   /* set the tab validity expected obj is {tabName: string, valid: boolean }*/
-  toggleNextTab(state, obj) { //TODO:
+  toggleNextTab(state, obj) {
     let tabs = []
     let tabname = obj.tabName
     if(state.isInterviewed && state.isSelfFarmerActive){
@@ -987,17 +984,7 @@ export const mutations = {
       tab.tempValidity = false
     })
     state.progress = 0
-    // state.form = {
-    //   farmHouseholdAsset: {}
-    // }
-    // state.isInterviewed = true
-    // state.isSelfFarmerActive = true
-    // state.isHouseMemberAffiliatedToOrg = ''
-    // state.selfFarmerOrganization = {}
-    // state.selfFarmerFullname = {}
-    // state.selfFarmerGeneralInfo = {}
-    // state.parcelInfo = {}
-    state.currentTab = 'DemographicFarmerProfile' //TODO:
+    state.currentTab = 'DemographicFarmerProfile'
   },
 
   /* display the next tab contents */
@@ -1078,6 +1065,20 @@ export const mutations = {
   /* toggle the isSelfFarmerActive */ //TODO:
   toggleIsSelfFarmerActive(state,bool){
     state.isSelfFarmerActive = bool
+  },
+
+  /* reset the state.form as empty form */
+  resetStateForm(state){
+    state.form = {
+      farmHouseholdAsset: {}
+    }
+    state.isInterviewed = true
+    state.isSelfFarmerActive = true
+    state.isHouseMemberAffiliatedToOrg = ''
+    state.selfFarmerOrganization = {}
+    state.selfFarmerFullname = {}
+    state.selfFarmerGeneralInfo = {}
+    state.parcelInfo = {}
   }
 }
 
@@ -1092,6 +1093,8 @@ export const actions = {
     if (context.state.isAllValid) {
       try {
         const response = await api.submitQuestionnaire(payload)
+        // context.commit('resetStateForm')
+        context.commit('resetTabsValidity')
         return response
       } catch (error) {
         throw error
@@ -1115,6 +1118,8 @@ export const actions = {
     if (context.state.isAllValid || context.state.isBasicInfoSurveyInfoValid) {
       try {
         const response = await api.submitUpdate(payload)
+        // context.commit('resetStateForm')
+        context.commit('resetTabsValidity')
         return response
       } catch (error) {
         throw error

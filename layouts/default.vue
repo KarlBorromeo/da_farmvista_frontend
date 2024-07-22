@@ -7,23 +7,23 @@
       fixed
       app
       color="primary"
-      class="px-5 py-1"
+      class="px-4 py-1"
     >
       <the-logo />
       <v-divider />
-      <v-list>
+      <v-list nav>
         <v-list-item
           v-for="(item, i) in items"
           :key="i"
           :to="item.to"
           router
           exact
-          class="mb-2"
+          class="mb-2 rounded-lg"
         >
           <v-list-item-action>
             <v-icon class="white--text">{{ item.icon }}</v-icon>
           </v-list-item-action>
-          <v-list-item-title class="white--text">{{
+          <v-list-item-title class="white--text rounded-lg">{{
             item.title
           }}</v-list-item-title>
         </v-list-item>
