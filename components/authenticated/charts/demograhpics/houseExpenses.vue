@@ -6,24 +6,33 @@
     style="display: flex; flex-direction: column; justify-content: center"
   >
     <div id="custom-card">
+      <chart-title :title="title" />
       <v-spacer />
       <apexchart :options="options" :series="series" />
       <v-spacer />
-      <p>{{ recommendation }}</p>
+      <chart-recommendation :text="recommendation" />
     </div>
   </v-col>
 </template>
 <script>
 import { chartPallet } from '~/chart_config/chart'
 import VueApexCharts from 'vue-apexcharts'
+import chartTitle from '../chartTitle.vue'
+import chartRecommendation from '../chartRecommendation.vue'
 export default {
   components: {
     apexchart: VueApexCharts,
+    chartTitle,
+    chartRecommendation
   },
   computed: {
     series() {
       return this.$store.getters['analytics/demographics']
         .householdExpenseDistribution.series
+    },
+    title(){
+      return this.$store.getters['analytics/demographics']
+            .householdExpenseDistribution.title
     },
     options() {
       return {
@@ -45,11 +54,11 @@ export default {
             },
           },
         },
-        title: {
-          text: this.$store.getters['analytics/demographics']
-            .householdExpenseDistribution.title,
-          align: 'center',
-        },
+        // title: {
+        //   text: this.$store.getters['analytics/demographics']
+        //     .householdExpenseDistribution.title,
+        //   align: 'center',
+        // },
         dataLabels: {
           enabled: false,
         },

@@ -6,9 +6,10 @@
     style="display: flex; flex-direction: column; justify-content: center"
   >
     <div id="custom-card">
+      <chart-title :title="title" />
       <apexchart :options="options" :series="series" />
       <v-spacer />
-      <p style="overflow: auto">{{ recommendation }}</p>
+      <chart-recommendation :text="recommendation" />
     </div>
   </v-col>
 </template>
@@ -16,22 +17,30 @@
 <script>
 import VueApexCharts from 'vue-apexcharts'
 import { chartPallet } from '~/chart_config/chart'
+import chartTitle from '../chartTitle.vue'
+import chartRecommendation from '../chartRecommendation.vue'
 export default {
   components: {
     apexchart: VueApexCharts,
+    chartTitle,
+    chartRecommendation
   },
   computed: {
     series() {
       return this.$store.getters['analytics/demographics']
         .educationalBackgroundDistribution.series
     },
+    title(){
+      return this.$store.getters['analytics/demographics']
+            .educationalBackgroundDistribution.title
+    },
     options() {
       return {
-        title: {
-          text: this.$store.getters['analytics/demographics']
-            .educationalBackgroundDistribution.title,
-          align: 'center',
-        },
+        // title: {
+        //   text: this.$store.getters['analytics/demographics']
+        //     .educationalBackgroundDistribution.title,
+        //   align: 'center',
+        // },
         chart: {
           type: 'radialBar',
         },
