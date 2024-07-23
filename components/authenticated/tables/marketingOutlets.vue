@@ -30,7 +30,7 @@
 
 <script>
 import menuDropdownProvinces from '~/components/authenticated/menuDropdownProvinces.vue'
-import chartTitle from '../charts/dashboard/chartTitle.vue'
+import chartTitle from '../charts/chartTitle.vue'
 export default {
   components: {
     menuDropdownProvinces,

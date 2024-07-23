@@ -11,12 +11,10 @@
           cols="10"
           style="display: flex !important; flex-direction: column !important"
         >
+          <chart-title :title="title" />
           <apexchart :options="options" :series="series" />
           <v-spacer />
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius porro
-            sit, at excepturi esse hic nulla ex eaque perferendis cupiditate!
-          </p>
+          <chart-recommendation :text="recommendation" />
         </v-col>
       </v-row>
     </div>
@@ -25,13 +23,23 @@
 <script>
 import { chartPallet } from '~/chart_config/chart'
 import VueApexCharts from 'vue-apexcharts'
+import chartTitle from '../chartTitle.vue'
+import chartRecommendation from '../chartRecommendation.vue'
 export default {
   components: {
     apexchart: VueApexCharts,
+    chartTitle,
+    chartRecommendation
   },
   computed: {
     series() {
       return [44, 55, 41, 17, 15]
+    },
+    title(){
+      return 'Cropping System Count'
+    },
+    recommendation(){
+      return 'fdsfdas fdfa fdsaf f dsfasdf fas'
     },
     options() {
       return {
@@ -56,10 +64,10 @@ export default {
             return val + ' - ' + opts.w.globals.series[opts.seriesIndex]
           },
         },
-        title: {
-          text: 'Cropping System Count',
-          align: 'center',
-        },
+        // title: {
+        //   text: 'Cropping System Count',
+        //   align: 'center',
+        // },
         colors: chartPallet(),
         responsive: [
           {

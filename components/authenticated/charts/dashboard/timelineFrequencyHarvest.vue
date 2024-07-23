@@ -37,8 +37,8 @@
 <script>
 import VueApexCharts from 'vue-apexcharts'
 import { chartPallet } from '~/chart_config/chart'
-import chartTitle from './chartTitle.vue'
-import chartRecommendation from './chartRecommendation.vue'
+import chartTitle from '../chartTitle.vue'
+import chartRecommendation from '../chartRecommendation.vue'
 export default {
   components: {
     apexchart: VueApexCharts,
