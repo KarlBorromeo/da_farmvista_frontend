@@ -43,10 +43,10 @@
         :circle="true"
       ></v-pagination>
     </div>
-    <v-dialog v-if="dialog" v-model="dialog" width="1000">
+    <v-dialog v-if="isEditing" v-model="dialog" width="1000">
       <questionnaire-vue :id="id" :commodityProp="commodity" />
     </v-dialog>
-    <snackbar ref="snackbar" />
+    <snackbar ref="snackbarUpdate" />
   </div>
 </template>
 
@@ -70,6 +70,14 @@ export default {
     }
   },
   computed: {
+    /* basis to re-render the modal if isEditing is toggles */
+    isEditing(){
+      return this.$store.getters['profiling/isEditingMode']
+    },
+    /* basis to close the modal */
+    doneSubmitFormStatus(){
+      return this.$store.getters['questionnaire/doneSubmit']
+    },
     headers() {
       return [
         // { text: 'ID.', align: 'start', value: 'id' },
@@ -97,6 +105,7 @@ export default {
     editItem(id) {
       this.$store.commit('profiling/toggleEditingMode', true)
       this.$store.commit('questionnaire/toggleIsInterviewed', false)
+      this.$store.commit('questionnaire/toggleDoneSubmit', false)
       this.dialog = true
       this.id = id
     },
@@ -107,9 +116,9 @@ export default {
       if (confirmed) {
         try {
           const res = await this.$store.dispatch('profiling/deleteSurvey', id)
-          this.$refs.snackbar.showBar(res, 'success')
+          this.$refs.snackbarUpdate.showBar(res, 'success')
         } catch (error) {
-          this.$refs.snackbar.showBar(error, 'red')
+          this.$refs.snackbarUpdate.showBar(error, 'red')
         }
       }
     },
@@ -120,21 +129,20 @@ export default {
         this.loading = true
         // this.items = []
         await this.$store.dispatch('profiling/fetchAllSurvey', {
-          type: this.commodity,
           search: this.search.toLowerCase(),
           page: this.page,
           limit: this.itemPerPage,
         })
         // this.items = this.$store.getters['profiling/items']
       } catch (error) {
-        this.$refs.snackbar.showBar(error, 'red')
+        this.$refs.snackbarUpdate.showBar(error, 'red')
       }
       this.loading = false
     },
 
     /* this method will be triggered when switching the commodity, via emits */
     async switchCommodity(commodity) {
-      this.commodity = commodity
+      this.$store.commit('profiling/changeCommodityType',commodity)
       await this.fetchAllSurvey()
     },
   },
@@ -145,6 +153,24 @@ export default {
   },
 
   watch: {
+    doneSubmitFormStatus: {
+      handler: async function (val) {
+        const isEditing = this.$store.getters['profiling/isEditingMode']
+        if(val && isEditing){
+          this.dialog = false
+          this.$refs.snackbarUpdate.showBar('Succesfully updated', 'success')
+
+          /* fetch all profiling surveys after closing the dialog */
+          await this.$store.dispatch('profiling/fetchAllSurvey', {
+            page: 1,
+            limit: 10,
+          })
+
+          this.page = 1
+
+        }
+      }
+    },
     /* execute the fetching everytime navigating to other page numbers */
     async page(newVal, oldVal) {
       if (newVal !== oldVal) {

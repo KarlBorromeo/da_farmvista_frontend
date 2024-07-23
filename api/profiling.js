@@ -36,7 +36,7 @@ export async function fetchSingleSurvey(payload) {
 export async function deleteSurvey(id) {
   try {
     const res = await Axios.delete(`survey/${id}`)
-    return 'Deleted succesfully'
+    return 'Deleted successfully'
   } catch (error) {
     throw error
   }

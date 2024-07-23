@@ -212,7 +212,7 @@ export default {
 
 				/* tests if we already save an prfoile details data into the store inside the basicInformation tab */
 				const existingProfilewDetails = this.$store.getters['questionnaire/form'].profile
-				if(existingProfilewDetails && existingProfilewDetails.contactNumber){
+				if(existingProfilewDetails){
 					this.$store.commit('questionnaire/saveData', {
 						keyName: 'profile',
 						data: {
