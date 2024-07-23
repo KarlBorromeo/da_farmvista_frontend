@@ -257,7 +257,7 @@ export const state = () => ({
       tempValidity: false,
     },
     {
-      tabName: 'SubmissionValidated',
+      tabName: 'Submission',
       validity: true,
       tempValidity: true,
     },
@@ -282,7 +282,7 @@ export const state = () => ({
   isInterviewed: true,
   isSelfFarmerActive: true,
   isBasicInfoSurveyInfoValid: false,
-  onGoingFillup: false, //TODO:
+  doneSubmit: false,
 
   /* handler for isHouseMemberAffiliatedToOrg inside the generalInformation, in order for this to watch the value and affect the familyAffiliated tab forms */
   isHouseMemberAffiliatedToOrg: '',
@@ -297,8 +297,8 @@ export const state = () => ({
 })
 
 export const getters = {
-  onGoingFillup(state){ //TODO:
-    return state.onGoingFillup
+  doneSubmit(state){ 
+    return state.doneSubmit
   },
   form(state){
     return state.form
@@ -334,11 +334,6 @@ export const getters = {
   generalInformationDetails(state) {
     return state.form.profileGeneralInfo
   },
-  // TODO:
-  // /* return the parcel information details */
-  // parcelInformationDetails(state) {
-  //   return state.form.parcelInfo
-  // },
   /* return boolean if the farmer is interviewed or not*/
   isInterviewed(state) {
     return state.isInterviewed
@@ -898,23 +893,13 @@ export const getters = {
       console.error('tabname cannot find')
     }
   },
-  // Tab3ReasonStoppingValidated(state) {
-  //   const index = state.tabs3.findIndex(
-  //     (el) => el.tabName == 'ReasonStopping'
-  //   )
-  //   if (index >= 0) {
-  //     return state.tabs3[index].validity
-  //   } else {
-  //     console.error('tabname cannot find')
-  //   }
-  // },
   /* Tab3 Items Getters END */
 }
 
 export const mutations = {
-  /* toggle the ongoing fill up TODO:*/
-  toggleOngoingFillup(state, bool){
-    state.onGoingFillup = bool;
+  /* toggle the done submit form status*/
+  toggleDoneSubmit(state, bool){
+    state.doneSubmit = bool;
   },
   /* save the array of parcel numbers and crops planted */
   saveParcelInfo(state,obj){
@@ -1030,6 +1015,7 @@ export const mutations = {
     }else{
       tabs = [...state.tabs3]
     }
+    console.log(tabs)
     for (let i = 0; i < tabs.length; i++) {
       if (tabs[i].validity == false) {
         state.isAllValid = false
@@ -1037,14 +1023,6 @@ export const mutations = {
       }
     }
   },
-
-  // /* test if the basic information and survey information form are valid before submission */
-  // checkBasicInfoSurveyInfoValdity(state) {
-  //   state.isBasicInfoSurveyInfoValid = false
-  //   if (state.tabs[0].validity && state.tabs[1].validity) {
-  //     state.isBasicInfoSurveyInfoValid = true
-  //   }
-  // },
 
   /* update the commodity type */
   updateCommodity(state, commodity) {
@@ -1054,15 +1032,9 @@ export const mutations = {
   /* toggle the isInterviewed */
   toggleIsInterviewed(state, bool) {
     state.isInterviewed = bool
-    // this will remove or add the 'farmHouseholdAsset' key in the form to just remove it when the interviewee is not validated, the default form has an existing 'farmHouseholdAsset' already
-    // if (!bool) {
-    //   delete state.form.farmHouseholdAsset
-    // } else {
-    //   state.form.farmHouseholdAsset = {}
-    // }
   },
 
-  /* toggle the isSelfFarmerActive */ //TODO:
+  /* toggle the isSelfFarmerActive */
   toggleIsSelfFarmerActive(state,bool){
     state.isSelfFarmerActive = bool
   },
@@ -1074,11 +1046,11 @@ export const mutations = {
     }
     state.isInterviewed = true
     state.isSelfFarmerActive = true
-    state.isHouseMemberAffiliatedToOrg = ''
-    state.selfFarmerOrganization = {}
-    state.selfFarmerFullname = {}
-    state.selfFarmerGeneralInfo = {}
-    state.parcelInfo = {}
+    // state.isHouseMemberAffiliatedToOrg = ''
+    // state.selfFarmerOrganization = {}
+    // state.selfFarmerFullname = {}
+    // state.selfFarmerGeneralInfo = {}
+    // state.parcelInfo = {}
   }
 }
 
@@ -1092,8 +1064,9 @@ export const actions = {
     }
     if (context.state.isAllValid) {
       try {
-        const response = await api.submitQuestionnaire(payload)
-        // context.commit('resetStateForm')
+        const response = await api.submitQuestionnaire(payload) 
+        context.commit('toggleDoneSubmit',true) // close the modal
+        context.commit('resetStateForm')
         context.commit('resetTabsValidity')
         return response
       } catch (error) {
@@ -1106,20 +1079,17 @@ export const actions = {
 
   /* submit and update the existing record or (basicInfo and surveyInfo forms only if interviewee status is not validated) */
   async submitUpdate(context, id) {
-    if (context.state.isInterviewed) {
-      context.commit('checkValidityAll')
-    } else {
-      context.commit('checkBasicInfoSurveyInfoValdity')
-    }
+    context.commit('checkValidityAll')
     const payload = {
       id: id,
       form: context.state.form,
     }
     if (context.state.isAllValid || context.state.isBasicInfoSurveyInfoValid) {
       try {
-        const response = await api.submitUpdate(payload)
-        // context.commit('resetStateForm')
+        const response = await api.submitUpdate(payload)  
+        context.commit('toggleDoneSubmit',true) // close the modal
         context.commit('resetTabsValidity')
+        context.commit('resetStateForm')
         return response
       } catch (error) {
         throw error

@@ -384,7 +384,6 @@ export default {
       this.$store.getters['questionnaireCode/PrintMaterials']
 
     const data = this.$store.getters['profiling/selectedRecord']
-    console.log(data.infoKnowledgeSource.timeListeningRadio,data.infoKnowledgeSource.timeWatchingTv)
     if (Object.keys(data).length > 0) {
       this.formData.haveFunctionalRadio =
         data.infoKnowledgeSource.haveFunctionalRadio

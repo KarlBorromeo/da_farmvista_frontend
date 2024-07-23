@@ -8,6 +8,7 @@ export const state = () => ({
   },
   isEditingMode: false,
   pageArraysSearch: [],
+  currentCommodity: 'coffee'
 })
 
 export const getters = {
@@ -38,6 +39,10 @@ function capitalizeFirstLetter(text) {
 }
 
 export const mutations = {
+  /* change the current commodity */
+  changeCommodityType(state,type){
+    state.currentCommodity = type
+  },
   /* select  and extract specific key/values from the response and push it in our store */
   saveItems(state, items) {
     state.itemsCurrentPage = []
@@ -136,7 +141,11 @@ export const actions = {
   /* fetch all survey records*/
   async fetchAllSurvey(context, payload) {
     try {
-      const response = await api.fetchAllRecords(payload)
+      const obj = {
+        ...payload,
+        type: context.state.currentCommodity
+      }
+      const response = await api.fetchAllRecords(obj)
       context.commit('saveItems', response.data)
       context.commit('savePageLength', {
         length: response.count,
@@ -150,7 +159,11 @@ export const actions = {
   /* fetch one survey record using id */
   async fetchSingleSurvey(context, payload) {
     try {
-      const response = await api.fetchSingleSurvey(payload)
+      const obj = {
+        ...payload,
+        type: context.state.currentCommodity
+      }
+      const response = await api.fetchSingleSurvey(obj)
       context.commit('saveSelectedRecord', response)
       context.commit('toggleEditingMode', true)
     } catch (error) {
