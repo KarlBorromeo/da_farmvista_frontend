@@ -26,6 +26,9 @@
         />
      </v-row> 
      <v-row justify="center">
+        <mindanao-map />
+      </v-row>
+     <v-row justify="center">
         <profile-status-count />
         <active-farmer-counts />
       </v-row>
@@ -59,6 +62,7 @@ import farmOrganizations from '~/components/authenticated/tables/farmOrganizatio
 import marketingOutlets from '~/components/authenticated/tables/marketingOutlets.vue'
 import OutletMarketPopulation from '~/components/authenticated/charts/dashboard/outletMarketPopulation.vue'
 import commodityChange from '~/components/authenticated/charts/dashboard/commodityChange.vue'
+import mindanaoMap from '~/components/authenticated/map/mindanaoMap.vue'
 export default {
   components: {
     PageContents,
@@ -71,7 +75,8 @@ export default {
     farmOrganizations,
     marketingOutlets,
     OutletMarketPopulation,
-    commodityChange
+    commodityChange,
+    mindanaoMap
   },
   async beforeMount() {
     this.$store.commit('udpateHeaderTitle', 'DASHBOARD')
