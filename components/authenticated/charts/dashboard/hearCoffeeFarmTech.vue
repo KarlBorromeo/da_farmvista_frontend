@@ -1,9 +1,10 @@
 <template>
-  <v-col cols="12" lg="4" class="mt-2">
-    <v-card class="pa-3 text-center rounded-lg" style="height: 100%">
+  <v-col cols="12" lg="4">
+    <v-card class="pa-3 rounded-lg" style="height: 100%">
       <menu-dropdown-provinces @emitChangeProvince="changeProvince" />
-      <v-row justify="center">
-        <v-col cols="12">
+      <chart-title :title="title" />
+      <v-row justify="center" class="ma-0 pa-0">
+        <v-col cols="12" class="ma-0 pa-0">
           <apexchart
             :options="options"
             :series="series"
@@ -16,18 +17,23 @@
           />
         </v-col>
       </v-row>
+      <chart-recommendation :text="recommendation" />
     </v-card>
   </v-col>
 </template>
 
 <script>
 import VueApexCharts from 'vue-apexcharts'
-import { chartPallet } from '~/chart_config/chart'
-import MenuDropdownProvinces from '../menuDropdownProvinces.vue'
+// import { chartPallet } from '~/chart_config/chart'
+import MenuDropdownProvinces from '../../menuDropdownProvinces.vue'
+import chartTitle from '../chartTitle.vue'
+import chartRecommendation from '../chartRecommendation.vue'
 export default {
   components: {
     apexchart: VueApexCharts,
     MenuDropdownProvinces,
+    chartTitle,
+    chartRecommendation
   },
   methods: {
     changeProvince(province) {
@@ -40,6 +46,18 @@ export default {
     },
   },
   computed: {
+    title(){
+      return this.$store.getters['dashboard/data'].haveHeardFarmTechFarmerCount
+              .title +
+            ' - ' +
+            this.$store.getters[
+              'dashboard/haveHeardFarmTechFarmerCountSelected'
+            ].province
+    },
+    recommendation(){
+        return this.$store.getters['dashboard/haveHeardFarmTechFarmerCountSelected']
+          .recommendation
+    },
     series() {
       return [
         this.$store.getters['dashboard/haveHeardFarmTechFarmerCountSelected']
@@ -48,20 +66,8 @@ export default {
     },
     options() {
       return {
-        title: {
-          text:
-            this.$store.getters['dashboard/data'].haveHeardFarmTechFarmerCount
-              .title +
-            ' - ' +
-            this.$store.getters[
-              'dashboard/haveHeardFarmTechFarmerCountSelected'
-            ].province,
-          align: 'center',
-          floating: true,
-        },
         chart: {
           type: 'radialBar',
-          // width: '120%',
         },
         colors: ['#f55525'],
         plotOptions: {
@@ -104,7 +110,7 @@ export default {
             breakpoint: 650,
             options: {
               chart: {
-                width: '100%',
+                width: '120%',
               },
               legend: {
                 position: 'bottom',
@@ -115,7 +121,7 @@ export default {
             breakpoint: 1264,
             options: {
               chart: {
-                width: '70%',
+                width: '110%',
               },
               legend: {
                 position: 'right',

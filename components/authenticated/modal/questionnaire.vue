@@ -441,16 +441,6 @@
             XV Open EndedQuestion Rating
           </v-tab>
 
-          <!-- TAB 3 -->
-          <!-- <v-tab
-            v-if="!isInterviewed"
-            :disabled="Tab3DemographicFarmerProfileValidated"
-            class="caption font-weight-black"
-            @click="selectTab('ReasonStopping')"
-          >
-            I. Reason Stopping
-          </v-tab> -->
-
           <!-- SUBMISSION -->
           <v-tab
             class="caption font-weight-black"
@@ -523,6 +513,7 @@ import snackbar from '~/components/snackbar.vue'
 
 export default {
   mounted() {
+    alert('haha')
     // Smooth scrolling with JavaScript
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function(e) {
@@ -587,6 +578,7 @@ export default {
     /* change/update the commodity type */
     switchCommodity(commodity) {
       this.currentCommodity = commodity.toLowerCase()
+      this.$store.commit('questionnaire/changeCommodityType',this.currentCommodity)
     },
     /* fetching code requestS, and set the form type commodity in store for the submission stage */
     async fetchAllCodes() {

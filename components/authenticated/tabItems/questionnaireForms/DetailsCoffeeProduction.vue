@@ -720,6 +720,9 @@ export default {
       }
       this.validate()
     },
+    weedControlOther(){
+      this.validate()
+    },
     insectPestManagement(value) {
     
       const otherTicked = value.findIndex((item) => item == 'others')
@@ -728,11 +731,17 @@ export default {
       }
         this.validate()
     },
+    insectPestManagementOther(){
+      this.validate()
+    },
     diseaseManagement(value) {
       const otherTicked = value.findIndex((item) => item == 'others')
       if (!otherTicked) {
         this.diseaseManagementOther = ''
       }
+      this.validate()
+    },
+    diseaseManagementOther(){
       this.validate()
     },
     startPlanting() {

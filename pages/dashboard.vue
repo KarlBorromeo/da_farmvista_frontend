@@ -12,95 +12,99 @@
       />
     </div>
     <div v-else>
+      <v-row>
+        <v-spacer />
+        <commodity-change @switchCommodity="switchCommodity"/>
+      </v-row>
       <v-row justify="center">
-        <active-farmers
+        <farmer-counts
           v-for="(prov, ind) in provinces"
           :key="ind"
           :name="prov.provinceName"
-          :count="prov.count"
-          :styleProp="prov.style"
+          :active="prov.activeCount"
+          :inactive="prov.inactiveCount"
         />
+     </v-row> 
+     <v-row justify="center">
+        <profile-status-count />
+        <active-farmer-counts />
       </v-row>
       <v-row justify="center">
-        <farmer-status-population />
-        <farmer-total-population />
+        <sold-coffee-variety />
       </v-row>
-      <v-row justify="center">
-        <sold-coffee-provinces />
-      </v-row>
-      <v-row>
+    
+       <v-row>
         <outlet-market-population />
-        <coffee-production />
-        <hear-coffee-farm-tech />
+        <timeline-frequency-harvest />
+         <hear-coffee-farm-tech />
       </v-row>
+   
       <v-row>
         <marketing-outlets />
         <farm-organizations />
-      </v-row>
+      </v-row> 
     </div>
   </page-contents>
 </template>
 
 <script>
-import ActiveFarmers from '~/components/authenticated/charts/activeFarmers.vue'
+import farmerCounts from '~/components/authenticated/charts/dashboard/farmerCounts.vue'
 import PageContents from '~/components/authenticated/pageContents.vue'
-import FarmerStatusPopulation from '~/components/authenticated/charts/farmerStatusPopulation.vue'
-import FarmerTotalPopulation from '~/components/authenticated/charts/farmerTotalPopulation.vue'
-import coffeeProduction from '~/components/authenticated/charts/coffeeProduction.vue'
-import soldCoffeeProvinces from '~/components/authenticated/charts/soldCoffeeProvinces.vue'
-import hearCoffeeFarmTech from '~/components/authenticated/charts/hearCoffeeFarmTech.vue'
+import profileStatusCount from '~/components/authenticated/charts/dashboard/profileStatusCount.vue'
+import activeFarmerCounts from '~/components/authenticated/charts/dashboard/activeFarmerCounts.vue'
+import timelineFrequencyHarvest from '~/components/authenticated/charts/dashboard/timelineFrequencyHarvest.vue'
+import soldCoffeeVariety from '~/components/authenticated/charts/dashboard/soldCoffeeVariety.vue'
+import hearCoffeeFarmTech from '~/components/authenticated/charts/dashboard/hearCoffeeFarmTech.vue'
 import farmOrganizations from '~/components/authenticated/tables/farmOrganizations.vue'
 import marketingOutlets from '~/components/authenticated/tables/marketingOutlets.vue'
-import OutletMarketPopulation from '~/components/authenticated/charts/outletMarketPopulation.vue'
+import OutletMarketPopulation from '~/components/authenticated/charts/dashboard/outletMarketPopulation.vue'
+import commodityChange from '~/components/authenticated/charts/dashboard/commodityChange.vue'
 export default {
   components: {
     PageContents,
-    ActiveFarmers,
-    FarmerStatusPopulation,
-    FarmerTotalPopulation,
-    coffeeProduction,
-    soldCoffeeProvinces,
+    farmerCounts,
+    profileStatusCount,
+    activeFarmerCounts,
+    timelineFrequencyHarvest,
+    soldCoffeeVariety,
     hearCoffeeFarmTech,
     farmOrganizations,
     marketingOutlets,
     OutletMarketPopulation,
+    commodityChange
   },
   async beforeMount() {
     this.$store.commit('udpateHeaderTitle', 'DASHBOARD')
-    try {
-      this.fetching = true
-      await this.$store.dispatch('dashboard/dashboardFetch')
-    } catch (err) {
-      console.error(err)
-    }
-    this.fetching = false
+    await this.fetchDashboard('coffee')
   },
   data() {
     return {
       fetching: true,
-      styles: [
-        `background-color: #1a7358`,
-        `background-color: #1a7358`,
-        `background-color: #1a7358`,
-        `background-color: #1a7358`,
-        `background-color: #1a7358`,
-      ],
+      commodity: 'coffee'
     }
   },
   methods: {
-    aw() {
-      this.$store.commit('dashboard/modify')
+    async switchCommodity(commodity){
+      await this.fetchDashboard(commodity)
     },
-    ew() {
-      this.$store.commit('dashboard/ew')
-    },
+    async fetchDashboard(commodity){
+      try {
+        this.fetching = true
+        await this.$store.dispatch('dashboard/dashboardFetch',commodity)
+        this.commodity = commodity
+      } catch (err) {
+        console.error(err)
+        alert('something went wrong fetching the dashboard for commodity type:' + commodity)
+      }
+      this.fetching = false
+    }
   },
   computed: {
     provinces() {
       const activeFarmers =
-        this.$store.getters['dashboard/data'].activeFarmersByProvince
+        this.$store.getters['dashboard/data'].farmersCountByProvince
       const provinces = activeFarmers.map(
-        (data, index) => (data = { ...data, style: this.styles[index] })
+        data => data = { ...data }
       )
       return provinces
     },

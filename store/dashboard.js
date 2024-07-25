@@ -2,40 +2,46 @@ import * as api from '../api/dashboard'
 export const state = () => ({
   data: {
     provinces: [],
-    activeFarmersByProvince: [
+    farmersCountByProvince: [
       {
         provinceName: 'Surigao Del Sur',
-        count: 0,
+        activeCount: 0,
+        inactiveCount: 0
       },
       {
         provinceName: 'Surigao Del Norte',
-        count: 0,
+        activeCount: 0,
+        inactiveCount: 0
       },
       {
         provinceName: 'Agusan Del Sur',
-        count: 0,
+        activeCount: 0,
+        inactiveCount: 0
       },
       {
         provinceName: 'Agusan Del Norte',
-        count: 0,
+        activeCount: 0,
+        inactiveCount: 0
       },
       {
         provinceName: 'Province of Dinagat Island',
-        count: 0,
+        activeCount: 0,
+        inactiveCount: 0
       },
     ],
-    intervieweeStatusByProvince: {
+    profileStatusCountByProvince: {
       title: '',
       yLabel: '',
       data: [],
+      recommendation: ''
     },
-    totalFarmerCountByProvince: {
+    activeFarmerCountByProvince: {
       title: '',
       subtitle: '',
       total: 40,
       data: [],
     },
-    soldCommodityByProvince: {
+    soldCoffeeVarietyByProvince: {
       title: '',
       yLabel: '',
       provinces: [],
@@ -119,9 +125,9 @@ export const state = () => ({
     ],
   },
 
-  intervieweeStatusByProvinceSelected: {},
-  totalFarmerCountByProvinceSelected: {},
-  soldCommodityByProvinceSelected: {},
+  profileStatusCountByProvinceSelected: {},
+  activeFarmerCountByProvinceSelected: {},
+  soldCoffeeVarietyByProvinceSelected: {},
   marketingOutletFarmerCountSelected: {},
   timelineFrequencySelected: {},
   haveHeardFarmTechFarmerCountSelected: {},
@@ -133,17 +139,17 @@ export const getters = {
   data(state) {
     return state.data
   },
-  activeFarmersByProvince(state) {
-    return state.data.activeFarmersByProvince
+  farmersCountByProvince(state) {
+    return state.data.farmersCountByProvince
   },
-  intervieweeStatusByProvinceSelected(state) {
-    return state.intervieweeStatusByProvinceSelected
+  profileStatusCountByProvinceSelected(state) {
+    return state.profileStatusCountByProvinceSelected
   },
-  totalFarmerCountByProvinceSelected(state) {
-    return state.totalFarmerCountByProvinceSelected
+  activeFarmerCountByProvinceSelected(state) {
+    return state.activeFarmerCountByProvinceSelected
   },
-  soldCommodityByProvinceSelected(state) {
-    return state.soldCommodityByProvinceSelected
+  soldCoffeeVarietyByProvinceSelected(state) {
+    return state.soldCoffeeVarietyByProvinceSelected
   },
   marketingOutletFarmerCountSelected(state) {
     return state.marketingOutletFarmerCountSelected
@@ -164,80 +170,100 @@ export const getters = {
 
 export const mutations = {
   saveData(state, data) {
+    console.log(data)
     state.data = { ...data }
   },
-  /* intialize the intervieweeStatusByProvinceSelected Data */
-  inititializeIntervieweeStatusByProvince(state, data) {
-    if (data.intervieweeStatusByProvince.data.length > 0) {
-      state.intervieweeStatusByProvinceSelected =
-        data.intervieweeStatusByProvince.data[0]
+  /* intialize the profileStatusCountByProvinceSelected Data */
+  inititializeProfileStatusCountByProvince(state, data) {
+    if (data.profileStatusCountByProvince.data.length > 0) {
+      state.profileStatusCountByProvinceSelected = {
+        ...data.profileStatusCountByProvince.data[0],
+        recommendation: data.profileStatusCountByProvince.recommendation[0].recommendation
+      }
+        
     } else {
-      state.intervieweeStatusByProvinceSelected = {
+      state.profileStatusCountByProvinceSelected = {
         province: '',
         series: [],
         categories: [],
+        recommendation: ''
       }
     }
   },
-  /* intialize the totalFarmerCountByProvinceSelected Data */
-  inititializeTotalFarmerCountByProvince(state, data) {
-    if (data.totalFarmerCountByProvince.data.length > 0) {
-      state.totalFarmerCountByProvinceSelected =
-        data.totalFarmerCountByProvince.data[0]
+  /* intialize the activeFarmerCountByProvinceSelected Data */
+  inititializeActiveFarmerCountByProvince(state, data) {
+    if (data.activeFarmerCountByProvince.data.length > 0) {
+      state.activeFarmerCountByProvinceSelected = {
+        ...data.activeFarmerCountByProvince.data[0],
+        recommendation: data.activeFarmerCountByProvince.recommendation[0].recommendation
+      }
     } else {
-      state.totalFarmerCountByProvinceSelected = {
+      state.activeFarmerCountByProvinceSelected = {
         province: '',
         series: [],
         categories: [],
+        recommendation: ''
       }
     }
   },
   /* initialize the Coffee Harvest Data */
-  initializeSoldCommodityByProvinceSelected(state, data) {
-    if (data.soldCommodityByProvince.data.length > 0) {
-      state.soldCommodityByProvinceSelected =
-        data.soldCommodityByProvince.data[0]
+  initializeSoldCoffeeVarietyByProvinceSelected(state, data) {
+    if (data.soldCoffeeVarietyByProvince.data.length > 0) {
+      state.soldCoffeeVarietyByProvinceSelected = {
+        ...data.soldCoffeeVarietyByProvince.data[0],
+        recommendation: data.soldCoffeeVarietyByProvince.recommendation[0].recommendation
+      }
     } else {
-      state.soldCommodityByProvinceSelected = {
+      state.soldCoffeeVarietyByProvinceSelected = {
         province: '',
         series: [],
         categories: [],
+        recommendation: ''
       }
     }
   },
   /* intialize the marketingOutletFarmerCountSelected Data */
   inititializeMarketingOutletFarmerCount(state, data) {
     if (data.marketingOutletFarmerCount.data.length > 0) {
-      state.marketingOutletFarmerCountSelected =
-        data.marketingOutletFarmerCount.data[0]
+      state.marketingOutletFarmerCountSelected = {
+        ...data.marketingOutletFarmerCount.data[0],
+        recommendation: data.marketingOutletFarmerCount.recommendation[0].recommendation
+      }
     } else {
       state.marketingOutletFarmerCountSelected = {
         title: '',
         data: [],
+        recommendation: ''
       }
     }
   },
   /* initialize the chart data of Coffee Production */
   initializeTimelineFrequencySelected(state, data) {
     if (data.timelineFrequencyOfHarvestPerYear.data.length > 0) {
-      state.timelineFrequencySelected =
-        data.timelineFrequencyOfHarvestPerYear.data[0]
+      state.timelineFrequencySelected = {
+        ...data.timelineFrequencyOfHarvestPerYear.data[0],
+        recommendation: data.timelineFrequencyOfHarvestPerYear.recommendation[0].recommendation
+      }
     } else {
       state.timelineFrequencySelected = {
         year: '',
         series: [],
+        recommendation: ''
       }
     }
   },
   /* intialize the haveHeardFarmTechFarmerCountSelected Data */
   inititializeHaveHeardFarmTechFarmerCount(state, data) {
     if (data.haveHeardFarmTechFarmerCount.data.length > 0) {
-      state.haveHeardFarmTechFarmerCountSelected =
-        data.haveHeardFarmTechFarmerCount.data[0]
+      state.haveHeardFarmTechFarmerCountSelected = {
+        ...data.haveHeardFarmTechFarmerCount.data[0],
+        recommendation: data.haveHeardFarmTechFarmerCount.recommendation[0].recommendation
+      }
     } else {
       state.haveHeardFarmTechFarmerCountSelected = {
         province: '',
         percentage: 0,
+        recommendation: ''
       }
     }
   },
@@ -284,6 +310,7 @@ export const mutations = {
       )
       state[obj.stateNameSelected] = {
         ...state.data[obj.stateName].data[index],
+        recommendation: state.data[obj.stateName].recommendation[index].recommendation
       }
     }
   },
@@ -295,19 +322,20 @@ export const mutations = {
     if (index >= 0) {
       state.timelineFrequencySelected = {
         ...state.data.timelineFrequencyOfHarvestPerYear.data[index],
+        recommendation: state.data.timelineFrequencyOfHarvestPerYear.recommendation[index].recommendation
       }
     }
   },
 }
 
 export const actions = {
-  async dashboardFetch(context) {
+  async dashboardFetch(context,commodity) {
     try {
-      const data = await api.dashboardFetch()
+      const data = await api.dashboardFetch(commodity)
       context.commit('saveData', data)
-      context.commit('inititializeIntervieweeStatusByProvince', data)
-      context.commit('inititializeTotalFarmerCountByProvince', data)
-      context.commit('initializeSoldCommodityByProvinceSelected', data)
+      context.commit('inititializeProfileStatusCountByProvince', data)
+      context.commit('inititializeActiveFarmerCountByProvince', data)
+      context.commit('initializeSoldCoffeeVarietyByProvinceSelected', data)
       context.commit('inititializeMarketingOutletFarmerCount', data)
       context.commit('initializeTimelineFrequencySelected', data)
       context.commit('inititializeHaveHeardFarmTechFarmerCount', data)

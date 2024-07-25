@@ -178,6 +178,7 @@
             <v-time-picker
               v-if="timeDialogTVStart"
               v-model="formData.startTimeWatchingTv"
+              :rules="requiredRule"
               full-width
             >
               <v-spacer></v-spacer>
@@ -346,8 +347,8 @@ export default {
         haveFunctionalRadio: this.formData.haveFunctionalRadio,
         radioStationUsuallyTune: this.formData.radioStationUsuallyTune,
         timeListeningRadio: [
-          this.formData.startTimeListeningRadio,
-          this.formData.endTimeListeningRadio,
+          this.convertTimeToHHMM(this.formData.startTimeListeningRadio),
+          this.convertTimeToHHMM(this.formData.endTimeListeningRadio),
         ],
         radioProgramsListens: this.formData.radioProgramsListens,
         printMaterialsRead: concatinateOtherValueToString(
@@ -357,12 +358,25 @@ export default {
         haveTelevision: this.formData.haveTelevision,
         tvStationWatches: this.formData.tvStationWatches,
         timeWatchingTv: [
-          this.formData.startTimeWatchingTv,
-          this.formData.endTimeWatchingTv,
+          this.convertTimeToHHMM(this.formData.startTimeWatchingTv),
+          this.convertTimeToHHMM(this.formData.endTimeWatchingTv),
         ],
         haveSocmedAccount: this.formData.haveSocmedAccount,
         howOftenUsedSocmed: parseInt(this.formData.howOftenUsedSocmed),
       }
+    },
+        /* converts into hh:mm format*/
+    convertTimeToHHMM(timeStr) {
+      if (!timeStr) {
+        return ''
+      }
+      // Split the time string by colon
+      let timeParts = timeStr.split(':')
+      // Extract hours and minutes
+      let hours = timeParts[0]
+      let minutes = timeParts[1]
+      // Format the result as hh:mm
+      return `${hours}:${minutes}`
     },
   },
   beforeMount() {
@@ -375,7 +389,7 @@ export default {
         data.infoKnowledgeSource.haveFunctionalRadio
       this.formData.radioStationUsuallyTune =
         data.infoKnowledgeSource.radioStationUsuallyTune
-      this.formData.startTimeListeningRadio = data.infoKnowledgeSource.timeListeningRadio.length==1? data.infoKnowledgeSource.timeListeningRadio[0]: ''
+      this.formData.startTimeListeningRadio = data.infoKnowledgeSource.timeListeningRadio.length>=1? data.infoKnowledgeSource.timeListeningRadio[0]: ''
       this.formData.endTimeListeningRadio = data.infoKnowledgeSource.timeListeningRadio.length==2? data.infoKnowledgeSource.timeListeningRadio[1]: ''
       this.formData.radioProgramsListens =
         data.infoKnowledgeSource.radioProgramsListens
@@ -389,7 +403,7 @@ export default {
       )
       this.formData.haveTelevision = data.infoKnowledgeSource.haveTelevision
       this.formData.tvStationWatches = data.infoKnowledgeSource.tvStationWatches
-      this.formData.startTimeWatchingTv = data.infoKnowledgeSource.timeWatchingTv.length == 1?data.infoKnowledgeSource.timeWatchingTv[0]: ''
+      this.formData.startTimeWatchingTv = data.infoKnowledgeSource.timeWatchingTv.length >= 1?data.infoKnowledgeSource.timeWatchingTv[0]: ''
       this.formData.endTimeWatchingTv = data.infoKnowledgeSource.timeWatchingTv.length == 2? data.infoKnowledgeSource.timeWatchingTv[1]: ''
       this.formData.haveSocmedAccount =
         data.infoKnowledgeSource.haveSocmedAccount

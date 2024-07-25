@@ -37,8 +37,8 @@ export default {
         } else {
           response = await this.$store.dispatch('questionnaire/submitAll')
         }
-
         this.$refs.snackbar.showBar(response, 'success')
+        
       } catch (error) {
         this.$refs.snackbar.showBar(error, 'red')
       }

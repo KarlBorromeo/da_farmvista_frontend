@@ -6,21 +6,23 @@
     style="display: flex; flex-direction: column; justify-content: center"
   >
     <div id="custom-card">
+      <chart-title :title="title" />
       <apexchart :options="options" :series="series" />
       <v-spacer />
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius porro sit,
-        at excepturi esse hic nulla ex eaque perferendis cupiditate!
-      </p>
+      <chart-recommendation :text="recommendation" />
     </div>
   </v-col>
 </template>
 <script>
 import { chartPallet } from '~/chart_config/chart'
 import VueApexCharts from 'vue-apexcharts'
+import chartTitle from '../chartTitle.vue'
+import chartRecommendation from '../chartRecommendation.vue'
 export default {
   components: {
     apexchart: VueApexCharts,
+    chartTitle,
+    chartRecommendation
   },
   computed: {
     series() {
@@ -30,6 +32,12 @@ export default {
           data: [1380, 1100, 990, 880, 740, 548, 330, 200],
         },
       ]
+    },
+    title(){
+      return 'Best Commodity Intercropped'
+    },
+    recommendation(){
+      return 'fdsfdsafdsfdasfdsa'
     },
     options() {
       return {
@@ -54,10 +62,10 @@ export default {
             enabled: true,
           },
         },
-        title: {
-          text: 'Best Commodity Intercropped',
-          align: 'center',
-        },
+        // title: {
+        //   text: 'Best Commodity Intercropped',
+        //   align: 'center',
+        // },
         xaxis: {
           categories: [
             'Sourced',

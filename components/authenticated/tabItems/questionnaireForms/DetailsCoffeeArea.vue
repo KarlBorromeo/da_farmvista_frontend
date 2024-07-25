@@ -359,7 +359,7 @@ export default {
         data.detailCoffeeArea.classificationCrops.details
       this.classificationCropsReasons =
         data.detailCoffeeArea.classificationCrops.reasonUsing
-      this.yearPlantedDetails = data.detailCoffeeArea.yearPlanted.details
+      this.yearPlantedDetails = data.detailCoffeeArea.yearPlanted.details?data.detailCoffeeArea.yearPlanted.details:0
       this.yearPlantedReasons = data.detailCoffeeArea.yearPlanted.reasonUsing
       this.plantingDistanceDetails =
         data.detailCoffeeArea.plantingDistance.details

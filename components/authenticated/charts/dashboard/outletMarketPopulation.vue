@@ -1,12 +1,13 @@
 <template>
-  <v-col cols="12" lg="4" class="mt-2">
+  <v-col cols="12" lg="4">
     <v-card
       class="pa-3 text-center rounded-lg"
-      style="height: 100%; overflow: auto"
+      style="height: 100%"
     >
       <menu-dropdown-provinces @emitChangeProvince="changeProvince" />
-      <v-row justify="center">
-        <v-col cols="12">
+      <chart-title :title="title" />
+      <v-row justify="center" class="ma-0 pa-0">
+        <v-col cols="12" class="ma-0 pa-0">
           <apexchart
             :options="options"
             :series="series"
@@ -19,18 +20,23 @@
           />
         </v-col>
       </v-row>
+      <chart-recommendation :text="recommendation" />
     </v-card>
   </v-col>
 </template>
-
+../../menuDropdownProvinces.vue
 <script>
 import VueApexCharts from 'vue-apexcharts'
-import { chartPallet } from '~/chart_config/chart'
-import menuDropdownProvinces from '../menuDropdownProvinces.vue'
+import { chartPallet, titleStyle } from '~/chart_config/chart'
+import menuDropdownProvinces from '../../menuDropdownProvinces.vue'
+import chartTitle from '../chartTitle.vue'
+import chartRecommendation from '../chartRecommendation.vue'
 export default {
   components: {
     apexchart: VueApexCharts,
     menuDropdownProvinces,
+    chartTitle,
+    chartRecommendation
   },
   methods: {
     changeProvince(province) {
@@ -43,32 +49,37 @@ export default {
     },
   },
   computed: {
+    recommendation(){
+      return this.$store.getters['dashboard/marketingOutletFarmerCountSelected']
+        .recommendation
+    },
     series() {
       return this.$store.getters['dashboard/marketingOutletFarmerCountSelected']
         .series
     },
-    options() {
-      return {
-        title: {
-          text:
-            this.$store.getters['dashboard/data'].marketingOutletFarmerCount
+    title(){
+      return this.$store.getters['dashboard/data'].marketingOutletFarmerCount
               .title +
             ' - ' +
             this.$store.getters['dashboard/marketingOutletFarmerCountSelected']
-              .province,
-          align: 'center',
-        },
+              .province
+    },
+    options() {
+      return {
         chart: {
           type: 'donut',
         },
         colors: chartPallet(),
-        labels:
-          this.$store.getters['dashboard/marketingOutletFarmerCountSelected']
-            .categories,
+        labels:  this.$store.getters['dashboard/marketingOutletFarmerCountSelected']
+              .categories,
+        dataLabels: {
+          enabled: false
+        },
         stroke: {
           width: 2,
         },
         legend: {
+          show: false,
           position: 'bottom',
         },
         dataLabels: {
@@ -90,7 +101,6 @@ export default {
         subtitle: {
           text: 'a',
           style: {
-            // fontSize:  '17px',
             color: '#ffffff',
           },
         },
@@ -99,7 +109,7 @@ export default {
             breakpoint: 320,
             options: {
               chart: {
-                width: '200%',
+                width: '140%',
               },
               legend: {
                 position: 'bottom',
@@ -110,7 +120,7 @@ export default {
             breakpoint: 450,
             options: {
               chart: {
-                width: '160%',
+                width: '110%',
               },
               legend: {
                 position: 'bottom',
@@ -121,7 +131,7 @@ export default {
             breakpoint: 650,
             options: {
               chart: {
-                width: '150%',
+                width: '120%',
               },
               legend: {
                 position: 'bottom',

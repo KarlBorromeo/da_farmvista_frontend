@@ -35,15 +35,15 @@
 </template>
 
 <script>
-import ageDemographics from '../../charts/demograhpics/ageDemographics.vue'
-import areaCoffeeFarmDemographics from '../../charts/demograhpics/areaCoffeeFarmDemographics.vue'
-import croppingSystem from '../../charts/demograhpics/croppingSystemDemographics.vue'
-import educationAttainedDemographics from '../../charts/demograhpics/educationAttainedDemographics.vue'
-import genderDemographics from '../../charts/demograhpics/genderDemographics.vue'
-import houseExpenses from '../../charts/demograhpics/houseExpensesDemographics.vue'
-import marginalizedDemographics from '../../charts/demograhpics/marginalizedDemographics.vue'
-import sourceIncomeDemographics from '../../charts/demograhpics/sourceIncomeDemographics.vue'
-import commodity from '../../charts/demograhpics/commodityDemographics.vue'
+import ageDemographics from '../../charts/demograhpics/age.vue'
+import areaCoffeeFarmDemographics from '../../charts/demograhpics/areaCoffeeFarm.vue'
+import croppingSystem from '../../charts/demograhpics/croppingSystem.vue'
+import educationAttainedDemographics from '../../charts/demograhpics/educationAttained.vue'
+import genderDemographics from '../../charts/demograhpics/gender.vue'
+import houseExpenses from '../../charts/demograhpics/houseExpenses.vue'
+import marginalizedDemographics from '../../charts/demograhpics/marginalized.vue'
+import sourceIncomeDemographics from '../../charts/demograhpics/sourceIncome.vue'
+import commodity from '../../charts/demograhpics/commodity.vue'
 export default {
   components: {
     ageDemographics,

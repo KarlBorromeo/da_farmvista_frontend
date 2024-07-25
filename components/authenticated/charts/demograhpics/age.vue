@@ -6,15 +6,18 @@
     style="display: flex; flex-direction: column; justify-content: center"
   >
     <div id="custom-card">
+      <chart-title :title="title" />
       <apexchart :options="options" :series="series" />
       <v-spacer />
-      <p>{{ recommendation }}</p>
+      <chart-recommendation :text="recommendation" />
     </div>
   </v-col>
 </template>
 <script>
 import { chartPallet } from '~/chart_config/chart'
 import VueApexCharts from 'vue-apexcharts'
+import chartTitle from '../chartTitle.vue'
+import chartRecommendation from '../chartRecommendation.vue'
 export default {
   data() {
     return {
@@ -23,6 +26,8 @@ export default {
   },
   components: {
     apexchart: VueApexCharts,
+    chartRecommendation,
+    chartTitle
   },
   async mounted() {
     await new Promise((resolve) => setTimeout(resolve, 100))
@@ -33,13 +38,17 @@ export default {
       return this.$store.getters['analytics/demographics'].ageDistribution
         .series
     },
+    title(){
+      return this.$store.getters['analytics/demographics'].ageDistribution
+            .title
+    },
     options() {
       return {
-        title: {
-          text: this.$store.getters['analytics/demographics'].ageDistribution
-            .title,
-          align: 'center',
-        },
+        // title: {
+        //   text: this.$store.getters['analytics/demographics'].ageDistribution
+        //     .title,
+        //   align: 'center',
+        // },
         chart: {
           type: 'bar',
           height: this.height,

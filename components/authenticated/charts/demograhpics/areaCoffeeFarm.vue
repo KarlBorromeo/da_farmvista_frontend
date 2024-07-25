@@ -8,12 +8,10 @@
     <div id="custom-card">
       <v-row justify="center">
         <v-col cols="12" lg="8">
+          <chart-title :title="title" />
           <apexchart :options="options" :series="series" />
           <v-spacer />
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius porro
-            sit, at excepturi esse hic nulla ex eaque perferendis cupiditate!
-          </p>
+          <chart-recommendation :text="recommendation" />
         </v-col>
       </v-row>
     </div>
@@ -23,9 +21,13 @@
 <script>
 import VueApexCharts from 'vue-apexcharts'
 import { chartPallet } from '~/chart_config/chart'
+import chartTitle from '../chartTitle.vue'
+import chartRecommendation from '../chartRecommendation.vue'
 export default {
   components: {
     apexchart: VueApexCharts,
+    chartTitle,
+    chartRecommendation
   },
   computed: {
     series() {
@@ -48,12 +50,18 @@ export default {
         },
       ]
     },
+    recommendation(){
+      return 'fdsafsd fdsf dsaf dsafdsafdas f'
+    },
+    title(){
+      return 'Area Coffe Farm'
+    },
     options() {
       return {
-        title: {
-          text: 'Area Coffee Farm',
-          align: 'center',
-        },
+        // title: {
+        //   text: 'Area Coffee Farm',
+        //   align: 'center',
+        // },
         chart: {
           height: 350,
           type: 'area',
