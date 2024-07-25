@@ -170,7 +170,6 @@ export const getters = {
 
 export const mutations = {
   saveData(state, data) {
-    console.log(data)
     state.data = { ...data }
   },
   /* intialize the profileStatusCountByProvinceSelected Data */
