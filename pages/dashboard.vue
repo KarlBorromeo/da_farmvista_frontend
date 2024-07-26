@@ -26,7 +26,7 @@
         />
      </v-row> 
      <v-row justify="center">
-        <mindanao-map />
+        <caraga-provinces />
       </v-row>
      <v-row justify="center">
         <profile-status-count />
@@ -62,7 +62,7 @@ import farmOrganizations from '~/components/authenticated/tables/farmOrganizatio
 import marketingOutlets from '~/components/authenticated/tables/marketingOutlets.vue'
 import OutletMarketPopulation from '~/components/authenticated/charts/dashboard/outletMarketPopulation.vue'
 import commodityChange from '~/components/authenticated/charts/dashboard/commodityChange.vue'
-import mindanaoMap from '~/components/authenticated/map/mindanaoMap.vue'
+import caragaProvinces from '~/components/authenticated/map/dashboard/caragaProvinces.vue'
 export default {
   components: {
     PageContents,
@@ -76,7 +76,7 @@ export default {
     marketingOutlets,
     OutletMarketPopulation,
     commodityChange,
-    mindanaoMap
+    caragaProvinces
   },
   async beforeMount() {
     this.$store.commit('udpateHeaderTitle', 'DASHBOARD')
@@ -112,7 +112,7 @@ export default {
         data => data = { ...data }
       )
       return provinces
-    },
+    }
   },
 }
 </script>

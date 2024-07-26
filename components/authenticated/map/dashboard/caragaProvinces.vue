@@ -2,8 +2,41 @@
   <v-col class="card">
     <v-card  class="rounded-lg pt-4">
       <h4 class="text-center">Caraga Reigion Map</h4>
-      <v-container class="mt-0 pt-0" style="height:500px; display:flex">
-        <div id="map" class="map-container ma-4"/>
+      <v-container class="mt-0 pt-0" style="height:500px; display:flex;">
+        <div id="caragaProvinces" class="map-container ma-4">
+          <v-card
+            elevation="2"
+            style="position: absolute; top: 2rem; right: 1rem; z-index: 2"
+            tile
+          >
+            <v-list dense>
+              <v-list-group
+                  no-action
+                  sub-group
+                  :value="true"
+                >
+                  <template v-slot:activator>
+                    <v-list-item-content>
+                      Legend
+                    </v-list-item-content>
+                  </template>
+
+                  <v-list-item
+                    v-for="(item, i) in legend"
+                    :key="i"
+                    class="pa-0 pl-2 ma-0"
+                  >
+                    
+                    <v-list-item-icon>
+                      <div class="colorLegendBox" :class="item.legend"/>
+                    </v-list-item-icon>
+                    <v-list-item-title style="width:40px; overflow: hidden; word-wrap: break-word;" class="pa-0 ma-0">{{item.province}}</v-list-item-title>
+                  </v-list-item>
+              </v-list-group>
+            </v-list>
+          </v-card>
+        </div>
+        
       </v-container>
     </v-card>
   </v-col>
@@ -23,6 +56,28 @@ export default {
   data() {
     return {
       map: null,
+      legend: [
+        {
+          province: 'Agusan del Norte',
+          legend: 'red'
+        },
+        {
+          province: 'Agusan del Sur',
+          legend: 'blue'
+        },
+        {
+          province: 'Surigao del Norte',
+          legend: 'green'
+        },
+        {
+          province: 'Surigao del Sur',
+          legend: 'yellow'
+        },
+        {
+          province: 'Province of Dinagat Islands',
+          legend: 'orange'
+        },
+      ]
     };
   },
   methods: {
@@ -30,7 +85,7 @@ export default {
 
       // intialize the map variable as a Map entity
       this.map = new Map({
-        target: 'map',
+        target: 'caragaProvinces',
         view: new View({
             center: fromLonLat([125, 8]),
             zoom: 8,
@@ -187,14 +242,19 @@ export default {
   },
   mounted() {
     this.initializeMap()
-    this.addHandleClick()
+    // this.addHandleClick()
   },
 };
 </script>
 
 <style scoped>
-#map{
+#caragaProvinces{
   width: 100%!important;
   height: auto; /* Adjust the height as needed */
+  position: relative;
+}
+.colorLegendBox{
+  width: 50px;
+  height: 100%;
 }
 </style>
