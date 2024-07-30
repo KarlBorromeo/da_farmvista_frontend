@@ -80,7 +80,9 @@ export default {
   },
   async beforeMount() {
     this.$store.commit('udpateHeaderTitle', 'DASHBOARD')
+    await this.$store.dispatch('dashboard/geojsonFetch')
     await this.fetchDashboard('coffee')
+    
   },
   data() {
     return {
