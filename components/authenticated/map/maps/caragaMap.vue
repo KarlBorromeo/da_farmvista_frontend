@@ -1,47 +1,47 @@
 <template>
-  <v-col class="card">
-      <v-container class="ma-0 pa-0" style="height:80vh; display:flex;">
-        <div id="caragaMap" class="map-container ma-4">
+      <!-- <v-container class="ma-0 pa-0" style="height:80vh; display:flex; border: 1px dashed yellow"> -->
+        <div id="caragaMap" class="mt-4">
             <div  style="position: absolute; top: 2rem; right: 1rem; z-index: 2">
                 <v-card
                     elevation="2"
                     tile
-                    class="ma-0 mb-2"
+                    class="ma-0 mb-2 rounded-lg"
                 >
                     <v-list dense>
                     <v-list-group
                         no-action
                         sub-group
-                        :value="true"
+                        :value="false"
                         >
-                            <template v-slot:activator>
-                                <v-list-item-content>
-                                Layers
-                                </v-list-item-content>
-                            </template>
-                            <v-radio-group v-model="layerFocused" class="text-center pl-2 ma-0" style="width: 50px">
-                                <v-radio
-                                    v-for="(layer,i) in layers"
-                                    :key="i"
-                                    :label="layer.label"
-                                    :value="layer.value"
-                                    class="text-capitalize"
-                                ></v-radio>
-                            </v-radio-group>
+                          <template v-slot:activator>
+                              <v-list-item-content>
+                              Layers
+                              </v-list-item-content>
+                          </template>
+                          <v-radio-group v-model="layerFocused" class="text-center pl-2 ma-0" style="width: 50px">
+                              <v-radio
+                                  v-for="(layer,i) in layers"
+                                  :key="i"
+                                  :label="layer.label"
+                                  :value="layer.value"
+                                  class="text-capitalize"
+                              ></v-radio>
+                          </v-radio-group>
                     </v-list-group>
                     </v-list>
                 </v-card>
                 <v-card
+                  v-if="isClickedOnce"
                     elevation="2"
                     tile
-                    class="ma-0"
+                    class="ma-0 rounded-lg"
                     style="max-width: 250px"
                 >
                     <v-list dense>
                     <v-list-group
                         no-action
                         sub-group
-                        :value="true"
+                        :value="false"
                         >
                             <template v-slot:activator>
                                 <v-list-item-content>
@@ -56,15 +56,31 @@
                    </v-list-group>
                     </v-list>
                 </v-card>
-            </div>       
-        </div>    
-      </v-container>
-  </v-col>
+            </div> 
+            <v-sheet
+              v-if="isLoading"
+              id="skeleton-map"
+              color="grey lighten-4"
+              class="pa-3"
+            >
+              <v-skeleton-loader
+                class="mx-auto"  
+              >
+            
+              </v-skeleton-loader>
+              <v-progress-circular
+                id="progress-circular"
+                :size="70"
+                :width="7"
+                indeterminate
+              ></v-progress-circular>
+            </v-sheet>      
+        </div>  
+      <!-- </v-container> -->
 </template>
 
 <script>
 import 'ol/ol.css';
-import { register } from 'ol/proj/proj4';
 import { Map, View } from 'ol';
 import { OSM, Source } from 'ol/source';
 import { GeoJSON } from 'ol/format';
@@ -81,6 +97,7 @@ import * as olLayer from 'ol/layer';
 import * as olSource from 'ol/source';
 const { Vector: VectorLayer } = olLayer;
 const { Vector: VectorSource } = olSource;
+
 export default {
   name: 'OpenLayersMap',
   data() {
@@ -89,71 +106,98 @@ export default {
         layers: [
             {
                 label: 'region',
-                value: 'farmvista:region_boundaries'
+                value: 'region'
             },
             {
                 label: 'province',
-                value: 'farmvista:province_boundaries'
+                value: 'province'
             },
             {
-                label: 'city/municipality',
-                value: 'farmvista:city_municipality_boundaries'
+                label: 'city',
+                value: 'city'
             },
             {
                 label: 'barangay',
-                value: 'farmvista:barangay_boundaries'
+                value: 'barangay'
             }
         ],
-        layerFocused: '',
-        layerFocusedMinAxis: [], //[x,y]
-        layerFocusedMaxAxis: []  //[x,y]
+        layerFocused: 'province',
+        isLoading: false,
+        isClickedOnce: false
     };
   },
   watch: {
-    layerFocused(newVal,oldVal){
-        if(newVal != oldVal){
-            this.map.getLayers().getArray().forEach(layer => {
-                if(layer.get('title') == 'Overlays' && layer instanceof Group){
-                   layer.getLayers().getArray().forEach(subLayer => {
-                        if(subLayer.get('title') != newVal){
-                            subLayer.setVisible(false)
-                        }else{
-                            subLayer.setVisible(true)
-                        }
-                   })
-                }
-            })
-            this.layerFocused = newVal
-        }
+    async layerFocused(newVal){
+        this.removeSubLayers()
+        await this.fetchSubLayer()
+        this.addSubLayer()
     }
   },
   methods: {
-    initializeMap() {
+    /* removes all the layers under the 'Overlays' layer */
+    removeSubLayers(){
+      this.map.getLayers().getArray().forEach(layer => {
+          if(layer.get('title') == 'Overlays' && layer instanceof Group){
+              layer.getLayers().getArray().forEach(subLayer => {
+                  layer.getLayers().remove(subLayer)
+              })
+          }
+      });
+    },
 
-      // Define the EPSG:32651 projection
+    /* add a sublayer inside the 'Overlays' layer */
+    addSubLayer(){
+      const geojsonData = this.$store.getters['maps/layer'];
+      const vectorSource = new VectorSource({
+        features: new GeoJSON().readFeatures(geojsonData, {
+          featureProjection: 'EPSG:4326',
+        })
+      })
 
+      const newSublayer = new VectorLayer({
+        title: this.layerFocused,
+        source: vectorSource,
+        style: new Style({
+          fill: new Fill({
+            color: 'rgba(165,80,51,0.5)'
+          }),
+          stroke: new Stroke({
+            color: 'black',
+            width: 1
+          })
+        }),
+        visible: true
+      })
+    
+      this.map.getLayers().getArray().forEach(layer => {
+        if (layer.get('title') === 'Overlays' && layer instanceof Group) {
+          layer.getLayers().push(newSublayer)
+        }
+      });
+    },
 
-      // intialize the map variable as a Map entity
+    /* fetch the layer */
+    async fetchSubLayer(){
+      this.isLoading = true
+      await this.$store.dispatch('maps/geoLayerReq',this.layerFocused)
+      this.isLoading = false
+    },
+
+    /* initialize */
+    async initializeMap() {
+      /* intialize the map variable as a Map entity */
       this.map = new Map({
         target: 'caragaMap',
         view: new View({
             projection: 'EPSG:4326',
-            center: fromLonLat([125, 8],'EPSG:4326'),
-            zoom: 8,
-          }),
-        controls: defaultControls({
-          zoom: false, // Disable the zoom buttons
-          rotate: false, // Disable the rotate control
-          attribution: false, // Disable the attribution control
-          zoomSlider: false, // Disable the zoom slider control
-          zoomToExtent: false, // Disable the zoom to extent control
-          overviewMap: false, // Disable the overview map control
-          fullscreen: false, // Disable the fullscreen control
-          mousePosition: false, // Disable the mouse position control
-        })
+            center: fromLonLat([125.79, 8.9],'EPSG:4326'),
+            zoom: 9,
+            minZoom: 8,
+            maxZoom: 11
+          })
       });
 
-      // create a base map Tile
+      /* creating a base map */
       var base_maps = new Group({
         'title': 'Base maps',
         layers: [
@@ -166,166 +210,36 @@ export default {
         ]
       });
 
-
-    //   create a new layers using imageWms
-      var overlays = new Group({
+      /* creating a layer group for sublayers */
+      const overlays = new Group({
           'title': 'Overlays',
-          layers: [
-            //  new Image({
-            //     title: 'farmvista:region_boundaries',
-            //     source: new ImageWMS({
-            //     url: 'http://localhost:8081/geoserver/farmvista/wms',
-            //     params: { 'LAYERS': 'farmvista:region_boundaries','VERSION':'1.1.1','CRS':'EPSG:32651'},
-            //     ratio: 1,
-            //     serverType: 'geoserver',
-            //     }),
-            //     visible: true
-            // }),
-            new VectorLayer({
-              title: 'farmvista:region_boundaries',
-              source: new VectorSource({
-                url: 'http://localhost:8081/geoserver/farmvista/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=farmvista%3Aregion_boundaries&outputFormat=application%2Fjson', // GeoJSON file URL
-                format: new GeoJSON(),
-              }),
-              style: new Style({
-                fill: new Fill({
-                  color: 'rgba(165,80,51,0.8)'
-                }),
-                stroke: new Stroke({
-                  color: 'black',
-                  width: 1
-                })
-              }),
-              visible: false
-            }),
-            // new Image({
-            //     title: 'farmvista:province_boundaries',
-            //     source: new ImageWMS({
-            //     url: 'http://localhost:8081/geoserver/farmvista/wms',
-            //     params: { 'LAYERS': 'farmvista:province_boundaries','VERSION':'1.1.1','CRS':'EPSG:32651'},
-            //     ratio: 1,
-            //     serverType: 'geoserver',
-            //     }),
-            //     visible: false
-            // }),
-            new VectorLayer({
-              title: 'farmvista:province_boundaries',
-              source: new VectorSource({
-                url: 'http://localhost:8081/geoserver/farmvista/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=farmvista%3Aprovince_boundaries&outputFormat=application%2Fjson', // GeoJSON file URL
-                format: new GeoJSON(),
-              }),
-              style: new Style({
-                fill: new Fill({
-                  color: 'rgba(165,80,51,0.8)'
-                }),
-                stroke: new Stroke({
-                  color: 'black',
-                  width: 1
-                })
-              }),
-              visible: false
-            }),
-            // new Image({
-            //     title: 'farmvista:city_municipality_boundaries',
-            //     source: new ImageWMS({
-            //     url: 'http://localhost:8081/geoserver/farmvista/wms',
-            //     params: { 'LAYERS': '	farmvista:city_municipality_boundaries','VERSION':'1.1.1','CRS':'EPSG:32651'},
-            //     ratio: 1,
-            //     serverType: 'geoserver',
-            //     }),
-            //     visible: false
-            // }),
-            new VectorLayer({
-              title: 'farmvista:city_municipality_boundaries',
-              source: new VectorSource({
-                url: 'http://localhost:8081/geoserver/farmvista/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=farmvista%3Acity_municipality_boundaries&outputFormat=application%2Fjson', // GeoJSON file URL
-                format: new GeoJSON(),
-              }),
-              style: new Style({
-                fill: new Fill({
-                  color: 'rgba(165,80,51,0.8)'
-                }),
-                stroke: new Stroke({
-                  color: 'black',
-                  width: 1
-                })
-              }),
-              visible: false
-            }),
-            // new Image({
-            //     title: 'farmvista:barangay_boundaries',
-            //     source: new ImageWMS({
-            //     url: 'http://localhost:8081/geoserver/farmvista/wms',
-            //     params: { 'LAYERS': 'farmvista:barangay_boundaries','VERSION':'1.1.1','CRS':'EPSG:32651'},
-            //     ratio: 1,
-            //     serverType: 'geoserver',
-            //     }),
-            //     visible: false
-            // }),
-            new VectorLayer({
-              title: 'farmvista:barangay_boundaries',
-              source: new VectorSource({
-                url: 'http://localhost:8081/geoserver/farmvista/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=farmvista%3Abarangay_boundaries&outputFormat=application%2Fjson', // GeoJSON file URL
-                format: new GeoJSON(),
-              }),
-              style: new Style({
-                fill: new Fill({
-                  color: 'rgba(165,80,51,0.8)'
-                }),
-                stroke: new Stroke({
-                  color: 'black',
-                  width: 1
-                })
-              }),
-              visible: false
-            })
-          ]
+          layers: []
       });
+
+      /* added the layers */
       this.map.addLayer(base_maps);
       this.map.addLayer(overlays);
 
-//TODO: start
-      // const vectorSource = new VectorSource({
-      //   url: 'http://localhost:8081/geoserver/farmvista/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=farmvista%3Abarangay_boundaries&outputFormat=application%2Fjson', // GeoJSON file URL
-      //   format: new GeoJSON(),
-      // });
-
-      // // Create the VectorLayer
-      // const vectorLayer = new VectorLayer({
-      //   title: 'haha',
-      //   source: vectorSource,
-      //   style: new Style({
-      //     fill: new Fill({
-      //       color: 'rgba(165,80,51,0.8)'
-      //     }),
-      //     stroke: new Stroke({
-      //       color: 'orange',
-      //       width: 2
-      //     })
-      //   })
-      // });
-
-      // this.map.addLayer(vectorLayer);
-
+      /* create hover style interaction, styles the feature if hovered */
       const hoverInteraction = new Select({
         condition: pointerMove,
         style: new Style({
           fill: new Fill({
-            color: 'rgba(0, 255, 0, 0.5)', // Change to your desired hover color
+            color: 'rgba(0, 0, 0, 0.5)', // Change to your desired hover color
           }),
           stroke: new Stroke({
             color: '#FF0000', // Change to your desired hover color
-            width: 1,
+            width: .5,
           }),
         }),
       });
+
+      /* create select interaciton when feature is selected/clicked */
       const clickInteraction = new Select({
         condition: click
       })
-      this.map.addInteraction(hoverInteraction);
-      this.map.addInteraction(clickInteraction);
-
       clickInteraction.on('select', (event) => {
+        this.isClickedOnce = true;
         const selectedFeatures = event.target.getFeatures();
         if (selectedFeatures.getLength() > 0) {
           const selectedFeature = selectedFeatures.item(0);
@@ -333,115 +247,48 @@ export default {
           console.log('Selected feature properties:', featureProperties);
         }
       });
-//TODO: end
+
+      /* added interaction features on the map */
+      this.map.addInteraction(hoverInteraction);
+      this.map.addInteraction(clickInteraction);
+
+      /* added mouse position coordinates feature */
       var mouse_position = new MousePosition();
-      var zoom = new Zoom();
       this.map.addControl(mouse_position);
-      this.map.addControl(zoom);
-
-      /* initialize other variables */  //TODO: this should be dynamic, changes if the the layers focused was changed
-      this.layerFocused = 'farmvista:region_boundaries'
-      // this.layerFocusedMinAxis = [125,7.91],    //[x,y]
-      // this.layerFocusedMaxAxis = [126.45,10.47]  //[x,y]
-      /* initialize other variables */  //TODO: this should be dynamic, changes if the the layers focused was changed
-    },
-
-    addHandleClick() {
-      /* return url for feature req */
-      // function getFeatureInfoUrl(pixel, mapSize, bbox, layerFocused) {
-      //   const wmsUrl = 'http://localhost:8081/geoserver/farmvista/wms'; // Replace with your WMS URL
-      //   const params = {
-      //     SERVICE: 'WMS',
-      //     VERSION: '1.1.1',
-      //     REQUEST: 'GetFeatureInfo',
-      //     LAYERS: layerFocused,
-      //     QUERY_LAYERS: layerFocused,
-      //     INFO_FORMAT: 'application/json',
-      //     FEATURE_COUNT: 50,
-      //     X: Math.floor(pixel[0]),
-      //     Y: Math.floor(pixel[1]),
-      //     WIDTH: mapSize[0],
-      //     HEIGHT: mapSize[1],
-      //     CRS: 'EPSG:32651', // the CRS expected by WMS server 'EPSG:4326''VERSION':'1.1.1','CRS':'EPSG:32651'
-      //     BBOX: bbox.join(','),
-      //   };
-
-      //   const urlParams = new URLSearchParams(params).toString();
-      //   return `${wmsUrl}?${urlParams}`;
-      // }
-
-      
-
-      // const isCoordinateInBoundingBox = (coordinate) =>{
-      //   if(coordinate[0] < this.layerFocusedMinAxis[0] || coordinate[0] > this.layerFocusedMaxAxis[0]){
-      //     return false
-      //   }
-      //   if(coordinate[1] < this.layerFocusedMinAxis[1] || coordinate[1] > this.layerFocusedMaxAxis[1]){
-      //     return false
-      //   }
-      //   return true
-      // }
-      // this.map.on('click', (evt) => {
-      //   if(isCoordinateInBoundingBox(evt.coordinate)){
-      //     const view = this.map.getView();
-      //     const mapSize = this.map.getSize();
-      //     const viewProjection = view.getProjection()
-
-      //     // Calculate the extent in the correct CRS
-      //     // Assuming server expects EPSG:4326
-      //     const extent = view.calculateExtent(mapSize);
-      //     const transformedExtent = transformExtent(extent, viewProjection, 'EPSG:4326'); 
-
-      //     // Construct GetFeatureInfo URL
-      //     const url = getFeatureInfoUrl(evt.pixel, mapSize, transformedExtent, this.layerFocused);
-
-      //     if (url) {
-      //       fetch(url)
-      //         .then(response => response.json())
-      //         .then(data => {
-      //           console.log(data);
-      //         })
-      //       .catch(error => console.error('Error fetching feature info:', error));
-      //     }          
-      //   }else{
-      //     alert('outside the feature')
-      //   }
-      // })
-    },
-    layerTest(){
-        // this.map.on('click', (evt) => {
-        //   console.log(evt.pixel,evt.coordinate)
-        //   this.map.getLayers().getArray().forEach(layer => {
-        //         console.log(layer.get('title'))
-        //         if(layer.get('title') == 'Overlays' && layer instanceof Group){
-        //            layer.getLayers().getArray().forEach(subLayer => {
-        //                 console.log(subLayer.get('title'))
-        //                 // subLayer.setVisible(false)
-        //                 if(subLayer instanceof VectorLayer){
-        //                   console.log('this is vector',subLayer.get('title'))
-        //                 }
-        //            })
-        //         }
-        //     });
-        // })
     }
   },
-  mounted() {
+  async mounted() {
     this.initializeMap()
-    // this.addHandleClick()
-    // this.layerTest()
+    await this.fetchSubLayer()
+    this.addSubLayer()
   },
 };
 </script>
 
 <style scoped>
 #caragaMap{
-  width: 100%!important;
-  height: auto; /* Adjust the height as needed */
+  width: auto;
+  height: 80vh;
   position: relative;
 }
 .colorLegendBox{
   width: 50px;
   height: 100%;
+}
+#skeleton-map{
+  opacity: .7;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 3;
+}
+#progress-circular{
+  color: rgba(165,80,51,1);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
 }
 </style>

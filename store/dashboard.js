@@ -1,3 +1,4 @@
+import * as map from '../api/maps'
 import * as api from '../api/dashboard'
 export const state = () => ({
   data: {
@@ -133,6 +134,8 @@ export const state = () => ({
   haveHeardFarmTechFarmerCountSelected: {},
   marketingOutletInfoSelected: [],
   farmOrganizationFarmerCountSelected: [],
+
+  caragaProvincesGeoJSON: null
 })
 
 export const getters = {
@@ -166,9 +169,16 @@ export const getters = {
   farmOrganizationFarmerCountSelected(state) {
     return state.farmOrganizationFarmerCountSelected
   },
+  caragaProvincesGeoJSON(state){
+    return state.caragaProvincesGeoJSON
+  }
 }
 
 export const mutations = {
+  /* save geojson of caraga */
+  saveCaragaProvincesGeoJSON(state,geojson){
+    state.caragaProvincesGeoJSON = geojson
+  },
   saveData(state, data) {
     state.data = { ...data }
   },
@@ -344,4 +354,12 @@ export const actions = {
       throw err
     }
   },
+  async geojsonFetch(context){
+    try{
+      const geojson = await map.geoLayerReq('province') 
+      context.commit('saveCaragaProvincesGeoJSON',geojson)
+    }catch(err){
+      console.error(err)
+    }
+  }
 }
