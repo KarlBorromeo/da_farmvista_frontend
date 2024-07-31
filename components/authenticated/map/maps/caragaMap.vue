@@ -8,54 +8,29 @@
                     class="ma-0 mb-2 rounded-lg"
                 >
                     <v-list dense>
-                    <v-list-group
-                        no-action
-                        sub-group
-                        :value="false"
-                        >
-                          <template v-slot:activator>
-                              <v-list-item-content>
-                              Layers
-                              </v-list-item-content>
-                          </template>
-                          <v-radio-group v-model="layerFocused" class="text-center pl-2 ma-0" style="width: 50px">
-                              <v-radio
-                                  v-for="(layer,i) in layers"
-                                  :key="i"
-                                  :label="layer.label"
-                                  :value="layer.value"
-                                  class="text-capitalize"
-                              ></v-radio>
-                          </v-radio-group>
-                    </v-list-group>
-                    </v-list>
-                </v-card>
-                <v-card
-                  v-if="isClickedOnce"
-                    elevation="2"
-                    tile
-                    class="ma-0 rounded-lg"
-                    style="max-width: 250px"
-                >
-                    <v-list dense>
-                    <v-list-group
-                        no-action
-                        sub-group
-                        :value="false"
-                        >
+                      <v-list-group
+                          no-action
+                          sub-group
+                          :value="false"
+                          >
                             <template v-slot:activator>
                                 <v-list-item-content>
-                                Details
+                                Location
                                 </v-list-item-content>
                             </template>
-                            <section class="pa-2">
-                                <p><strong style="white-space: normal;word-wrap: break-word;">{{layerFocused}}</strong><p>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing eluos nulla quaerat, aspernatur vel
-                                    it dicta laudantium nemo? Porro, animi aperiam.</p>
-                            </section>
-                   </v-list-group>
+                            <v-radio-group v-model="layerFocused" class="text-center pl-6 ma-0" style="width: 50px">
+                                <v-radio
+                                    v-for="(layer,i) in layers"
+                                    :key="i"
+                                    :label="layer.label"
+                                    :value="layer.value"
+                                    class="text-capitalize"
+                                ></v-radio>
+                            </v-radio-group>
+                      </v-list-group>
                     </v-list>
                 </v-card>
+                <feature-details v-if="isClickedOnce" :layerFocused="layerFocused" :gid="selectedGid"/>
             </div> 
             <v-sheet
               v-if="isLoading"
@@ -74,7 +49,8 @@
                 :width="7"
                 indeterminate
               ></v-progress-circular>
-            </v-sheet>      
+            </v-sheet> 
+            <mapFooter />     
         </div>  
       <!-- </v-container> -->
 </template>
@@ -98,16 +74,15 @@ import * as olSource from 'ol/source';
 const { Vector: VectorLayer } = olLayer;
 const { Vector: VectorSource } = olSource;
 
+import mapFooter from '../mapFooter.vue';
+import featureDetails from './featureDetails.vue';
 export default {
+  components: { mapFooter, featureDetails },
   name: 'OpenLayersMap',
   data() {
     return {
         map: null,
         layers: [
-            {
-                label: 'region',
-                value: 'region'
-            },
             {
                 label: 'province',
                 value: 'province'
@@ -123,7 +98,8 @@ export default {
         ],
         layerFocused: 'province',
         isLoading: false,
-        isClickedOnce: false
+        isClickedOnce: false,
+        selectedGid: null,
     };
   },
   watch: {
@@ -244,7 +220,7 @@ export default {
         if (selectedFeatures.getLength() > 0) {
           const selectedFeature = selectedFeatures.item(0);
           const featureProperties = selectedFeature.getProperties();
-          console.log('Selected feature properties:', featureProperties);
+          this.selectedGid = featureProperties.gid;
         }
       });
 

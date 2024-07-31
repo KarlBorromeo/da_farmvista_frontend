@@ -21,22 +21,42 @@
                       Legend
                     </v-list-item-content>
                   </template>
-
-                  <v-list-item
-                    v-for="(item, i) in details"
-                    :key="i"
-                    class="pa-0 pl-2 ma-0"
-                    @click="highlightLayer(item.province)"
-                  >
-                    
-                    <v-list-item-icon>
-                      <div class="colorLegendBox" :style="setBGcolor(item.color)"/>
-                    </v-list-item-icon>
-                    <v-list-item-title style="width:40px; overflow: hidden; word-wrap: break-word;" class="pa-0 ma-0">{{item.province}}</v-list-item-title>
-                  </v-list-item>
+                  <v-list-item-group>
+                    <v-list-item
+                      v-for="(item, i) in details"
+                      :key="i"
+                      class="pa-0 pl-2 ma-0"
+                      @click="highlightLayer(item.province)"
+                    >
+                      
+                      <v-list-item-icon>
+                        <div class="colorLegendBox" :style="setBGcolor(item.color)"/>
+                      </v-list-item-icon>
+                      <v-list-item-title style="width:40px; overflow: hidden; word-wrap: break-word;" class="pa-0 ma-0">{{item.province}}</v-list-item-title>
+                    </v-list-item>
+                  </v-list-item-group>
               </v-list-group>
             </v-list>
           </v-card>
+          <v-sheet
+              v-if="isLoading"
+              id="skeleton-map"
+              color="grey lighten-4"
+              class="pa-3"
+            >
+              <v-skeleton-loader
+                class="mx-auto"  
+              >
+            
+              </v-skeleton-loader>
+              <v-progress-circular
+                id="progress-circular"
+                :size="70"
+                :width="7"
+                indeterminate
+              ></v-progress-circular>
+            </v-sheet> 
+            <mapFooter />
         </div>
       </v-container>
     </v-card>
@@ -56,11 +76,14 @@ import { defaults as defaultControls, ScaleLine, Zoom, ZoomSlider, MousePosition
 
 import * as olLayer from 'ol/layer';
 import * as olSource from 'ol/source';
+import { onBeforeMount } from 'vue';
 const { Vector: VectorLayer } = olLayer;
 const { Vector: VectorSource } = olSource;
 
+import mapFooter from '../mapFooter.vue';
 export default {
   name: 'OpenLayersMap',
+  components: { mapFooter },
   data() {
     return {
       map: null,
@@ -86,9 +109,19 @@ export default {
           color: 'rgba(245, 85, 37, 0.5)'
         }
       },
-    };
+      isLoading: false,
+    }
   },
   methods: {
+    async fetchGeojson(){
+      try{
+        this.isLoading = true
+        await this.$store.dispatch('dashboard/geojsonFetch')
+      }catch(err){
+        console.error(err)
+      } 
+      this.isLoading = false
+    },
     highlightLayer(province){
       this.map.getLayers().getArray().forEach(layer=>{
         if(layer.get('title') == 'province layers'){
@@ -110,7 +143,7 @@ export default {
               default: fillColor = 'rgba(0,0,0,0.3)'; // Default color
             }
             if(provinceName == province){
-              fillColor = 'rgba(255,255,255,1)'
+              fillColor = 'rgba(255,255,255,.8)'
             }
             feature.setStyle(new Style({
               fill: new Fill({
@@ -196,6 +229,7 @@ export default {
     }
   },
   async mounted() {
+    await this.fetchGeojson()
     this.initializeMap()
   },
 };
@@ -210,5 +244,21 @@ export default {
 .colorLegendBox{
   width: 50px;
   height: 100%;
+}
+#skeleton-map{
+  opacity: .7;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 3;
+}
+#progress-circular{
+  color: rgba(165,80,51,1);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
 }
 </style>

@@ -1,5 +1,11 @@
 <template>
   <div>
+    <v-container class="mb-0">
+      <v-row>
+          <v-spacer />
+          <commodity-change @switchCommodity="switchCommodity"/>
+      </v-row>   
+    </v-container>
     <page-description
       icon="mdi-finance"
       title="Analytics"
@@ -51,7 +57,7 @@ import PestDiseases from '~/components/authenticated/tabItems/analytics/pestDise
 import Infrastructure from '~/components/authenticated/tabItems/analytics/infrastructure.vue'
 import MarketAccess from '~/components/authenticated/tabItems/analytics/marketAccess.vue'
 import AccessResources from '~/components/authenticated/tabItems/analytics/accessResources.vue'
-
+import commodityChange from '~/components/authenticated/commodityChangeCogs.vue'
 export default {
   middleware: 'authSuperadminAdmin',
   components: {
@@ -62,6 +68,7 @@ export default {
     Infrastructure,
     MarketAccess,
     AccessResources,
+    commodityChange
   },
   data() {
     return {

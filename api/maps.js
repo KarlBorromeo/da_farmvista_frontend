@@ -15,26 +15,24 @@ export async function geoLayerReq(layer) {
     throw err
   }
 }
-// export async function geoserviceReq() {
-//   // try {
-//   //   // alert(geoserverBaseURL)
-//   //   const params = {
-//   //       request: 'getCapabilities',
-//   //   }
-//   //   const res = await axios.get('http://localhost:8081/geoserver/farmvista/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=farmvista%3Aregion_boundaries&outputFormat=application%2Fjson')
-//   //   console.log(res)
 
-//   // } catch (err) {
-//   //   console.error(err)
-//   //   throw err
-//   // }
-// }
-
-// export async function featureReq() {
-//   try {
-//     console.log('requestion feature request')
-//   } catch (err) {
-//     console.error(err)
-//     throw err
-//   }
-// }
+export async function featureReq(gid) {
+  try {
+    await new Promise(resolve => setTimeout(resolve,2000))
+    return {
+      location: {
+          province: "agusan del sur",
+          cityMunicipality: "",
+          barangay: ""
+      },
+      activeFarmerCount: 999,
+      commonCoffeeVariety: "karl",
+      estimatedCoffeeArea: "200 km squared",
+      commodityPresentArea: ['ha','he','hi'],
+      listPlacesCoffeePlantation: ['hehe','hoho','hihi','huhu']
+    }
+  } catch (err) {
+    console.error(err)
+    throw err
+  }
+}

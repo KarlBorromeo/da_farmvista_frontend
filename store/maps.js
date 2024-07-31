@@ -1,9 +1,13 @@
 import * as api from '../api/maps'
 export const state = () => ({
-    layer: ''
+    layer: '',
+    featureDetails: {}
   })
   
   export const getters = {
+    featureDetails(state){
+        return state.featureDetails
+    },
     layer(state){
         return state.layer
     }
@@ -12,20 +16,17 @@ export const state = () => ({
   export const mutations = {
     saveLayer(state,data){
         state.layer = data
+    },
+    saveFeatureDetails(state,data){
+        state.featureDetails = data
     }
   }
   
   export const actions = {
-    async geoserviceReq(){
+    async featureReq(context,gid){
         try{
-            // await api.geoserviceReq()
-        }catch(err){
-            throw err
-        }
-    },
-    async featureReq(){
-        try{
-            // await api.featureReq()
+            const data = await api.featureReq(gid)
+            context.commit('saveFeatureDetails',data)
         }catch(err){
             console.error(err)
         }
