@@ -1,5 +1,11 @@
 <template>
   <div>
+    <v-container class="mb-0">
+      <v-row>
+          <v-spacer />
+          <commodity-change @switchCommodity="switchCommodity"/>
+      </v-row>   
+    </v-container>
     <page-description
       icon="mdi-google-maps"
       title="Maps"
@@ -13,12 +19,13 @@
 </template>
 
 <script>
+import commodityChange from '~/components/authenticated/commodityChangeCogs.vue'
 import caragaMap from '~/components/authenticated/map/maps/caragaMap.vue'
 import PageContents from '~/components/authenticated/pageContents.vue'
 import PageDescription from '~/components/authenticated/pageDescription.vue'
 export default {
   middleware: 'authSuperadminAdmin',
-  components: { PageDescription, caragaMap,PageContents },
+  components: { PageDescription, caragaMap,PageContents, commodityChange },
   data() {
     return {
       description:

@@ -61,8 +61,8 @@ import hearCoffeeFarmTech from '~/components/authenticated/charts/dashboard/hear
 import farmOrganizations from '~/components/authenticated/tables/farmOrganizations.vue'
 import marketingOutlets from '~/components/authenticated/tables/marketingOutlets.vue'
 import OutletMarketPopulation from '~/components/authenticated/charts/dashboard/outletMarketPopulation.vue'
-import commodityChange from '~/components/authenticated/charts/dashboard/commodityChange.vue'
 import caragaProvinces from '~/components/authenticated/map/dashboard/caragaProvinces.vue'
+import commodityChange from '~/components/authenticated/commodityChangeCogs.vue'
 export default {
   components: {
     PageContents,
@@ -80,7 +80,6 @@ export default {
   },
   async beforeMount() {
     this.$store.commit('udpateHeaderTitle', 'DASHBOARD')
-    await this.$store.dispatch('dashboard/geojsonFetch')
     await this.fetchDashboard('coffee')
     
   },
