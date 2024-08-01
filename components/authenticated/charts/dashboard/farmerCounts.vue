@@ -1,8 +1,8 @@
 <template>
 	<v-col>
 		<v-card
-			style="height: 100%"
-			class="d-flex justify-center align-center rounded-lg card"
+			style="height: 100%; border-radius: .3rem"
+			class="d-flex justify-center align-center card"
 		>
 			<v-container class="d-flex justify-center align-center" color="red">
 				<v-spacer />

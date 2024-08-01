@@ -356,7 +356,7 @@ export const actions = {
   },
   async geojsonFetch(context){
     try{
-      const geojson = await map.geoLayerReq('province') 
+      const geojson = await map.geoLayerReq('region') 
       context.commit('saveCaragaProvincesGeoJSON',geojson)
     }catch(err){
       console.error(err)
