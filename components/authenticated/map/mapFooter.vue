@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p class="ma-0 pa-1 caption"><strong>Geospatial Data Source: </strong>National Mapping and Resource Information Authority</p>
+    <p class="ma-0 pa-1 caption"><strong>Geospatial Data Source: </strong>National Mapping and Resource Information Authority (<strong>NAMRIA</strong>),2023</p>
   </div>
 </template>
 <style scoped>
