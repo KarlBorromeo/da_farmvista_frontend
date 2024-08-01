@@ -103,7 +103,8 @@ export default {
     };
   },
   watch: {
-    async layerFocused(newVal){
+    async layerFocused(){
+        this.isClickedOnce = false
         this.removeSubLayers()
         await this.fetchSubLayer()
         this.addSubLayer()
