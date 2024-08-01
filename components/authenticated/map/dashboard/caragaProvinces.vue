@@ -73,6 +73,7 @@ import { Tile, Group, Image } from 'ol/layer';
 import { TileWMS, ImageWMS }from 'ol/source';
 import { fromLonLat, toLonLat, transform, transformExtent } from 'ol/proj';
 import { defaults as defaultControls, ScaleLine, Zoom, ZoomSlider, MousePosition} from 'ol/control';
+import { getCenter } from 'ol/extent';
 
 import * as olLayer from 'ol/layer';
 import * as olSource from 'ol/source';
@@ -90,23 +91,23 @@ export default {
       details: {
         agusanDelNorte: {
           province: 'Agusan del Norte',
-          color: 'rgba(211, 232, 211, 0.5)'
+          color: 'rgba(211, 232, 211, 0.3)'
         },
         agusanDelSur: {
           province: 'Agusan del Sur',
-          color: 'rgba(26, 115, 88, 0.5)'
+          color: 'rgba(26, 115, 88, 0.3)'
         },
         surigaoDelNorte: {
           province: 'Surigao del Norte',
-          color: 'rgba(255, 0, 0, 0.5)'
+          color: 'rgba(255, 0, 0, 0.3)'
         },
         surigaoDelSur: {
           province: 'Surigao del Sur',
-          color: 'rgba(0, 0, 255, 0.5)'
+          color: 'rgba(0, 0, 255, 0.3)'
         },
         dinagatIsland: {
           province: 'Dinagat Islands',
-          color: 'rgba(245, 85, 37, 0.5)'
+          color: 'rgba(245, 85, 37, 0.3)'
         }
       },
       isLoading: false,
@@ -129,8 +130,10 @@ export default {
     
           // Get the features from the source
           const features = source.getFeatures();
-       
-          // reset the colors and provide white color for the selected layer
+
+          let targetFeature;
+
+          // reset the default colors each features
           features.forEach(feature => {
             let provinceName = feature.get('adm2_en')
             let fillColor;
@@ -142,9 +145,13 @@ export default {
               case 'Dinagat Islands': fillColor = this.details.dinagatIsland.color; break; // '#f55525'  
               default: fillColor = 'rgba(0,0,0,0.3)'; // Default color
             }
+
+            /* instaniate the selected Feature as target*/
             if(provinceName == province){
-              fillColor = 'rgba(255,255,255,.8)'
+              targetFeature = feature
             }
+
+            /* reset the default colors of the features */
             feature.setStyle(new Style({
               fill: new Fill({
                 color: fillColor
@@ -154,7 +161,30 @@ export default {
                 width: 1
               })
             }))
-          });
+          })
+
+          if(targetFeature){
+            /* update the fill color to darken it */
+            const style = targetFeature.getStyle();
+            const fillColor = style.getFill().getColor();
+            const darkerFillColor = fillColor.replace('0.3','0.8')
+            targetFeature.setStyle(new Style({
+              fill: new Fill({
+                color: darkerFillColor
+              }),
+              stroke: new Stroke({
+                color: 'black',
+                width: 1
+              })
+            }))
+
+            /* locate the center and set the map instance to center and zoom */
+            const geometry = targetFeature.getGeometry();
+            const extent = geometry.getExtent();
+            const center = getCenter(extent);
+            this.map.getView().setCenter(center);
+            this.map.getView().setZoom(8);
+          }
         }
       })
     },

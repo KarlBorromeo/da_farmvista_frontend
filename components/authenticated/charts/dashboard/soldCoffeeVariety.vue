@@ -1,15 +1,17 @@
 <template>
   <v-col cols="12" class="mt-2">
-    <v-card class="pa-3 rounded-lg">
+    <div id="custom-card">
       <menu-dropdown-provinces @emitChangeProvince="changeprovince" />
       <chart-title :title="title"/>
+      <v-spacer />
       <v-row justify="center" class="ma-0 pa-0">
         <v-col cols="12" class="ma-0 pa-0">
           <apexchart :options="options" :series="series" />
         </v-col>
       </v-row>
+      <v-spacer />
       <chart-recommendation :text="recommendation" />
-    </v-card>
+    </div>
   </v-col>
 </template>
 
@@ -47,11 +49,16 @@ export default {
   },
   computed: {
     title(){
-      return this.$store.getters['dashboard/data'].soldCoffeeVarietyByProvince
-              .title +
-            ' - ' +
-            this.$store.getters['dashboard/soldCoffeeVarietyByProvinceSelected']
-              .province
+      if(this.$store.getters['dashboard/data'].soldCoffeeVarietyByProvince.title){
+        return this.$store.getters['dashboard/data'].soldCoffeeVarietyByProvince
+                .title +
+              ' - ' +
+              this.$store.getters['dashboard/soldCoffeeVarietyByProvinceSelected']
+                .province        
+      }else{
+        return ''
+      }
+
     },
     recommendation(){
       return this.$store.getters['dashboard/soldCoffeeVarietyByProvinceSelected']
@@ -142,4 +149,7 @@ export default {
   display: flex;
   justify-content: center;
 }
+</style>
+<style scoped>
+@import url('~/assets/css/analytics.css');
 </style>
