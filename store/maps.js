@@ -23,17 +23,17 @@ export const state = () => ({
   }
   
   export const actions = {
-    async featureReq(context,gid){
+    async featureReq(context,obj){
         try{
-            const data = await api.featureReq(gid)
+            const data = await api.featureReq(obj)
             context.commit('saveFeatureDetails',data)
         }catch(err){
             console.error(err)
         }
     },
-    async geoLayerReq(context,layer){
+    async geoLayerReq(context,obj){
         try{
-            const geojson = await api.geoLayerReq(layer)
+            const geojson = await api.geoLayerReq(obj)
             context.commit('saveLayer',geojson)
         }catch(err){
             console.error(err)

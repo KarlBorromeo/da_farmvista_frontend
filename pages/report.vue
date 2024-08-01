@@ -25,6 +25,11 @@ export default {
       description: 'This module is for reporting chuchcuchcuchcuc.',
     }
   },
+  methods:{
+    switchCommodity(commodity){
+      alert(commodity)
+    }
+  },
   beforeMount() {
     this.$store.commit('udpateHeaderTitle', 'REPORT')
   },

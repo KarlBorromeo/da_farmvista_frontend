@@ -30,7 +30,7 @@
                       </v-list-group>
                     </v-list>
                 </v-card>
-                <feature-details v-if="isClickedOnce" :layerFocused="layerFocused" :gid="selectedGid"/>
+                <feature-details v-if="isClickedOnce" :layerFocused="layerFocused" :gid="selectedGid" :commodity="commodity"/>
             </div> 
             <v-sheet
               v-if="isLoading"
@@ -77,6 +77,7 @@ const { Vector: VectorSource } = olSource;
 import mapFooter from '../mapFooter.vue';
 import featureDetails from './featureDetails.vue';
 export default {
+  props: ['commodity'],
   components: { mapFooter, featureDetails },
   name: 'OpenLayersMap',
   data() {
@@ -97,17 +98,20 @@ export default {
             }
         ],
         layerFocused: 'province',
-        isLoading: false,
+        isLoading: true,
         isClickedOnce: false,
         selectedGid: null,
     };
   },
   watch: {
     async layerFocused(){
-        this.isClickedOnce = false
-        this.removeSubLayers()
-        await this.fetchSubLayer()
-        this.addSubLayer()
+      this.isClickedOnce = false
+      this.removeSubLayers()
+      await this.fetchSubLayer()
+      this.addSubLayer()
+    },
+    async commodity(){
+      await this.fetchSubLayer()
     }
   },
   methods: {
@@ -156,7 +160,11 @@ export default {
     /* fetch the layer */
     async fetchSubLayer(){
       this.isLoading = true
-      await this.$store.dispatch('maps/geoLayerReq',this.layerFocused)
+      const obj = {
+        type: this.commodity,
+        layer: this.layerFocused
+      }
+      await this.$store.dispatch('maps/geoLayerReq',obj)
       this.isLoading = false
     },
 
@@ -239,6 +247,9 @@ export default {
     await this.fetchSubLayer()
     this.addSubLayer()
   },
+  beforeMount(){
+    this.isLoading = true;
+  }
 };
 </script>
 

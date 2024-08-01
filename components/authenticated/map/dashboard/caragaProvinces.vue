@@ -83,6 +83,7 @@ const { Vector: VectorSource } = olSource;
 
 import mapFooter from '../mapFooter.vue';
 export default {
+  props: ['commodity'],
   name: 'OpenLayersMap',
   components: { mapFooter },
   data() {
@@ -117,7 +118,7 @@ export default {
     async fetchGeojson(){
       try{
         this.isLoading = true
-        await this.$store.dispatch('dashboard/geojsonFetch')
+        await this.$store.dispatch('dashboard/geojsonFetch',this.commodity)
       }catch(err){
         console.error(err)
       } 

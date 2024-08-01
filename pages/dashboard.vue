@@ -26,7 +26,7 @@
         />
      </v-row> 
      <v-row justify="center">
-        <caraga-provinces />
+        <caraga-provinces :commodity="commodity"/>
       </v-row>
      <v-row justify="center">
         <profile-status-count />
@@ -81,7 +81,9 @@ export default {
   async beforeMount() {
     this.$store.commit('udpateHeaderTitle', 'DASHBOARD')
     await this.fetchDashboard('coffee')
-    
+  },
+  created(){
+    this.fetching = true;
   },
   data() {
     return {

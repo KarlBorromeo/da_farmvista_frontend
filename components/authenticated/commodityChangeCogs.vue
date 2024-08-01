@@ -7,7 +7,7 @@
     </template>
     <v-list elevation="15">
       <v-list-item v-for="(item, i) in commodity" :key="i">
-        <v-list-item-title class="dropdown-item" @click="switchCommodity(item)">{{
+        <v-list-item-title class="dropdown-item text-capitalize" @click="switchCommodity(item)">{{
           item
         }}</v-list-item-title>
       </v-list-item>
@@ -20,7 +20,8 @@ export default {
   emits: ['switchCommodity'],
   data() {
     return {
-      commodity: ['Coffee', 'Banana'],
+      commodity: ['coffee', 'banana'],
+      selected: 'coffee'
     }
   },
   methods: {

@@ -77,7 +77,7 @@ export default {
             isLoading: true
         }
     },
-    props: ['layerFocused','gid'],
+    props: ['layerFocused','gid','commodity'],
     components: { snackbar },
     methods:{
         generateDyamicTitle(layerFocused){
@@ -93,8 +93,12 @@ export default {
         },
         async fetchFeatureDetails(){
             this.isLoading = true
+            const obj = {
+                type: this.commodity,
+                gid: this.gid
+            }
             try{
-                await this.$store.dispatch('maps/featureReq',this.gid)
+                await this.$store.dispatch('maps/featureReq',obj)
             }catch(err){
                 this.$refs.snackbar.showBar(err,'red')
             }
