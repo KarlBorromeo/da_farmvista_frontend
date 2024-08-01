@@ -63,7 +63,7 @@ export default {
       search: '',
       // items: [],
       itemPerPage: 10, // number of rows per page
-      loading: false, // toggle the loading of the table
+      loading: true, // toggle the loading of the table
       page: 1, // current page number
       commodity: 'coffee',
       id: '', // this is used for specific fetch record
@@ -149,6 +149,7 @@ export default {
 
   /* before mounting the component first http request to fetch the records */
   async beforeMount() {
+    this.loading = true;
     await this.fetchAllSurvey()
   },
 

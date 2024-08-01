@@ -1,11 +1,13 @@
 import Axios from "~/axios_config/Axios"
 const geoserverBaseURL = process.env.geoserverBaseUrl
-export async function geoLayerReq(layer) {
+export async function geoLayerReq(obj) {
   try {
-    // alert(geoserverBaseURL)
+    //TODO: this is just to run the applicaiton, specified here should include the commodity type
     const params = {
-      locationType: layer
-    }
+      locationType: obj.layer
+    }      
+
+
     const res = await Axios.get('geoserver/wfs/feature',{
       params
     })
@@ -16,8 +18,9 @@ export async function geoLayerReq(layer) {
   }
 }
 
-export async function featureReq(gid) {
+export async function featureReq(obj) {
   try {
+    console.log('api fetch feature req: ',obj)
     await new Promise(resolve => setTimeout(resolve,2000))
     return {
       location: {

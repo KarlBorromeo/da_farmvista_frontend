@@ -12,7 +12,7 @@
       :description="description"
     />    
     <page-contents>
-      <caraga-map />
+      <caraga-map :commodity="commodity"/>
     </page-contents>
   </div>
 
@@ -30,7 +30,13 @@ export default {
     return {
       description:
         'This module facilitates the location of coffee information, farmers, and other relevant points of interest, enhancing accessibility and connectivity within the agricultural community.',
+      commodity: 'coffee'
     }
+  },
+  methods:{
+    switchCommodity(commodity){
+      this.commodity = commodity
+    },    
   },
   beforeMount() {
     this.$store.commit('udpateHeaderTitle', 'MAPS')

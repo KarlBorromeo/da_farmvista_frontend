@@ -58,9 +58,9 @@ export const mutations = {
   },
 }
 export const actions = {
-  async fetchDemographics(context) {
+  async fetchDemographics(context,commodity) {
     try {
-      const res = await api.demographics()
+      const res = await api.demographics(commodity)
       context.commit('saveDemographics', res)
     } catch (err) {
       throw err
