@@ -27,27 +27,27 @@
                     </section>
                     <section class="pa-2 pl-6" v-else>
                         <v-list-item style="" class="pa-0 pl-1">
-                            <p class="pa-0 ma-0 text-capitalize"> Province Name: <strong>{{featureDetails.location.province}}</strong></p>
+                            <p class="pa-0 ma-0 text-capitalize"> Province Name: <strong>{{featureDetails.geolocation.province}}</strong></p>
                         </v-list-item>
                         <v-list-item style="" class="pa-0 pl-1" v-if="layerFocused=='city' || layerFocused=='barangay'">
-                            <p class="pa-0 ma-0 text-capitalize">City/Municipality Name: <strong class="subheading">{{featureDetails.location.cityMunicipality}}</strong></p>
+                            <p class="pa-0 ma-0 text-capitalize">City/Municipality Name: <strong class="subheading">{{featureDetails.geolocation.cityMunicipality}}</strong></p>
                         </v-list-item>
                         <v-list-item style="" class="pa-0 pl-1" v-if="layerFocused=='barangay'">
-                            <p class="pa-0 ma-0 text-capitalize">Barangay Name: <strong class="subheading">{{featureDetails.location.barangay}}</strong></p>
+                            <p class="pa-0 ma-0 text-capitalize">Barangay Name: <strong class="subheading">{{featureDetails.geolocation.barangay}}</strong></p>
                         </v-list-item>
                         <v-list-item style="" class="pa-0 pl-1">
-                            <p class="pa-0 ma-0 text-capitalize">Active Coffee Farmers as of year 1999: <strong class="subheading">{{featureDetails.activeFarmerCount}}</strong></p>
+                            <p class="pa-0 ma-0 text-capitalize">Active Coffee Farmers as of year {{featureDetails.year}}: <strong class="subheading">{{featureDetails.activeFarmerCount}}</strong></p>
                         </v-list-item>
                         <v-list-item style="" class="pa-0 pl-1">
                             <p class="pa-0 ma-0 text-capitalize">Most Common Coffee Variety: <strong class="subheading">{{featureDetails.commonCoffeeVariety}}</strong></p>
                         </v-list-item>
                         <v-list-item style="" class="pa-0 pl-1">
-                            <p class="pa-0 ma-0 text-capitalize">Estimated Coffee Area: <strong class="subheading">{{featureDetails.estimatedCoffeeArea}}</strong></p>
+                            <p class="pa-0 ma-0">Estimated Coffee Area: <strong class="subheading">{{featureDetails.coffeeArea}}</strong></p>
                         </v-list-item>
                         <v-list-item style="; display: block" class="pa-0 pl-1">
                             <p class="pa-0 ma-0 text-capitalize">Commodities Present in the Area: </p>
                             <ul class="ml-4">
-                                <li v-for="(item,i) in featureDetails.commodityPresentArea" :key="i">
+                                <li v-for="(item,i) in featureDetails.commoditiesPresent" :key="i">
                                     {{item}}
                                 </li>
                             </ul>
@@ -55,8 +55,8 @@
                         <v-list-item style="; display: block" class="pa-0 pl-1 mt-2" v-if="layerFocused !='barangay'">
                             <p class="pa-0 ma-0 text-capitalize">{{generateDyamicTitle(layerFocused)}}</p>
                             <ul class="ml-4">
-                                <li v-for="(item,i) in featureDetails.listPlacesCoffeePlantation" :key="i">
-                                    {{item}}
+                                <li v-for="(item,i) in featureDetails.coffeePlantations" :key="i">
+                                    {{item.location}} - {{item.count}}
                                 </li>
                             </ul>
                         </v-list-item>
@@ -94,6 +94,7 @@ export default {
         async fetchFeatureDetails(){
             this.isLoading = true
             const obj = {
+                layer: this.layerFocused,
                 type: this.commodity,
                 gid: this.gid
             }
