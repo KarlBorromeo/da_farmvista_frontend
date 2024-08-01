@@ -248,7 +248,7 @@ export const mutations = {
   },
   /* initialize the chart data of Coffee Production */
   initializeTimelineFrequencySelected(state, data) {
-    if (data.timelineFrequencyOfHarvestPerYear.data.length > 0) {
+    if (data.timelineFrequencyOfHarvestPerYear.data.length >= 0) {
       state.timelineFrequencySelected = {
         ...data.timelineFrequencyOfHarvestPerYear.data[0],
         recommendation: data.timelineFrequencyOfHarvestPerYear.recommendation[0].recommendation
