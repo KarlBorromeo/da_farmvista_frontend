@@ -26,10 +26,16 @@
       </v-row>
     </v-card>
     <div id="architecture" class="mt-0 pt-0">
-      <v-row justify="center" align="center" class="mt-0">
-        <v-col cols="9" sm="3" v-for="i in 3" :key="i" class="mb-4">
-          <v-card class="elevation-2" style="height: 300px">
-            {{ i }}
+      <v-row justify="center" align="center" class="mt-0 pa-4">
+        <v-col cols="9" sm="3" lg="2" v-for="(item,i) in architecture" :key="i" class="mb-4">
+          <v-card class="elevation-2 pt-6" style="height: 260px; display:flex; flex-direction: column; justify-content:start; align-items:center" :style="dynamicBGColor(i)">
+            <section class="d-flex justify-center mt-6">
+              <v-icon color="black" size="48" :style="dynamicBorderColor(i)" class="pa-2 rounded-lg"
+                    >{{item.icon}}</v-icon>
+            </section>
+            <section class="pa-2">
+              <p class="title text-center font-weight-normal" :style="dynamicTextColor(i)">{{item.text}}</p>
+            </section>
           </v-card>
         </v-col>
       </v-row>
@@ -46,14 +52,14 @@
               />
               <img
                 class="img-cropped"
-                style="width: 60%"
+                style="width: 60%; opacity:.85"
                 src="~/static/hand2.png"
               />
             </section>
             <section class="d-flex">
               <img
                 class="img-cropped"
-                style="width: 60%"
+                style="width: 60%; opacity:.85"
                 src="~/static/hand3.png"
               />
               <img
@@ -65,55 +71,83 @@
           </v-container>
         </v-col>
         <v-col cols="9" sm="6">
-          <p class="font-weigth-light title text-capitalize">
-            A data-centric web application designed to revolutionize farming
+          <p class="font-weight-normal title text-capitalize">
+            A data-centric web application <br>Designed to revolutionize farming
           </p>
-          <p class="font-weigth-light body-2">
+          <p class="font-weight-normal body-2">
             This platform facilitates real-time information provision and visual
             data dissemination to key stakeholders and decision-makers.
           </p>
-          <v-btn large>Learn More</v-btn>
+          <v-btn large color="primary">Learn More</v-btn>
         </v-col>
       </v-row>
     </v-container>
-    <v-container>
-      <v-row align="center" justify="center">
-        <v-col cols="9" sm="6">
-          <h3 class="title">Insights</h3>
-          <v-expansion-panels focusable>
-            <v-expansion-panel v-for="(item, i) in 5" :key="i">
-              <v-expansion-panel-header>
-                <p>
-                  <b>{{ i + 1 }}.</b> What is the fda fdasl aa a?
-                </p>
-              </v-expansion-panel-header>
-              <v-expansion-panel-content>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat.
-              </v-expansion-panel-content>
-            </v-expansion-panel>
-          </v-expansion-panels>
-          <v-btn large id="aw">More</v-btn>
-        </v-col>
-        <v-col cols="5" style="height: 300px">
-          <section style="position: relative; height: 100%">
-            <section id="farmer1">
-              <img src="~/static/farmer2.jpg" />
+    
+    <div class="customSpacer" />
+    <div id="insights" style="background-color: #f0f0f0; min-height: 500px; display:flex; align-items: center; justify-content: center">
+      <v-container>
+        <v-row align="center" justify="center">
+          <v-spacer/>
+          <v-col cols="9" sm="6">
+            <p class="font-weight-normal title text-capitalize text-start pl-6">Insights</p>
+            <v-expansion-panels focusable>
+              <v-expansion-panel v-for="(item, i) in 5" :key="i">
+                <v-expansion-panel-header>
+                  <p>
+                    <b>{{ i + 1 }}.</b> What is the fda fdasl aa a?
+                  </p>
+                </v-expansion-panel-header>
+                <v-expansion-panel-content>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                  eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+                  enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                  nisi ut aliquip ex ea commodo consequat.
+                </v-expansion-panel-content>
+              </v-expansion-panel>
+            </v-expansion-panels>
+            <v-btn large color="primary" class="mt-4">Discover More</v-btn>
+          </v-col>
+          <v-spacer class="d-none d-sm-block" />
+          <v-col cols="5" style="height: 300px" class="d-none d-sm-block">
+            <section style="position: relative; height: 100%">
+              <section id="farmer1">
+                <img src="~/static/farmer2.jpg" />
+              </section>
+              <section id="farmer2">
+                <img
+                  style="width: 90%; height: 100%; object-fit: cover"
+                  src="~/static/farmerPortrait.jpg"
+                />
+              </section>
             </section>
-            <section id="farmer2">
-              <img
-                style="width: 90%; height: 100%; object-fit: cover"
-                src="~/static/farmerPortrait.jpg"
-              />
-            </section>
-          </section>
+          </v-col>
+          <v-spacer/>
+        </v-row>
+      </v-container>      
+    </div>
+    <div class="customSpacer" />
+    <v-container id="about">
+      <p class="font-weight-normal title text-capitalize text-center">About</p>
+      <v-row justify="center" align="center">
+        <v-spacer class="d-none d-sm-block" />
+        <v-col cols="9" sm="5">
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam impedit iure, doloremque numquam facilis ipsum aut asperiores perferendis repudiandae sed fugiat, hic amet distinctio sint perspiciatis voluptate, sunt eum. Quo adipisci soluta voluptas consequuntur, velit quidem iste hic recusandae sint perferendis dolor dignissimos nobis obcaecati. Recusandae doloribus neque earum quis?</p>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero, dolores.</p>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam, soluta, quas maiores fuga dicta odio similique minima aliquam eum facilis iusto accusantium! Autem, ducimus itaque!</p>
         </v-col>
+        <v-spacer class="d-none d-sm-block" />
+        <v-col cols="9" sm="5">
+            <p class="font-weight-normal subheading text-capitalize text-center">Architecture Framework</p>
+            <img
+                  style="width: 100%; height: 100%; object-fit: cover"
+                  src="~/static/methodology.png"
+                />
+        </v-col>
+        <v-spacer class="d-none d-sm-block" />
       </v-row>
     </v-container>
-    <v-container class="mt-6 pt-9">
-      <h1 class="title text-center">Explore Projects</h1>
+    <v-container id="commodities" class="mt-6 pt-9">
+      <p class="font-weight-normal title text-capitalize text-center">Explore Commodity Projects</p>
       <v-slide-group
         v-model="model"
         class="pa-4 pt-0"
@@ -124,7 +158,7 @@
           <v-card
             :color="active ? 'primary' : 'grey lighten-1'"
             class="ma-4"
-            height="200"
+            height="350"
             width="300"
             @click="toggle"
           >
@@ -145,10 +179,58 @@
 <script>
 export default {
   layout: 'main',
+  data(){
+    return{
+      architecture: [
+        {
+          text: 'Farmer Profiling',
+          icon: 'mdi-badge-account-horizontal-outline'
+        },
+        {
+          text: 'Maps and Spatial Data',
+          icon: 'mdi-map-check-outline'
+        },
+        {
+          text: 'Analytics and Visualization',
+          icon: 'mdi-chart-bar'
+        }
+      ]
+    }
+  },
+  methods:{
+    dynamicBGColor(index){
+      if(index == 1){
+        return 'background-color:#1a7358'
+      }
+      return 'background-color: white'
+    },
+    dynamicBorderColor(index){
+      if(index == 1){
+        return 'border: 4px solid white; color: white!important'
+      }
+      return 'border: 4px solid black: color: black'
+    },
+    dynamicTextColor(index){
+      if(index == 1){
+        return 'color: white'
+      }
+      return 'color: black'
+    }
+  }
 }
 </script>
 
 <style scoped>
+.customSpacer{
+  height: 50px;
+}
+.customGreenColor{
+  color: #4db048!important
+}
+.customGreenBG{
+  background-color: #4db048!important;
+  color: white;
+}
 #headline {
   border-radius: 0 !important;
   background-image: url('~/static/landingPageHeadline.jpg');
@@ -188,6 +270,7 @@ export default {
   width: 100%;
   min-height: 250px;
   max-height: 350px;
+  border-radius: .2rem;
 }
 #farmer1::before {
   content: '';
@@ -202,6 +285,7 @@ export default {
   left: 50%;
   transform: translate(-45%, -45%);
   z-index: -2;
+  border-radius: .2rem;
 }
 #farmer2 {
   position: absolute;
@@ -216,6 +300,9 @@ export default {
   object-fit: cover;
   z-index: 6;
 }
+#farmer2 img{
+  border-radius: .2rem;
+}
 #farmer2::before {
   content: '';
   display: block;
@@ -227,6 +314,7 @@ export default {
   left: 50%;
   transform: translate(-50%, -45%);
   z-index: -1;
+  border-radius: .2rem;
 }
 @media screen and (min-width: 601px) {
   #headline {

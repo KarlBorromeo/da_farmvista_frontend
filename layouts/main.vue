@@ -2,10 +2,12 @@
   <v-app>
     <v-app-bar
       color="white"
-      elevate-on-scroll
-      scroll-target="#scrolling-techniques-7"
+      absolute
+      hide-on-scroll
+      app
       align="center"
       height="80"
+      style="z-index: 4!important"
     >
       <v-spacer class="hidden-sm-and-down"></v-spacer>
 
@@ -18,14 +20,15 @@
           <v-list-item
             v-for="(item, i) in items"
             :key="i"
-            :to="item.to"
             router
             exact
-            class="mb-2"
+            class="mb-2 rounded-lg"
           >
-            <v-list-item-title class="text-center">{{
+            <v-list-item-title class="text-center rounded-lg">
+              <a :href="item.id">
+              {{
               item.title
-            }}</v-list-item-title>
+            }}</a></v-list-item-title>
           </v-list-item>
         </v-list>
       </div>
@@ -43,7 +46,7 @@
 
       <v-spacer class="hidden-sm-and-down"></v-spacer>
     </v-app-bar>
-    <v-main style="height: 1500px">
+    <v-main style="height: 1500px; z-index: 1!important">
       <nuxt />
       <the-footer />
     </v-main>
@@ -68,25 +71,39 @@ export default {
       items: [
         {
           title: 'Home',
-          to: '/',
+          id: '#headline',
+        },
+        {
+          title: 'Insights',
+          id: '#insights',
         },
         {
           title: 'About',
-          to: '/about',
+          id: '#about',
         },
         {
           title: 'Commodities',
-          to: '/commodities',
-        },
-        {
-          title: 'Demographics',
-          to: '/demographics',
+          id: '#commodities',
         },
       ],
     }
   },
+  mounted(){
+    // Smooth scrolling with JavaScript
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+  }
 }
 </script>
 <style scoped>
 @import url('~/assets/css/fonts.css');
+a{
+  text-decoration: none;
+}
 </style>
