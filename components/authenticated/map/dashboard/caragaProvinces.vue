@@ -1,7 +1,7 @@
 <template>
   <v-col class="card">
     <v-card  class="rounded-lg pt-4">
-      <h4 class="text-center">Caraga Provinces Map</h4>
+      <h4 class="text-center">Region 13 (Caraga) Provinces</h4>
       <v-container class="mt-0 pt-0" style="height:500px; display:flex;">
         <div id="caragaProvinces" class="map-container ma-4">
           <v-card
