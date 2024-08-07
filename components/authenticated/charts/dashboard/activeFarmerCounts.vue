@@ -1,9 +1,8 @@
 <template>
 	<v-col cols="12" lg="6">
-		<div id="custom-card">
+		<v-card class="pa-3 text-center rounded-lg" style="height: 100%">
 			<menu-dropdown-provinces @emitChangeProvince="changeProvince" />
-      		<chart-title :title="title" />
-			<v-spacer />
+      <chart-title :title="title" />
 			<v-row justify="center" class="ma-0 pa-0">
 				<v-col cols="12" sm="10" class="ma-0 pa-0">
 					<apexchart
@@ -17,9 +16,8 @@
 					/>
 				</v-col>
 			</v-row>
-			<v-spacer />
-      		<chart-recommendation :text="recommendation" />
-		</div>
+      <chart-recommendation :text="recommendation" />
+		</v-card>
 	</v-col>
 </template>
 
@@ -48,17 +46,12 @@ export default {
 	},
 	computed: {
     title(){
-		if(this.$store.getters['dashboard/data'].activeFarmerCountByProvince.title){
-			return this.$store.getters['dashboard/data']
-									.activeFarmerCountByProvince.title +
-								' - ' +
-								this.$store.getters[
-									'dashboard/activeFarmerCountByProvinceSelected'
-								].count			
-		}else{
-			return ''
-		}
-
+      return this.$store.getters['dashboard/data']
+							.activeFarmerCountByProvince.title +
+						' - ' +
+						this.$store.getters[
+							'dashboard/activeFarmerCountByProvinceSelected'
+						].count
     },
 		recommendation() {
 			return this.$store.getters[
@@ -146,6 +139,3 @@ export default {
 	},
 }
 </script>
-<style scoped>
-@import url('~/assets/css/analytics.css');
-</style>

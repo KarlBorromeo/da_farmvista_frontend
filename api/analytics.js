@@ -1,15 +1,15 @@
 import Axios from '~/axios_config/Axios'
 
-export async function demographics(commodity) {
+export async function demographics() {
   try {
     const params = {
-      type: commodity,
+      type: 'coffee',
     }
     const res = await Axios.get('analytics/demographics', {
       params,
     })
     return res.data
   } catch (err) {
-    throw err
+    console.err(err)
   }
 }

@@ -80,7 +80,6 @@ export default {
   // dotenv configuration
   env: {
     baseUrlApi: process.env.API_BASE_URL || 'http://localhost:3000',
-    geoserverBaseUrl: process.env.GEOSERVER_BASE_URL,
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build

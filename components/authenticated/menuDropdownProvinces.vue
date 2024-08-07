@@ -1,5 +1,5 @@
 <template>
-  <v-row justify="end" style="width: 100%; flex-grow: 0!important">
+  <v-row justify="end" style="width: 100%">
     <v-col cols="1" id="year-dropdown">
       <v-menu offset-y left>
         <template v-slot:activator="{ on, attrs }">

@@ -1,9 +1,11 @@
 <template>
   <v-col cols="12" lg="4">
-    <div id="custom-card">
+    <v-card
+      class="pa-3 text-center rounded-lg"
+      style="height: 100%"
+    >
       <menu-dropdown-provinces @emitChangeProvince="changeProvince" />
       <chart-title :title="title" />
-      <v-spacer />
       <v-row justify="center" class="ma-0 pa-0">
         <v-col cols="12" class="ma-0 pa-0">
           <apexchart
@@ -18,9 +20,8 @@
           />
         </v-col>
       </v-row>
-      <v-spacer />
       <chart-recommendation :text="recommendation" />
-    </div>
+    </v-card>
   </v-col>
 </template>
 ../../menuDropdownProvinces.vue
@@ -57,15 +58,11 @@ export default {
         .series
     },
     title(){
-      if(this.$store.getters['dashboard/data'].marketingOutletFarmerCount.title){
-        return this.$store.getters['dashboard/data'].marketingOutletFarmerCount
-                .title +
-              ' - ' +
-              this.$store.getters['dashboard/marketingOutletFarmerCountSelected']
-                .province        
-      }else{
-        return ''
-      }
+      return this.$store.getters['dashboard/data'].marketingOutletFarmerCount
+              .title +
+            ' - ' +
+            this.$store.getters['dashboard/marketingOutletFarmerCountSelected']
+              .province
     },
     options() {
       return {
@@ -174,6 +171,3 @@ export default {
   },
 }
 </script>
-<style scoped>
-@import url('~/assets/css/analytics.css');
-</style>

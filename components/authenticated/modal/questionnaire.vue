@@ -513,6 +513,7 @@ import snackbar from '~/components/snackbar.vue'
 
 export default {
   mounted() {
+    alert('haha')
     // Smooth scrolling with JavaScript
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function(e) {

@@ -1,7 +1,6 @@
 <template>
   <v-col cols="12" lg="4" class="mt-5">
     <v-data-table
-      id="custom-card"
       style="min-height: 600px; max-height: 600px; overflow: auto"
       class="pa-2 pt-1 pb-3 elevation-2 rounded-lg"
       :headers="headers"
@@ -82,6 +81,3 @@ export default {
   },
 }
 </script>
-<style scoped>
-@import url('~/assets/css/analytics.css');
-</style>

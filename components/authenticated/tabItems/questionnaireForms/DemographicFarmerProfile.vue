@@ -6,7 +6,7 @@
 					<v-select
 						v-model="regionProvince"
 						:items="regionProvinceItems"
-						label="* Province"
+						label="* Region/Pronvince"
 						dense
 						class="text-capitalize"
 						:rules="requiredRule"

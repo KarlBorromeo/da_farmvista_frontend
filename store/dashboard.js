@@ -1,4 +1,3 @@
-import * as map from '../api/maps'
 import * as api from '../api/dashboard'
 export const state = () => ({
   data: {
@@ -134,8 +133,6 @@ export const state = () => ({
   haveHeardFarmTechFarmerCountSelected: {},
   marketingOutletInfoSelected: [],
   farmOrganizationFarmerCountSelected: [],
-
-  caragaProvincesGeoJSON: null
 })
 
 export const getters = {
@@ -169,17 +166,11 @@ export const getters = {
   farmOrganizationFarmerCountSelected(state) {
     return state.farmOrganizationFarmerCountSelected
   },
-  caragaProvincesGeoJSON(state){
-    return state.caragaProvincesGeoJSON
-  }
 }
 
 export const mutations = {
-  /* save geojson of caraga */
-  saveCaragaProvincesGeoJSON(state,geojson){
-    state.caragaProvincesGeoJSON = geojson
-  },
   saveData(state, data) {
+    console.log(data)
     state.data = { ...data }
   },
   /* intialize the profileStatusCountByProvinceSelected Data */
@@ -248,7 +239,7 @@ export const mutations = {
   },
   /* initialize the chart data of Coffee Production */
   initializeTimelineFrequencySelected(state, data) {
-    if (data.timelineFrequencyOfHarvestPerYear.data.length >= 0) {
+    if (data.timelineFrequencyOfHarvestPerYear.data.length > 0) {
       state.timelineFrequencySelected = {
         ...data.timelineFrequencyOfHarvestPerYear.data[0],
         recommendation: data.timelineFrequencyOfHarvestPerYear.recommendation[0].recommendation
@@ -354,16 +345,4 @@ export const actions = {
       throw err
     }
   },
-  async geojsonFetch(context,commodity){
-    try{
-      const obj = {
-        type: commodity,
-        layer: 'region'
-      }
-      const geojson = await map.geoLayerReq(obj) 
-      context.commit('saveCaragaProvincesGeoJSON',geojson)
-    }catch(err){
-      console.error(err)
-    }
-  }
 }
