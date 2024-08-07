@@ -2,7 +2,7 @@
   <v-form ref="form" v-model="valid" lazy-validation>
     <v-container>
       <v-row>
-        <form-input-container>
+        <v-col cols="12" sm="6">
           <v-text-field
             v-model="coffee"
             :rules="requiredRule"
@@ -10,9 +10,9 @@
             type="number"
             min="0"
           ></v-text-field>
-        </form-input-container>
+        </v-col>
 
-        <form-input-container>
+        <v-col cols="12" sm="6">
           <v-text-field
             v-model="crops"
             :rules="requiredRule"
@@ -20,9 +20,9 @@
             type="number"
             min="0"
           ></v-text-field>
-        </form-input-container>
+        </v-col>
 
-        <form-input-container>
+        <v-col cols="12" sm="6">
           <v-text-field
             v-model="livestock"
             :rules="requiredRule"
@@ -30,9 +30,9 @@
             type="number"
             min="0"
           ></v-text-field>
-        </form-input-container>
+        </v-col>
 
-        <form-input-container>
+        <v-col cols="12" sm="6">
           <v-text-field
             v-model="agroforestry"
             :rules="requiredRule"
@@ -40,9 +40,9 @@
             type="number"
             min="0"
           ></v-text-field>
-        </form-input-container>
+        </v-col>
 
-        <form-input-container>
+        <v-col cols="12" sm="6">
           <v-text-field
             v-model="otherLivelihood"
             :rules="requiredRule"
@@ -50,9 +50,9 @@
             type="number"
             min="0"
           ></v-text-field>
-        </form-input-container>
+        </v-col>
 
-        <form-input-container>
+        <v-col cols="12" sm="6">
           <v-text-field
             v-model="nonFarmIncome"
             :rules="requiredRule"
@@ -60,9 +60,9 @@
             type="number"
             min="0"
           ></v-text-field>
-        </form-input-container>
+        </v-col>
 
-        <form-input-container>
+        <v-col cols="12" sm="6">
           <v-text-field
             v-model="otherSources"
             :rules="requiredRule"
@@ -70,7 +70,7 @@
             type="number"
             min="0"
           ></v-text-field>
-        </form-input-container>
+        </v-col>
       </v-row>
     </v-container>
     <!-- <v-btn @click="validate">Validate</v-btn> -->

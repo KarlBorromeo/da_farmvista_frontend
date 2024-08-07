@@ -458,7 +458,7 @@
       </p>
     </v-card>
     <v-tabs-items v-else>
-      <v-card v-if="currentCommodity == 'coffee'">
+      <v-card v-if="currentCommodity == 'coffee'" class="elevation-0 pt-4">
         <keep-alive>
           <component :is="currentTab"></component>
         </keep-alive>

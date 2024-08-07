@@ -7,16 +7,16 @@
           <v-col cols="12" class="mb-0 pb-0">
             <p class="ma-0 pa-0 font-weight-black">{{ i }}</p>
           </v-col>
-          <form-input-container>
+          <v-col cols="12" sm="6">
             <v-text-field
               v-model="name[i - 1]"
               :rules="requiredRule"
               label="* Name"
               :disabled="(i-1) === disabledIndex"
             ></v-text-field>
-          </form-input-container>
+          </v-col>
 
-          <form-input-container>
+          <v-col cols="12" sm="6">
             <v-text-field
               v-model="age[i - 1]"
               :rules="numberRule"
@@ -24,7 +24,7 @@
               type="number"
               :disabled="(i-1) === disabledIndex"
             ></v-text-field>
-          </form-input-container>
+          </v-col>
 
           <form-radio-container title="Sex" :required="true">
             <v-radio-group
@@ -32,6 +32,7 @@
               v-model="sex[i - 1]"
               class="pa-0 ma-0"
               :disabled="(i-1) === disabledIndex"
+              row
             >
               <v-radio
                 v-for="item in sexItems"
@@ -50,7 +51,7 @@
             ></v-text-field>
           </form-input-container>
 
-          <form-select-container>
+          <v-col cols="12" sm="6">
             <v-select
               :items="educationsAttainmentItems"
               v-model="educationsAttainment[i - 1]"
@@ -60,9 +61,9 @@
               class="text-capitalize"
               :disabled="(i-1) === disabledIndex"
             ></v-select>
-          </form-select-container>
+          </v-col>
 
-          <form-input-container>
+          <v-col cols="12" sm="6">
             <v-text-field
               v-model="contributionAmount[i - 1]"
               :rules="numberRule"
@@ -70,7 +71,7 @@
               type="number"
               min="0"
             ></v-text-field>
-          </form-input-container>
+          </v-col>
 
           <form-radio-container
             title="Involved in coffee farm"
@@ -80,6 +81,7 @@
               :rules="requiredRule"
               v-model="involveCoffeefarm[i - 1]"
               class="pa-0 ma-0"
+              row
             >
               <v-radio
                 v-for="item in involveCoffeefarmItems"

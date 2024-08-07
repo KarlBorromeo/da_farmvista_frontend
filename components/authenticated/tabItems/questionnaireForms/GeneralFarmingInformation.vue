@@ -2,7 +2,7 @@
   <v-form ref="form" v-model="valid" lazy-validation>
     <v-container>
       <v-row>
-        <form-input-container>
+        <v-col cols="12" sm="6">
           <v-text-field
             v-model="avgYearsGeneralFarming"
             :rules="numberRule"
@@ -10,9 +10,9 @@
             type="number"
             min="0"
           ></v-text-field>
-        </form-input-container>
+        </v-col>
 
-        <form-input-container>
+        <v-col cols="12" sm="6">
           <v-text-field
             v-model="avgYearsContourFarming"
             :rules="numberRule"
@@ -20,7 +20,7 @@
             type="number"
             min="0"
           ></v-text-field>
-        </form-input-container>
+        </v-col>
 
         <form-radio-container
           title="Was there time stopped farming?"
@@ -30,6 +30,7 @@
             :rules="requiredRule"
             v-model="isThereStoppedFarming"
             class="pa-0 ma-0"
+            row
           >
             <v-radio
               v-for="item in isThereStoppedFarmingItems"

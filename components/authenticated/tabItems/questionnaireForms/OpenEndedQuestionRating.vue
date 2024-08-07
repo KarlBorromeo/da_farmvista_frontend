@@ -11,6 +11,7 @@
               :rules="rateRule"
               v-model="formData[item.topic][questions.key]"
               class="pa-0 ma-0"
+              row
             >
               <v-radio
                 v-for="rate in rateItems"

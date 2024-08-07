@@ -13,12 +13,13 @@
         </form-input-container>
 
         <form-radio-container title="Sex" :required="true">
-          <v-radio-group :rules="requiredRule" v-model="sex" class="pa-0 ma-0">
+          <v-radio-group :rules="requiredRule" v-model="sex" class="pa-0 ma-0" row>
             <v-radio
               v-for="item in sexItems"
               :key="item"
               :label="item"
               :value="item"
+              class="display: inline-block"
             ></v-radio>
           </v-radio-group>
         </form-radio-container>
@@ -28,6 +29,7 @@
             :rules="requiredRule"
             v-model="civilStatus"
             class="pa-0 ma-0"
+            row
           >
             <v-radio
               v-for="item in civilStatusItems"
@@ -38,16 +40,16 @@
           </v-radio-group>
         </form-radio-container>
 
-        <form-input-container>
+        <v-col cols="12" sm="6">
           <v-text-field
             v-model="religion"
             :rules="requiredRule"
             label="* Religion"
             required
           ></v-text-field>
-        </form-input-container>
+        </v-col>
 
-        <form-select-container>
+        <v-col cols="12" sm="6">
           <v-select
             :items="highestEducationAttainedItems"
             v-model="highestEducationAttained"
@@ -56,7 +58,7 @@
             required
             class="text-capitalize"
           ></v-select>
-        </form-select-container>
+        </v-col>
 
         <form-radio-container
           title="Belongs to the Marginalized Sector"
@@ -66,6 +68,7 @@
             :rules="requiredRule"
             v-model="isBelongMarginalizedSector"
             class="py-0 my-0"
+            row
           >
             <v-radio
               v-for="item in isBelongMarginalizedSectorItems"
@@ -112,6 +115,7 @@
             :rules="requiredRule"
             v-model="isMemberOrgranization"
             class="py-0 my-0"
+            row
           >
             <v-radio
               v-for="item in isMemberOrgranizationItems"
@@ -128,7 +132,7 @@
           :required="true"
           :rules="requiredRule"
         >
-          <v-radio-group v-model="typeMembership" class="py-0 my-0">
+          <v-radio-group v-model="typeMembership" class="py-0 my-0" row>
             <v-radio
               v-for="item in typeMembershipItems"
               :key="item"
@@ -149,8 +153,9 @@
         <form-radio-container
           title="Any household member affiliated to any farming organization/association?"
           :required="true"
+          row
         >
-          <v-radio-group v-model="isAnyHouseholdMemberOrg" class="py-0 my-0">
+          <v-radio-group v-model="isAnyHouseholdMemberOrg" class="py-0 my-0" row>
             <v-radio
               v-for="item in isAnyHouseholdMemberOrgItems"
               :key="item.value"

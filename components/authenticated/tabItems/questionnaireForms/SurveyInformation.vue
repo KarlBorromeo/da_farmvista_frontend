@@ -2,7 +2,7 @@
   <v-form ref="form" v-model="valid" lazy-validation>
     <v-container>
       <v-row>
-        <form-input-container>
+        <v-col cols="12" sm="6">
           <v-text-field
             v-model="surveyNumber"
             :rules="surveyNumberRule"
@@ -10,18 +10,18 @@
             required
             type="number"
           ></v-text-field>
-        </form-input-container>
+        </v-col>
 
-        <form-input-container>
+        <v-col cols="12" sm="6">
           <v-text-field
             v-model="validatorName"
             :rules="requiredRule"
             label="* Name of Interviewer Validator"
             required
           ></v-text-field>
-        </form-input-container>
+        </v-col>
 
-        <form-input-container>
+        <v-col cols="12">
           <v-text-field
             v-model="date"
             :rules="dateRule"
@@ -29,9 +29,9 @@
             required
             type="date"
           ></v-text-field>
-        </form-input-container>
+        </v-col>
 
-        <form-menu-container>
+        <v-col cols="12" sm="6">
           <v-dialog
             ref="timeStartPicker"
             v-model="timeStartPicker"
@@ -62,9 +62,9 @@
               <v-btn text color="primary" @click="saveTimeStart"> OK </v-btn>
             </v-time-picker>
           </v-dialog>
-        </form-menu-container>
+        </v-col>
 
-        <form-menu-container>
+        <v-col cols="12" sm="6">
           <v-dialog
             ref="timeEndPicker"
             v-model="timeEndPicker"
@@ -95,7 +95,7 @@
               <v-btn text color="primary" @click="saveTimeEnd"> OK </v-btn>
             </v-time-picker>
           </v-dialog>
-        </form-menu-container>
+        </v-col>
       </v-row>
     </v-container>
     <!-- <v-btn @click="validate">Validate</v-btn> -->

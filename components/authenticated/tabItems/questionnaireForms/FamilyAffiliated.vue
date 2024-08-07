@@ -24,6 +24,7 @@
               required
               v-model="position[i - 1]"
               class="py-0 my-0"
+              row
             >
               <v-radio
                 v-for="item in positionItems"
@@ -61,6 +62,7 @@
               required
               v-model="typeOrganization[i - 1]"
               class="py-0 my-0"
+              row
             >
               <v-radio
                 v-for="item in typeOrganizationItems"
@@ -96,6 +98,7 @@
               required
               v-model="statusMembership[i - 1]"
               class="py-0 my-0"
+              row
             >
               <v-radio
                 v-for="item in statusMembershipItems"
@@ -112,7 +115,7 @@
               required
               v-model="statusOrganization[i - 1]"
               class="py-0 my-0"
-              @change="validate"
+              row
             >
               <v-radio
                 v-for="item in statusOrganizationItems"

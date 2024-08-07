@@ -3,32 +3,35 @@
     <v-container>
       <form-card v-for="item in list" :key="item.key">
         <v-row>
-          <p class="text-camelcase subheading ml-4 mt-5">{{ item.label }}</p>
+          <v-col cols="12">
+            <p class="subheading ml-4 mt-5">{{ item.label }}</p>
+          </v-col>
+          
           <form-input-container v-if="item.specify">
             <v-text-field
               v-model="formData[item.key].name"
-              label="* specify"
+              label="specify"
             ></v-text-field>
           </form-input-container>
-          <form-input-container>
+          <v-col cols="12" sm="4">
             <v-text-field
               v-model="formData[item.key].price"
               :rules="numberRule"
-              label="* Price/Unit"
-              type="number"
-              min="0"
-            ></v-text-field>
-          </form-input-container>
-          <v-col cols="6">
-            <v-text-field
-              v-model="formData[item.key].quantity"
-              :rules="numberRule"
-              label="* Qty. Used"
+              label="Price/Unit"
               type="number"
               min="0"
             ></v-text-field>
           </v-col>
-          <v-col cols="6">
+          <v-col cols="4">
+            <v-text-field
+              v-model="formData[item.key].quantity"
+              :rules="numberRule"
+              label="Qty. Used"
+              type="number"
+              min="0"
+            ></v-text-field>
+          </v-col>
+          <v-col cols="4">
             <v-select
               :items="unitItems"
               v-model="formData[item.key].unit"
@@ -36,28 +39,29 @@
               class="text-capitalize"
             ></v-select>
           </v-col>
-          <form-input-container>
+          <v-col cols="12" sm="6">
             <v-text-field
               v-model="formData[item.key].totalTransportCost"
               :rules="numberRule"
-              label="* Total Transport Used"
+              label="Total Transport Used"
               type="number"
               min="0"
             ></v-text-field>
-          </form-input-container>
-          <form-input-container>
+          </v-col>
+          <v-col cols="12" sm="6">
             <v-text-field
               v-model="formData[item.key].totalCost"
               :rules="numberRule"
-              label="* Total Cost"
+              label="Total Cost"
               type="number"
               min="0"
             ></v-text-field>
-          </form-input-container>
+          </v-col>
           <form-radio-container title="Cash/Credit">
             <v-radio-group
               v-model="formData[item.key].cashCredit"
               class="pa-0 ma-0"
+              row
             >
               <v-radio
                 v-for="item in cashCreditItems"
@@ -70,7 +74,7 @@
           <form-input-container>
             <v-text-field
               v-model="formData[item.key].sourceInputPurchased"
-              label="* Source Input/Place Purchased"
+              label="Source Input/Place Purchased"
             ></v-text-field>
           </form-input-container>
         </v-row>

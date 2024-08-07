@@ -4,6 +4,7 @@
       <v-row>
         <form-radio-container title="Did you use pesticide">
           <v-radio-group
+            row
             v-model="didUsePesticide"
             class="pa-0 ma-0"
           >
@@ -16,25 +17,25 @@
           </v-radio-group>
         </form-radio-container>
 
-        <form-input-container v-if="didUsePesticide == 'yes'">
+        <v-col cols="12" sm="4" v-if="didUsePesticide == 'yes'">
           <v-text-field
             v-model="typeOfPesticide"
             :rules="requiredRule"
             label="* specify type of pesticide"
             required
           />
-        </form-input-container>
+        </v-col>
 
-        <form-input-container v-if="didUsePesticide == 'yes'">
+        <v-col cols="12" sm="4" v-if="didUsePesticide == 'yes'">
           <v-text-field
             v-model="whomIdeaApplyPesticide"
             :rules="requiredRule"
             label="* whom get idea applying pesticides"
             required
           />
-        </form-input-container>
+        </v-col>
 
-        <form-input-container v-if="didUsePesticide == 'yes'">
+        <v-col cols="12" sm="4" v-if="didUsePesticide == 'yes'">
           <v-text-field
             v-model="timesAppliedPesticide"
             :rules="numberRule"
@@ -43,28 +44,44 @@
             required
             min="0"
           />
-        </form-input-container>
+        </v-col>
+        <v-col cols="12" sm="6" v-if="didUsePesticide == 'yes'">
+          <v-row>
+            <form-radio-container
+              title="Did you spary pesticided yourself?"
+              :required="true"
+            >
+              <v-radio-group
+                row
+                :rules="requiredRule"
+                v-model="didSprayYourself"
+                class="pa-0 ma-0"
+              >
+                <v-radio
+                  v-for="item in isAgreeItems"
+                  :key="item"
+                  :label="item"
+                  :value="item"
+                ></v-radio>
+              </v-radio-group>
+            
+            </form-radio-container> 
+            <form-input-container>
+              <v-text-field
+                v-if="didSprayYourself == 'no'"
+                v-model="payLaborSpraying"
+                :rules="numberRule"
+                type="number"
+                label="* how much pay labor of spraying"
+                required
+                min="0"
+              />
+            </form-input-container>
+          </v-row>         
+        </v-col>
 
-        <form-radio-container
-          title="Did you spary pesticided yourself?"
-          :required="true"
-          v-if="didUsePesticide == 'yes'"
-        >
-          <v-radio-group
-            :rules="requiredRule"
-            v-model="didSprayYourself"
-            class="pa-0 ma-0"
-          >
-            <v-radio
-              v-for="item in isAgreeItems"
-              :key="item"
-              :label="item"
-              :value="item"
-            ></v-radio>
-          </v-radio-group>
-        </form-radio-container>
 
-        <form-input-container
+        <!-- <form-input-container
           v-if="didSprayYourself == 'no' && didUsePesticide == 'yes'"
         >
           <v-text-field
@@ -75,52 +92,56 @@
             required
             min="0"
           />
-        </form-input-container>
+        </form-input-container> -->
+         <v-col cols="12" sm="6" v-if="didUsePesticide == 'yes'">
+          <v-row>
+              <form-radio-container title="Do you have a sprayer?">
+                <v-radio-group
+                  row
+                  v-model="haveSprayer"
+                  class="pa-0 ma-0"
+                >
+                  <v-radio
+                    v-for="item in isAgreeItems"
+                    :key="item"
+                    :label="item"
+                    :value="item"
+                  ></v-radio>
+                </v-radio-group>
+              </form-radio-container>
 
-        <form-radio-container title="Do you have a sprayer?">
-          <v-radio-group
-            v-model="haveSprayer"
-            class="pa-0 ma-0"
-          >
-            <v-radio
-              v-for="item in isAgreeItems"
-              :key="item"
-              :label="item"
-              :value="item"
-            ></v-radio>
-          </v-radio-group>
-        </form-radio-container>
+              <form-checkbox-container
+                v-if="haveSprayer == 'yes'"
+                title="Kind of sprayer do you have"
+                :required="true"
+              >
+                <v-checkbox
+                  v-for="item in kindSprayerHaveItems"
+                  v-model="kindSprayerHave"
+                  :key="item"
+                  :value="item"
+                  :label="item"
+                  class="ma-0 pa-0 mr-5"
+    
+                ></v-checkbox>
+                <v-text-field
+                  v-if="isOtherTicked(kindSprayerHave)"
+                  v-model="kindSprayerHaveOther"
+                  :rules="requiredRule"
+                  label="* please specify other sprayer"
+                ></v-text-field>
+              </form-checkbox-container>
 
-        <form-checkbox-container
-          v-if="haveSprayer == 'yes'"
-          title="Kind of sprayer do you have"
-          :required="true"
-        >
-          <v-checkbox
-            v-for="item in kindSprayerHaveItems"
-            v-model="kindSprayerHave"
-            :key="item"
-            :value="item"
-            :label="item"
-            dense
-            class="ma-0 pa-0 ml-5"
-            style="display: inline-block"
-          ></v-checkbox>
-          <v-text-field
-            v-if="isOtherTicked(kindSprayerHave)"
-            v-model="kindSprayerHaveOther"
-            :rules="requiredRule"
-            label="* please specify"
-          ></v-text-field>
-        </form-checkbox-container>
+              <form-input-container  v-else>
+                <v-text-field
+                  v-model="howGetSprayer"
+                  label="how do you get hold of a sprayer"
+                  required
+                />
+              </form-input-container>          
+            </v-row>
+         </v-col>
 
-        <form-input-container v-else>
-          <v-text-field
-            v-model="howGetSprayer"
-            label="how do you get hold of a sprayer"
-            required
-          />
-        </form-input-container>
 
         <form-radio-container
           title="first hear about using pesticide"
@@ -128,6 +149,7 @@
           :required="true"
         >
           <v-radio-group
+            row
             :rules="requiredRule"
             v-model="hearAboutPesticideUsed"
             class="pa-0 ma-0"
@@ -157,6 +179,7 @@
           title="most important consideration deciding for pesticide to buy"
         >
           <v-radio-group
+            row
             v-model="importantConsiderationDecidingPesticide"
             class="pa-0 ma-0"
           >
@@ -169,7 +192,7 @@
             <v-text-field
               v-if="importantConsiderationDecidingPesticide == 'others'"
               v-model="importantConsiderationDecidingPesticideOther"
-              label="* Other: please specify"
+              label="* Other: please specify consideration"
               :rules="requiredRule"
             />
           </v-radio-group>
@@ -187,8 +210,7 @@
             :value="item"
             :label="item"
             dense
-            class="ma-0 pa-0 ml-5"
-            style="display: inline-block"
+            class="ma-0 pa-0 mr-5"
           ></v-checkbox>
           <v-text-field
             v-if="isSpecificCheckboxTicked(whomPestControlAdvice, 'mass media')"
@@ -212,6 +234,7 @@
           :required="true"
         >
           <v-radio-group
+            row
             :rules="requiredRule"
             v-model="whichAdviceCredible"
             class="pa-0 ma-0"
@@ -240,6 +263,7 @@
           title="Have you attended a training on pest management?"
         >
           <v-radio-group
+            row
             v-model="attendedTrainingPestManagement"
             class="pa-0 ma-0"
           >

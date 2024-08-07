@@ -2,7 +2,7 @@
   <v-form ref="form" v-model="valid" lazy-validation>
     <v-container>
       <v-row>
-        <form-input-container v-for="item in list" :key="item.key">
+        <v-col cols="12" sm="6" v-for="item in list" :key="item.key">
           <v-text-field
             v-model="formData[item.key]"
             :rules="numberRule"
@@ -10,7 +10,7 @@
             type="number"
             min="0"
           ></v-text-field>
-        </form-input-container>
+        </v-col>
       </v-row>
     </v-container>
     <!-- <v-btn @click="validate">Validate</v-btn> -->

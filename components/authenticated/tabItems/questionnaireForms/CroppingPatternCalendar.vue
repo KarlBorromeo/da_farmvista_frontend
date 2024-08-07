@@ -9,8 +9,7 @@
             :key="item"
             :value="item"
             :label="item"
-            dense
-            class="ma-0 pa-0 ml-5"
+            class="ma-0 pa-0 mr-5"
             style="display: inline-block"
           ></v-checkbox>
           <v-text-field
@@ -18,6 +17,7 @@
             v-model="januaryOther"
             :rules="requiredRule"
             label="* please specify"
+            class="ma-0 pa-0"
           ></v-text-field>
         </form-checkbox-container>
 
@@ -28,8 +28,7 @@
             :key="item"
             :value="item"
             :label="item"
-            dense
-            class="ma-0 pa-0 ml-6"
+            class="ma-0 pa-0 mr-5"
             style="display: inline-block"
           ></v-checkbox>
           <v-text-field
@@ -37,6 +36,7 @@
             v-model="februaryOther"
             :rules="requiredRule"
             label="* please specify"
+            class="ma-0 pa-0"
           ></v-text-field>
         </form-checkbox-container>
 
@@ -47,8 +47,7 @@
             :key="item"
             :value="item"
             :label="item"
-            dense
-            class="ma-0 pa-0 ml-6"
+            class="ma-0 pa-0 mr-5"
             style="display: inline-block"
           ></v-checkbox>
           <v-text-field
@@ -56,6 +55,7 @@
             v-model="marchOther"
             :rules="requiredRule"
             label="* please specify"
+            class="ma-0 pa-0"
           ></v-text-field>
         </form-checkbox-container>
 
@@ -66,8 +66,7 @@
             :key="item"
             :value="item"
             :label="item"
-            dense
-            class="ma-0 pa-0 ml-6"
+            class="ma-0 pa-0 mr-5"
             style="display: inline-block"
           ></v-checkbox>
           <v-text-field
@@ -75,6 +74,7 @@
             v-model="aprilOther"
             :rules="requiredRule"
             label="* please specify"
+            class="ma-0 pa-0"
           ></v-text-field>
         </form-checkbox-container>
 
@@ -85,8 +85,7 @@
             :key="item"
             :value="item"
             :label="item"
-            dense
-            class="ma-0 pa-0 ml-6"
+            class="ma-0 pa-0 mr-5"
             style="display: inline-block"
           ></v-checkbox>
           <v-text-field
@@ -94,6 +93,7 @@
             v-model="mayOther"
             :rules="requiredRule"
             label="* please specify"
+            class="ma-0 pa-0"
           ></v-text-field>
         </form-checkbox-container>
 
@@ -104,8 +104,7 @@
             :key="item"
             :value="item"
             :label="item"
-            dense
-            class="ma-0 pa-0 ml-6"
+            class="ma-0 pa-0 mr-5"
             style="display: inline-block"
           ></v-checkbox>
           <v-text-field
@@ -113,6 +112,7 @@
             v-model="juneOther"
             :rules="requiredRule"
             label="* please specify"
+            class="ma-0 pa-0"
           ></v-text-field>
         </form-checkbox-container>
 
@@ -123,8 +123,7 @@
             :key="item"
             :value="item"
             :label="item"
-            dense
-            class="ma-0 pa-0 ml-6"
+            class="ma-0 pa-0 mr-5"
             style="display: inline-block"
           ></v-checkbox>
           <v-text-field
@@ -132,6 +131,7 @@
             v-model="julyOther"
             :rules="requiredRule"
             label="* please specify"
+            class="ma-0 pa-0"
           ></v-text-field>
         </form-checkbox-container>
 
@@ -142,8 +142,7 @@
             :key="item"
             :value="item"
             :label="item"
-            dense
-            class="ma-0 pa-0 ml-6"
+            class="ma-0 pa-0 mr-5"
             style="display: inline-block"
           ></v-checkbox>
           <v-text-field
@@ -151,6 +150,7 @@
             v-model="augustOther"
             :rules="requiredRule"
             label="* please specify"
+            class="ma-0 pa-0"
           ></v-text-field>
         </form-checkbox-container>
 
@@ -161,8 +161,7 @@
             :key="item"
             :value="item"
             :label="item"
-            dense
-            class="ma-0 pa-0 ml-6"
+            class="ma-0 pa-0 mr-5"
             style="display: inline-block"
           ></v-checkbox>
           <v-text-field
@@ -170,6 +169,7 @@
             v-model="septemberOther"
             :rules="requiredRule"
             label="* please specify"
+            class="ma-0 pa-0"
           ></v-text-field>
         </form-checkbox-container>
 
@@ -180,8 +180,7 @@
             :key="item"
             :value="item"
             :label="item"
-            dense
-            class="ma-0 pa-0 ml-6"
+            class="ma-0 pa-0 mr-5"
             style="display: inline-block"
           ></v-checkbox>
           <v-text-field
@@ -189,6 +188,7 @@
             v-model="octoberOther"
             :rules="requiredRule"
             label="* please specify"
+            class="ma-0 pa-0"
           ></v-text-field>
         </form-checkbox-container>
 
@@ -199,8 +199,7 @@
             :key="item"
             :value="item"
             :label="item"
-            dense
-            class="ma-0 pa-0 ml-6"
+            class="ma-0 pa-0 mr-5"
             style="display: inline-block"
           ></v-checkbox>
           <v-text-field
@@ -208,6 +207,7 @@
             v-model="novemberOther"
             :rules="requiredRule"
             label="* please specify"
+            class="ma-0 pa-0"
           ></v-text-field>
         </form-checkbox-container>
 
@@ -218,8 +218,7 @@
             :key="item"
             :value="item"
             :label="item"
-            dense
-            class="ma-0 pa-0 ml-6"
+            class="ma-0 pa-0 mr-5"
             style="display: inline-block"
           ></v-checkbox>
           <v-text-field
@@ -227,6 +226,7 @@
             v-model="decemberOther"
             :rules="requiredRule"
             label="* please specify"
+            class="ma-0 pa-0"
           ></v-text-field>
         </form-checkbox-container>
       </v-row>

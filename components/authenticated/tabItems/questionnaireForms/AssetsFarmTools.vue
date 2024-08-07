@@ -7,18 +7,16 @@
           <v-col cols="12" class="mb-0 pb-0">
             <p class="ma-0 pa-0 font-weight-black">{{ i }}</p>
           </v-col>
-          <form-select-container>
+          <v-col cols="12" sm="6">
             <v-select
               v-model="toolName[i - 1]"
               :items="toolNameItems"
               :rules="requiredRule"
               append-icon="mdi-tools"
               label="* Tool Items"
-              dense
             ></v-select>
-          </form-select-container>
-
-          <form-input-container>
+          </v-col>
+           <v-col cols="12" sm="6">
             <v-text-field
               v-model="toolQuantity[i - 1]"
               :rules="numberRule"
@@ -26,8 +24,7 @@
               type="number"
               min="0"
             ></v-text-field>
-          </form-input-container>
-
+           </v-col>
           <form-radio-container
             title="Did acquire through government or programs"
             :required="true"
@@ -36,6 +33,7 @@
               :rules="requiredRule"
               v-model="isToolAquiredGovtProg[i - 1]"
               class="pa-0 ma-0"
+              row
             >
               <v-radio
                 v-for="item in isToolAquiredGovtProgItems"
@@ -46,7 +44,7 @@
             </v-radio-group>
           </form-radio-container>
 
-          <form-input-container>
+          <v-col cols="12" sm="6">
             <v-text-field
               v-model="toolAge[i - 1]"
               :rules="numberRule"
@@ -55,7 +53,7 @@
               min="0"
               hint=".6 for 6 months, 1 for 1 year and so on"
             ></v-text-field>
-          </form-input-container>
+          </v-col>
         </v-row>
       </form-card>
       <form-card-button @emitIncrement="increment"/>

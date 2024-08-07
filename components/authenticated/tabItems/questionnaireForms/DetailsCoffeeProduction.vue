@@ -21,7 +21,7 @@
             :value="item"
             :label="item"
             dense
-            class="ma-0 pa-0 ml-6"
+            class="ma-0 pa-0 mr-5"
             style="display: inline-block"
           ></v-checkbox>
           <v-text-field
@@ -40,7 +40,7 @@
             :value="item"
             :label="item"
             dense
-            class="ma-0 pa-0 ml-6"
+            class="ma-0 pa-0 mr-5"
             style="display: inline-block"
           ></v-checkbox>
           <v-text-field
@@ -62,7 +62,7 @@
             :value="item"
             :label="item"
             dense
-            class="ma-0 pa-0 ml-6"
+            class="ma-0 pa-0 mr-5"
             style="display: inline-block"
           ></v-checkbox>
           <v-text-field
@@ -81,7 +81,7 @@
             :value="item"
             :label="item"
             dense
-            class="ma-0 pa-0 ml-6"
+            class="ma-0 pa-0 mr-5"
             style="display: inline-block"
           ></v-checkbox>
           <v-text-field
@@ -115,7 +115,7 @@
             :value="item"
             :label="item"
             dense
-            class="ma-0 pa-0 ml-6"
+            class="ma-0 pa-0 mr-5"
             style="display: inline-block"
           ></v-checkbox>
           <v-text-field
@@ -134,7 +134,7 @@
             :value="item"
             :label="item"
             dense
-            class="ma-0 pa-0 ml-6"
+            class="ma-0 pa-0 mr-5"
             style="display: inline-block"
           ></v-checkbox>
           <v-text-field
@@ -153,7 +153,7 @@
             :value="item"
             :label="item"
             dense
-            class="ma-0 pa-0 ml-6"
+            class="ma-0 pa-0 mr-5"
             style="display: inline-block"
           ></v-checkbox>
           <v-text-field
@@ -169,6 +169,7 @@
           :required="true"
         >
           <v-radio-group
+            row
             :rules="requiredRule"
             v-model="isUseInorganicFertilizer"
             class="pa-0 ma-0"
@@ -196,6 +197,7 @@
           :required="true"
         >
           <v-radio-group
+            row
             :rules="requiredRule"
             v-model="methodInorganicApplication"
             class="pa-0 ma-0"
@@ -223,6 +225,7 @@
           :required="true"
         >
           <v-radio-group
+            row
             :rules="requiredRule"
             v-model="isUseOrganicFertilizer"
             class="pa-0 ma-0"
@@ -250,6 +253,7 @@
           :required="true"
         >
           <v-radio-group
+            row
             :rules="requiredRule"
             v-model="methodOrganicApplication"
             class="pa-0 ma-0"
@@ -271,6 +275,7 @@
 
         <form-radio-container title="Practice green manuring" :required="true">
           <v-radio-group
+            row
             :rules="requiredRule"
             v-model="isPracticeGreenManuring"
             class="pa-0 ma-0"
@@ -286,6 +291,7 @@
 
         <form-radio-container title="Return crop residue" :required="true">
           <v-radio-group
+            row
             :rules="requiredRule"
             v-model="isReturnCropResidue"
             class="pa-0 ma-0"

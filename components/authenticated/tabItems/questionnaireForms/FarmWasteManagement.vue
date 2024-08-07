@@ -18,31 +18,22 @@
               class="custom-card"
             >
               <v-row justify="center">
-                <v-spacer />
+               
                 <v-col cols="10" class="pb-0" sm="5">
                   <v-text-field
                     v-model="singleParcelInfo.crop"
                     :rules="specialCharactersRule"
                     label="* crop name grown"
                     :disabled="true"
+                    class="mt-2 pb-0 mb-0"
                   ></v-text-field>
                 </v-col>
-                <v-spacer />
-                <v-col cols="5" sm="3" class="alignHorizontalVertical">
-                  <p class="body-2">* is utilized?</p>
-                </v-col>
-
                 <v-col
-                  class="ma-0 pa-0"
-                  cols="5"
-                  sm="3"
-                  style="
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: center;
-                    align-items: start;
-                  "
+                  cols="10"
+                  sm="5"
+                  class="pb-0"
                 >
+                  <p class="mt-2 font-weight-light caption">Is Utlilzed?</p>
                   <v-radio-group
                     :rules="requiredRule"
                     v-model="singleParcelInfo.isUtilized"
@@ -57,11 +48,9 @@
                     ></v-radio>
                   </v-radio-group>
                 </v-col>
-                <v-spacer />
               </v-row>
-              <v-row justify="center">
-                <v-spacer />
-                <v-col cols="7" class="pt-0">
+              <v-row justify="center"  class="pt-0">
+                <v-col cols="10" sm="5">
                   <v-text-field
                     v-model="singleParcelInfo.waste"
                     :rules="specialCharactersRule"
@@ -69,16 +58,9 @@
                     hint="Separate with comma ' , ' if multiple wastes"
                   ></v-text-field>
                 </v-col>
-                <v-spacer />
+            
                 <v-col
-                  class="pa-0"
-                  cols="4"
-                  style="
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: center;
-                    align-items: start;
-                  "
+                  cols="10" sm="5"
                 >
                   <v-text-field
                     :rules="numberRule"
@@ -89,7 +71,7 @@
                   >
                   </v-text-field>
                 </v-col>
-                <v-spacer />
+            
               </v-row>
             </div>
           </v-col>

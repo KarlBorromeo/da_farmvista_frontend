@@ -14,7 +14,7 @@
             ></v-text-field>
           </form-input-container>
           <form-radio-container title="Distance in (b) Unit" :required="true">
-            <v-radio-group v-model="farmToNearestRoad.unit" :rules="requiredRule" class="pa-0 ma-0">
+            <v-radio-group row v-model="farmToNearestRoad.unit" :rules="requiredRule" class="pa-0 ma-0">
               <v-radio
                 v-for="item in unitItems"
                 :key="item"
@@ -24,7 +24,7 @@
             </v-radio-group>
           </form-radio-container>
           <form-radio-container title="Dominant Mode of Transportation" :required="true">
-            <v-radio-group
+            <v-radio-group row
               v-model="farmToNearestRoad.dominantTransportation"
               class="pa-0 ma-0"
               :rules="requiredRule"
@@ -39,12 +39,12 @@
                 v-if="farmToNearestRoad.dominantTransportation == 'others'"
                 v-model="farmToNearestRoad.dominantTransportationOther"
                 label="* Please Specify"
-                class="my-0 py-0 pt-1"
+                class="my-0 py-0 pt-3"
               ></v-text-field>
             </v-radio-group>
           </form-radio-container>
           <form-radio-container title="Dominant Type of Road" :required="true">
-            <v-radio-group
+            <v-radio-group row
               v-model="farmToNearestRoad.dominantRoad"
               :rules="requiredRule"
               class="pa-0 ma-0"
@@ -59,7 +59,7 @@
                 v-if="farmToNearestRoad.dominantRoad == 'others'"
                 v-model="farmToNearestRoad.dominantRoadOther"
                 label="* Please Specify"
-                class="my-0 py-0 pt-1"
+                class="my-0 py-0 pt-3"
               ></v-text-field>
             </v-radio-group>
           </form-radio-container>
@@ -79,7 +79,7 @@
             ></v-text-field>
           </form-input-container>
           <form-radio-container title="Distance in (b) Unit" :required="true">
-            <v-radio-group v-model="farmToResidence.unit" :rules="requiredRule" class="pa-0 ma-0">
+            <v-radio-group row v-model="farmToResidence.unit" :rules="requiredRule" class="pa-0 ma-0">
               <v-radio
                 v-for="item in unitItems"
                 :key="item"
@@ -89,7 +89,7 @@
             </v-radio-group>
           </form-radio-container>
           <form-radio-container title="Dominant Mode of Transportation" :required="true">
-            <v-radio-group
+            <v-radio-group row
               v-model="farmToResidence.dominantTransportation"
               :rules="requiredRule"
               class="pa-0 ma-0"
@@ -104,12 +104,12 @@
                 v-if="farmToResidence.dominantTransportation == 'others'"
                 v-model="farmToResidence.dominantTransportationOther"
                 label="* Please Specify"
-                class="my-0 py-0 pt-1"
+                class="my-0 py-0 pt-3"
               ></v-text-field>
             </v-radio-group>
           </form-radio-container>
           <form-radio-container title="Dominant Type of Road" :required="true">
-            <v-radio-group
+            <v-radio-group row
               v-model="farmToResidence.dominantRoad"
               :rules="requiredRule"
               class="pa-0 ma-0"
@@ -124,7 +124,7 @@
                 v-if="farmToResidence.dominantRoad == 'others'"
                 v-model="farmToResidence.dominantRoadOther"
                 label="* Please Specify"
-                class="my-0 py-0 pt-1"
+                class="my-0 py-0 pt-3"
               ></v-text-field>
             </v-radio-group>
           </form-radio-container>
@@ -144,7 +144,7 @@
             ></v-text-field>
           </form-input-container>
           <form-radio-container title="Distance in (b) Unit">
-            <v-radio-group v-model="farmToOutputMarket.unit" class="pa-0 ma-0">
+            <v-radio-group row v-model="farmToOutputMarket.unit" class="pa-0 ma-0">
               <v-radio
                 v-for="item in unitItems"
                 :key="item"
@@ -154,7 +154,7 @@
             </v-radio-group>
           </form-radio-container>
           <form-radio-container title="Dominant Mode of Transportation">
-            <v-radio-group
+            <v-radio-group row
               v-model="farmToOutputMarket.dominantTransportation"
               class="pa-0 ma-0"
             >
@@ -168,12 +168,12 @@
                 v-if="farmToOutputMarket.dominantTransportation == 'others'"
                 v-model="farmToOutputMarket.dominantTransportationOther"
                 label="* Please Specify"
-                class="my-0 py-0 pt-1"
+                class="my-0 py-0 pt-3"
               ></v-text-field>
             </v-radio-group>
           </form-radio-container>
           <form-radio-container title="Dominant Type of Road">
-            <v-radio-group
+            <v-radio-group row
               v-model="farmToOutputMarket.dominantRoad"
               class="pa-0 ma-0"
             >
@@ -187,7 +187,7 @@
                 v-if="farmToOutputMarket.dominantRoad == 'others'"
                 v-model="farmToOutputMarket.dominantRoadOther"
                 label="* Please Specify"
-                class="my-0 py-0 pt-1"
+                class="my-0 py-0 pt-3"
               ></v-text-field>
             </v-radio-group>
           </form-radio-container>
@@ -207,7 +207,7 @@
             ></v-text-field>
           </form-input-container>
           <form-radio-container title="Distance in (b) Unit">
-            <v-radio-group
+            <v-radio-group row
               v-model="residenceToOutputMarket.unit"
               class="pa-0 ma-0"
             >
@@ -220,7 +220,7 @@
             </v-radio-group>
           </form-radio-container>
           <form-radio-container title="Dominant Mode of Transportation">
-            <v-radio-group
+            <v-radio-group row
               v-model="residenceToOutputMarket.dominantTransportation"
               class="pa-0 ma-0"
             >
@@ -236,12 +236,12 @@
                 "
                 v-model="residenceToOutputMarket.dominantTransportationOther"
                 label="* Please Specify"
-                class="my-0 py-0 pt-1"
+                class="my-0 py-0 pt-3"
               ></v-text-field>
             </v-radio-group>
           </form-radio-container>
           <form-radio-container title="Dominant Type of Road">
-            <v-radio-group
+            <v-radio-group row
               v-model="residenceToOutputMarket.dominantRoad"
               class="pa-0 ma-0"
             >
@@ -255,7 +255,7 @@
                 v-if="residenceToOutputMarket.dominantRoad == 'others'"
                 v-model="residenceToOutputMarket.dominantRoadOther"
                 label="* Please Specify"
-                class="my-0 py-0 pt-1"
+                class="my-0 py-0 pt-3"
               ></v-text-field>
             </v-radio-group>
           </form-radio-container>
@@ -275,7 +275,7 @@
             ></v-text-field>
           </form-input-container>
           <form-radio-container title="Distance in (b) Unit">
-            <v-radio-group v-model="farmToInputsSupply.unit" class="pa-0 ma-0">
+            <v-radio-group row v-model="farmToInputsSupply.unit" class="pa-0 ma-0">
               <v-radio
                 v-for="item in unitItems"
                 :key="item"
@@ -285,7 +285,7 @@
             </v-radio-group>
           </form-radio-container>
           <form-radio-container title="Dominant Mode of Transportation">
-            <v-radio-group
+            <v-radio-group row
               v-model="farmToInputsSupply.dominantTransportation"
               class="pa-0 ma-0"
             >
@@ -299,12 +299,12 @@
                 v-if="farmToInputsSupply.dominantTransportation == 'others'"
                 v-model="farmToInputsSupply.dominantTransportationOther"
                 label="* Please Specify"
-                class="my-0 py-0 pt-1"
+                class="my-0 py-0 pt-3"
               ></v-text-field>
             </v-radio-group>
           </form-radio-container>
           <form-radio-container title="Dominant Type of Road">
-            <v-radio-group
+            <v-radio-group row
               v-model="farmToInputsSupply.dominantRoad"
               class="pa-0 ma-0"
             >
@@ -318,7 +318,7 @@
                 v-if="farmToInputsSupply.dominantRoad == 'others'"
                 v-model="farmToInputsSupply.dominantRoadOther"
                 label="* Please Specify"
-                class="my-0 py-0 pt-1"
+                class="my-0 py-0 pt-3"
               ></v-text-field>
             </v-radio-group>
           </form-radio-container>
@@ -338,7 +338,7 @@
             ></v-text-field>
           </form-input-container>
           <form-radio-container title="Distance in (b) Unit">
-            <v-radio-group
+            <v-radio-group row
               v-model="residenceToInputsSupply.unit"
               class="pa-0 ma-0"
             >
@@ -351,7 +351,7 @@
             </v-radio-group>
           </form-radio-container>
           <form-radio-container title="Dominant Mode of Transportation">
-            <v-radio-group
+            <v-radio-group row
               v-model="residenceToInputsSupply.dominantTransportation"
               class="pa-0 ma-0"
             >
@@ -367,12 +367,12 @@
                 "
                 v-model="residenceToInputsSupply.dominantTransportationOther"
                 label="* Please Specify"
-                class="my-0 py-0 pt-1"
+                class="my-0 py-0 pt-3"
               ></v-text-field>
             </v-radio-group>
           </form-radio-container>
           <form-radio-container title="Dominant Type of Road">
-            <v-radio-group
+            <v-radio-group row
               v-model="residenceToInputsSupply.dominantRoad"
               class="pa-0 ma-0"
             >
@@ -386,7 +386,7 @@
                 v-if="residenceToInputsSupply.dominantRoad == 'others'"
                 v-model="residenceToInputsSupply.dominantRoadOther"
                 label="* Please Specify"
-                class="my-0 py-0 pt-1"
+                class="my-0 py-0 pt-3"
               ></v-text-field>
             </v-radio-group>
           </form-radio-container>

@@ -2,7 +2,7 @@
 	<v-form ref="form" v-model="valid">
 		<v-container>
 			<v-row>
-				<form-select-container>
+				<v-col cols="12" sm="6">
 					<v-select
 						v-model="regionProvince"
 						:items="regionProvinceItems"
@@ -12,8 +12,8 @@
 						:rules="requiredRule"
 						required
 					></v-select>
-				</form-select-container>
-				<form-select-container>
+				</v-col>
+				<v-col cols="12" sm="6">
 					<v-select
 						v-model="cityMunicipality"
 						:items="cities"
@@ -23,7 +23,7 @@
 						:rules="requiredRule"
 						required
 					></v-select>
-				</form-select-container>
+				</v-col>
 				<form-select-container>
 					<v-select
 						v-model="barangay"
@@ -92,46 +92,46 @@
 						></v-radio>
 					</v-radio-group>
 				</form-radio-container>
-				<form-input-container>
+				<v-col cols="12" sm="5">
 					<v-text-field
 						v-model="farmerFirstName"
 						:rules="requiredRule"
 						label="* Farmer's Firstname"
 						required
 					></v-text-field>
-				</form-input-container>
-				<form-input-container>
+				</v-col>
+				<v-col cols="12" sm="5">
 					<v-text-field
 						v-model="farmerSurName"
 						:rules="requiredRule"
 						label="* Farmer's Surname"
 						required
 					></v-text-field>
-				</form-input-container>
-				<form-input-container>
+				</v-col>
+				<v-col cols="12" sm="2">
 					<v-text-field
 						v-model="farmerMiddileInitial"
 						label="Farmer's Middle Initial"
 						counter="1"
 						maxlength="1"
 					></v-text-field>
-				</form-input-container>
-				<form-input-container>
+				</v-col>
+				<v-col cols="12" sm="6">
 					<v-text-field
 						v-model="confirmedBy"
 						:rules="requiredRule"
 						label="* Confirmed by (Name):"
 						required
 					></v-text-field>
-				</form-input-container>
-				<form-input-container>
+				</v-col>
+				<v-col cols="12" sm="6">
 					<v-text-field
 						v-model="position"
 						:rules="requiredRule"
 						label="* Confirmed by (Position):"
 						required
 					></v-text-field>
-				</form-input-container>
+				</v-col>
 			</v-row>
 		</v-container>
 		<!-- <v-btn @click="validate">Validate</v-btn> -->
@@ -140,6 +140,7 @@
 
 <script>
 import formInputContainer from '~/components/authenticated/form/formInputContainer.vue'
+import { capitalizeEachWordAdvanced } from '~/reusableFunctions/questionnaireValidation'
 import formRadioContainer from '../../form/formRadioContainer.vue'
 import formSelectContainer from '../../form/formSelectContainer.vue'
 export default {
@@ -373,9 +374,9 @@ export default {
 					city: data.interview.cityMunicipality,
 					province: data.interview.regionProvince
 				})
-				this.regionProvince = data.interview.regionProvince
-				this.cityMunicipality = data.interview.cityMunicipality
-				this.barangay = data.interview.barangay
+				this.regionProvince = capitalizeEachWordAdvanced(data.interview.regionProvince)
+				this.cityMunicipality = capitalizeEachWordAdvanced(data.interview.cityMunicipality)
+				this.barangay = capitalizeEachWordAdvanced(data.interview.barangay)
 				this.classification = data.interview.classification
 				this.status = data.interview.status
 				this.isInterviewed = data.interview.isInterviewed

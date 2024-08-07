@@ -7,7 +7,7 @@
           <v-col cols="12" class="mb-0 pb-0">
             <p class="ma-0 pa-0 font-weight-black">{{ i }}</p>
           </v-col>
-          <form-select-container>
+          <v-col cols="12" sm="6">
             <v-select
               v-model="pestDiseaseDamagesPlants[i - 1]"
               :items="pestDiseaseDamagesPlantsItems"
@@ -15,9 +15,9 @@
               label="* Pest and Diseases Damage in Plants"
               dense
             ></v-select>
-          </form-select-container>
+          </v-col>
 
-          <form-select-container>
+          <v-col cols="12" sm="6">
             <v-select
               v-model="stageOccurence[i - 1]"
               :items="stageOccurenceItems"
@@ -25,9 +25,9 @@
               label="* Stage of Occurence"
               dense
             ></v-select>
-          </form-select-container>
+          </v-col>
 
-          <form-select-container>
+          <v-col cols="12" sm="6">
             <v-select
               v-model="management[i - 1]"
               :items="managementItems"
@@ -42,9 +42,9 @@
               label="Please Specify"
               class="my-0 py-0 pt-1"
             ></v-text-field>
-          </form-select-container>
+          </v-col>
 
-          <form-select-container>
+          <v-col cols="12" sm="6">
             <v-select
               v-model="perceivedEffectiveness[i - 1]"
               :items="perceivedEffectivenessItems"
@@ -52,7 +52,7 @@
               label="* Perceived Effectiveness"
               dense
             ></v-select>
-          </form-select-container>
+          </v-col>
         </v-row>
       </form-card>
       <form-card-button @emitIncrement="increment" />

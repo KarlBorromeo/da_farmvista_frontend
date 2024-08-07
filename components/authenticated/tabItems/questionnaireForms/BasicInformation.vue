@@ -2,7 +2,7 @@
   <v-form ref="form" v-model="valid" lazy-validation>
     <v-container>
       <v-row>
-        <form-input-container>
+        <v-col cols="12" sm="6">
           <v-text-field
             v-model="contactNumber"
             :rules="contactNumberRule"
@@ -10,14 +10,14 @@
             counter="11"
             maxlength="11"
           ></v-text-field>
-        </form-input-container>
+        </v-col>
 
-        <form-input-container>
+        <v-col cols="12" sm="6">
           <v-text-field
             v-model="farmerCode"
             label="Farmer's Code Number"
           ></v-text-field>
-        </form-input-container>
+        </v-col>
       </v-row>
     </v-container>
     <!-- <v-btn @click="validate">Validate</v-btn> -->

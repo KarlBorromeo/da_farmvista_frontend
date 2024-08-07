@@ -11,6 +11,7 @@
               :rules="requiredRule"
               v-model="haveHeardCoffeeFarmTech"
               class="pa-0 ma-0"
+              row
             >
               <v-radio
                 v-for="item in isAgreeItems"
@@ -33,6 +34,7 @@
                 :rules="requiredRule"
                 v-model="formData[item].isHeard"
                 class="pa-0 ma-0"
+                row
               >
                 <v-radio
                   v-for="item in isAgreeItems"
@@ -42,27 +44,27 @@
                 ></v-radio>
               </v-radio-group>
             </form-radio-container>
-            <form-input-container v-if="formData[item].isHeard == 'yes'">
+            <v-col cols="12" sm="3" v-if="formData[item].isHeard == 'yes'">
               <v-text-field
                 v-model="formData[item].sourceInfo"
                 :rules="requiredRule"
                 label="* Source of information"
               ></v-text-field>
-            </form-input-container>
-            <form-input-container v-if="formData[item].isHeard == 'yes'">
+            </v-col>
+            <v-col cols="12" sm="7" v-if="formData[item].isHeard == 'yes'">
               <v-text-field
                 v-model="formData[item].howDidLearnTechPractices"
                 :rules="requiredRule"
                 label="* How did you learn about the Tech/Practices"
               ></v-text-field>
-            </form-input-container>
-            <form-input-container v-if="formData[item].isHeard == 'yes'">
+            </v-col>
+            <v-col cols="12" sm="2" v-if="formData[item].isHeard == 'yes'">
               <v-text-field
                 v-model="formData[item].year"
                 :rules="yearRule"
                 label="* Year"
               ></v-text-field>
-            </form-input-container>
+            </v-col>
           </v-row>
         </form-card>        
       </div>

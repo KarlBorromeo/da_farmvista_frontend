@@ -4,55 +4,56 @@
       <form-card>
         <p class="my-2 pb-0 font-weight-medium">Classification of crops</p>
         <v-row>
-          <form-input-container>
+          <v-col cols="12" sm="6" class="py-0 my-0">
             <v-text-field
               v-model="classificationCropsDetails"
               label="Details"
               hint="Separate with comma ' , ' if multiple values"
             ></v-text-field>
-          </form-input-container>
-          <form-input-container v-if="classificationCropsDetails">
+          </v-col>
+          <v-col cols="12" sm="6" class="py-0 my-0" v-if="classificationCropsDetails">
             <v-text-field
               v-model="classificationCropsReasons"
               label="Reason for using"
             ></v-text-field>
-          </form-input-container>
+          </v-col>
         </v-row>
       </form-card>
 
       <form-card>
         <p class="my-2 pb-0 font-weight-medium">Year Planted</p>
         <v-row>
-          <form-input-container>
+          <v-col cols="12" sm="6" class="py-0 my-0">
             <v-text-field
               v-model="yearPlantedDetails"
               :rules="yearRule"
               label="Details"
               type="number"
             ></v-text-field>
-          </form-input-container>
-          <form-input-container v-if="yearPlantedDetails">
+          </v-col>
+          <v-col cols="12" sm="6" class="py-0 my-0" v-if="yearPlantedDetails">
             <v-text-field
               v-model="yearPlantedReasons"
               label="Reason for using"
             ></v-text-field>
-          </form-input-container>
+          </v-col>
         </v-row>
       </form-card>
 
       <form-card>
         <p class="my-2 pb-0 font-weight-medium">Planting Distance</p>
         <v-row>
-          <form-input-container>
+          <v-col cols="12" sm="6" class="py-0 my-0">
             <v-text-field
               v-model="plantingDistanceDetails"
               label="Details"
             ></v-text-field>
-          </form-input-container>
+          </v-col>
           <form-radio-container v-if="plantingDistanceDetails" title="Reason for Using">
             <v-radio-group
               v-model="plantingDistanceReasons"
               class="pa-0 ma-0"
+              row
             >
               <v-radio
                 v-for="item in reasonUsingItems"
@@ -63,9 +64,8 @@
               <v-text-field
                 v-if="plantingDistanceReasons == 'others'"
                 v-model="plantingDistanceReasonsOther"
-
                 label="Please Specify"
-                class="my-0 py-0 pt-1"
+                class="my-0 py-0 pt-3"
               ></v-text-field>
             </v-radio-group>
           </form-radio-container>
@@ -75,34 +75,34 @@
       <form-card>
         <p class="my-2 pb-0 font-weight-medium">Number of Plants or stands</p>
         <v-row>
-          <form-input-container>
+          <v-col cols="12" sm="6" class="py-0 my-0">
             <v-text-field
               v-model="numberPlantsDetails"
               label="Details"
               type="number"
             ></v-text-field>
-          </form-input-container>
-          <form-input-container v-if="numberPlantsDetails">
+          </v-col>
+          <v-col cols="12" sm="6" class="py-0 my-0" v-if="numberPlantsDetails">
             <v-text-field
               v-model="numberPlantsReasons"
               label="Reason for using"
             ></v-text-field>
-          </form-input-container>
+          </v-col>
         </v-row>
       </form-card>
 
       <form-card>
         <p class="my-2 pb-0 font-weight-medium">Intercrop and Variety</p>
         <v-row>
-          <form-input-container>
+          <v-col cols="12" sm="6" class="py-0 my-0">
             <v-text-field
               v-model="intercropVarietyDetails"
               label="Details"
               hint="Separate with comma ' , ' if multiple crops"
             ></v-text-field>
-          </form-input-container>
+          </v-col>
           <form-radio-container v-if="intercropVarietyDetails" title="Reason for Using">
-            <v-radio-group v-model="intercropVarietyReasons" class="pa-0 ma-0">
+            <v-radio-group v-model="intercropVarietyReasons" class="pa-0 ma-0" row>
               <v-radio
                 v-for="item in reasonUsingItems"
                 :key="item"
@@ -112,9 +112,8 @@
               <v-text-field
                 v-if="intercropVarietyReasons == 'others'"
                 v-model="intercropVarietyReasonsOther"
-
                 label="Please Specify"
-                class="my-0 py-0 pt-1"
+                class="my-0 py-0 pt-3"
               ></v-text-field>
             </v-radio-group>
           </form-radio-container>
@@ -123,20 +122,20 @@
       <form-card>
         <p class="my-2 pb-0 font-weight-medium">Total Area (ha)</p>
         <v-row>
-          <form-input-container>
+          <v-col cols="12" sm="6" class="py-0 my-0">
             <v-text-field
               v-model="totalAreaDetails"
               :rules="numberRule"
               label="Details"
               type="number"
             ></v-text-field>
-          </form-input-container>
-          <form-input-container v-if="totalAreaDetails">
+          </v-col>
+          <v-col cols="12" sm="6" class="py-0 my-0" v-if="totalAreaDetails">
             <v-text-field
               v-model="totalAreaReasons"
               label="Reason for using"
             ></v-text-field>
-          </form-input-container>
+          </v-col>
         </v-row>
       </form-card>
       <form-card>
@@ -149,9 +148,7 @@
               :key="item"
               :value="item"
               :label="item"
-              dense
-              class="ma-0 pa-0 ml-6"
-              style="display: inline-block"
+              class="ma-0 pa-0 mr-5"
             ></v-checkbox>
             <v-text-field
               v-if="isOtherTicked(seedSourceDetails)"
@@ -164,6 +161,7 @@
             <v-radio-group
               v-model="seedSourceReasons"
               class="pa-0 ma-0"
+              row
             >
               <v-radio
                 v-for="item in reasonUsingItems"
@@ -174,9 +172,8 @@
               <v-text-field
                 v-if="seedSourceReasons == 'others'"
                 v-model="seedSourceReasonsOther"
-
                 label="Please Specify"
-                class="my-0 py-0 pt-1"
+                class="my-0 py-0 pt-3"
               ></v-text-field>
             </v-radio-group>
           </form-radio-container>

@@ -3,7 +3,7 @@
     <v-container class="my-0 py-0">
       <v-row class="my-0 mt-3">
         <form-radio-container title="Harvested already?" :required="true">
-          <v-radio-group v-model="isHarvested" class="pa-0 ma-0">
+          <v-radio-group v-model="isHarvested" class="pa-0 ma-0" row>
             <v-radio
               v-for="item in isHarvestedItems"
               :key="item"
@@ -26,7 +26,7 @@
             {{ item.title }}
           </p>
           <v-row>
-            <form-input-container v-if="!item.radio && item.type == 'number'">
+            <v-col cols="12" sm="6" v-if="!item.radio && item.type == 'number'">
               <v-text-field
                 v-model="formData[item.key].variable"
                 :rules="numberRule"
@@ -34,8 +34,8 @@
                 label="* Details"
                 :type="item.type"
               ></v-text-field>
-            </form-input-container>
-            <form-input-container
+            </v-col>
+            <v-col cols="12" sm="6"
               v-else-if="!item.radio && item.type == 'text'"
             >
               <v-text-field
@@ -43,7 +43,7 @@
                 label="* Details"
                 :type="item.type"
               ></v-text-field>
-            </form-input-container>
+            </v-col>
             <form-radio-container v-else :title="item.title" :required="true">
               <v-text-field
                 v-model="formData[item.key].variable"
@@ -66,12 +66,13 @@
                 </div>
               </v-radio-group>
             </form-radio-container>
-            <form-input-container>
-              <v-text-field
+            <v-col cols="12" sm="6">
+              <v-textarea
+                rows="1"
                 v-model="formData[item.key].remarks"
                 label="Remarks"
-              ></v-text-field>
-            </form-input-container>
+              ></v-textarea>
+            </v-col>
           </v-row>
         </form-card>
       </v-container>

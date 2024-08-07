@@ -8,6 +8,7 @@
           <v-radio-group
             v-model="formData.haveFunctionalRadio"
             class="pa-0 ma-0"
+            row
           >
             <v-radio
               v-for="item in isAgreeItems"
@@ -116,6 +117,7 @@
           <v-radio-group
             v-model="formData.printMaterialsRead"
             class="pa-0 ma-0"
+            row
           >
             <v-radio
               v-for="item in formData.printMaterialsReadItems"
@@ -138,6 +140,7 @@
           <v-radio-group
             v-model="formData.haveTelevision"
             class="pa-0 ma-0"
+            row
           >
             <v-radio
               v-for="item in isAgreeItems"
@@ -240,6 +243,7 @@
           <v-radio-group
             v-model="formData.haveSocmedAccount"
             class="pa-0 ma-0"
+            row
           >
             <v-radio
               v-for="item in isAgreeItems"

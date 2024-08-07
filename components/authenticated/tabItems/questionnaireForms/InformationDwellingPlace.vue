@@ -2,7 +2,7 @@
   <v-form ref="form" v-model="valid" lazy-validation>
     <v-container>
       <v-row>
-        <form-input-container>
+        <v-col cols="12" sm="6">
           <v-text-field
             v-model="yearsResidence"
             :rules="numberRules"
@@ -10,13 +10,14 @@
             type="number"
             min="0"
           ></v-text-field>
-        </form-input-container>
+        </v-col>
 
         <form-radio-container title="House Ownership" :required="true">
           <v-radio-group
             :rules="requiredRule"
             v-model="houseOwernship"
             class="ma-0"
+            row
           >
             <v-radio
               v-for="item in houseOwernshipItems"
@@ -34,7 +35,7 @@
           </v-radio-group>
         </form-radio-container>
 
-        <form-input-container>
+        <v-col cols="12" sm="6">
           <v-text-field
             v-model="numberRooms"
             :rules="numberRules"
@@ -42,13 +43,14 @@
             type="number"
             min="0"
           ></v-text-field>
-        </form-input-container>
+        </v-col>
 
         <form-radio-container title="Materials Roof Made" :required="true">
           <v-radio-group
             :rules="requiredRule"
             v-model="typeRoofMade"
             class="ma-0"
+            row
           >
             <v-radio
               v-for="item in typeRoofMadeItems"
@@ -71,6 +73,7 @@
             :rules="requiredRule"
             v-model="typeWallMade"
             class="ma-0"
+            row
           >
             <v-radio
               v-for="item in typeWallMadeItems"
@@ -93,6 +96,7 @@
             :rules="requiredRule"
             v-model="kindToilet"
             class="ma-0"
+            row
           >
             <v-radio
               v-for="item in kindToiletItems"
@@ -115,6 +119,7 @@
             :rules="requiredRule"
             v-model="lightingFacility"
             class="ma-0"
+            row
           >
             <v-radio
               v-for="item in lightingFacilityItems"
@@ -137,6 +142,7 @@
             :rules="requiredRule"
             v-model="sourceCooking"
             class="ma-0"
+            row
           >
             <v-radio
               v-for="item in sourceCookingItems"
@@ -159,6 +165,7 @@
             :rules="requiredRule"
             v-model="sourceWaterDrink"
             class="ma-0"
+            row
           >
             <v-radio
               v-for="item in sourceWaterDrinkItems"

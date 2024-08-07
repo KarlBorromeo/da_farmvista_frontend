@@ -2,7 +2,7 @@
   <v-form ref="form" v-model="valid" lazy-validation>
     <v-container>
       <v-row>
-        <form-input-container>
+        <v-col cols="12" sm="6">
           <v-text-field
             v-model="food"
             :rules="numberRule"
@@ -10,9 +10,9 @@
             type="number"
             min="0"
           ></v-text-field>
-        </form-input-container>
+        </v-col>
 
-        <form-input-container>
+        <v-col cols="12" sm="6">
           <v-text-field
             v-model="clothing"
             :rules="numberRule"
@@ -20,9 +20,9 @@
             type="number"
             min="0"
           ></v-text-field>
-        </form-input-container>
+        </v-col>
 
-        <form-input-container>
+        <v-col cols="12" sm="6">
           <v-text-field
             v-model="utilities"
             :rules="numberRule"
@@ -30,9 +30,9 @@
             type="number"
             min="0"
           ></v-text-field>
-        </form-input-container>
+        </v-col>
 
-        <form-input-container>
+        <v-col cols="12" sm="6">
           <v-text-field
             v-model="householdFacilities"
             :rules="numberRule"
@@ -40,9 +40,9 @@
             type="number"
             min="0"
           ></v-text-field>
-        </form-input-container>
+        </v-col>
 
-        <form-input-container>
+        <v-col cols="12" sm="6">
           <v-text-field
             v-model="nonFoodItems"
             :rules="numberRule"
@@ -50,9 +50,9 @@
             type="number"
             min="0"
           ></v-text-field>
-        </form-input-container>
+        </v-col>
 
-        <form-input-container>
+        <v-col cols="12" sm="6">
           <v-text-field
             v-model="healthExpenses"
             :rules="numberRule"
@@ -60,9 +60,9 @@
             type="number"
             min="0"
           ></v-text-field>
-        </form-input-container>
+        </v-col>
 
-        <form-input-container>
+        <v-col cols="12" sm="6">
           <v-text-field
             v-model="transportation"
             :rules="numberRule"
@@ -70,9 +70,9 @@
             type="number"
             min="0"
           ></v-text-field>
-        </form-input-container>
+        </v-col>
 
-        <form-input-container>
+        <v-col cols="12" sm="6">
           <v-text-field
             v-model="communication"
             :rules="numberRule"
@@ -80,9 +80,9 @@
             type="number"
             min="0"
           ></v-text-field>
-        </form-input-container>
+        </v-col>
 
-        <form-input-container>
+        <v-col cols="12" sm="6">
           <v-text-field
             v-model="recreation"
             :rules="numberRule"
@@ -90,9 +90,9 @@
             type="number"
             min="0"
           ></v-text-field>
-        </form-input-container>
+        </v-col>
 
-        <form-input-container>
+        <v-col cols="12" sm="6">
           <v-text-field
             v-model="education"
             :rules="numberRule"
@@ -100,9 +100,9 @@
             type="number"
             min="0"
           ></v-text-field>
-        </form-input-container>
+        </v-col>
 
-        <form-input-container>
+        <v-col cols="12" sm="6">
           <v-text-field
             v-model="specialOccasions"
             :rules="numberRule"
@@ -110,9 +110,9 @@
             type="number"
             min="0"
           ></v-text-field>
-        </form-input-container>
+        </v-col>
 
-        <form-input-container>
+        <v-col cols="12" sm="6">
           <v-text-field
             v-model="otherExpenses"
             :rules="numberRule"
@@ -120,14 +120,14 @@
             type="number"
             min="0"
           ></v-text-field>
-        </form-input-container>
-        <form-input-container>
+        </v-col>
+        <v-col cols="12" sm="6">
           <v-text-field
             v-model="otherExpensesSpecify"
             label="Other expenses Specify:"
             hint="specify the other item name"
           ></v-text-field>
-        </form-input-container>
+        </v-col>
       </v-row>
     </v-container>
     <!-- <v-btn @click="validate">Validate</v-btn> -->

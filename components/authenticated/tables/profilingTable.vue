@@ -43,7 +43,7 @@
         :circle="true"
       ></v-pagination>
     </div>
-    <v-dialog v-if="isEditing" v-model="dialog" width="1000">
+    <v-dialog v-if="isEditing" v-model="dialog" width="2000">
       <questionnaire-vue :id="id" :commodityProp="commodity" />
     </v-dialog>
     <snackbar ref="snackbarUpdate" />

@@ -9,7 +9,7 @@
             :key="item"
             :value="item"
             :label="item"
-            class="ma-0 pa-0"
+            class="ma-0 pa-0 mr-5"
           ></v-checkbox>
           <v-text-field
             v-if="isOtherTicked(agriculturalSystem)"
@@ -27,6 +27,7 @@
             :rules="requiredRule"
             v-model="didKnowProperReutilization"
             class="pa-0 ma-0"
+            row
           >
             <v-radio
               v-for="item in didKnowProperReutilizationItems"
@@ -48,7 +49,7 @@
             :key="item"
             :value="item"
             :label="item"
-            class="ma-0 pa-0"
+             class="ma-0 pa-0 mr-5"
           ></v-checkbox>
           <v-text-field
             v-if="isOtherTicked(whereDisposedUnutilizedAgriwaste)"
@@ -69,7 +70,7 @@
             :key="item"
             :value="item"
             :label="item"
-            class="ma-0 pa-0"
+             class="ma-0 pa-0 mr-5"
           ></v-checkbox>
           <v-text-field
             v-if="isOtherTicked(whereHearAboutReutilization)"

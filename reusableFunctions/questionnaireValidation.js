@@ -139,3 +139,12 @@ export const isOtherValueTickedCheckbox = (values, items) => {
     return []
   }
 }
+/* convert the string into Capitalize Casing, return capitalized string */
+export const capitalizeEachWordAdvanced = (string) => {
+  if (!string) return string; 
+  return string
+    .toLowerCase()
+    .split(/\s+/)
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+}

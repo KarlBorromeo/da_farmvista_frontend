@@ -5,16 +5,16 @@
         <v-btn icon class="formCardDeleteBtn" @click="deleteFormCard(i-1)"><v-icon class="red--text">mdi-trash-can</v-icon></v-btn>
         <v-row>
           <v-col cols="12" class="mb-0 pb-0"> </v-col>
-          <form-input-container>
+          <v-col cols="12" sm="6">
             <v-text-field
               v-model="parcelNumber[i - 1]"
               :rules="requiredRule"
               label="* Parcel Number"
               :disabled="true"
             ></v-text-field>
-          </form-input-container>
+          </v-col>
 
-          <form-input-container>
+          <v-col cols="12" sm="6">
             <v-text-field
               v-model="area[i - 1]"
               :rules="numberRule"
@@ -22,13 +22,14 @@
               type="number"
               min="0"
             ></v-text-field>
-          </form-input-container>
+          </v-col>
 
           <form-radio-container title="Tenure" :required="true">
             <v-radio-group
               :rules="requiredRule"
               v-model="tenure[i - 1]"
               class="pa-0 ma-0"
+              row
             >
               <v-radio
                 v-for="item in tenureItems"
@@ -41,7 +42,7 @@
                 v-model="tenureOther[i - 1]"
                 :rules="requiredRule"
                 label="* Please Specify"
-                class="my-0 py-0 pt-1"
+                class="my-0 py-0 pt-3"
               ></v-text-field>
             </v-radio-group>
           </form-radio-container>
@@ -51,6 +52,7 @@
               :rules="requiredRule"
               v-model="topography[i - 1]"
               class="pa-0 ma-0"
+              row
             >
               <v-radio
                 v-for="item in topographyItems"
@@ -63,7 +65,7 @@
                 v-model="topographyOther[i - 1]"
                 :rules="requiredRule"
                 label="* Please Specify"
-                class="my-0 py-0 pt-1"
+                class="my-0 py-0 pt-3"
               ></v-text-field>
             </v-radio-group>
           </form-radio-container>
@@ -73,6 +75,7 @@
               :rules="requiredRule"
               v-model="soilFertility[i - 1]"
               class="pa-0 ma-0"
+              row
             >
               <v-radio
                 v-for="item in soilFertilityItems"
@@ -85,7 +88,7 @@
                 v-model="soilFertilityOther[i - 1]"
                 :rules="requiredRule"
                 label="* Please Specify"
-                class="my-0 py-0 pt-1"
+                class="my-0 py-0 pt-3"
               ></v-text-field>
             </v-radio-group>
           </form-radio-container>
@@ -95,6 +98,7 @@
               :rules="requiredRule"
               v-model="croppingSystem[i - 1]"
               class="pa-0 ma-0"
+              row
             >
               <v-radio
                 v-for="item in croppingSystemItems"
@@ -107,7 +111,7 @@
                 v-model="croppingSystemOther[i - 1]"
                 :rules="requiredRule"
                 label="* Please Specify"
-                class="my-0 py-0 pt-1"
+                class="my-0 py-0 pt-3"
               ></v-text-field>
             </v-radio-group>
           </form-radio-container>
@@ -117,6 +121,7 @@
               :rules="requiredRule"
               v-model="sourceWater[i - 1]"
               class="pa-0 ma-0"
+              row
             >
               <v-radio
                 v-for="item in sourceWaterItems"
@@ -129,7 +134,7 @@
                 v-model="sourceWaterOther[i - 1]"
                 :rules="requiredRule"
                 label="* Please Specify"
-                class="my-0 py-0 pt-1"
+                class="my-0 py-0 pt-3"
               ></v-text-field>
             </v-radio-group>
           </form-radio-container>
@@ -139,6 +144,7 @@
               :rules="requiredRule"
               v-model="landUseStatus[i - 1]"
               class="pa-0 ma-0"
+              row
             >
               <v-radio
                 v-for="item in landUseStatusItems"
@@ -151,19 +157,20 @@
                 v-model="landUseStatusOther[i - 1]"
                 :rules="requiredRule"
                 label="* Please Specify"
-                class="my-0 py-0 pt-1"
+                class="my-0 py-0 pt-3"
               ></v-text-field>
             </v-radio-group>
           </form-radio-container>
 
-          <form-input-container class="mt-2">
-            <v-text-field
+          <v-col cols="12">
+            <v-textarea
+              rows="2"
               v-model="cropsPlanted[i - 1]"
               :rules="regexRule"
               label="* Crops Planted (coffee,corn)"
               hint="Separate with comma ' , ' if multiple crops"
-            ></v-text-field>
-          </form-input-container>
+            ></v-textarea>
+          </v-col>
         </v-row>
       </form-card>
       <form-card-button @emitIncrement="increment"/>
