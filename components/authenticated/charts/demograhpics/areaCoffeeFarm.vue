@@ -54,7 +54,7 @@ export default {
       return 'fdsafsd fdsf dsaf dsafdsafdas f'
     },
     title(){
-      return 'Area Coffe Farm'
+      return 'Area Coffee Farm'
     },
     options() {
       return {

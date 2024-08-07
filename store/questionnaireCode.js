@@ -188,9 +188,6 @@ export const getters = {
     }
     return arr
   },
-  CityMunicipality(state) {
-    return generateArray(state.codes.CityMunicipality)
-  },
   ProfileStatus(state) {
     return generateArray(state.codes.ProfileStatus)
   },
