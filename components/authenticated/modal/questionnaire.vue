@@ -1,10 +1,15 @@
 <template>
   <v-card id="card" ref="card" light class="pa-4">
-    <div class="d-flex align-center justify-space-between pa-4">
+    <!-- <div class="d-flex align-center justify-space-between pa-4">
       <h2 class="pa-0 ma-0 headline font-weight-bold">
-        Survey Questionaire {{ currentCommodity }}
+        Survey Questionaire {{ commodity }}
       </h2>
       <commodity-dropdown v-if="!id" @switchCommodity="switchCommodity" />
+    </div> -->
+    <div class="d-flex align-center justify-space-between pa-4">
+      <p class="pa-0 ma-0 title font-weight-normal text-capitalize">
+        Survey Questionaire {{ commodity }} {{selectedForm}}
+      </p>
     </div>
     <v-progress-linear :value="progress" color="primary" height="25" striped
       ><strong class="white--text"
@@ -12,7 +17,7 @@
       ></v-progress-linear
     >
     <v-divider />
-    <v-toolbar light elevation="0" v-if="currentCommodity == 'coffee'">
+    <v-toolbar light elevation="0" v-if="commodity == 'coffee'">
       <template >
         <v-tabs
           fixed-tabs
@@ -29,7 +34,7 @@
             I. Demographic Farmer Profile
           </v-tab>
           <v-tab
-            v-if="isInterviewed && isSelfFarmerActive"
+            v-if="isSelfFarmerActive"
             :disabled="Tab1DemographicFarmerProfileValidated"
             class="caption font-weight-black"
             @click="selectTab('BasicInformation')"
@@ -37,7 +42,7 @@
             I. Farmer's Basic Information
           </v-tab>
           <v-tab
-            v-if="isInterviewed && isSelfFarmerActive"
+            v-if="isSelfFarmerActive"
             @click="selectTab('SurveyInformation')"
             class="caption font-weight-black"
             :disabled="Tab1BasicInformationValidated"
@@ -45,7 +50,7 @@
             Survey Information
           </v-tab>
           <v-tab
-            v-if="isInterviewed && isSelfFarmerActive"
+            v-if="isSelfFarmerActive"
             class="caption font-weight-black"
             @click="selectTab('GeneralInformation')"
             :disabled="Tab1SurveyInformationValidated"
@@ -54,7 +59,7 @@
           </v-tab>
 
           <v-tab
-            v-if="isInterviewed && isSelfFarmerActive"
+            v-if="isSelfFarmerActive"
             class="caption font-weight-black"
             @click="selectTab('FamilyAffiliated')"
             :disabled="Tab1GeneralInformationValidated"
@@ -62,7 +67,7 @@
             II. Family Affiliated
           </v-tab>
           <v-tab
-            v-if="isInterviewed && isSelfFarmerActive"
+            v-if="isSelfFarmerActive"
             class="caption font-weight-black"
             @click="selectTab('FamilyIncome')"
             :disabled="Tab1FamilyAffiliatedValidated"
@@ -70,7 +75,7 @@
             III. Family Income
           </v-tab>
           <v-tab
-            v-if="isInterviewed && isSelfFarmerActive"
+            v-if="isSelfFarmerActive"
             class="caption font-weight-black"
             @click="selectTab('FarmIncome')"
             :disabled="Tab1FamilyIncomeValidated"
@@ -78,7 +83,7 @@
             III. Farm Income
           </v-tab>
           <v-tab
-            v-if="isInterviewed && isSelfFarmerActive"
+            v-if="isSelfFarmerActive"
             class="caption font-weight-black"
             @click="selectTab('HouseholdExpenses')"
             :disabled="Tab1FarmIncomeValidated"
@@ -86,7 +91,7 @@
             IV. Household Expenses
           </v-tab>
           <v-tab
-            v-if="isInterviewed && isSelfFarmerActive"
+            v-if="isSelfFarmerActive"
             class="caption font-weight-black"
             @click="selectTab('AssetsFarmTools')"
             :disabled="Tab1HouseholdExpensesValidated"
@@ -94,7 +99,7 @@
             V. Assets Farm Tools
           </v-tab>
           <v-tab
-            v-if="isInterviewed && isSelfFarmerActive"
+            v-if="isSelfFarmerActive"
             class="caption font-weight-black"
             @click="selectTab('AssetsFarmMachinery')"
             :disabled="Tab1AssetsFarmToolsValidated"
@@ -102,7 +107,7 @@
             V. Assets Farm Machinery
           </v-tab>
           <v-tab
-            v-if="isInterviewed && isSelfFarmerActive"
+            v-if="isSelfFarmerActive"
             class="caption font-weight-black"
             @click="selectTab('AssetsFarmPoultryLivestock')"
             :disabled="Tab1AssetsFarmMachineryValidated"
@@ -110,7 +115,7 @@
             V. Assets Farm Poultry Livestock
           </v-tab>
           <v-tab
-            v-if="isInterviewed && isSelfFarmerActive"
+            v-if="isSelfFarmerActive"
             class="caption font-weight-black"
             @click="selectTab('AssetsFarmStructure')"
             :disabled="Tab1AssetsFarmPoultryLivestockValidated"
@@ -118,7 +123,7 @@
             V. Assets Farm Structure
           </v-tab>
           <v-tab
-            v-if="isInterviewed && isSelfFarmerActive"
+            v-if="isSelfFarmerActive"
             class="caption font-weight-black"
             @click="selectTab('InformationDwellingPlace')"
             :disabled="Tab1AssetsFarmStructureValidated"
@@ -126,7 +131,7 @@
             VI. Information Dwelling Place
           </v-tab>
           <v-tab
-            v-if="isInterviewed && isSelfFarmerActive"
+            v-if="isSelfFarmerActive"
             class="caption font-weight-black"
             @click="selectTab('GeneralFarmingInformation')"
             :disabled="Tab1InformationDwellingPlaceValidated"
@@ -134,7 +139,7 @@
             VII. General Farming Information
           </v-tab>
           <v-tab
-            v-if="isInterviewed && isSelfFarmerActive"
+            v-if="isSelfFarmerActive"
             class="caption font-weight-black"
             @click="selectTab('ParcelInformation')"
             :disabled="Tab1GeneralFarmingInformationValidated"
@@ -142,7 +147,7 @@
             VII.IV Parcel Information
           </v-tab>
           <v-tab
-            v-if="isInterviewed && isSelfFarmerActive"
+            v-if="isSelfFarmerActive"
             class="caption font-weight-black"
             @click="selectTab('DetailsCoffeeArea')"
             :disabled="Tab1ParcelInformationValidated"
@@ -150,7 +155,7 @@
             VII.V Details Coffee Area
           </v-tab>
           <v-tab
-            v-if="isInterviewed && isSelfFarmerActive"
+            v-if="isSelfFarmerActive"
             class="caption font-weight-black"
             @click="selectTab('InfrastructureDistanceAccessibility')"
             :disabled="Tab1DetailsCoffeeAreaValidated"
@@ -158,7 +163,7 @@
             VII.VI Infrastructure Distance Accessibility
           </v-tab>
           <v-tab
-            v-if="isInterviewed && isSelfFarmerActive"
+            v-if="isSelfFarmerActive"
             class="caption font-weight-black"
             @click="selectTab('FarmActivities')"
             :disabled="Tab1InfrastructureDistanceAccessibilityValidated"
@@ -166,7 +171,7 @@
             VIII Farm Activities
           </v-tab>
           <v-tab
-            v-if="isInterviewed && isSelfFarmerActive"
+            v-if="isSelfFarmerActive"
             class="caption font-weight-black"
             @click="selectTab('FarmWasteManagement')"
             :disabled="Tab1FarmActivitiesValidated"
@@ -174,7 +179,7 @@
             VIII.IV Farm Waste Management
           </v-tab>
           <v-tab
-            v-if="isInterviewed && isSelfFarmerActive"
+            v-if="isSelfFarmerActive"
             class="caption font-weight-black"
             @click="selectTab('CroppingPatternCalendar')"
             :disabled="Tab1FarmWasteManagementValidated"
@@ -182,7 +187,7 @@
             VIII.V Cropping Pattern Calendar
           </v-tab>
           <v-tab
-            v-if="isInterviewed && isSelfFarmerActive"
+            v-if="isSelfFarmerActive"
             class="caption font-weight-black"
             @click="selectTab('DetailsCoffeeProduction')"
             :disabled="Tab1CroppingPatternCalendarValidated"
@@ -190,7 +195,7 @@
             IX Details Coffee Production
           </v-tab>
           <v-tab
-            v-if="isInterviewed && isSelfFarmerActive"
+            v-if="isSelfFarmerActive"
             class="caption font-weight-black"
             @click="selectTab('LaborUtilizationOperations')"
             :disabled="Tab1DetailsCoffeeProductionValidated"
@@ -198,7 +203,7 @@
             IX.II Labor Utilization Operations
           </v-tab>
           <v-tab
-            v-if="isInterviewed && isSelfFarmerActive"
+            v-if="isSelfFarmerActive"
             class="caption font-weight-black"
             @click="selectTab('DetailWageOperation')"
             :disabled="Tab1LaborUtilizationOperationsValidated"
@@ -206,7 +211,7 @@
             IX.III Detail Wage Operation
           </v-tab>
           <v-tab
-            v-if="isInterviewed && isSelfFarmerActive"
+            v-if="isSelfFarmerActive"
             class="caption font-weight-black"
             @click="selectTab('CostInputsCoffee')"
             :disabled="Tab1DetailWageOperationValidated"
@@ -214,7 +219,7 @@
             IX.IV Cost Inputs Coffee
           </v-tab>
           <v-tab
-            v-if="isInterviewed && isSelfFarmerActive"
+            v-if="isSelfFarmerActive"
             class="caption font-weight-black"
             @click="selectTab('PestDamageObserved')"
             :disabled="Tab1CostInputsCoffeeValidated"
@@ -222,7 +227,7 @@
             X Pest Damage Observed
           </v-tab>
           <v-tab
-            v-if="isInterviewed && isSelfFarmerActive"
+            v-if="isSelfFarmerActive"
             class="caption font-weight-black"
             @click="selectTab('PestManagementPractice')"
             :disabled="Tab1PestDamageObservedValidated"
@@ -230,7 +235,7 @@
             X.I Pest Management Practice
           </v-tab>
           <v-tab
-            v-if="isInterviewed && isSelfFarmerActive"
+            v-if="isSelfFarmerActive"
             class="caption font-weight-black"
             @click="selectTab('CoffeeHarvestMarketing')"
             :disabled="Tab1PestManagementPracticeValidated"
@@ -238,7 +243,7 @@
             XI Coffee Harvest Marketing
           </v-tab>
           <v-tab
-            v-if="isInterviewed && isSelfFarmerActive"
+            v-if="isSelfFarmerActive"
             class="caption font-weight-black"
             @click="selectTab('TechAwareness')"
             :disabled="Tab1CoffeeHarvestMarketingValidated"
@@ -246,7 +251,7 @@
             XII Technology Awareness
           </v-tab>
           <v-tab
-            v-if="isInterviewed && isSelfFarmerActive"
+            v-if="isSelfFarmerActive"
             class="caption font-weight-black"
             @click="selectTab('InformationKnowledgeSources')"
             :disabled="Tab1TechAwarenessValidated"
@@ -254,7 +259,7 @@
             XIII Information Knowledge Sources
           </v-tab>
           <v-tab
-            v-if="isInterviewed && isSelfFarmerActive"
+            v-if="isSelfFarmerActive"
             class="caption font-weight-black"
             @click="selectTab('OpenEndedQuestions')"
             :disabled="Tab1InformationKnowledgeSourcesValidated"
@@ -262,7 +267,7 @@
             XIV Open Ended Questions
           </v-tab>
           <v-tab
-            v-if="isInterviewed && isSelfFarmerActive"
+            v-if="isSelfFarmerActive"
             class="caption font-weight-black"
             @click="selectTab('OpenEndedQuestionRating')"
             :disabled="Tab1OpenEndedQuestionsValidated"
@@ -272,7 +277,7 @@
 
           <!-- TAB 2 -->
           <v-tab
-            v-if="isInterviewed && !isSelfFarmerActive"
+            v-if="!isSelfFarmerActive"
             :disabled="Tab2DemographicFarmerProfileValidated"
             class="caption font-weight-black"
             @click="selectTab('BasicInformation')"
@@ -280,7 +285,7 @@
             I. Farmer's Basic Information
           </v-tab>
           <v-tab
-            v-if="isInterviewed && !isSelfFarmerActive"
+            v-if="!isSelfFarmerActive"
             @click="selectTab('SurveyInformation')"
             class="caption font-weight-black"
             :disabled="Tab2BasicInformationValidated"
@@ -288,7 +293,7 @@
             Survey Information
           </v-tab>
           <v-tab
-            v-if="isInterviewed && !isSelfFarmerActive"
+            v-if="!isSelfFarmerActive"
             class="caption font-weight-black"
             @click="selectTab('GeneralInformation')"
             :disabled="Tab2SurveyInformationValidated"
@@ -297,7 +302,7 @@
           </v-tab>
 
           <v-tab
-            v-if="isInterviewed && !isSelfFarmerActive"
+            v-if="!isSelfFarmerActive"
             class="caption font-weight-black"
             @click="selectTab('FamilyAffiliated')"
             :disabled="Tab2GeneralInformationValidated"
@@ -305,7 +310,7 @@
             II. Family Affiliated
           </v-tab>
           <v-tab
-            v-if="isInterviewed && !isSelfFarmerActive"
+            v-if="!isSelfFarmerActive"
             class="caption font-weight-black"
             @click="selectTab('FamilyIncome')"
             :disabled="Tab2FamilyAffiliatedValidated"
@@ -313,7 +318,7 @@
             III. Family Income
           </v-tab>
           <v-tab
-            v-if="isInterviewed && !isSelfFarmerActive"
+            v-if="!isSelfFarmerActive"
             class="caption font-weight-black"
             @click="selectTab('FarmIncome')"
             :disabled="Tab2FamilyIncomeValidated"
@@ -321,7 +326,7 @@
             III. Farm Income
           </v-tab>
           <v-tab
-            v-if="isInterviewed && !isSelfFarmerActive"
+            v-if="!isSelfFarmerActive"
             class="caption font-weight-black"
             @click="selectTab('HouseholdExpenses')"
             :disabled="Tab2FarmIncomeValidated"
@@ -329,7 +334,7 @@
             IV. Household Expenses
           </v-tab>
           <v-tab
-            v-if="isInterviewed && !isSelfFarmerActive"
+            v-if="!isSelfFarmerActive"
             class="caption font-weight-black"
             @click="selectTab('AssetsFarmTools')"
             :disabled="Tab2HouseholdExpensesValidated"
@@ -337,7 +342,7 @@
             V. Assets Farm Tools
           </v-tab>
           <v-tab
-            v-if="isInterviewed && !isSelfFarmerActive"
+            v-if="!isSelfFarmerActive"
             class="caption font-weight-black"
             @click="selectTab('AssetsFarmMachinery')"
             :disabled="Tab2AssetsFarmToolsValidated"
@@ -345,7 +350,7 @@
             V. Assets Farm Machinery
           </v-tab>
           <v-tab
-            v-if="isInterviewed && !isSelfFarmerActive"
+            v-if="!isSelfFarmerActive"
             class="caption font-weight-black"
             @click="selectTab('AssetsFarmPoultryLivestock')"
             :disabled="Tab2AssetsFarmMachineryValidated"
@@ -353,7 +358,7 @@
             V. Assets Farm Poultry Livestock
           </v-tab>
           <v-tab
-            v-if="isInterviewed && !isSelfFarmerActive"
+            v-if="!isSelfFarmerActive"
             class="caption font-weight-black"
             @click="selectTab('AssetsFarmStructure')"
             :disabled="Tab2AssetsFarmPoultryLivestockValidated"
@@ -361,7 +366,7 @@
             V. Assets Farm Structure
           </v-tab>
           <v-tab
-            v-if="isInterviewed && !isSelfFarmerActive"
+            v-if="!isSelfFarmerActive"
             class="caption font-weight-black"
             @click="selectTab('InformationDwellingPlace')"
             :disabled="Tab2AssetsFarmStructureValidated"
@@ -369,7 +374,7 @@
             VI. Information Dwelling Place
           </v-tab>
           <v-tab
-            v-if="isInterviewed && !isSelfFarmerActive"
+            v-if="!isSelfFarmerActive"
             class="caption font-weight-black"
             @click="selectTab('GeneralFarmingInformation')"
             :disabled="Tab2InformationDwellingPlaceValidated"
@@ -377,7 +382,7 @@
             VII. General Farming Information
           </v-tab>
           <v-tab
-            v-if="isInterviewed && !isSelfFarmerActive"
+            v-if="!isSelfFarmerActive"
             class="caption font-weight-black"
             @click="selectTab('ParcelInformation')"
             :disabled="Tab2GeneralFarmingInformationValidated"
@@ -385,7 +390,7 @@
             VII.IV Parcel Information
           </v-tab>
           <v-tab
-            v-if="isInterviewed && !isSelfFarmerActive"
+            v-if="!isSelfFarmerActive"
             class="caption font-weight-black"
             @click="selectTab('InfrastructureDistanceAccessibility')"
             :disabled="Tab2ParcelInformationValidated"
@@ -393,7 +398,7 @@
             VII.VI Infrastructure Distance Accessibility
           </v-tab>
           <v-tab
-            v-if="isInterviewed && !isSelfFarmerActive"
+            v-if="!isSelfFarmerActive"
             class="caption font-weight-black"
             @click="selectTab('FarmActivities')"
             :disabled="Tab2InfrastructureDistanceAccessibilityValidated"
@@ -401,7 +406,7 @@
             VIII Farm Activities
           </v-tab>
           <v-tab
-            v-if="isInterviewed && !isSelfFarmerActive"
+            v-if="!isSelfFarmerActive"
             class="caption font-weight-black"
             @click="selectTab('DetailWageOperation')"
             :disabled="Tab2FarmActivitiesValidated"
@@ -409,7 +414,7 @@
             IX.III Detail Wage Operation
           </v-tab>
           <v-tab
-            v-if="isInterviewed && !isSelfFarmerActive"
+            v-if="!isSelfFarmerActive"
             class="caption font-weight-black"
             @click="selectTab('TechAwareness')"
             :disabled="Tab2DetailWageOperationValidated"
@@ -417,7 +422,7 @@
             XII Technology Awareness
           </v-tab>
           <v-tab
-            v-if="isInterviewed && !isSelfFarmerActive"
+            v-if="!isSelfFarmerActive"
             class="caption font-weight-black"
             @click="selectTab('InformationKnowledgeSources')"
             :disabled="Tab2TechAwarenessValidated"
@@ -425,7 +430,7 @@
             XIII Information Knowledge Sources
           </v-tab>
           <v-tab
-            v-if="isInterviewed && !isSelfFarmerActive"
+            v-if="!isSelfFarmerActive"
             class="caption font-weight-black"
             @click="selectTab('OpenEndedQuestions')"
             :disabled="Tab2InformationKnowledgeSourcesValidated"
@@ -433,7 +438,7 @@
             XIV Open Ended Questions
           </v-tab>
           <v-tab
-            v-if="isInterviewed && !isSelfFarmerActive"
+            v-if="!isSelfFarmerActive"
             class="caption font-weight-black"
             @click="selectTab('OpenEndedQuestionRating')"
             :disabled="Tab2OpenEndedQuestionsValidated"
@@ -452,13 +457,16 @@
         </v-tabs>
       </template>
     </v-toolbar>
-    <v-card v-if="loading" class="mt-3">
-      <p class="text-center">
-        Please wait we are fetching the form, apply loading screen here
-      </p>
+    <v-card v-if="loading" class="mt-3 elevation-0">
+      <v-skeleton-loader
+        type="article"
+        v-for="i in 4"
+        :key="i"
+        class="mb-4"
+      />
     </v-card>
     <v-tabs-items v-else>
-      <v-card v-if="currentCommodity == 'coffee'" class="elevation-0 pt-4">
+      <v-card v-if="commodity == 'coffee'" class="elevation-0 pt-4" style="min-height: 550px">
         <keep-alive>
           <component :is="currentTab"></component>
         </keep-alive>
@@ -523,7 +531,7 @@ export default {
       });
     });
   },
-  props: ['id', 'commodityProp'],
+  props: ['id', 'commodity', 'selectedForm'],
   components: {
     DemographicFarmerProfile,
     SurveyInformation,
@@ -563,9 +571,8 @@ export default {
   },
   data() {
     return {
-      aw:true,
       loading: false,
-      currentCommodity: 'coffee',
+      commodity: 'coffee',
       initialTab: 0,
     }
   },
@@ -575,21 +582,21 @@ export default {
       this.$store.commit('questionnaire/displayCurrentTab', item)
     },
     /* change/update the commodity type */
-    switchCommodity(commodity) {
-      this.currentCommodity = commodity.toLowerCase()
-      this.$store.commit('questionnaire/changeCommodityType',this.currentCommodity)
-    },
+    // switchCommodity() {
+    //   this.commodity = this.commodity.toLowerCase()
+    //   this.$store.commit('questionnaire/changeCommodityType',this.commodity)
+    // },
     /* fetching code requestS, and set the form type commodity in store for the submission stage */
     async fetchAllCodes() {
       try {
         this.loading = true
         this.$store.dispatch(
           'questionnaire/updateCommodity',
-          this.currentCommodity
+          this.commodity
         )
         await this.$store.dispatch(
           'questionnaireCode/fetchAllCodes',
-          this.currentCommodity
+          this.commodity
         )
       } catch (error) {
         this.$refs.snackbar.showBar(error, 'red')
@@ -599,12 +606,12 @@ export default {
 
     /* fetching one record existing using the id, needed an id first */
     async fetchOneRecord() {
-      this.switchCommodity(this.commodityProp)
+      // this.switchCommodity()
       try {
         this.loading = true
         await this.$store.dispatch('profiling/fetchSingleSurvey', {
           id: this.id,
-          type: this.currentCommodity,
+          type: this.commodity,
         })
       } catch (error) {
         this.$refs.snackbar.showBar(error, 'red')
@@ -619,9 +626,9 @@ export default {
     isSelfFarmerActive(){
       return this.$store.getters['questionnaire/isSelfFarmerActive']
     },
-    isInterviewed() {
-      return this.$store.getters['questionnaire/isInterviewed']
-    },
+    // isInterviewed() {
+    //   return this.$store.getters['questionnaire/isInterviewed']
+    // },
     currentTab() {
       return this.$store.getters['questionnaire/currentTab']
     },
@@ -816,13 +823,13 @@ export default {
 
     /* for not interviewed either active or inactive, tab buttons started here*/
     /* tab3 */
-    Tab3DemographicFarmerProfileValidated() {
-      return !this.$store.getters['questionnaire/Tab3DemographicFarmerProfileValidated']
-    },
+    // Tab3DemographicFarmerProfileValidated() {
+    //   return !this.$store.getters['questionnaire/Tab3DemographicFarmerProfileValidated']
+    // },
     /* for not interviewed either active or inactive, tab buttons ended here*/
 
     SubmissionAllowed(){
-      const openEndedQuestionsValidity = this.$store.getters['questionnaire/Tab1OpenEndedQuestionRatingValidated'] || this.$store.getters['questionnaire/Tab2OpenEndedQuestionRatingValidated'] || this.$store.getters['questionnaire/Tab3DemographicFarmerProfileValidated']
+      const openEndedQuestionsValidity = this.$store.getters['questionnaire/Tab1OpenEndedQuestionRatingValidated'] || this.$store.getters['questionnaire/Tab2OpenEndedQuestionRatingValidated']
       const reasonValidity = this.$store.getters['questionnaire/Tab3ReasonStoppingValidated']
       if(openEndedQuestionsValidity || reasonValidity){
         return false
@@ -858,11 +865,9 @@ export default {
       }
     },
     /* fetch codes if the commodity changed*/
-    async currentCommodity(newVal, oldVal) {
-      if (newVal != oldVal) {
-        this.switchCommodity(newVal)
+    async commodity() {
+        // this.switchCommodity()
         await this.fetchAllCodes()
-      }
     },
     /* if id prop is changed and not null, we fetch one record, edit mode only */
     async id(val) {

@@ -1,5 +1,5 @@
 <template>
-  <v-menu offset-y>
+  <v-menu offset-y v-model="dropdownShow">
     <template v-slot:activator="{ on, attrs }">
       <v-btn
         block
@@ -19,20 +19,20 @@
     <v-dialog v-model="dialog" width="700">
       <template v-slot:activator="{ on, attrs }">
         <v-list>
-          <v-list-item v-for="item in items" :key="item">
+          <v-list-item v-for="(form,i) in options" :key="i">
             <v-btn
               color="white text-capitalize"
               block
               elevation="0"
               v-bind="attrs"
               v-on="on"
-              @click="openModal(item)"
-              >{{ item }}</v-btn
-            >
+              @click="openModal(form)"
+              >{{ form }}
+            </v-btn>
           </v-list-item>
         </v-list>
       </template>
-      <upload-vue @emitCloseModal="emitCloseModal" :commodity="commodity" />
+      <upload-vue @emitCloseModal="emitCloseModal" :commodity="commodity" :selectedForm="selectedForm" />
     </v-dialog>
   </v-menu>
 </template>
@@ -40,24 +40,47 @@
 <script>
 import uploadVue from '../modal/upload.vue'
 export default {
-  emits: ['emitCloseModal'],
+  props: ['commodity'],
   components: { uploadVue },
   data() {
     return {
       dialog: false,
-      items: ['coffee', 'banana'],
-      commodity: '',
+      dropdownShow: false,
+      items: {
+        coffee: [
+          'Form 1',
+          'Form 2'
+        ],
+        banana: [
+          'Form 1'
+        ]
+      },
+      options: [],
+      selectedForm: '',
+    }
+  },
+  beforeMount(){
+    this.options = this.items[this.commodity]
+  },
+  watch:{
+    commodity(val){
+      this.options = this.items[val]
+    },
+    /* close the drodown when the dialog closed */
+    dialog(val){
+      if(!val){
+        this.dropdownShow = false
+      }
     }
   },
   methods: {
-    openModal(item) {
-      this.commodity = item
+    openModal(form) {
+      this.selectedForm = form
     },
     emitCloseModal() {
       this.dialog = false
+      this.dropdownShow = false
     },
   },
 }
 </script>
-
-<style></style>

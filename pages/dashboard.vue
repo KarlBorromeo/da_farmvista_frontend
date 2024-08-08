@@ -12,10 +12,7 @@
       />
     </div>
     <div v-else>
-      <v-row>
-        <v-spacer />
-        <commodity-change @switchCommodity="switchCommodity"/>
-      </v-row>
+      <commodity-change @switchCommodity="switchCommodity"/>
       <v-row justify="center">
         <farmer-counts
           v-for="(prov, ind) in provinces"

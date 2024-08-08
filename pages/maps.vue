@@ -1,10 +1,7 @@
 <template>
   <div>
     <v-container class="mb-0">
-      <v-row>
-          <v-spacer />
-          <commodity-change @switchCommodity="switchCommodity"/>
-      </v-row>   
+      <commodity-change @switchCommodity="switchCommodity"/> 
     </v-container>
     <page-description
       icon="mdi-google-maps"

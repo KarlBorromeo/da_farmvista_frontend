@@ -1,9 +1,9 @@
 <template>
   <v-card light class="pa-4">
     <div class="d-flex align-center justify-space-between pa-4">
-      <h2 class="pa-0 ma-0 headline font-weight-bold">
-        Upload File {{ commodity }}
-      </h2>
+      <p class="pa-0 ma-0 title font-weight-normal text-capitalize">
+        Upload File {{ commodity }} {{selectedForm}}
+      </p>
     </div>
 
     <label for="file-input" id="upload">
@@ -35,10 +35,10 @@ import snackbar from '~/components/snackbar.vue'
 export default {
   emits: ['emitCloseModal'],
   components: { snackbar },
-  props: ['commodity'],
+  props: ['commodity','selectedForm'],
   data() {
     return {
-      file: '',
+      file: null,
       disabledBtn: false,
     }
   },

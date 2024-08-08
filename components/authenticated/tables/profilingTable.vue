@@ -1,7 +1,7 @@
 <template>
-  <div class="mt-5">
+  <div class="mt-2">
     <v-data-table
-      class="pt-1 pb-3 elevation-2 text-capitalize"
+      class="pt-2 pb-3 elevation-2 text-capitalize"
       :headers="headers"
       :items="items"
       item-key="name"
@@ -11,13 +11,13 @@
       :hide-default-footer="true"
     >
       <template v-slot:top>
-        <div style="display: flex; justify-content: end">
+        <!-- <div style="display: flex; justify-content: end">
           <commodity-dropdown @switchCommodity="switchCommodity" class="mt-0" />
-        </div>
+        </div> -->
         <v-text-field
           v-model="search"
           label="Search here the record"
-          class="mx-4"
+          class="mx-4 mt-0"
         ></v-text-field>
       </template>
       <template v-slot:[`item.validated`]="{ item }">
@@ -43,8 +43,21 @@
         :circle="true"
       ></v-pagination>
     </div>
+    <!-- diff modals here based on the commodity and form number -->
     <v-dialog v-if="isEditing" v-model="dialog" width="2000">
-      <questionnaire-vue :id="id" :commodityProp="commodity" />
+      <questionnaire-vue v-if="isEditing && selectedForm=='form 1' && commodity == 'coffee'" :id="id" :commodity="commodity" :selectedForm="selectedForm"/>
+      <v-card v-else-if="isEditing && selectedForm=='form 2' && commodity == 'coffee'" >
+        <p class="pa-0 ma-0 title font-weight-normal text-capitalize">
+          Survey Questionaire {{ commodity }} {{selectedForm}}
+        </p>
+        coffee form 2
+      </v-card>
+      <v-card v-else>
+        <p class="pa-0 ma-0 title font-weight-normal text-capitalize">
+          Survey Questionaire {{ commodity }} {{selectedForm}}
+        </p>
+        empty
+      </v-card>
     </v-dialog>
     <snackbar ref="snackbarUpdate" />
   </div>
@@ -57,16 +70,18 @@ import questionnaireVue from '../modal/questionnaire.vue'
 export default {
   emits: ['switchCommodity'],
   components: { snackbar, CommodityDropdown, questionnaireVue },
+  props: [ 'commodity' ],
   data() {
     return {
       dialog: false,
       search: '',
       // items: [],
-      itemPerPage: 10, // number of rows per page
+      itemPerPage: 30, // number of rows per page
       loading: true, // toggle the loading of the table
       page: 1, // current page number
-      commodity: 'coffee',
+      // commodity: 'coffee',
       id: '', // this is used for specific fetch record
+      selectedForm: ''
     }
   },
   computed: {
@@ -108,6 +123,7 @@ export default {
       this.$store.commit('questionnaire/toggleDoneSubmit', false)
       this.dialog = true
       this.id = id
+      this.selectedForm = 'form 1'
     },
 
     /* when delete button is clicked, delete the specific record using its id */
@@ -190,6 +206,10 @@ export default {
       this.page = 1
       await this.fetchAllSurvey() // fetch the all list with filter search value
     },
+    /* watch commodity change */
+    async commodity(val){
+      await this.fetchAllSurvey()
+    }
   },
 }
 </script>

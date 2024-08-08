@@ -9,12 +9,7 @@
       />
     </v-container>
     <div v-else>
-      <v-container class="mb-0">
-        <v-row>
-            <v-spacer />
-            <commodity-change @switchCommodity="switchCommodity"/>
-        </v-row>   
-      </v-container>
+      <commodity-change @switchCommodity="switchCommodity"/>
       <page-description
         icon="mdi-finance"
         title="Analytics"

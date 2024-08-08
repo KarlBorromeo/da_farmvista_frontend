@@ -883,16 +883,16 @@ export const getters = {
   /* Tab2 Items Getters END */
 
   /* Tab3 Items Getters START */
-  Tab3DemographicFarmerProfileValidated(state) {
-    const index = state.tabs3.findIndex(
-      (el) => el.tabName == 'DemographicFarmerProfile'
-    )
-    if (index >= 0) {
-      return state.tabs3[index].validity
-    } else {
-      console.error('tabname cannot find')
-    }
-  },
+  // Tab3DemographicFarmerProfileValidated(state) {
+  //   const index = state.tabs3.findIndex(
+  //     (el) => el.tabName == 'DemographicFarmerProfile'
+  //   )
+  //   if (index >= 0) {
+  //     return state.tabs3[index].validity
+  //   } else {
+  //     console.error('tabname cannot find')
+  //   }
+  // },
   /* Tab3 Items Getters END */
 }
 
@@ -975,12 +975,16 @@ export const mutations = {
   /* display the next tab contents */
   displayCurrentTab(state, tabName) {
     let tabs = []
-    if(state.isInterviewed && state.isSelfFarmerActive){
+    if(state.isSelfFarmerActive){
       tabs = [...state.tabs1]
-    }else if(state.isInterviewed && !state.isSelfFarmerActive){
+    }else if(!state.isSelfFarmerActive){
       tabs = [...state.tabs2]
     }else{
-      tabs = [...state.tabs3]
+      tabs = []
+    }
+    if(tabs.length<1){
+      alert('empty array tabs')
+      return 
     }
     const index = tabs.findIndex(item => item.tabName === tabName+'Validated')
     if(index>=0){
@@ -1008,14 +1012,17 @@ export const mutations = {
   checkValidityAll(state) {
     state.isAllValid = true
     let tabs = []
-    if(state.isInterviewed && state.isSelfFarmerActive){
+    if(state.isSelfFarmerActive){
       tabs = [...state.tabs1]
-    }else if(state.isInterviewed && !state.isSelfFarmerActive){
+    }else if(!state.isSelfFarmerActive){
       tabs = [...state.tabs2]
     }else{
-      tabs = [...state.tabs3]
+      tabs = []
     }
-    console.log(tabs)
+    if(tabs.length<1){
+      alert('empty array tabs')
+      return 
+    }
     for (let i = 0; i < tabs.length; i++) {
       if (tabs[i].validity == false) {
         state.isAllValid = false
