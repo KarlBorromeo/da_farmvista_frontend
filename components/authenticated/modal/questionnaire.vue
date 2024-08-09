@@ -1,11 +1,5 @@
 <template>
   <v-card id="card" ref="card" light class="pa-4">
-    <!-- <div class="d-flex align-center justify-space-between pa-4">
-      <h2 class="pa-0 ma-0 headline font-weight-bold">
-        Survey Questionaire {{ commodity }}
-      </h2>
-      <commodity-dropdown v-if="!id" @switchCommodity="switchCommodity" />
-    </div> -->
     <div class="d-flex align-center justify-space-between pa-4">
       <p class="pa-0 ma-0 title font-weight-normal text-capitalize">
         Survey Questionaire {{ commodity }} {{selectedForm}}
@@ -26,43 +20,25 @@
           slider-color="primary"
           v-model="initialTab"
         >
-        
           <v-tab
-            class="caption font-weight-black"
-            @click="selectTab('DemographicFarmerProfile')"
-          >
-            I. Demographic Farmer Profile
-          </v-tab>
-          <v-tab
-            v-if="isSelfFarmerActive"
-            :disabled="Tab1DemographicFarmerProfileValidated"
-            class="caption font-weight-black"
-            @click="selectTab('BasicInformation')"
-          >
-            I. Farmer's Basic Information
-          </v-tab>
-          <v-tab
-            v-if="isSelfFarmerActive"
             @click="selectTab('SurveyInformation')"
             class="caption font-weight-black"
-            :disabled="Tab1BasicInformationValidated"
           >
             Survey Information
           </v-tab>
           <v-tab
             v-if="isSelfFarmerActive"
             class="caption font-weight-black"
-            @click="selectTab('GeneralInformation')"
+            @click="selectTab('DemographicFarmerProfile')"
             :disabled="Tab1SurveyInformationValidated"
           >
-            II. General Information
+            I. Demographic Farmer Profile
           </v-tab>
-
           <v-tab
             v-if="isSelfFarmerActive"
             class="caption font-weight-black"
             @click="selectTab('FamilyAffiliated')"
-            :disabled="Tab1GeneralInformationValidated"
+            :disabled="Tab1DemographicFarmerProfileValidated"
           >
             II. Family Affiliated
           </v-tab>
@@ -278,34 +254,17 @@
           <!-- TAB 2 -->
           <v-tab
             v-if="!isSelfFarmerActive"
-            :disabled="Tab2DemographicFarmerProfileValidated"
             class="caption font-weight-black"
-            @click="selectTab('BasicInformation')"
-          >
-            I. Farmer's Basic Information
-          </v-tab>
-          <v-tab
-            v-if="!isSelfFarmerActive"
-            @click="selectTab('SurveyInformation')"
-            class="caption font-weight-black"
-            :disabled="Tab2BasicInformationValidated"
-          >
-            Survey Information
-          </v-tab>
-          <v-tab
-            v-if="!isSelfFarmerActive"
-            class="caption font-weight-black"
-            @click="selectTab('GeneralInformation')"
+            @click="selectTab('DemographicFarmerProfile')"
             :disabled="Tab2SurveyInformationValidated"
           >
-            II. General Information
+            I. Demographic Farmer Profile
           </v-tab>
-
           <v-tab
             v-if="!isSelfFarmerActive"
             class="caption font-weight-black"
             @click="selectTab('FamilyAffiliated')"
-            :disabled="Tab2GeneralInformationValidated"
+            :disabled="Tab2DemographicFarmerProfileValidated"
           >
             II. Family Affiliated
           </v-tab>
@@ -572,7 +531,6 @@ export default {
   data() {
     return {
       loading: false,
-      commodity: 'coffee',
       initialTab: 0,
     }
   },
@@ -860,7 +818,7 @@ export default {
     // },
     /* watch the current tab, move to the intial tab when the current tab is BasicInformation */
     currentTab(tabName) {
-      if (tabName == 'DemographicFarmerProfile') {
+      if (tabName == 'SurveyInformation') {
         this.initialTab = 0
       }
     },

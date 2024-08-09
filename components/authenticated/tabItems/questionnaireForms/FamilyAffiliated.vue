@@ -482,7 +482,6 @@ export default {
             this.nameOrganization[indexNumber] = val.organizationName
           }
           this.disabledIndex = indexNumber
-          this.validate() 
         }
       },
       deep: true,
@@ -517,9 +516,9 @@ export default {
     },
     /* watch if the self farmer fullname is changed like names, then it will update the name of the index of disabled index if there is disabled index*/
     selfFarmerFullname(val) {
-       if(this.disabledIndex>=0){
+      if(this.disabledIndex>=0){
         this.nameFamilyMember[this.disabledIndex] = val
-       }
+      }
     },
     items() {
       this.validate()

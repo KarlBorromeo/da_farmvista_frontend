@@ -3,6 +3,77 @@
     <v-container>
       <v-row>
         <v-col cols="12" sm="6">
+          <v-row>
+            <form-radio-container title="Classification" :required="true">
+              <v-radio-group
+                :rules="requiredRule"
+                v-model="classification"
+                class="pa-0 ma-0"
+                row
+              >
+                <v-radio
+                  v-for="item in classificationItems"
+                  :key="item"
+                  :label="item"
+                  :value="item"
+                  class="text-capitalize"
+                ></v-radio>
+              </v-radio-group>
+            </form-radio-container>
+          </v-row>
+        </v-col>
+
+        <v-col cols="12" sm="6">
+          <v-row>
+            <form-radio-container title="Status" :required="true">
+              <v-radio-group
+                :rules="requiredRule"
+                v-model="status"
+                class="pa-0 ma-0"
+                row
+              >
+                <v-radio
+                  v-for="item in statusItems"
+                  :key="item"
+                  :label="item"
+                  :value="item"
+                  class="text-capitalize"
+                ></v-radio>
+              </v-radio-group>
+            </form-radio-container>
+          </v-row>
+        </v-col>
+
+				<form-input-container v-if="status == 'inactive'">
+					<v-textarea
+						v-model="reasonForStopCoffeeFarm"
+						:rules="requiredRule"
+						label="* Reason for Stopping Farming"
+						required
+						rows="2"
+					/>
+				</form-input-container>
+				
+				<v-col cols="12" sm="6">
+					<v-text-field
+						v-model="confirmedBy"
+						:rules="requiredRule"
+						label="* Confirmed by (Name):"
+						required
+					></v-text-field>
+				</v-col>
+
+				<v-col cols="12" sm="6">
+					<v-text-field
+						v-model="position"
+						:rules="requiredRule"
+						label="* Confirmed by (Position):"
+						required
+					></v-text-field>
+				</v-col>
+
+        <!-- TODO: -->
+        <v-col cols="12" sm="6">
           <v-text-field
             v-model="surveyNumber"
             :rules="surveyNumberRule"
@@ -132,13 +203,25 @@ export default {
       timeEndPicker: false,
       interviewEndRule: [(v) => !!v || 'time end is required'],
       requiredRule: [(v) => !!v || 'this field is required'],
+      classification: '',
+      classificationItems: [],
+      status: '',
+      statusItems: [],
+      reasonForStopCoffeeFarm: '',
+      confirmedBy: '',
+      position: '',
     }
   },
 
   methods: {
+    /* call the this.validate if the dom was done rendering the form  */
+		validteAfterVueTick(){
+			this.$nextTick(async () => {
+						await this.validate();
+			});
+		},
     /* test if the form is valid, return boolean */
     async validate() {
-      await new Promise(resolve => setTimeout(resolve,300))
       const valid = this.$refs.form.validate()
       this.$store.commit('questionnaire/toggleNextTab', {
         tabName: 'SurveyInformationValidated',
@@ -151,14 +234,6 @@ export default {
           data: this.getData(),
         })
       }
-
-      // this is the basis to enable the submission tab, it is not really related to this form, it just to toggle the submission tab if the interviewee status is !validated <3
-      // if (this.intervieweeStatus !== 'validated') {
-      //   this.$store.commit('questionnaire/toggleNextTab', {
-      //     tabName: 'OpenEndedQuestionRatingValidated',
-      //     valid,
-      //   })
-      // }
     },
     /* converts into hh:mm format*/
     convertTimeToHHMM(timeStr) {
@@ -184,6 +259,11 @@ export default {
         validatorName: this.validatorName,
         interviewStart: this.convertTimeToHHMM(this.interviewStart),
         interviewEnd: this.convertTimeToHHMM(this.interviewEnd),
+        classification : this.classification,
+				status : this.status,
+				reasonForStopCoffeeFarm: this.reasonForStopCoffeeFarm,
+        confirmedByName : this.confirmedBy,
+				confirmedByPosition : this.position,
       }
     },
     /* ensure to execute the method validate() if saving time, sometimes the watch is not working well on this part*/
@@ -199,27 +279,60 @@ export default {
   },
   watch: {
     date() {
-      this.validate()
+      this.validteAfterVueTick()
     },
     surveyNumber() {
-      this.validate()
+      this.validteAfterVueTick()
     },
     validatorName() {
-      this.validate()
+      this.validteAfterVueTick()
     },
     interviewStart() {
-      this.validate()
+      this.validteAfterVueTick()
     },
     interviewEnd() {
-      this.validate()
-    }
+      this.validteAfterVueTick()
+    },
+    regionProvince(){
+      this.validteAfterVueTick()
+    },
+    municipality(){
+      this.validteAfterVueTick()
+    },
+    barangay(){
+      this.validteAfterVueTick()
+    },
+    confirmedBy(){
+      this.validteAfterVueTick()
+    },
+    position(){
+      this.validteAfterVueTick()
+    },
+    classification(){
+      this.validteAfterVueTick()
+    },
+    status(val){
+			if(val !== 'active'){
+				this.$store.commit('questionnaire/toggleIsSelfFarmerActive',false)
+			}else{
+				this.$store.commit('questionnaire/toggleIsSelfFarmerActive',true)
+			}
+			this.$store.commit('questionnaire/resetTabsValidity')
+			this.validteAfterVueTick()
+		},
+    reasonForStopCoffeeFarm(){
+      this.validteAfterVueTick()
+    },
   },
   beforeMount() {
+    this.statusItems =
+			this.$store.getters['questionnaireCode/ProfileStatus']
+		this.classificationItems =
+			this.$store.getters['questionnaireCode/ProfileClassification']
     const isEditing = this.$store.getters['profiling/isEditingMode']
     if (isEditing) {
       const data = this.$store.getters['profiling/selectedRecord']
-      if (Object.keys(data).length > 0) {
-        this.intervieweeStatus = 'validated'
+      if(data.interview){
         this.date = data.interview.dateOfInterview
         this.surveyNumber = data.interview.surveyNo
         this.validatorName = data.interview.validatorName
@@ -228,27 +341,26 @@ export default {
         this.regionProvince = data.interview.regionProvince
         this.municipality = data.interview.cityMunicipality
         this.barangay = data.interview.barangay
-      } else {
-        this.intervieweeStatus = 'validated'
-        this.date = ''
-        this.surveyNumber = ''
-        this.validatorName = ''
-        this.interviewStart = ''
-        this.interviewEnd = ''
-        this.regionProvince = ''
-        this.municipality = ''
-        this.barangay = ''
-      }      
+        this.confirmedBy = data.interview.confirmedByName
+        this.position = data.interview.confirmedByPosition
+        this.classification = data.interview.classification
+        this.status = data.interview.status
+        this.reasonForStopCoffeeFarm = "sample raason for stopping"        
+      }
     }else {
-      this.intervieweeStatus = ''
       this.date = ''
-      this.surveyNumber = ''
+      this.surveyNumber = '1234'
       this.validatorName = ''
       this.interviewStart = ''
       this.interviewEnd = ''
       this.regionProvince = ''
       this.municipality = ''
       this.barangay = ''
+      this.confirmedBy = ''
+      this.position = ''
+      this.classification = ''
+      this.status = ''
+      this.reasonForStopCoffeeFarm = "sample raason for stopping"
     }
   },
 }

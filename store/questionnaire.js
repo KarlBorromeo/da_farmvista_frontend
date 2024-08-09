@@ -5,25 +5,30 @@ export const state = () => ({
   },
   tabs1: [ // for interviewed and active status
     {
-      tabName: 'DemographicFarmerProfile',
-      validity: false,
-      tempValidity: false,
-    },
-    {
-      tabName: 'BasicInformationValidated',
-      validity: false,
-      tempValidity: false,
-    },
-    {
       tabName: 'SurveyInformationValidated',
       validity: false,
       tempValidity: false,
     },
     {
-      tabName: 'GeneralInformationValidated',
+      tabName: 'DemographicFarmerProfile',
       validity: false,
       tempValidity: false,
     },
+    // {
+    //   tabName: 'BasicInformationValidated',
+    //   validity: false,
+    //   tempValidity: false,
+    // },
+    // {
+    //   tabName: 'SurveyInformationValidated',
+    //   validity: false,
+    //   tempValidity: false,
+    // },
+    // {
+    //   tabName: 'GeneralInformationValidated',
+    //   validity: false,
+    //   tempValidity: false,
+    // },
     {
       tabName: 'FamilyAffiliatedValidated',
       validity: false,
@@ -154,26 +159,31 @@ export const state = () => ({
     },
   ],
   tabs2: [ // for interviewed and inactive status
-    {
-      tabName: 'DemographicFarmerProfile',
-      validity: false,
-      tempValidity: false,
-    },
-    {
-      tabName: 'BasicInformationValidated',
-      validity: false,
-      tempValidity: false,
-    },
+    // {
+    //   tabName: 'DemographicFarmerProfile',
+    //   validity: false,
+    //   tempValidity: false,
+    // },
+    // {
+    //   tabName: 'BasicInformationValidated',
+    //   validity: false,
+    //   tempValidity: false,
+    // },
     {
       tabName: 'SurveyInformationValidated',
       validity: false,
       tempValidity: false,
     },
     {
-      tabName: 'GeneralInformationValidated',
+      tabName: 'DemographicFarmerProfile',
       validity: false,
       tempValidity: false,
     },
+    // {
+    //   tabName: 'GeneralInformationValidated',
+    //   validity: false,
+    //   tempValidity: false,
+    // },
     {
       tabName: 'FamilyAffiliatedValidated',
       validity: false,
@@ -262,19 +272,19 @@ export const state = () => ({
       tempValidity: true,
     },
   ],
-  tabs3: [ // for not interviewed
-    {
-      tabName: 'DemographicFarmerProfile',
-      validity: false,
-      tempValidity: false,
-    },
-    {
-      tabName: 'Submission',
-      validity: true,
-      tempValidity: true,
-    },
-  ],
-  currentTab: 'BasicInformation',
+  // tabs3: [ // for not interviewed
+  //   {
+  //     tabName: 'DemographicFarmerProfile',
+  //     validity: false,
+  //     tempValidity: false,
+  //   },
+  //   {
+  //     tabName: 'Submission',
+  //     validity: true,
+  //     tempValidity: true,
+  //   },
+  // ],
+  currentTab: 'SurveyInformation',
   sliderTabPosition: 0,
   progress: 0,
   isAllValid: false,
@@ -921,13 +931,15 @@ export const mutations = {
   toggleNextTab(state, obj) {
     let tabs = []
     let tabname = obj.tabName
-    if(state.isInterviewed && state.isSelfFarmerActive){
+    if(state.isSelfFarmerActive){
       tabs = [...state.tabs1]
-    }else if(state.isInterviewed && !state.isSelfFarmerActive){
+    }else if(!state.isSelfFarmerActive){
       tabs = [...state.tabs2]
     }else{
-      tabs = [...state.tabs3]
+      alert('empty array tabs')
+      return
     }
+    console.log(tabs.length,tabs)
     const tabsLength = tabs.length
     const index = tabs.findIndex((el) => el.tabName == tabname)
     if (index >= 0) {
@@ -957,19 +969,20 @@ export const mutations = {
   /* reset the validity of all tabs into false */
   resetTabsValidity(state) {
     let tabs = []
-    if(state.isInterviewed && state.isSelfFarmerActive){
+    if(state.isSelfFarmerActive){
       tabs = [...state.tabs1]
-    }else if(state.isInterviewed && !state.isSelfFarmerActive){
+    }else if(!state.isSelfFarmerActive){
       tabs = [...state.tabs2]
     }else{
-      tabs = [...state.tabs3]
+      alert('empty array tabs')
+      return 
     }
     tabs.forEach((tab) => {
       tab.validity = false
       tab.tempValidity = false
     })
     state.progress = 0
-    state.currentTab = 'DemographicFarmerProfile'
+    state.currentTab = 'SurveyInformation'
   },
 
   /* display the next tab contents */
@@ -980,9 +993,6 @@ export const mutations = {
     }else if(!state.isSelfFarmerActive){
       tabs = [...state.tabs2]
     }else{
-      tabs = []
-    }
-    if(tabs.length<1){
       alert('empty array tabs')
       return 
     }
@@ -1017,12 +1027,10 @@ export const mutations = {
     }else if(!state.isSelfFarmerActive){
       tabs = [...state.tabs2]
     }else{
-      tabs = []
-    }
-    if(tabs.length<1){
       alert('empty array tabs')
       return 
     }
+    
     for (let i = 0; i < tabs.length; i++) {
       if (tabs[i].validity == false) {
         state.isAllValid = false

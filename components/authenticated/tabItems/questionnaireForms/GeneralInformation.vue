@@ -253,12 +253,12 @@ export default {
           keyName: 'profileGeneralInfo',
           data: this.getData(),
         })
-        this.$store.commit('questionnaire/saveIsHouseMemberAffiliatedToOrg',this.isAnyHouseholdMemberOrg)
-        this.$store.commit('questionnaire/saveSelfFarmerOrganization',{
-          isMemberFarmerOrganization: this.isMemberOrgranization,
-          organizationTypeMembership: this.typeMembership,
-          organizationName: this.organizationName,
-        })
+        // this.$store.commit('questionnaire/saveIsHouseMemberAffiliatedToOrg',this.isAnyHouseholdMemberOrg)
+        // this.$store.commit('questionnaire/saveSelfFarmerOrganization',{
+        //   isMemberFarmerOrganization: this.isMemberOrgranization,
+        //   organizationTypeMembership: this.typeMembership,
+        //   organizationName: this.organizationName,
+        // })
       }
     },
     /* validate checkbox if empty or not */
